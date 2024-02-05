@@ -7,9 +7,9 @@ server:
 spring:
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@localhost:1521:xe
+    url: jdbc:oracle:thin:@whi0m2vf43suz8ly_high?TNS_ADMIN=C:/Workspaces/final_bootbox/bootbox/wallets/Wallet_WHI0M2VF43SUZ8LY
     username: bootbox
-    password: bootbox
+    password: "Code_director240226@123"
   jpa:
     generate-ddl: true
     show-sql: true
