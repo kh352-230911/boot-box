@@ -1,0 +1,27 @@
+# tomcat (container)
+server:
+  port: 8080
+  servlet:
+    context-path: /bootbox
+# database
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: bootbox
+    password: bootbox
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        hbm2ddl:
+          auto: create
+    database: oracle
+    database-platform: org.hibernate.dialect.OracleDialect
+# logback (logging)
+logging:
+  level:
+    root: info
+    com.sh.app: debug
