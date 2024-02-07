@@ -29,7 +29,9 @@ public class Schedule {
     @Column(nullable = false)
     private long theaterId;
     @Column(nullable = false)
-    private String date;
+    private String schDate;
     @Column(nullable = false)
     private String time;
+
+
 }

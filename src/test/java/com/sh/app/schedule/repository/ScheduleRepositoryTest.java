@@ -36,7 +36,7 @@ public class ScheduleRepositoryTest {
                 Schedule.builder()
                         .movieId(1L)
                         .theaterId(1L)
-                        .date("2024.01.31")
+                        .schDate("2024.01.31")
                         .time("1시30분")
                         .build()
         );
