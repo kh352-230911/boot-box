@@ -1,6 +1,8 @@
 package com.sh.app.theater.repository;
 
 
+import com.sh.app.cinema.entity.Cinema;
+import com.sh.app.cinema.repository.CinemaRepository;
 import com.sh.app.theater.entity.Theater;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,6 +23,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TheaterRepositoryTest {
     @Autowired
     TheaterRepository theaterRepository;
+    @Autowired
+    CinemaRepository cinemaRepository;
 
     @DisplayName("극장 전체조회")
     @Test
@@ -28,23 +32,42 @@ public class TheaterRepositoryTest {
         // given
         insertTheaterData();
         // when
-        List<Theater> schedules = theaterRepository.findAll();
-        System.out.println(schedules);
+        List<Theater> theaters = theaterRepository.findAll();
+        System.out.println(theaters);
         // then
-        assertThat(schedules)
+        assertThat(theaters)
                 .isNotEmpty()
-                .hasSize(schedules.size());
+                .hasSize(theaters.size());
     }
 
     private void insertTheaterData() {
+
+        Cinema cinema = Cinema.builder()
+                .region_cinema("영등포점")
+                .theater_number(10)
+                .address("서울특별시 영등포구 영등포동")
+                .location_lo(1234)
+                .location_la(1234)
+                .phone("02-1111-1234")
+                .build();
+        cinemaRepository.save(cinema);
+        Cinema cinema2 = Cinema.builder()
+                .region_cinema("관악점")
+                .theater_number(10)
+                .address("서울특별시 관악구 관악동")
+                .location_lo(1234)
+                .location_la(1234)
+                .phone("02-1234-1234")
+                .build();
+        cinemaRepository.save(cinema2);
         List<Theater> theaters = Arrays.asList(
                 Theater.builder()
-                        .cinemaId(1L)
-                        .name("강남시네마")
+                        .cinema(cinema)
+                        .name("강남 극장")
                         .seat(40)
                         .build(),
                 Theater.builder()
-                        .cinemaId(2L)
+                        .cinema(cinema2)
                         .name("역삼 네모극장")
                         .seat(60)
                         .build()
