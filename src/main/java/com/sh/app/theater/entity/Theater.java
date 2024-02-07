@@ -19,7 +19,8 @@ public class Theater {
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "cinema_id")
 //    private Cinema cinema;
-
+    @Column(nullable = false)
+    private Long cinemaId;
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)

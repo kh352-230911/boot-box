@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @DataJpaTest
 @Transactional(propagation = Propagation.NOT_SUPPORTED)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -29,15 +31,25 @@ public class ScheduleRepositoryTest {
         List<Schedule> schedules = scheduleRepository.findAll();
         System.out.println(schedules);
         // then
+        assertThat(schedules)
+                .isNotEmpty()
+                .hasSize(schedules.size());
     }
+
 
     private void insertScheduleData() {
         List<Schedule> schedules = Arrays.asList(
                 Schedule.builder()
                         .movieId(1L)
                         .theaterId(1L)
-                        .date("2024.01.31")
+                        .schDate("2024.01.31")
                         .time("1시30분")
+                        .build(),
+                Schedule.builder()
+                        .movieId(2L)
+                        .theaterId(2L)
+                        .schDate("2024.02.31")
+                        .time("2시30분")
                         .build()
         );
         schedules.forEach(scheduleRepository::save);
