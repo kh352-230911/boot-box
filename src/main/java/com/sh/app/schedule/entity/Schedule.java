@@ -32,4 +32,6 @@ public class Schedule {
     private String schDate;
     @Column(nullable = false)
     private String time;
+
+
 }
