@@ -15,10 +15,11 @@ import lombok.NoArgsConstructor;
 public class Theater {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cinema_id")
-    private Cinema cinema;
+    private Long id;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "cinema_id")
+//    private Cinema cinema;
+
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
