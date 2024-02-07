@@ -1,11 +1,12 @@
 package com.sh.app.cinema.entity;
 
 import com.sh.app.location.entity.Location;
+import com.sh.app.theater.entity.Theater;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(exclude = "theaters")
 public class Cinema implements Comparable<Cinema>{
 
     @Id
@@ -35,6 +37,10 @@ public class Cinema implements Comparable<Cinema>{
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "location_id")
     private Location location;
+
+    @OneToMany(mappedBy = "cinema", fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<Theater> theaters = new ArrayList<>();
 
     public void setLocation(Location location) {
         this.location = location;

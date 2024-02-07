@@ -1,10 +1,11 @@
 package com.sh.app.movie.entity;
 
+import com.sh.app.schedule.entity.Schedule;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "movie")
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(exclude = "schedules")
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,4 +32,8 @@ public class Movie {
     private String actor;
     private String summary;
     private double advanceReservation;
+
+    @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<Schedule> schedules = new ArrayList<>();
 }
