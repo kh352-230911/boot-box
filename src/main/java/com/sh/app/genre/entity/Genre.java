@@ -1,6 +1,5 @@
 package com.sh.app.genre.entity;
 
-import com.sh.app.moviegenre.entity.MovieGenre;
 import jakarta.persistence.*;
 import lombok.*;
 import com.sh.app.movie.entity.Movie;
@@ -26,8 +25,6 @@ public class Genre {
     private Long id;
     @Column(nullable = false)
     private String genreList;
-    @OneToMany
-    @Builder.Default
-    private List<MovieGenre> movieGenres = new ArrayList<>();
+
 
 }

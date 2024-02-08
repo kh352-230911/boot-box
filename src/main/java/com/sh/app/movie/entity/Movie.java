@@ -1,6 +1,5 @@
 package com.sh.app.movie.entity;
 
-import com.sh.app.moviegenre.entity.MovieGenre;
 import com.sh.app.genre.entity.Genre;
 import com.sh.app.schedule.entity.Schedule;
 
@@ -52,7 +51,7 @@ public class Movie {
 
     public void addMovieGenre(Genre genre) {
             this.genres.add(genre);
-       }
+    }
 
     @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
     @Builder.Default
