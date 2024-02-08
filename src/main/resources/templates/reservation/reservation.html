@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>reservation</title>
+</head>
+<style layout:fragment="style"></style>
+
+<div layout:fragment="content">
+    <div th:class="sortmenu">
+        <a href="#" th:onclick=" " >예매율순</a>
+        <a href="#" th:onclick=" " >가나다순</a>
+        <div th:scrolling="" id="movieList"></div > <!-- 스크롤 어떻게 넣을지는 아직 미정 -->
+        <ul>
+            <li></li> <!-- 영화 목록 -->
+        </ul>
+    </div>
+</div>
+
+<script layout:fragment="script"></script>
+</html>
