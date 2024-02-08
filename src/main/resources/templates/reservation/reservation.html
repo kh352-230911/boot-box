@@ -9,13 +9,23 @@
 <style layout:fragment="style"></style>
 
 <div layout:fragment="content">
-    <div th:class="sortmenu">
+    <div th:class="sortmovieList">
+        <div><h3>영화</h3></div>
         <a href="#" th:onclick=" " >예매율순</a>
         <a href="#" th:onclick=" " >가나다순</a>
+        <!-- 영화 스크롤바 -->
         <div th:scrolling="" id="movieList"></div > <!-- 스크롤 어떻게 넣을지는 아직 미정 -->
         <ul>
-            <li></li> <!-- 영화 목록 -->
+            <!-- 영화 목록 -->
+            <li></li>
         </ul>
+    </div>
+    <div th:class="sortcinemaList">
+        <div><h3>극장</h3></div>
+        <a href="#" th:onclick="" >전체</a>
+        <a href="#" th:onclick="" >관심극장</a>
+        <!-- 극장 스크롤바 -->
+        <div th:scrolling="" id="cinemaList"></div>
     </div>
 </div>
 

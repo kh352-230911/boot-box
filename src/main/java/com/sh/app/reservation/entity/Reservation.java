@@ -21,11 +21,11 @@ public class Reservation {
             // 첫번째 할당할값, 몇개할당할까
             initialValue = 1,
             allocationSize = 1)
-    private Long id;
+    private Long id; // 예매시퀀스
     @Column(nullable = false)
-    private Long memberId;
+    private Long memberId; // 회원아이디
     @Column(nullable = false)
-    private Long scheduleId;
+    private Long scheduleId; // 상영일정시퀀스
     @Column(nullable = false)
-    private String status;
+    private String status; // 상태값
 }
