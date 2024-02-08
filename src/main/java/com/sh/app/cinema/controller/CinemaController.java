@@ -20,4 +20,9 @@ public class CinemaController {
 
     }
 
+    @GetMapping("/cinemaList.do")
+    public void cinemaList() {
+
+    }
+
 }

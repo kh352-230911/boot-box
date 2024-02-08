@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>극장목록</title>
+    <!-- 페이지별 css -->
+    <link rel="stylesheet" th:href="@{/css/cinema/cinemaList.css}" />
+</head>
+<style layout:fragment="style">
+</style>
+
+<div layout:fragment="content" class="px-10">
+    <span>전체극장</span>
+    <br>
+    <hr style="height: 1px">
+    <br>
+    <div class = "theater-box">
+        <div class = "location-area">
+            <ul>
+                <li>서울</li>
+                <li>강남</li>
+                <li>경기</li>
+                <li>대구</li>
+                <li>부산</li>
+            </ul>
+        </div>
+    </div>
+    <br><br><br><br><br>
+    <span class="notice-span">극장 공지사항</span>
+    <br>
+    <hr style="height: 1px">
+    <br>
+    <table id="notice_tb">
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>유형</th>
+                <th>제목</th>
+                <th>작성일</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>system</td>
+                <td class="notice-content">제목</td>
+                <td>작성일</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>system</td>
+                <td class="notice-content">제목</td>
+                <td>작성일</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>system</td>
+                <td class="notice-content">제목</td>
+                <td>작성일</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>system</td>
+                <td class="notice-content">제목</td>
+                <td>작성일</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<br>
+
+<script layout:fragment="script">
+</script>
+</html>
