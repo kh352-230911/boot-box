@@ -4,8 +4,6 @@ import com.sh.app.genre.entity.Genre;
 import com.sh.app.genre.repository.GenreRepository;
 import com.sh.app.movie.entity.Movie;
 import com.sh.app.movie.entity.Rating;
-import com.sh.app.moviegenre.entity.MovieGenre;
-import com.sh.app.moviegenre.repository.MovieGenreRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +27,6 @@ public class MovieRepositoryTest {
     MovieRepository movieRepository;
     @Autowired
     GenreRepository genreRepository;
-    @Autowired
-    MovieGenreRepository movieGenreRepository;
 
     @DisplayName("영화 전체 조회")
     @Test
@@ -87,8 +83,6 @@ public class MovieRepositoryTest {
         );
         movies.forEach(movieRepository::save);
 
-        List<MovieGenre> movieGenres = movieGenreRepository.findAll();
-        System.out.println(movieGenres);
     }
 
     @DisplayName("영화 등록")
