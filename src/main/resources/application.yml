@@ -17,7 +17,9 @@ spring:
       hibernate:
         format_sql: true #false일시 한 줄로 나옴
         hbm2ddl:
+
           auto: validate
+
     database: oracle
     database-platform: org.hibernate.dialect.OracleDialect
 # logback (logging)
@@ -25,3 +27,8 @@ logging:
   level:
     root: info
     com.sh.app: debug
+  # profile 관리
+  spring:
+    profiles:
+      default: test
+#    active: prod
