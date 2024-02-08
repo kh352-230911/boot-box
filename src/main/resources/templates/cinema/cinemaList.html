@@ -5,11 +5,9 @@
         layout:decorate="~{layout/default}">
 <head>
     <title>극장목록</title>
-    <!-- 페이지별 css -->
-    <link rel="stylesheet" th:href="@{/css/cinema/cinemaList.css}" />
+   <link rel="stylesheet" th:href="@{/css/cinema/cinemaList.css}" />
 </head>
-<style layout:fragment="style">
-</style>
+<style layout:fragment="style"></style>
 
 <div layout:fragment="content" class="px-10">
     <span>전체극장</span>
@@ -19,8 +17,7 @@
     <div class = "theater-box">
         <div class = "location-area">
             <ul>
-                <li>서울</li>
-                <li>강남</li>
+                <li><a th:href="@{/cinema/cinemaDetail.do}">서울</a></li>
                 <li>경기</li>
                 <li>대구</li>
                 <li>부산</li>

@@ -28,7 +28,7 @@ div, section, header, aside, footer {
 }
 
 /********** 전체컨테이너 **********/
-div#container {
+body#container {
     background-color: #232323;
 }
 
