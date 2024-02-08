@@ -12,10 +12,10 @@ spring:
     password: ${PROD_DB_PASSWORD}
   jpa:
     generate-ddl: true
-    show-sql: true
+    show-sql: true #만들어진 쿼리를 보여줄것인가? true or false
     properties:
       hibernate:
-        format_sql: true
+        format_sql: true #false일시 한 줄로 나옴
         hbm2ddl:
           auto: validate
     database: oracle
