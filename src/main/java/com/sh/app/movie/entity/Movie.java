@@ -1,11 +1,19 @@
 package com.sh.app.movie.entity;
 
+import com.sh.app.moviegenre.entity.MovieGenre;
+import com.sh.app.genre.entity.Genre;
 import com.sh.app.schedule.entity.Schedule;
+
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "movie")
@@ -17,6 +25,7 @@ import java.util.List;
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "movie_id")
     private Long id;
     @Column(nullable = false)
     private String title;
@@ -33,7 +42,20 @@ public class Movie {
     private String summary;
     private double advanceReservation;
 
+    @ManyToMany
+    @JoinTable(
+           name = "movie_genre",
+           joinColumns = @JoinColumn(name = "movie_id"),
+           inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    @Builder.Default
+    private Set<Genre> genres = new LinkedHashSet<>();
+
+    public void addMovieGenre(Genre genre) {
+            this.genres.add(genre);
+       }
+
     @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
     @Builder.Default
     private List<Schedule> schedules = new ArrayList<>();
+
 }
