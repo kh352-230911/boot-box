@@ -1,11 +1,8 @@
-package com.sh.app.reservation.entity;
+package com.sh.app.reservation1.entity;
 import com.sh.app.common.Status;
 import com.sh.app.pay.entity.OrderPay;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 /**
  * 0206

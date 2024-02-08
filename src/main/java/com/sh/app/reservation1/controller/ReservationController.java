@@ -1,9 +1,8 @@
-package com.sh.app.reservation.controller;
-import com.sh.app.reservation.service.ReservationService;
+package com.sh.app.reservation1.controller;
+import com.sh.app.reservation1.service.ReservationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @Slf4j
-@RequestMapping("/reservation")
+@RequestMapping("/reservation1")
 /**
  * @RequestMapping은 클라이언트이 요청(url)에 맞는 클래스나 메서드를 연결시켜주는 어노테이션이다.
  * 이 어노테이션은 그 위치에 따라 의미가 다르다. 클래스 레벨 : 공통 주소 / 메서드 레벨에서 get/post 분류
@@ -27,7 +26,7 @@ public class ReservationController {
     @Autowired
     ReservationService reservationService;
 
-    @GetMapping("/reservationMain.do")
+    @GetMapping("/reservationBooking1.do")
     public void reservationMain()
     {
         
