@@ -25,3 +25,8 @@ logging:
   level:
     root: info
     com.sh.app: debug
+  # profile 관리
+  spring:
+    profiles:
+      default: test
+#    active: prod
