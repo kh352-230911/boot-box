@@ -10,26 +10,129 @@
 </style>
 
 <div layout:fragment="content" class="px-10">
-    <span>무비차트</span>
-    <br>
+
+    <div class="mt-5 flex justify-between items-center">
+        무비차트
+
+        <div class="flex justify-end mb-3">
+            <div class="pt-2 relative text-slate-200">
+                <input class="border-2 border-red-500 bg-gray-700 h-8 px-3 pr-10 rounded-lg text-sm focus:outline-none"
+                       type="search" name="search" placeholder="Search Movie">
+                <button type="submit" class="absolute right-0 top-0 mt-4 mr-4">
+                    <svg class="text-gray-300 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px"
+                         viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;" xml:space="preserve"
+                         width="500px" height="400px">
+                        <path
+                                d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
     <hr style="height: 1px">
     <br>
-    <div  class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div>
-            <a th:href="@{/bootbox/}"><img class="h-auto max-w-full rounded-lg" th:src="@{/images/웡카.jpg}"></a>
-                <div>웡카</div>
-        </div>
-        <div>
-            <a href="#"><img class="h-auto max-w-full rounded-lg" th:src="@{/images/시민덕희.jpg}"></a>
-            <div>시민덕희</div>
-        </div>
-        <div>
-            <a href="#"><img class="h-auto max-w-full rounded-lg" th:src="@{/images/외계인2부.jpg}"></a>
-            <div>외계+인 2부</div>
-        </div>
-        <div>
-            <a href="#"><img class="h-auto max-w-full rounded-lg" th:src="@{/images/추락의 해부.jpg}"></a>
-            <div>추락의 해부</div>
+<!--    <div  class="grid grid-cols-2 md:grid-cols-4 gap-4">-->
+<!--        <div>-->
+<!--            <a th:href="@{/movie/movieDetail.do}"><img class="h-auto max-w-full rounded-lg" th:src="@{/images/웡카.jpg}"></a>-->
+<!--                <div>웡카</div>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <a href="#"><img class="h-auto max-w-full rounded-lg" th:src="@{/images/시민덕희.jpg}"></a>-->
+<!--            <div>시민덕희</div>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <a href="#"><img class="h-auto max-w-full rounded-lg" th:src="@{/images/외계인2부.jpg}"></a>-->
+<!--            <div>외계+인 2부</div>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <a href="#"><img class="h-auto max-w-full rounded-lg" th:src="@{/images/추락의 해부.jpg}"></a>-->
+<!--            <div>추락의 해부</div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <div class="section-1">
+        <div class="con">
+            <div class="flex section-1-1">
+
+                <div class="full-view">
+                    <div class="flex-shrink-0 flex align-center">
+                        <div class="full-view flex align-center justify-center"><a href="#">전체보기 ></a></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-1-2 flex">
+                <div>
+                    <div>
+                        <a href="#"><img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000086/86058/86058_320.jpg" alt="헌트"></a>
+
+                        <div class="section-1-2-btn">
+                            <div class="section-1-2-btn-bg"></div>
+                            <div class="section-1-2-btn-de">
+                                <div class="detail"><a th:href="@{/movie/movieDetail.do}">상세보기</a></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a class="movie-title" href="#">헌트</a>
+                    <a class="movie-content" href="#"><img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg"><span>94%</span> <span>예매율29.1%</span></a>
+                </div>
+
+                <div>
+                    <div><a href="#"><img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000083/83280/83280_320.jpg" alt="한산"></a>
+                        <div class="section-1-2-btn">
+                            <div class="section-1-2-btn-bg"></div>
+                            <div class="section-1-2-btn-de">
+                                <div class="detail"><a href="#">상세보기</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="movie-title" href="#">한산-용의 출현</a>
+                    <a class="movie-content" href="#"><img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg"><span>95%</span> <span>예매율25.7%</span></a>
+                </div>
+
+                <div>
+                    <div><a href="#"><img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000082/82120/82120_320.jpg" alt="탑건"></a>
+                        <div class="section-1-2-btn">
+                            <div class="section-1-2-btn-bg"></div>
+                            <div class="section-1-2-btn-de">
+                                <div class="detail"><a href="#">상세보기</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="movie-title" href="#">탑건-매버릭</a>
+                    <a class="movie-content" href="#"><img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg"><span>99%</span> <span>예매율11.0%</span></a>
+                </div>
+
+                <div>
+                    <div><a href="#"><img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000085/85722/85722_320.jpg" alt="놉"></a>
+                        <div class="section-1-2-btn">
+                            <div class="section-1-2-btn-bg"></div>
+                            <div class="section-1-2-btn-de">
+                                <div class="detail"><a href="#">상세보기</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="movie-title" href="#">놉</a>
+                    <a class="movie-content" href="#"><img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg"><span>99%</span> <span>예매율7.7%</span></a>
+                </div>
+
+                <div>
+                    <div><a href="#"><img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000085/85465/85465_320.jpg" alt="비상선언"></a>
+                        <div class="section-1-2-btn">
+                            <div class="section-1-2-btn-bg"></div>
+                            <div class="section-1-2-btn-de">
+                                <div class="detail"><a href="#">상세보기</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="movie-title" href="#">비상선언</a>
+                    <a class="movie-content" href="#"><img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg"><span>81%</span> <span>예매율7.2%</span></a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
