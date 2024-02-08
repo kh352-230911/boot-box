@@ -75,7 +75,7 @@ jobs:
           sudo docker stop $(sudo docker ps -aq -f "name=${{ vars.APP_NAME }}") 
           sudo docker rm $(sudo docker ps -aq -f "name=${{ vars.APP_NAME }}") 
           sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ vars.APP_NAME }}
-          sudo docker run -d -p 8080:8080 -e --name ${{ vars.APP_NAME }} ${{ secrets.DOCKERHUB_USERNAME }}/${{ vars.APP_NAME }}
+          sudo docker run -d -p 8080:8080 -e "SPRING_PROFILES_ACTIVE=prod" --name ${{ vars.APP_NAME }} ${{ secrets.DOCKERHUB_USERNAME }}/${{ vars.APP_NAME }}
 
     - name: Remove Github Actions IP From Security Group
       run: |
