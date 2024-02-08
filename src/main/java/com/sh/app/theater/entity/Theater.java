@@ -1,6 +1,7 @@
 package com.sh.app.theater.entity;
 
 import com.sh.app.cinema.entity.Cinema;
+import com.sh.app.movie.entity.Movie;
 import com.sh.app.schedule.entity.Schedule;
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,4 +31,13 @@ public class Theater {
     @OneToMany(mappedBy = "theater", fetch = FetchType.EAGER)
     @Builder.Default
     private List<Schedule> schedules = new ArrayList<>();
+
+    public void setCinema(Cinema cinema) {
+        this.cinema = cinema;
+
+        if(cinema != null) {
+            if(cinema.getTheaters().contains(this))
+                cinema.getTheaters().add(this);
+        }
+    }
 }

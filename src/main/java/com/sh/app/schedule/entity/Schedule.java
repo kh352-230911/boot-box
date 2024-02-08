@@ -38,4 +38,13 @@ public class Schedule {
         }
     }
 
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+
+        if(movie != null) {
+            if(movie.getSchedules().contains(this))
+                movie.getSchedules().add(this);
+        }
+    }
+
 }
