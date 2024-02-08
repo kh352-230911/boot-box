@@ -91,19 +91,19 @@ footer {
     height:350px;
     justify-content: space-evenly
 }
-/*.section-1-2 > div > div > a > img {*/
-/*    width: 190px;*/
-/*    border-radius:10px;*/
-/*}*/
-/*.section-1-2 > div > div {*/
-/*    position:relative;*/
-/*    width: auto;*/
-/*    height: auto;*/
-/*    margin-right: 10px;*/
-/*}*/
-/*.section-1-2 > div:nth-child(5) > div{*/
-/*    margin-right:0;*/
-/*}*/
+.section-1-2 > div > div > a > img {
+    width: 250px;
+    border-radius:10px;
+}
+.section-1-2 > div > div {
+    position:relative;
+    width: auto;
+    height: auto;
+    margin-right: 10px;
+}
+.section-1-2 > div:nth-child(5) > div{
+    margin-right:0;
+}
 /* 영화이미지 위 호버버튼  */
 .section-1-2-btn {
     position:absolute;
