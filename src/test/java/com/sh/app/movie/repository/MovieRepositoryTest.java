@@ -4,6 +4,8 @@ import com.sh.app.genre.entity.Genre;
 import com.sh.app.genre.repository.GenreRepository;
 import com.sh.app.movie.entity.Movie;
 import com.sh.app.movie.entity.Rating;
+import com.sh.app.moviegenre.entity.MovieGenre;
+import com.sh.app.moviegenre.repository.MovieGenreRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class MovieRepositoryTest {
     MovieRepository movieRepository;
     @Autowired
     GenreRepository genreRepository;
+    @Autowired
+    MovieGenreRepository movieGenreRepository;
 
     @DisplayName("영화 전체 조회")
     @Test
@@ -82,6 +86,9 @@ public class MovieRepositoryTest {
                         .advanceReservation(94).build()
         );
         movies.forEach(movieRepository::save);
+
+        List<MovieGenre> movieGenres = movieGenreRepository.findAll();
+        System.out.println(movieGenres);
     }
 
     @DisplayName("영화 등록")
@@ -101,9 +108,8 @@ public class MovieRepositoryTest {
 
         movie = movieRepository.save(movie);
         assertThat(movie.getId()).isNotNull().isNotZero();
-
-
     }
+
     @DisplayName("영화 수정")
     @Test
     void test3() {
@@ -137,6 +143,7 @@ public class MovieRepositoryTest {
                     assertThat(_movie.getFileRatings()).isEqualTo(newRating);
                 });
     }
+
     @DisplayName("영화 삭제")
     @Test
     void test4() {
@@ -171,6 +178,7 @@ public class MovieRepositoryTest {
                     assertThat(movie.getAdvanceReservation()).isNotNull();
                 });
     }
+
     @DisplayName("장르에따른 영화목록들 조회")
     @Test
     void test6() {
@@ -208,6 +216,26 @@ public class MovieRepositoryTest {
         List<Movie> movies = movieRepository.findByGenreList(genre.getGenreList());
         System.out.println(movies);
 
+    }
+
+    @DisplayName("영화 검색 조회")
+    @Test
+    void test7() {
+        // given
+        insertMovieData();
+        String title = "시민";
+
+        // when
+        List<Movie> movies = movieRepository.findByTitleContaining(title);
+        System.out.println(movies);
+
+        // then
+        assertThat(movies)
+                .isNotEmpty()
+                .hasSize(movies.size())
+                .allSatisfy((movie -> {
+                    assertThat(movie.getTitle().contains(title));
+                }));
     }
 
 }

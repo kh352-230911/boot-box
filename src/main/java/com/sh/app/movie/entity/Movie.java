@@ -1,5 +1,6 @@
 package com.sh.app.movie.entity;
 
+import com.sh.app.moviegenre.entity.MovieGenre;
 import com.sh.app.genre.entity.Genre;
 import com.sh.app.schedule.entity.Schedule;
 
@@ -41,19 +42,20 @@ public class Movie {
     private String summary;
     private double advanceReservation;
 
-   @ManyToMany
-   @JoinTable(
+    @ManyToMany
+    @JoinTable(
            name = "movie_genre",
            joinColumns = @JoinColumn(name = "movie_id"),
            inverseJoinColumns = @JoinColumn(name = "genre_id"))
-   @Builder.Default
-   private Set<Genre> genres = new LinkedHashSet<>();
+    @Builder.Default
+    private Set<Genre> genres = new LinkedHashSet<>();
 
-   public void addMovieGenre(Genre genre) {
-        this.genres.add(genre);
-   }
+    public void addMovieGenre(Genre genre) {
+            this.genres.add(genre);
+       }
 
     @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
     @Builder.Default
     private List<Schedule> schedules = new ArrayList<>();
+
 }

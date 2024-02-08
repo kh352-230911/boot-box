@@ -1,5 +1,8 @@
 package com.sh.app.genre.entity;
 
+import com.sh.app.moviegenre.entity.MovieGenre;
+import jakarta.persistence.*;
+import lombok.*;
 import com.sh.app.movie.entity.Movie;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,10 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 @Table(name = "genre")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Genre {
     @Id
@@ -23,6 +26,8 @@ public class Genre {
     private Long id;
     @Column(nullable = false)
     private String genreList;
-
+    @OneToMany
+    @Builder.Default
+    private List<MovieGenre> movieGenres = new ArrayList<>();
 
 }
