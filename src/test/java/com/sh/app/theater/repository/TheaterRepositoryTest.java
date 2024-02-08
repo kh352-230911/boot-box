@@ -60,18 +60,19 @@ public class TheaterRepositoryTest {
                 .phone("02-1234-1234")
                 .build();
         cinemaRepository.save(cinema2);
-        List<Theater> theaters = Arrays.asList(
-                Theater.builder()
+        Theater theater = Theater.builder()
                         .cinema(cinema)
-                        .name("강남 극장")
-                        .seat(40)
-                        .build(),
-                Theater.builder()
-                        .cinema(cinema2)
-                        .name("역삼 네모극장")
+                        .name("1관")
                         .seat(60)
-                        .build()
-        );
-        theaters.forEach(theaterRepository::save);
+                        .build();
+        theater.setCinema(cinema);
+        Theater theater2 = Theater.builder()
+                        .cinema(cinema)
+                        .name("2관")
+                        .seat(60)
+                        .build();
+        theater2.setCinema(cinema2);
+        theaterRepository.save(theater);
+        theaterRepository.save(theater2);
     }
 }

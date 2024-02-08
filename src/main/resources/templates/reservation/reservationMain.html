@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>예약메인</title>
+</head>
+<style layout:fragment="style">
+    div#cinema
+    {
+        background-color: pink;
+        width: 80%;
+        height: 400px;
+    }
+    div#div01
+    {
+        background-color: cornflowerblue;
+    }
+    div#div02
+    {
+        background-color : antiquewhite;
+    }
+    div#div03
+    {
+        background-color : burlywood;
+    }
+    div#div04
+    {
+        background-color : aquamarine;
+    }
+
+</style>
+<div layout:fragment="content">
+    <span>영화 예매</span>
+    <br>
+    <hr style="height: 1px">
+    <br>
+
+    <div id="cinema" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div id="div01">
+            <div>영화</div>
+            <div>웡카</div>
+        </div>
+        <div id="div02">
+            <div>극장</div>
+            <div>시민덕희</div>
+        </div>
+        <div id="div03">
+            <div>날짜</div>
+            <div>시민덕희</div>
+        </div>
+        <div id="div04">
+            <div>시간</div>
+            <div>시민덕희</div>
+        </div>
+    </div>
+
+
+
+</div>
+<script layout:fragment="script">
+</script>
+
+</html>

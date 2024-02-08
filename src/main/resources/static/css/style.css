@@ -28,7 +28,7 @@ div, section, header, aside, footer {
 }
 
 /********** 전체컨테이너 **********/
-div#container {
+body#container {
     background-color: #232323;
 }
 
@@ -55,7 +55,7 @@ section#content {
 footer {
     background-color: #212121;
     background-clip: content-box;
-    height: 95px;
+    height: 10vh;
 }
 
 
@@ -177,4 +177,3 @@ footer {
     border-radius: 15px; /* 테두리 둥글게 설정 */
     text-decoration: none; /* 텍스트 밑줄 제거 */
 }
-

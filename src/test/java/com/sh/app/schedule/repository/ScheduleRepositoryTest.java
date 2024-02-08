@@ -81,30 +81,37 @@ public class ScheduleRepositoryTest {
         cinemaRepository.save(cinema2);
         Theater theater = Theater.builder()
                 .cinema(cinema)
-                .name("강남 극장")
-                .seat(40)
+                .name("1관")
+                .seat(60)
                 .build();
         Theater theater2 = Theater.builder()
                 .cinema(cinema2)
-                .name("역삼 네모극장")
+                .name("2관")
                 .seat(60)
                 .build();
+        theater.setCinema(cinema);
+        theater2.setCinema(cinema2);
         theaterRepository.save(theater);
         theaterRepository.save(theater2);
-        List<Schedule> schedules = Arrays.asList(
+        Schedule schedule1 =
                 Schedule.builder()
                         .movie(movie)
                         .schDate("2024.01.31")
                         .theater(theater)
-                        .time("1시간 56분")
-                        .build(),
+                        .time("120분")
+                        .build();
+        Schedule schedule2 =
                 Schedule.builder()
-                        .movie(movie2)
-                        .schDate("2024.01.24")
-                        .theater(theater2)
-                        .time("1시간 54분")
-                        .build()
-        );
-        schedules.forEach(scheduleRepository::save);
+                        .movie(movie)
+                        .schDate("2024.02.31")
+                        .theater(theater)
+                        .time("180분")
+                        .build();
+        schedule1.setTheater(theater);
+        schedule1.setMovie(movie);
+        schedule2.setTheater(theater2);
+        schedule2.setMovie(movie2);
+        scheduleRepository.save(schedule1);
+        scheduleRepository.save(schedule2);
     }
 }
