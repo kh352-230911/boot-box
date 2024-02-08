@@ -1,10 +1,17 @@
 package com.sh.app.movie.entity;
 
+import com.sh.app.genre.entity.Genre;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "movie")
@@ -15,6 +22,7 @@ import lombok.NoArgsConstructor;
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "movie_id")
     private Long id;
     @Column(nullable = false)
     private String title;
@@ -30,4 +38,16 @@ public class Movie {
     private String actor;
     private String summary;
     private double advanceReservation;
+
+   @ManyToMany
+   @JoinTable(
+           name = "movie_genre",
+           joinColumns = @JoinColumn(name = "movie_id"),
+           inverseJoinColumns = @JoinColumn(name = "genre_id"))
+   @Builder.Default
+   private Set<Genre> genres = new LinkedHashSet<>();
+
+    public void addMovieGenre(Genre genre) {
+        this.genres.add(genre);
+    }
 }
