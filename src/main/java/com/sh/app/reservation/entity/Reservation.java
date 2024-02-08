@@ -39,8 +39,7 @@ public class Reservation {
     //예약 내역 - 결제 내역 1:1 oneTo one 
     //한개의 예약내역엔 한개의 결제내역이 존재함
     @OneToOne(mappedBy = "reservation", fetch = FetchType.EAGER)
-    @Builder.Default
-    private OrderPay orderPay = new OrderPay();
+    private OrderPay orderPay;
 }
 
 //public class Reservation {
