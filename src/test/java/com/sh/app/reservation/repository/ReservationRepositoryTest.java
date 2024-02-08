@@ -1,10 +1,10 @@
 package com.sh.app.reservation.repository;
-
 import com.sh.app.common.Status;
 import com.sh.app.pay.entity.OrderPay;
 import com.sh.app.pay.repository.OrderPayRepository;
 import com.sh.app.reservation.entity.Reservation;
 import org.junit.jupiter.api.Disabled;
+import com.sh.app.reservation.entity.Reservation;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,3 +138,4 @@ class ReservationRepositoryTest {
     }
 
 }
+

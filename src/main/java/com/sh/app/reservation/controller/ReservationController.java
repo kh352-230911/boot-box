@@ -1,5 +1,4 @@
 package com.sh.app.reservation.controller;
-
 import com.sh.app.reservation.service.ReservationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +32,4 @@ public class ReservationController {
     {
         
     }
-
 }

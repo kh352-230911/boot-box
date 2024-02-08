@@ -63,7 +63,7 @@ public class OrderPay {
 
         if(reservation!=null)
         {
-            if(reservation.getOrderPay().)
+            //if(reservation.getOrderPay().)
         }
     }
 }
