@@ -49,8 +49,8 @@ class ReservationRepositoryTest {
         //given
         //1.영화 예매 테이블 insert(예약 시작)
         Reservation reservation = Reservation.builder()
-                .id("BOX99999") //예매 고유 id pk Long이 아니라 String 입니다..
-                .memberId(1234l) //멤버 id
+                .id("BOX02081") //예매 고유 id pk Long이 아니라 String 입니다..
+                .memberId(1234567l) //멤버 id
                 .scheduleId(1L) //상영 id
                 .status(Status.PENDING) //pending[보류중]상태로 insert함
                 .build();
@@ -66,11 +66,11 @@ class ReservationRepositoryTest {
         OrderPay orderPay = OrderPay.builder()
                 .id("order"+new Date().getTime())//order+시간으로 겹치지 않는 id를 생성한다.
                 //.reservationId("BOX12345") //예매 고유 id
-                .memberId(1234L)//나중에 findById로 member.getId() 대체
-                .imp("kh1010") //가맹점 식별코드
+                .memberId(1234567l)//나중에 findById로 member.getId() 대체
+                .imp("kh352-1111111111") //가맹점 식별코드
                 .inicis("inicis")
-                .reservationAmount("card")
-                .price(12000)
+                .reservationAmount("phone")
+                .price(15000)
                 .phone("01012345678")
                 .status(Status.PENDING)
                 .build();

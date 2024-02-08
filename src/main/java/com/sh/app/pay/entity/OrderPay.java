@@ -60,10 +60,5 @@ public class OrderPay {
      */
     public void setReservation(Reservation reservation) {
         this.reservation = reservation;
-
-        if(reservation!=null)
-        {
-            //if(reservation.getOrderPay().)
-        }
     }
 }
