@@ -10,6 +10,9 @@ spring:
     url: ${PROD_DB_URL}
     username: ${PROD_DB_USERNAME}
     password: ${PROD_DB_PASSWORD}
+#    url: jdbc:oracle:thin:@localhost:1521:xe
+#    username: movietest
+#    password: movietest
   jpa:
     generate-ddl: true
     show-sql: true #만들어진 쿼리를 보여줄것인가? true or false

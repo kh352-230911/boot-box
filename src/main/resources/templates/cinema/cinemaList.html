@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>전체극장</title>
+</head>
+<style layout:fragment="style"></style>
+
+<div layout:fragment="content">
+    <ul>
+        <li>
+            <a th:href="@{/cinema/cinemaDetail.do}">극장 리스트</a>
+        </li>
+    </ul>
+</div>
+
+<script layout:fragment="script"></script>
+</html>
