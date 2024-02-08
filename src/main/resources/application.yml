@@ -6,13 +6,10 @@ server:
 # database
 spring:
   datasource:
-    driver-class-name: oracle.jdbc.driver.OracleDriver
+    driver-class-name: oracle.jdbc.OracleDriver
     url: ${PROD_DB_URL}
     username: ${PROD_DB_USERNAME}
     password: ${PROD_DB_PASSWORD}
-  #    url: jdbc:oracle:thin:@localhost:1521:xe
-  #    username: bootbox_test
-  #    password: bootbox_test
   jpa:
     generate-ddl: true
     show-sql: true
