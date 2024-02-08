@@ -3,6 +3,12 @@ package com.sh.app.genre.entity;
 import com.sh.app.moviegenre.entity.MovieGenre;
 import jakarta.persistence.*;
 import lombok.*;
+import com.sh.app.movie.entity.Movie;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +24,10 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "genre_id")
     private Long id;
+    @Column(nullable = false)
     private String genreList;
     @OneToMany
     @Builder.Default
     private List<MovieGenre> movieGenres = new ArrayList<>();
+
 }
