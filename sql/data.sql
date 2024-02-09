@@ -1,21 +1,21 @@
 -- DML 작성
 
 -- movie
--- insert into movie values (seq_movie_id.nextval, '웡카', 'ALL', '2024.01.31', 116,
---     'https://www.kmdb.or.kr/trailer/trailerPlayPop?pFileNm=MK060560_P02.mp4', 'http://file.koreafilm.or.kr/thm/02/99/18/30/tn_DPF028589.jpg',
---     '폴 킹', '티모시 샬라메', '세상에서 가장 달콤한 여정 좋은 일은 모두 꿈에서부터 시작된다!', 98);
--- insert into movie values (seq_movie_id.nextval, '시민덕희', '15', '2024.01.24', 114,
---     'https://www.kmdb.or.kr/trailer/trailerPlayPop?pFileNm=MK060515_P02.mp4', 'http://file.koreafilm.or.kr/thm/02/99/18/28/tn_DPK021526.jpg',
---     '박영주', '라미란', '내 돈을 사기 친 그 놈이 구조 요청을 해왔다!', 99);
--- insert into movie values (seq_movie_id.nextval, '도그데이즈', '12', '2024.02.07', 120,
---     'http://h.vod.cgv.co.kr/vodCGVa/87978/87978_222744_1200_128_960_540.mp4', 'http://file.koreafilm.or.kr/thm/02/99/18/31/tn_DPK021652.jpg',
---     '김덕민', '윤여정', '깔끔한 성격의 계획형 싱글남 ‘민상’(유해진).영끌까지 모아 산 건물을 개똥밭으로 만드는 세입자 수의사 ‘진영’(김서형) 때문에 매일 머리가 아프다.오늘도 ‘진영’과 티격태격하던 ‘민상’은 동물병원에서 한 성격하는 할머니를 만나는데...', 99);
--- insert into movie values (seq_movie_id.nextval, '데드맨', '15', '2024.02.07', 108,
---     'http://h.vod.cgv.co.kr/vodCGVa/87981/87981_222534_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87981/87981_1000.jpg',
---     '하준원', '조진웅', '목숨값 단돈 500만원! 이름값 1000억? 이름에 살고, 이름에 죽는다!', 97);
--- insert into movie values (seq_movie_id.nextval, '아가일', '12', '2024.02.07', 139,
---     'http://h.vod.cgv.co.kr/vodCGVa/87426/87426_220043_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87426/87426_1000.jpg',
---     '매튜 본', '헨리 카빌', '내가 쓴 베스트셀러 스파이 소설이 현실이 되었습니다?!', 90);
+insert into movie values (seq_movie_id.nextval, '웡카', 'ALL', '2024.01.31', 116,
+    'https://www.kmdb.or.kr/trailer/trailerPlayPop?pFileNm=MK060560_P02.mp4', 'http://file.koreafilm.or.kr/thm/02/99/18/30/tn_DPF028589.jpg',
+    '폴 킹', '티모시 샬라메', '세상에서 가장 달콤한 여정 좋은 일은 모두 꿈에서부터 시작된다!', 98);
+insert into movie values (seq_movie_id.nextval, '시민덕희', '15', '2024.01.24', 114,
+    'https://www.kmdb.or.kr/trailer/trailerPlayPop?pFileNm=MK060515_P02.mp4', 'http://file.koreafilm.or.kr/thm/02/99/18/28/tn_DPK021526.jpg',
+    '박영주', '라미란', '내 돈을 사기 친 그 놈이 구조 요청을 해왔다!', 99);
+insert into movie values (seq_movie_id.nextval, '도그데이즈', '12', '2024.02.07', 120,
+    'http://h.vod.cgv.co.kr/vodCGVa/87978/87978_222744_1200_128_960_540.mp4', 'http://file.koreafilm.or.kr/thm/02/99/18/31/tn_DPK021652.jpg',
+    '김덕민', '윤여정', '깔끔한 성격의 계획형 싱글남 ‘민상’(유해진).영끌까지 모아 산 건물을 개똥밭으로 만드는 세입자 수의사 ‘진영’(김서형) 때문에 매일 머리가 아프다.오늘도 ‘진영’과 티격태격하던 ‘민상’은 동물병원에서 한 성격하는 할머니를 만나는데...', 99);
+insert into movie values (seq_movie_id.nextval, '데드맨', '15', '2024.02.07', 108,
+    'http://h.vod.cgv.co.kr/vodCGVa/87981/87981_222534_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87981/87981_1000.jpg',
+    '하준원', '조진웅', '목숨값 단돈 500만원! 이름값 1000억? 이름에 살고, 이름에 죽는다!', 97);
+insert into movie values (seq_movie_id.nextval, '아가일', '12', '2024.02.07', 139,
+    'http://h.vod.cgv.co.kr/vodCGVa/87426/87426_220043_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87426/87426_1000.jpg',
+    '매튜 본', '헨리 카빌', '내가 쓴 베스트셀러 스파이 소설이 현실이 되었습니다?!', 90);
 --
 -- -- location
 -- insert into LOCATION values (seq_location_id.nextval, '서울');
@@ -65,12 +65,12 @@
 -- insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
 -- values(seq_member_id.nextVal, 'less','1234','leess@naver.com','이순신','01013225521','1989');
 --
--- -- genre
--- insert into GENRE values (seq_genre_id.nextval, '드라마');
--- insert into GENRE values (seq_genre_id.nextval, '액션');
--- insert into GENRE values (seq_genre_id.nextval, '코미디');
--- insert into GENRE values (seq_genre_id.nextval, '판타지');
--- insert into GENRE values (seq_genre_id.nextval, '범죄');
+-- genre
+insert into GENRE values (seq_genre_id.nextval, '드라마');
+insert into GENRE values (seq_genre_id.nextval, '액션');
+insert into GENRE values (seq_genre_id.nextval, '코미디');
+insert into GENRE values (seq_genre_id.nextval, '판타지');
+insert into GENRE values (seq_genre_id.nextval, '범죄');
 --
 -- -- authority
 -- insert into AUTHORITY values (seq_authority_id.nextval, 1, null, 'ROLE_USER');
@@ -149,14 +149,14 @@
 --insert into REVIEW values (seq_review_id.nextval, 'box32582', 5, 2, '재미없어요', default);
 -- -- 브릿지
 --
--- -- movie_genre
--- insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 4, 1);
--- insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 1);
--- insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 2);
--- insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 3);
--- insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 5, 4);
--- insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 2, 5);
--- insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 3, 5);
+-- movie_genre
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 4, 1);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 1);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 2);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 3);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 5, 4);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 2, 5);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 3, 5);
 --
 -- -- member_like_genre
 -- insert into MEMBER_LIKE_GENRE values (seq_member_like_genre_id.nextval, 1, 1);
