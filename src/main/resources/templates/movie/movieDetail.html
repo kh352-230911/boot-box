@@ -4,10 +4,84 @@
         layout:decorate="~{layout/default}">
 <head>
     <title>영화상세페이지</title>
+    <!-- 사용자css -->
+    <link rel="stylesheet" th:href="@{/css/movie/movieDetail.css}" />
 </head>
 <style layout:fragment="style"></style>
 
-<div layout:fragment="content"></div>
+<div layout:fragment="content">
+
+    <div class="container">
+        <div class="content">
+            <!-- Home -->
+            <main class="movie_home">
+                <!-- Movie information -->
+                <div class="movie_info">
+
+                    <div class="movie_info-left">
+                        <ul class="movie_breadcrumb">
+                            <li class="movie_breadcrumb-item">Series</li>
+                            <li class="movie_breadcrumb-item">/</li>
+                            <li class="movie_breadcrumb-item">Action</li>
+                            <li class="movie_breadcrumb-item">/</li>
+                            <li class="movie_breadcrumb-item selected">Breaking Bad</li>
+                        </ul>
+                        <h1 class="movie_title">윙카</h1>
+                        <div class="movie_rate">
+                            <ul class="movie_stars">
+                                <li class="movie_star rated">
+                                    <i class="fa-solid fa-star"></i>
+                                </li>
+                                <li class="movie_star rated">
+                                    <i class="fa-solid fa-star"></i>
+                                </li>
+                                <li class="movie_star rated">
+                                    <i class="fa-solid fa-star"></i>
+                                </li>
+                                <li class="movie_star rated">
+                                    <i class="fa-solid fa-star"></i>
+                                </li>
+                                <li class="movie_star"><i class="fa-solid fa-star"></i></li>
+                            </ul>
+                            <div class="movie_comment">평점 99%</div>
+                        </div>
+                        <br>
+                        <div>
+                            개봉 : 2024.01.31.
+                            <br>
+                            등급 : 전체 관람가
+                            <br>
+                            장르 : 판타지, 드라마
+                            <br>
+                            국가 : 미국
+                            <br>
+                            러닝타임 : 116분
+                        </div>
+                        <div class="movie_des">
+                            세상에서 가장 달콤한 여정 좋은 일은 모두 꿈에서부터 시작된다! 마법사이자 초콜릿 메이커 ‘윌리 웡카’의 꿈은 디저트의 성지, ‘달콤 백화점’에 자신만의 초콜릿 가게를 여는 것. 가진 것이라고는 낡은 모자 가득한 꿈과 단돈 12소버린 뿐이지만 특별한 마법의 초콜릿으로 사람들을 사로잡을 자신이 있다. 하지만 먹을 것도, 잠잘 곳도, 의지할 사람도 없는 상황 속에서 낡은 여인숙에 머물게 된 ‘웡카’는 ‘스크러빗 부인’과 ‘블리처’의 계략에 빠져 눈더미처럼 불어난 숙박비로 인해 순식간에 빚더미에 오른다. 게다가 밤마다 초콜릿을 훔쳐가는 작은 도둑 ‘움파 룸파’의 등장과 ‘달콤 백화점’을 독점한 초콜릿 카르텔의 강력한 견제까지. 세계 최고의 초콜릿 메이커가 되는 길은 험난하기만 한데…                        </div>
+                        <div class="movie_action">
+                            <button class="movie_button">예매하기</button>
+                        </div>
+                    </div>
+
+                    <div class="movie_info-right">
+                        <div class="movie_img">
+                            <img
+                                    th:src= "@{/images/웡카.jpg}"                                    alt="movie_image"
+                                    class="movie_img-item movie_img-first"
+                            />
+                            <img
+                                    th:src= "@{/images/웡카.jpg}"
+                                    alt="movie_image"
+                                    class="movie_img-item movie_img-second"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
 
 <script layout:fragment="script"></script>
 </html>
