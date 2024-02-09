@@ -1,5 +1,5 @@
 package com.sh.app.movie.entity;
 
 public enum Rating {
-    G, PG;
+    ALL, TWELVE, FIFTEEN, EIGHTEEN, NONE;
 }
