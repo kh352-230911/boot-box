@@ -11,10 +11,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 @RequestMapping("/movie")
 public class MovieController {
+    // 의존 주입 영역
     @Autowired
     MovieService movieService;
+
+    // ------------------------------------------ //
+
+    // 초임
+    @GetMapping("/movieDetail.do")
+    public void movieDetail() {}
+
+    // ------------------------------------------ //
+
+    // 정호
+    @GetMapping("/")
+    public void movieChart() {
+
+    }
 
     @GetMapping("/movieList.do")
     public void movieList() {}
 
+    // ------------------------------------------ //
 }
