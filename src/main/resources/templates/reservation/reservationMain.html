@@ -4,56 +4,95 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{layout/default}">
 <head>
-    <title>예약메인</title>
+    <title>예매메인페이지</title>
+    <!-- 페이지별 css -->
+    <link rel="stylesheet" th:href="@{/css/reservationMain/reservation.css}" />
 </head>
 <style layout:fragment="style">
-    div#cinema
-    {
-        background-color: pink;
-        width: 80%;
-        height: 400px;
-    }
-    div#div01
-    {
-        background-color: cornflowerblue;
-    }
-    div#div02
-    {
-        background-color : antiquewhite;
-    }
-    div#div03
-    {
-        background-color : burlywood;
-    }
-    div#div04
-    {
-        background-color : aquamarine;
-    }
 
 </style>
+
 <div layout:fragment="content">
-    <span>영화 예매</span>
+    <span class="text-white" >영화 예매</span>
     <br>
     <hr style="height: 1px">
     <br>
 
-    <div id="cinema" class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div id="div01">
-            <div>영화</div>
-            <div>웡카</div>
+    <div id="cinemaReservation" class="grid grid-cols-5 ml-60">  <!-- 전체 정보 -->
+        <div id="movie" class="col-body" style="width: 300px;">
+            <div><h3>영화</h3></div>
+            <div class="col-body" style="height: 400px; width: 300px;">
+                <div class="ml-6 mt-3">
+                    <a href="#" th:onclick="" >예매율순 </a>
+                    <a href="#" th:onclick="" >가나다순</a>
+                </div>
+<!--                <div id="movieList" class="has-scrollbar has-scrollbar-y">-->
+                    <ul>
+                        <li><a href="#" th:onclick="" >웡카</a></li>
+                        <li><a href="#" th:onclick="" >시민덕희</a></li>
+                        <li><a href="#" th:onclick="" >외계+인 2부</a></li>
+                        <li><a href="#" th:onclick="" >추락의 해부</a></li>
+<!--                        <li th:each="movie : ${movies}">-->
+<!--                            <a th:href="@{/movies/{id}(id=${movie.id})}" th:text="${movie.title}"></a>-->
+<!--                        </li>-->
+                    </ul>
+                </div>
+            </div>
+
+
+        <div id="cinema" class="col-body ml-6" style="width: 300px;">
+            <div><h3>극장</h3></div>
+            <div class="col-body" style="height: 400px; width: 300px;">
+                <div class="ml-6 mt-3">
+                    <a href="#" th:onclick="cinemaAll()" >전체 </a>
+                    <a href="#" th:onclick="cinemaLike()" >자주가는극장</a>
+                </div>
+                <div id="cinemaList" class="flex justify-center has-scrollbar has-scrollbar-y">
+                    <ul>지역
+                        <li><a href="#" th:onclick="" >서울 </a></li>
+                        <li><a href="#" th:onclick="" >경기 </a></li>
+                    </ul>
+                    <ul>극장
+                        <li><a href="#" th:onclick="" >강남 </a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div id="div02">
-            <div>극장</div>
-            <div>시민덕희</div>
+
+        <div id="date" class="col-body ml-6" style="width: 300px;">
+            <div><h3>날짜</h3></div>
+            <div class="col-body" style="height: 200px; width: 200px;">
+                <div class="ml-6 mt-3">
+                    <div class="text-5xl flex justify-center">2024 </div>
+                    <div class="text-4xl flex justify-center">2월 </div>
+                </div>
+                <div id="dateList" class="flex justify-center has-scrollbar has-scrollbar-y">
+                    <ul>
+                        <li><a href="#" th:onclick="" >목 8 </a></li>
+                        <li><a href="#" th:onclick="" >금 9 </a></li>
+                        <li><a href="#" th:onclick="" >토 10</a></li>
+                        <li><a href="#" th:onclick="" >일 11</a></li>
+                        <li><a href="#" th:onclick="" >월 12</a></li>
+                        <li><a href="#" th:onclick="" >화 13</a></li>
+                        <li><a href="#" th:onclick="" >수 14</a></li>
+                        <li><a href="#" th:onclick="" >목 15</a></li>
+                        <li><a href="#" th:onclick="" >금 16</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div id="div03">
-            <div>날짜</div>
-            <div>시민덕희</div>
+
+        <div id="time" class="col-body ml-6" style="width: 300px;">
+            <div><h3>시간</h3></div>
+            <div class="col-body" style="height: 400px; width: 300px;">
+                <div id="timeList" class="ml-6 mt-3">
+                    <a href="#" th:onclick="15" >15:00 </a>
+                    <a href="#" th:onclick="17" >17:00 </a>
+                    <a href="#" th:onclick="20" >20:00 </a>
+                </div>
+            </div>
         </div>
-        <div id="div04">
-            <div>시간</div>
-            <div>시민덕희</div>
-        </div>
+        <div id="movieSelect" style="width: 100px; height: 100px;" th:placeholder="영화선택"></div>
     </div>
 
 
