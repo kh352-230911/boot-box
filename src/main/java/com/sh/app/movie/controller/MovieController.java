@@ -1,5 +1,6 @@
 package com.sh.app.movie.controller;
 
+
 import com.sh.app.movie.dto.MovieDetailDto;
 import com.sh.app.movie.service.MovieService;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -32,10 +35,6 @@ public class MovieController {
     // ------------------------------------------ //
 
     // 정호
-    @GetMapping("/")
-    public void movieChart() {
-
-    }
 
     @GetMapping("/movieList.do")
     public void movieList() {}
