@@ -26,7 +26,7 @@
                             <li class="movie_breadcrumb-item">/</li>
                             <li class="movie_breadcrumb-item selected">Breaking Bad</li>
                         </ul>
-                        <h1 class="movie_title">윙카</h1>
+                        <h1 class="movie_title" th:text="${movie.title}">윙카</h1>
                         <div class="movie_rate">
                             <ul class="movie_stars">
                                 <li class="movie_star rated">
@@ -67,11 +67,11 @@
                     <div class="movie_info-right">
                         <div class="movie_img">
                             <img
-                                    th:src= "@{/images/웡카.jpg}"                                    alt="movie_image"
+                                    th:src= "${movie.poster}"                                    alt="movie_image"
                                     class="movie_img-item movie_img-first"
                             />
                             <img
-                                    th:src= "@{/images/웡카.jpg}"
+                                    th:src= "${movie.poster}"
                                     alt="movie_image"
                                     class="movie_img-item movie_img-second"
                             />
