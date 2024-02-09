@@ -1,5 +1,5 @@
 -- DDL 작성
--- drop table movie;
+drop table movie;
 -- drop table admin;
 -- drop table cinema;
 -- drop table seat;
@@ -13,11 +13,11 @@
 -- drop table review;
 -- drop table reservation;
 -- drop table order_pay;
--- drop table genre;
+drop table genre;
 -- drop table member_like_cinema;
 -- drop table location;
 -- drop table authority;
--- drop table movie_genre;
+drop table movie_genre;
 -- drop table member_like_genre;
 -- drop table reservation_seat;
 -- drop table movie_list;
@@ -109,42 +109,42 @@
 -- );
 -- create sequence seq_theater_id; --상영관 시퀀스
 --
--- --15.장르
--- CREATE TABLE GENRE(
--- 	id	number NOT NULL, --pk
--- 	genre_list varchar2(200) NOT NULL,
---     constraints pk_genre_id primary key(id) --pk
--- );
--- create sequence seq_genre_id;
+--15.장르
+CREATE TABLE GENRE(
+	id	number NOT NULL, --pk
+	genre_list varchar2(200) NOT NULL,
+    constraints pk_genre_id primary key(id) --pk
+);
+create sequence seq_genre_id;
 --
--- --1.예매 가능한 영화
--- CREATE TABLE MOVIE(
--- 	id number NOT NULL, --영화 id (api로 받아올 때 - 고유값이라 겹치지 않음)
--- 	title varchar2(50) NOT NULL, --영화 제목
--- 	film_ratings varchar2(20) NOT NULL, -- 관람등급
--- 	release_date varchar2(20) NOT NULL, -- 개봉일(상영가능한 날짜의 첫 날)
--- 	running_time number NOT NULL, --상영시간
--- 	trailer	varchar2(500) NULL, --예고편
--- 	poster varchar2(500) NULL, --포스터
--- 	director varchar2(100) NULL, --감독
--- 	actor	varchar2(500) NULL, --배우
--- 	summary varchar2(4000) NULL, --줄거리(5000자 length에러 나서 4000으로 수정)
---     advance_reservation number NOT NULL, -- 예매율
---     constraints pk_movie_id primary key(id), -- pk
---     constraints ck_movie_advance_reservation check(film_ratings in('ALL', '12', '15', '18', 'NONE')) -- ck
--- );
--- --시퀀스 사용x
+-- 1.예매 가능한 영화
+CREATE TABLE MOVIE(
+	id number NOT NULL, --영화 id (api로 받아올 때 - 고유값이라 겹치지 않음)
+	title varchar2(50) NOT NULL, --영화 제목
+	film_ratings varchar2(20) NOT NULL, -- 관람등급
+	release_date varchar2(20) NOT NULL, -- 개봉일(상영가능한 날짜의 첫 날)
+	running_time number NOT NULL, --상영시간
+	trailer	varchar2(500) NULL, --예고편
+	poster varchar2(500) NULL, --포스터
+	director varchar2(100) NULL, --감독
+	actor	varchar2(500) NULL, --배우
+	summary varchar2(4000) NULL, --줄거리(5000자 length에러 나서 4000으로 수정)
+    advance_reservation number NOT NULL, -- 예매율
+    constraints pk_movie_id primary key(id), -- pk
+    constraints ck_movie_advance_reservation check(film_ratings in('ALL', '12', '15', '18', 'NONE')) -- ck
+);
+-- 시퀀스 사용x
 --
--- --19.영화 장르
--- CREATE TABLE MOVIE_GENRE(
---      id	number NOT NULL,
---      genre_id number NOT NULL,
---      movie_id number NOT NULL,
---      constraint pk_movie_genre_id primary key(id),
---      constraint fk_movie_genre_genre_id foreign key(genre_id) references genre(id) on delete set null,
---      constraint fk_movie_genre_movie_id foreign key(movie_id) references movie(id) on delete set null,
--- );
--- create sequence seq_movie_genre_id;
+--19.영화 장르
+CREATE TABLE MOVIE_GENRE(
+     id	number NOT NULL,
+     genre_id number NOT NULL,
+     movie_id number NOT NULL,
+     constraint pk_movie_genre_id primary key(id),
+     constraint fk_movie_genre_genre_id foreign key(genre_id) references genre(id) on delete set null,
+     constraint fk_movie_genre_movie_id foreign key(movie_id) references movie(id) on delete set null,
+);
+create sequence seq_movie_genre_id;
 --
 -- --20.회원이 선호하는 장르
 -- CREATE TABLE MEMBER_LIKE_GENRE(
