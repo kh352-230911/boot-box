@@ -12,19 +12,24 @@ spring:
     password: ${PROD_DB_PASSWORD}
 #    driver-class-name: oracle.jdbc.driver.OracleDriver
 #    url: jdbc:oracle:thin:@localhost:1521:xe
-#    username: test
-#    password: test
-jpa:
-  generate-ddl: true
-  show-sql: true #만들어진 쿼리를 보여줄것인가? true or false
-  properties:
-    hibernate:
-      format_sql: true #false일시 한 줄로 나옴
-      hbm2ddl:
-        #create:entity로 등록한 모든 테이블을 생성하기때문에 member table만 작업하는것따윈없다..
-        auto: update #ddl 생성옵션 (개발극초기:create,create-drop/개발중:update/종료후:validate
-    database: oracle
-    database-platform: org.hibernate.dialect.OracleDialect
+#    username: guys
+#    password: guys
+  jpa:
+    generate-ddl: true
+    show-sql: true #만들어진 쿼리를 보여줄것인가? true or false
+    properties:
+      hibernate:
+        format_sql: true #false일시 한 줄로 나옴
+        hbm2ddl:
+          #create:entity로 등록한 모든 테이블을 생성하기때문에 member table만 작업하는것따윈없다..
+          auto: update #ddl 생성옵션 (개발극초기:create,create-drop/개발중:update/종료후:validate
+      database: oracle
+      database-platform: org.hibernate.dialect.OracleDialect
+  sql:
+    init:
+      schema-locations: classpath:/sql/schema.sql
+      data-locations: classpath:/sql/data.sql
+      mode: always
 # logback (logging)
 logging:
   level:
@@ -33,5 +38,5 @@ logging:
   # profile 관리
   spring:
     profiles:
-      default: test
-#    active: prod
+#      default: test
+      active: prod

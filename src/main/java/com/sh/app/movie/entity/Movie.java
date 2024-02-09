@@ -23,13 +23,12 @@ import java.util.Set;
 @ToString(exclude = "schedules")
 public class Movie {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "movie_id")
     private Long id;
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
-    private Rating fileRatings;
+    @Enumerated(EnumType.STRING)
+    private Rating filmRatings;
     @Column(nullable = false)
     private String releaseDate;
     @Column(nullable = false)
