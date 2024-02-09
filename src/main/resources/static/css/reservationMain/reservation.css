@@ -1,38 +1,37 @@
 /*div#cinemaReservation {*/
 /*    display: inline-grid;*/
 /*}*/
+hr {
+    background-color: #ff3939;
+    border: 0;
+}
 div
 {
     font-family: "Bahnschrift";
 }
-h3
+h2
 {
     height: 38px;
     font-family: "Bahnschrift";
     background-color: black;
     color: white;
     text-align: center;
-
 }
 div#movie
 {
     background-color: #d6d5d2;
-    color : black;
 }
 div#cinema
 {
     background-color : #d6d5d2;
-    color : black;
 }
 div#date
 {
     background-color : #d6d5d2;
-    color : black;
 }
 div#time
 {
     background-color : #d6d5d2;
-    color : black;
 }
 div.movieSelect
 {
@@ -40,6 +39,35 @@ div.movieSelect
     height: 108px;
     width: 212px;
     display: block;
+}
+ul
+{
+    width: 130px;
+    height: 28px;
+}
+div#dateList
+{
+    overflow: scroll;
+    width: 150px;
+    height: 210px;
+    -ms-overflow-style: none;
+}
+div#dateList::-webkit-scrollbar{
+    display:none;
+}
+div#cinemaList
+{
+    overflow: scroll;
+    width: 150px;
+    height: 210px;
+    -ms-overflow-style: none;
+}
+div#cinemaList::-webkit-scrollbar{
+    display:none;
+}
+div#locationAndCinemaList
+{
+    height: 300px;
 }
 /*.col-body*/
 /*{*/
