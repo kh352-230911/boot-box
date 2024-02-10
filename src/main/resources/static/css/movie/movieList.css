@@ -32,7 +32,7 @@
     justify-content: space-evenly
 }
 .section-1-2 > div > div > a > img {
-    width: 250px;
+    width: 200px;
     border-radius:10px;
 }
 .section-1-2 > div > div {
@@ -71,17 +71,18 @@
 }
 .grade {
     position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 150px;
-    line-height: 1.1;
-    font-size: 1em;
+    /*left: 0;*/
+    /*top: 0;*/
+    /*width: 100%;*/
+    /*height: 150px;*/
+    /*line-height: 1.1;*/
+    /*font-size: 1em;*/
     font-style: italic;
-    font-family: 'Roboto';
-    font-weight: 300;
-    color: #fff;
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, .8);
+    /*font-family: 'Roboto';*/
+    /*font-weight: 300;*/
+    /*color: #fff;*/
+    /*text-shadow: 2px 2px 2px rgba(0, 0, 0, .8);*/
+    margin: 5px;
 }
 .movie_action {
     position: relative;
