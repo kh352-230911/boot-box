@@ -25,11 +25,10 @@ public class MovieController {
 
     // 초임
     @GetMapping("/movieDetail.do")
-    public void movieDetail(Long id) {
+    public void movieDetail(Long id, Model model) {
         MovieDetailDto movieDetailDto = movieService.findById(id);
-
+        model.addAttribute("movie",movieDetailDto);
         log.debug("movie = {}", movieDetailDto);
-
     }
 
     // ------------------------------------------ //

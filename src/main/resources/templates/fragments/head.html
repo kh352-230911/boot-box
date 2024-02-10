@@ -20,7 +20,9 @@
 
     <!-- 사용자작성 css -->
     <link rel="stylesheet" th:href="@{/css/style.css}" />
-
+    <script>
+        const contextPath = '[[@{/}]]';
+    </script>
     <script th:if="${msg != null}">
         alert('[[${msg}]]');
     </script>

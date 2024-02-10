@@ -51,21 +51,22 @@
                 </div>
             </div>
             <br>
-            <div th:each="movie, status : ${movies}" class="section-1-2 flex">
-                <div>
+            <div class="section-1-2 flex">
+                <div th:each="movie, status : ${movies}">
                     <div>
                         <a href="#">
                             <p class="rank">1</p>
-                            <img th:src="${movie.poster}" alt="헌트"></a>
-
+                            <img th:src="${movie.poster}" alt="헌트">
+                        </a>
                         <div class="section-1-2-btn">
                             <div class="section-1-2-btn-bg"></div>
                             <div class="section-1-2-btn-de">
-                                <div class="detail"><a th:href="@{/movie/movieDetail.do}">상세보기</a></div>
+                                <div class="detail">
+                                    <a th:href="@{/movie/movieDetail.do(id=${movie.id})}">상세보기</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                     <a class="movie-title mb-1" th:text="${movie.title}" href="#">헌트</a>
                     <a th:href="@{#}">
                         <div class="flex items-center justify-center">
