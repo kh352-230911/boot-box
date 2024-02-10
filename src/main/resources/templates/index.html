@@ -31,14 +31,12 @@
     <hr style="height: 1px">
     <br>
 
-    <banner th:each="movie, status : ${movies}">
+    <banner>
         <div class="video-banner flex">
             <video autoplay muted controls loop>
-                <source th:src="${status.current.trailer}" type="video/mp4">
+                <source th:src="${movies[0].trailer}" type="video/mp4">
             </video>
         </div>
-<!--        <p th:text="${status}"></p>-->
-<!--        <p th:text="${movie.genres[1]}"></p>-->
     </banner>
     <br>
 

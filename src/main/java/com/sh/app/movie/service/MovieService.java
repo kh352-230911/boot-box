@@ -34,4 +34,8 @@ public class MovieService {
         MovieDetailDto movieDetailDto = modelMapper.map(movie, MovieDetailDto.class);
         return movieDetailDto;
     }
+
+    public List<Movie> findAll() {
+        return movieRepository.findAll();
+    }
 }

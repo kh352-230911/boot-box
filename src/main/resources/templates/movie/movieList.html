@@ -5,10 +5,203 @@
         layout:decorate="~{layout/default}">
 <head>
     <title>영화 목록</title>
+    <link rel="stylesheet" th:href="@{/css/movie/movieList.css}" />
 </head>
 <style layout:fragment="style"></style>
 
-<div layout:fragment="content"></div>
+<div layout:fragment="content">
+    <div class="section-1-2 flex flex-wrap">
+        <div th:each="movie, status : ${movies}">
+            <div><a href="#">
+                <p class="grade" th:text="${movie.filmRatings}">All</p>
+                <img th:src="${movie.poster}" th:alt="${movie.title}"></a>
+            </div>
+            <a class="movie-title mb-1" href="#" th:text="${movie.title}">한산-용의 출현</a>
+            <a th:href="@{#}">
+            </a>
+            <a class="movie-content" href="#">
+                <img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">
+                <span th:text="|예매율 ${movie.advanceReservation}%|">예매율 25.7%</span>
+                <span class="text-sm" th:text="|${movie.releaseDate} 개봉|">2023.12.11 개봉</span>
+            </a>
+            <div class="movie_action">
+                <button class="movie_button text-sm">예매하기</button>
+            </div>
+        </div>
+<!--            <div>-->
+<!--                <div><a href="#">-->
+<!--                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000082/82120/82120_320.jpg" alt="탑건"></a>-->
+<!--                </div>-->
+<!--                <a class="movie-title mb-1" href="#">탑건-매버릭</a>-->
+<!--                <a th:href="@{#}">-->
+<!--                </a>-->
+<!--                <a class="movie-content" href="#">-->
+<!--                    <img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">-->
+<!--                    <span>예매율11.0%</span>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <div><a href="#">-->
+<!--                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000085/85722/85722_320.jpg" alt="놉"></a>-->
+<!--                </div>-->
+<!--                <a class="movie-title mb-1" href="#">놉</a>-->
+<!--                <a th:href="@{#}">-->
+<!--                </a>-->
+<!--                <a class="movie-content" href="#">-->
+<!--                    <img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">-->
+<!--                    <span>예매율7.7%</span>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <div><a href="#">-->
+<!--                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000085/85465/85465_320.jpg" alt="비상선언"></a>-->
+<!--                </div>-->
+<!--                <a class="movie-title mb-1" href="#">비상선언</a>-->
+<!--                <a th:href="@{#}">-->
+<!--                </a>-->
+<!--                <a class="movie-content" href="#">-->
+<!--                    <img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">-->
+<!--                    <span>예매율7.2%</span>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <div><a href="#">-->
+<!--                    <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000085/85465/85465_320.jpg" alt="비상선언"></a>-->
+<!--                </div>-->
+<!--                <a class="movie-title mb-1" href="#">비상선언</a>-->
+<!--                <a th:href="@{#}">-->
+<!--                </a>-->
+<!--                <a class="movie-content" href="#">-->
+<!--                    <img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">-->
+<!--                    <span>예매율7.2%</span>-->
+<!--                </a>-->
+<!--            </div>-->
+    </div>
+<!--    <div class="section-1-2 flex">-->
+<!--        <div>-->
+<!--            <div><a href="#">-->
+<!--                <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000083/83280/83280_320.jpg" alt="한산"></a>-->
+<!--            </div>-->
+<!--            <a class="movie-title mb-1" href="#">한산-용의 출현</a>-->
+<!--            <a th:href="@{#}">-->
+<!--            </a>-->
+<!--            <a class="movie-content" href="#">-->
+<!--                <img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">-->
+<!--                <span>예매율25.7%</span>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <div><a href="#">-->
+<!--                <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000082/82120/82120_320.jpg" alt="탑건"></a>-->
+<!--            </div>-->
+<!--            <a class="movie-title mb-1" href="#">탑건-매버릭</a>-->
+<!--            <a th:href="@{#}">-->
+<!--            </a>-->
+<!--            <a class="movie-content" href="#">-->
+<!--                <img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">-->
+<!--                <span>예매율11.0%</span>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <div><a href="#">-->
+<!--                <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000085/85722/85722_320.jpg" alt="놉"></a>-->
+<!--            </div>-->
+<!--            <a class="movie-title mb-1" href="#">놉</a>-->
+<!--            <a th:href="@{#}">-->
+<!--            </a>-->
+<!--            <a class="movie-content" href="#">-->
+<!--                <img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">-->
+<!--                <span>예매율7.7%</span>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <div><a href="#">-->
+<!--                <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000085/85465/85465_320.jpg" alt="비상선언"></a>-->
+<!--            </div>-->
+<!--            <a class="movie-title mb-1" href="#">비상선언</a>-->
+<!--            <a th:href="@{#}">-->
+<!--            </a>-->
+<!--            <a class="movie-content" href="#">-->
+<!--                <img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">-->
+<!--                <span>예매율7.2%</span>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <div><a href="#">-->
+<!--                <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000085/85465/85465_320.jpg" alt="비상선언"></a>-->
+<!--            </div>-->
+<!--            <a class="movie-title mb-1" href="#">비상선언</a>-->
+<!--            <a th:href="@{#}">-->
+<!--            </a>-->
+<!--            <a class="movie-content" href="#">-->
+<!--                <img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">-->
+<!--                <span>예매율7.2%</span>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="section-1-2 flex">-->
+<!--        <div>-->
+<!--            <div><a href="#">-->
+<!--                <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000083/83280/83280_320.jpg" alt="한산"></a>-->
+<!--            </div>-->
+<!--            <a class="movie-title mb-1" href="#">한산-용의 출현</a>-->
+<!--            <a th:href="@{#}">-->
+<!--            </a>-->
+<!--            <a class="movie-content" href="#">-->
+<!--                <img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">-->
+<!--                <span>예매율25.7%</span>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <div><a href="#">-->
+<!--                <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000082/82120/82120_320.jpg" alt="탑건"></a>-->
+<!--            </div>-->
+<!--            <a class="movie-title mb-1" href="#">탑건-매버릭</a>-->
+<!--            <a th:href="@{#}">-->
+<!--            </a>-->
+<!--            <a class="movie-content" href="#">-->
+<!--                <img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">-->
+<!--                <span>예매율11.0%</span>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <div><a href="#">-->
+<!--                <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000085/85722/85722_320.jpg" alt="놉"></a>-->
+<!--            </div>-->
+<!--            <a class="movie-title mb-1" href="#">놉</a>-->
+<!--            <a th:href="@{#}">-->
+<!--            </a>-->
+<!--            <a class="movie-content" href="#">-->
+<!--                <img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">-->
+<!--                <span>예매율7.7%</span>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <div><a href="#">-->
+<!--                <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000085/85465/85465_320.jpg" alt="비상선언"></a>-->
+<!--            </div>-->
+<!--            <a class="movie-title mb-1" href="#">비상선언</a>-->
+<!--            <a th:href="@{#}">-->
+<!--            </a>-->
+<!--            <a class="movie-content" href="#">-->
+<!--                <img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">-->
+<!--                <span>예매율7.2%</span>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <div><a href="#">-->
+<!--                <img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000085/85465/85465_320.jpg" alt="비상선언"></a>-->
+<!--            </div>-->
+<!--            <a class="movie-title mb-1" href="#">비상선언</a>-->
+<!--            <a th:href="@{#}">-->
+<!--            </a>-->
+<!--            <a class="movie-content" href="#">-->
+<!--                <img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">-->
+<!--                <span></span>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </div>-->
+</div>
 
 <script layout:fragment="script"></script>
 </html>
