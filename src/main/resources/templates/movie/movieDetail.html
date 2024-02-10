@@ -20,6 +20,14 @@
 
                     <div class="movie_info-left">
 
+                        <ul class="movie_breadcrumb">
+                            <li class="movie_breadcrumb-item">Series</li>
+                            <li class="movie_breadcrumb-item">/</li>
+                            <li class="movie_breadcrumb-item">Action</li>
+                            <li class="movie_breadcrumb-item">/</li>
+                            <li class="movie_breadcrumb-item selected">Breaking Bad</li>
+                        </ul>
+
                         <h1 class="movie_title" th:text="${movie.title}">윙카</h1>
                         <div class="movie_rate">
                             <ul class="movie_stars">
@@ -60,9 +68,17 @@
                     <div class="movie_info-right">
                         <div class="movie_img">
                             <img
-                                    th:src= "@{/images/웡카.jpg}"                                    alt="movie_image"
+                                    th:src= "${movie.poster}"                                    alt="movie_image"
                                     class="movie_img-item movie_img-first"
                             />
+<<<<<<< HEAD
+=======
+                            <img
+                                    th:src= "${movie.poster}"
+                                    alt="movie_image"
+                                    class="movie_img-item movie_img-second"
+                            />
+>>>>>>> 43359d7af06b5cf02827255564b60d16d999aaeb
                         </div>
                     </div>
                 </div>

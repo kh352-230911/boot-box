@@ -1,6 +1,5 @@
 package com.sh.app.movie.controller;
 
-
 import com.sh.app.movie.dto.MovieDetailDto;
 import com.sh.app.movie.service.MovieService;
 import lombok.extern.slf4j.Slf4j;
@@ -9,9 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @Slf4j
@@ -19,7 +18,7 @@ import java.util.List;
 public class MovieController {
     // 의존 주입 영역
     @Autowired
-    MovieService movieService;
+    private MovieService movieService;
 
     // ------------------------------------------ //
 
@@ -28,7 +27,7 @@ public class MovieController {
     public void movieDetail(Long id, Model model) {
         MovieDetailDto movieDetailDto = movieService.findById(id);
         model.addAttribute("movie",movieDetailDto);
-        log.debug("movie = {}", movieDetailDto);
+        log.debug("movieDetailDto = {}", movieDetailDto);
     }
 
     // ------------------------------------------ //
