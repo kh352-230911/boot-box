@@ -10,7 +10,6 @@
 <style layout:fragment="style"></style>
 
 <div layout:fragment="content">
-
     <div class="container">
         <div class="content">
             <!-- Home -->
@@ -19,7 +18,6 @@
                 <div class="movie_info">
 
                     <div class="movie_info-left">
-
                         <h1 class="movie_title" th:text="${movie.title}">윙카</h1>
                         <div class="movie_rate">
                             <ul class="movie_stars">
@@ -40,8 +38,11 @@
                             <div class="movie_comment" th:text="|평점${movie.advanceReservation}%|"></div>
                         </div>
                         <div class="movie_infos" th:text="|개봉 : ${movie.releaseDate}|"></div>
-                        <div th:each="movieGenre, status : ${movie.genres}">
-                            <p th:text="|장르 : ${movieGenre.genreList}|"></p>
+                        <div class="flex">
+                            장르 :&nbsp;
+                            <span th:each="movieGenre, status : ${movie.genres}">
+                                <p th:text="|${movieGenre.genreList}${!status.last ? ', ' : ''}|"></p>
+                            </span>
                         </div>
                         <div th:text="|러닝타임 : ${movie.runningTime} 분|"></div>
                         <div th:text="|감독 : ${movie.director}|"></div>
@@ -52,13 +53,14 @@
                                                movie.filmRatings.name() == 'FIFTEEN' ? '15세이상관람가' :
                                                movie.filmRatings.name() == 'TWELVE' ? '12세이상관람가' :
                                                movie.filmRatings.name() == 'NONE' ? '등급 없음' : '등급 없음'}|"></div>
-
                         <div class="movie_des" th:text="${movie.summary}">
                             줄거리
-                        <div class="movie_action">
-                            <button class="movie_button">예매하기</button>
+                            <div class="movie_action">
+                                <button class="movie_button">예매하기</button>
+                            </div>
                         </div>
                     </div>
+
 
                     <div class="movie_info-right">
                         <div class="movie_img">
