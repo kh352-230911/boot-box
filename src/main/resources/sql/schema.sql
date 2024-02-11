@@ -286,7 +286,7 @@ create sequence seq_movie_genre_id;
 --     cinema_id number NOT NULL,--FK
 --     constraint pk_movie_list_id primary key(id),
 --     constraint fk_movie_list_movie_id foreign key(movie_id) references movie(id) on delete set null,
---     constraint fk_movie_list_cinema_id foreign key(chinema_id) references cinema(id) on delete set null
+--     constraint fk_movie_list_cinema_id foreign key(cinema_id) references cinema(id) on delete set null
 -- );
 -- create sequence seq_movie_list_id;
 --
@@ -295,11 +295,13 @@ create sequence seq_movie_genre_id;
 -- 	 id number NOT NULL,--pk
 -- 	 reservation_id varchar2(100)	NOT NULL, -- 예약내역 fk
 -- 	 member_id number NOT NULL, --회원id fk
+--   movie_id number NOT NULL, -- 영화 id fk
 -- 	 review_score number NOT NULL,--리뷰 평점
 -- 	 review_detail varchar2(2000) NOT NULL,--리뷰 내용
 -- 	 review_createdAt date NOT NULL DEFAULT current_date,--리뷰 작성날짜
 --      constraints pk_schedule_id primary key(id), --pk
 --      constraints fk_review_reservation_id foreign key(reservation_id) references reservation(id) on delete set null,
---      constraints fk_review_member_id foreign key(member_id) references member(id) on delete set null
+--      constraints fk_review_member_id foreign key(member_id) references member(id) on delete set null,
+--      constraints fk_review_movie_id foreign key(movie_id) references movie(id) on delete set null
 -- );
 -- create sequence seq_review_id;
