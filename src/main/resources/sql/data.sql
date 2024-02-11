@@ -43,7 +43,7 @@ insert into
 values (5, '아가일', 'TWELVE', '2024.02.07', 139,
     'http://h.vod.cgv.co.kr/vodCGVa/87426/87426_220043_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87426/87426_1000.jpg',
     '매튜 본', '헨리 카빌, 브라이스 달라스 하워드, 샘 록웰, 두아 리파', '내가 쓴 베스트셀러 스파이 소설이 현실이 되었습니다?! 현실감 넘치는 스파이 세계를 구현한 책 ‘아가일’로 엄청난 성공을 거둔 베스트셀러 작가 ‘엘리’.
-    소설의 마지막 권을 앞둔 그녀는 자기도 모르는 사이 수많은 적들에게 둘러 쌓이고 그녀 앞에 갑자기 추레한 행색의 현실 스파이 ''에이든''이 나타나 그녀를 구해준다.
+    소설의 마지막 권을 앞둔 그녀는 자기도 모르는 사이 수많은 적들에게 둘러 쌓이고 그녀 앞에 갑자기 추레한 행색의 현실 스파이 ‘에이든’이 나타나 그녀를 구해준다.
     그는 그녀의 소설 ‘아가일’ 속 사건이 현실이 되었고 그로 인해 엘리가 전세계 스파이들이 표적이 되었다고 말한다.
     자신을 쫓는 전세계의 스파이들로부터 벗어나기 위해, 엘리는 소설의 다음 챕터를 쓰고 그 안의 단서를 바탕으로 현실의 레전드 요원 아가일을 찾아야만 한다!',
     3.0);
@@ -106,7 +106,7 @@ insert into
 values (14, '상견니 ', 'FIFTEEN', '2024.01.25', 107,
       'http://h.vod.cgv.co.kr/vodCGVa/86750/86750_211203_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000086/86750/86750_1000.jpg',
       '황천인', '가가연, 허광한, 시백우', '드라마 스토리를 영화 버전으로 확장시킨 멀티버스 판타지 로맨스 완전히 새로운 세계관, 완전히 새로운 스토리의 <상견니> 2009년, 리쯔웨이와 황위쉬안은 밀크티 가게에서 우연히 재회한다. 처음 만났지만 마치 오래전부터 알고 있었던 것 같은 기시감과 묘한 설렘을 느끼는 두 사람. 이들은 사계절을 함께 보내며 가까워지고, 2010년의 마지막 날, 함께 새해를 맞이하며 연인이 된다. 2017년, 황위쉬안의 인생에 예상치 못한 변화가 생긴다. 해외 발령을 받게 된 것. 황위쉬안은 이 제안을 받아들이고 새로운 여정을 시작하지만 이 선택은 그녀의 미래를 바꿀 뿐만 아니라, 리쯔웨이와 모쥔제, 그리고 그녀가 아직 모르는 천윈루의 운명까지 뒤바꿔 놓는데… 이제, 이들은 수없이 뒤엉킨 타임라인 속에서 서로를 구하기 위해 낡은 테이프 속 들려오는 노래 ‘라스트 댄스’를 따라 달려가기 시작한다.',
-    0.2);    
+    0.2);
 -- -- location
 -- insert into LOCATION values (seq_location_id.nextval, '서울');
 -- insert into LOCATION values (seq_location_id.nextval, '경기');
@@ -240,11 +240,11 @@ insert into GENRE values (seq_genre_id.nextval, '호러');
 --insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 5, 12000, 'card');
 --
 -- -- review
---insert into REVIEW values (seq_review_id.nextval, 'box16443', 1, 1, 3, '너무 지루해요', default);
---insert into REVIEW values (seq_review_id.nextval, 'box25822', 2, 2, 4, '최고', default);
---insert into REVIEW values (seq_review_id.nextval, 'box47220', 3, 3, 5, '시간 가는 줄 모르고 봤어용', default);
---insert into REVIEW values (seq_review_id.nextval, 'box42217', 4, 4, 5, '짱짱', default);
---insert into REVIEW values (seq_review_id.nextval, 'box32582', 5, 5, 2, '재미없어요', default);
+insert into REVIEW values (seq_review_id.nextval, 'box16443', 1, 1, 3, '너무 지루해요', default);
+insert into REVIEW values (seq_review_id.nextval, 'box25822', 2, 2, 4, '최고', default);
+insert into REVIEW values (seq_review_id.nextval, 'box47220', 3, 3, 5, '시간 가는 줄 모르고 봤어용', default);
+insert into REVIEW values (seq_review_id.nextval, 'box42217', 4, 4, 5, '짱짱', default);
+insert into REVIEW values (seq_review_id.nextval, 'box32582', 5, 5, 2, '재미없어요', default);
 -- -- 브릿지
 --
 -- movie_genre
