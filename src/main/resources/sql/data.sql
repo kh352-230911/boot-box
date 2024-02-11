@@ -157,11 +157,11 @@ insert into GENRE values (seq_genre_id.nextval, '범죄');
 --insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 5, 12000, 'card');
 --
 -- -- review
---insert into REVIEW values (seq_review_id.nextval, 'box16443', 1, 1, 3, '너무 지루해요', default);
---insert into REVIEW values (seq_review_id.nextval, 'box25822', 2, 2, 4, '최고', default);
---insert into REVIEW values (seq_review_id.nextval, 'box47220', 3, 3, 5, '시간 가는 줄 모르고 봤어용', default);
---insert into REVIEW values (seq_review_id.nextval, 'box42217', 4, 4, 5, '짱짱', default);
---insert into REVIEW values (seq_review_id.nextval, 'box32582', 5, 5, 2, '재미없어요', default);
+insert into REVIEW values (seq_review_id.nextval, 'box16443', 1, 1, 3, '너무 지루해요', default);
+insert into REVIEW values (seq_review_id.nextval, 'box25822', 2, 2, 4, '최고', default);
+insert into REVIEW values (seq_review_id.nextval, 'box47220', 3, 3, 5, '시간 가는 줄 모르고 봤어용', default);
+insert into REVIEW values (seq_review_id.nextval, 'box42217', 4, 4, 5, '짱짱', default);
+insert into REVIEW values (seq_review_id.nextval, 'box32582', 5, 5, 2, '재미없어요', default);
 -- -- 브릿지
 --
 -- movie_genre
