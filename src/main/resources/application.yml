@@ -30,6 +30,8 @@ spring:
       schema-locations: classpath:/sql/schema.sql
       data-locations: classpath:/sql/data.sql
       mode: always
+    database: oracle
+    database-platform: org.hibernate.dialect.OracleDialect
 # logback (logging)
 logging:
   level:
