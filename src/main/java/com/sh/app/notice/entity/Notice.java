@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class Notice {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "notice_id")
+    @Column
     private long id;
     private long adminId;
     private String noticeTitle;

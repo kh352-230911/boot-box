@@ -17,9 +17,11 @@ public class HomeController {
     MovieService movieService;
 
     @GetMapping("/")
-    public String home() {
+    public String home(Model model) {
         List<Movie> movies = movieService.findFirst5ByOrderByAdvanceReservation();
         log.debug("movies = {}", movies);
+
+        model.addAttribute("movies", movies);
         return "index";
     }
 
