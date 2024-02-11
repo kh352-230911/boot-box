@@ -231,5 +231,10 @@ public class MovieRepositoryTest {
                     assertThat(movie.getTitle().contains(title));
                 }));
     }
+    @DisplayName("영화상세페이지에 관람평 조회")
+    @Test
+    void test8() {
+
+    }
 
 }
