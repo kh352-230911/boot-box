@@ -1,6 +1,7 @@
 package com.sh.app.movie.controller;
 
 import com.sh.app.movie.dto.MovieDetailDto;
+import com.sh.app.movie.entity.Movie;
 import com.sh.app.movie.service.MovieService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
