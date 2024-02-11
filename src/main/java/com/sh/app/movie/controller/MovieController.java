@@ -38,7 +38,12 @@ public class MovieController {
     // 정호
 
     @GetMapping("/movieList.do")
-    public void movieList() {}
+    public void movieList(Model model) {
+        List<Movie> movies = movieService.findAll();
+        log.debug("movies = {}", movies);
+
+        model.addAttribute("movies", movies);
+    }
 
     // ------------------------------------------ //
 }
