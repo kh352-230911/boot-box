@@ -35,7 +35,4 @@ public class MovieService {
         return movieDetailDto;
     }
 
-    public Movie findByIdMovie(Long id) {
-        return movieRepository.findById(id).get();
-    }
 }

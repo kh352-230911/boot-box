@@ -3,7 +3,7 @@
     box-sizing: border-box;
 }
 * {
-    /*margin: -3px;*/
+    /*margin: 0;*/
     padding: 0;
     border: 0;
     font-size: 100%;
@@ -83,7 +83,7 @@ div {
 }
 
 .movie_info-left {
-    /*margin-right: 100px;*/
+    margin-right: 100px;
 }
 .movie_title {
     position: relative;
@@ -167,7 +167,7 @@ div {
 }
 /* 트레일러 영역 */
 .trailer-container {
-    max-width: 60%;
+    max-width: 100%;
     display: block;
     margin: 0 auto;
 }
