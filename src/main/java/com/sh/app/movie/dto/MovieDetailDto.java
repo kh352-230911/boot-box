@@ -1,11 +1,10 @@
 package com.sh.app.movie.dto;
 
+
+
 import com.sh.app.genre.entity.Genre;
 import com.sh.app.movie.entity.Rating;
-import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Data;
-
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -24,4 +23,5 @@ public class MovieDetailDto {
     private double advanceReservation;
 
     private Set<Genre> genres = new LinkedHashSet<>();
+
 }
