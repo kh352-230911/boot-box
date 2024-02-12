@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,14 +35,20 @@ public class MovieController {
     // ------------------------------------------ //
 
     // 정호
-
     @GetMapping("/movieList.do")
-    public void movieList(Model model) {
-        List<Movie> movies = movieService.findAll();
-        log.debug("movies = {}", movies);
+    public void movieList(String genre, Model model) {
+        log.debug("genre = {}", genre);
+        if (genre == null) {
+            List<Movie> movies = movieService.findAll();
+            model.addAttribute("movies", movies);
+            log.debug("movies = {}", movies);
+        }
+        else {
+            List<Movie> movies = movieService.findByGenreList(genre);
+            model.addAttribute("movies", movies);
+            log.debug("movies = {}", movies);
+        }
 
-        model.addAttribute("movies", movies);
     }
-
     // ------------------------------------------ //
 }

@@ -40,4 +40,11 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
+    public List<Movie> findByGenreList(String genre) {
+        return movieRepository.findByGenreList(genre);
+    }
+
+    public List<Movie> findByTitleContaining(String search) {
+        return movieRepository.findByTitleContaining(search);
+    }
 }

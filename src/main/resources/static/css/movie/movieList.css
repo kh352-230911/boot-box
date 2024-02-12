@@ -33,6 +33,7 @@
 }
 .section-1-2 > div > div > a > img {
     width: 200px;
+    height: 270px;
     border-radius:10px;
 }
 .section-1-2 > div > div {
@@ -96,4 +97,17 @@
     border-radius: 4px;
     text-transform: uppercase;
     padding: 2px 25px;
+}
+.wrap-container {
+    height: auto;
+    min-height: 100%;
+    padding-bottom: 60px;
+}
+.home-container {
+    min-height: 600px;
+}
+footer {
+    height: 60px;
+    position: relative;
+    transform: translateY(0%);
 }
