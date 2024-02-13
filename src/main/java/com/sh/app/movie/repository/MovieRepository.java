@@ -14,7 +14,7 @@ import java.util.Optional;
 
 
 public interface MovieRepository extends JpaRepository<Movie, Long> {
-@Query(value = """
+    @Query(value = """
     select 
         *
     from(select 
@@ -28,6 +28,20 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     """, nativeQuery = true)
     List<Movie> findFirst5ByOrderByAdvanceReservation();
 
+    @Query(value = """
+    select 
+        *
+    from(select 
+            *
+        from 
+            movie
+        order by 
+            advance_reservation desc)
+    where 
+        rownum between 1 and 5
+    and
+        title like %:title%
+    """, nativeQuery = true)
     List<Movie> findByTitleContaining(String title);
 
     @Query("select m, g from Movie m join fetch m.genres g where g.genreList = :genreList")
