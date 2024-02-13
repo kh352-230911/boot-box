@@ -17,9 +17,19 @@ public class HomeController {
     MovieService movieService;
 
     @GetMapping("/")
-    public String home() {
-        List<Movie> movies = movieService.findFirst5ByOrderByAdvanceReservation();
-        log.debug("movies = {}", movies);
+    public String home(String search, Model model) {
+        if(search == null) {
+            List<Movie> movies = movieService.findFirst5ByOrderByAdvanceReservation();
+            log.debug("movies = {}", movies);
+
+            model.addAttribute("movies", movies);
+        }
+        else {
+            List<Movie> movies = movieService.findByTitleContaining(search);
+            log.debug("movies = {}", movies);
+
+            model.addAttribute("movies", movies);
+        }
         return "index";
     }
 
