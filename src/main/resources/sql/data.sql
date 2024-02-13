@@ -50,7 +50,6 @@ insert into AUTHORITY values (seq_authority_id.nextval, null, 3, 'ROLE_MANAGER')
 insert into AUTHORITY values (seq_authority_id.nextval, null, 4, 'ROLE_MANAGER');
 insert into AUTHORITY values (seq_authority_id.nextval, null, 5, 'ROLE_MANAGER');
 insert into AUTHORITY values (seq_authority_id.nextval, null, 6, 'ROLE_ADMIN');
---
 -- seat
 insert into SEAT values (seq_seat_id.nextval, 'A01');
 insert into SEAT values (seq_seat_id.nextval, 'B01');

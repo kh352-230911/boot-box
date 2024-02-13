@@ -30,6 +30,7 @@ spring:
       schema-locations: classpath:/sql/schema.sql
       data-locations: classpath:/sql/data.sql
       mode: always
+      
 # logback (logging)
 logging:
   level:

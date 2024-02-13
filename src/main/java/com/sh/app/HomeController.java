@@ -3,7 +3,6 @@ package com.sh.app;
 import com.sh.app.movie.dto.MovieListDto;
 import com.sh.app.movie.entity.Movie;
 import com.sh.app.movie.service.MovieService;
-import com.sh.app.review.dto.MovieAverageReviewDto;
 import com.sh.app.review.entity.Review;
 import com.sh.app.review.repository.ReviewRepository;
 import com.sh.app.review.service.ReviewService;
