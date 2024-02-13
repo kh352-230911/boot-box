@@ -166,7 +166,8 @@ public class MovieRepositoryTest {
     @Test
     void test5() {
         insertMovieData();
-        List<Movie> movies = movieRepository.findFirst5ByOrderByAdvanceReservation();
+//        List<Movie> movies = movieRepository.findFirst5ByOrderByAdvanceReservation();
+        List<Movie> movies = movieRepository.findFirst5ByOrderByAdvanceReservationDesc();
         System.out.println(movies);
 
         assertThat(movies)
@@ -274,8 +275,6 @@ public class MovieRepositoryTest {
         );
         reviews.forEach(reviewRepository::save);
         // when
-        Movie movie1 = (Movie) movieRepository.findFirst5ByOrderByAdvanceReservationByReviewScore();
-        System.out.println(movie1);
         // then
     }
 }

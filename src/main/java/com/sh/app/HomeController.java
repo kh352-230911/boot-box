@@ -26,7 +26,8 @@ public class HomeController {
     public String home(String search, Model model) {
         List<MovieListDto> movieListDtos;
         if(search == null) {
-            movieListDtos = movieService.findFirst5ByOrderByAdvanceReservation();
+            movieListDtos = movieService.findFirst5ByOrderByAdvanceReservationDesc();
+//            movieListDtos = movieService.findFirst5ByOrderByAdvanceReservation();
         }
         else {
             movieListDtos = movieService.findByTitleContaining(search);

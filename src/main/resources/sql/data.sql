@@ -31,11 +31,11 @@ insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,membe
 values(seq_member_id.nextVal, 'less','1234','leess@naver.com','이순신','01013225521','1989');
 --
 -- admin
-insert into ADMIN values (seq_admin_id.nextval, 1, 'adm220932', '1234');
-insert into ADMIN values (seq_admin_id.nextval, 2, 'adm650704', '1234');
-insert into Admin values (seq_admin_id.nextval, 3, 'adm392258', '1234');
-insert into ADMIN values (seq_admin_id.nextval, 4, 'adm852542', '1234');
-insert into ADMIN values (seq_admin_id.nextval, 5, 'adm724198', '1234');
+insert into ADMIN values (seq_admin_id.nextval, 0201, 'adm220932', '1234');
+insert into ADMIN values (seq_admin_id.nextval, 03101, 'adm650704', '1234');
+insert into Admin values (seq_admin_id.nextval, 03201, 'adm392258', '1234');
+insert into ADMIN values (seq_admin_id.nextval, 04201, 'adm852542', '1234');
+insert into ADMIN values (seq_admin_id.nextval, 05101, 'adm724198', '1234');
 insert into ADMIN values (seq_admin_id.nextval, null, 'adm322100', '1234');
 --
 -- authority
@@ -219,11 +219,11 @@ insert into MEMBER_LIKE_GENRE values (seq_member_like_genre_id.nextval, 4, 3);
 insert into MEMBER_LIKE_GENRE values (seq_member_like_genre_id.nextval, 5, 2);
 --
 -- member_like_cinema
-insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 1, 1, 2, 3);
-insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 2, 1, null, null);
-insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 3, 2, 5, null);
-insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 4, 4, null, null);
-insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 5, 2, 3, 5);
+insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 1, 0201, 03101, 03201);
+insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 2, 0201, null, null);
+insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 3, 03101, 05101, null);
+insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 4, 04201, null, null);
+insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 5, 03101, 03201, 05101);
 --
 -- ask
 insert into ASK values (seq_ask_id.nextval, 1, '예매 취소 및 환불', '예매 취소 및 환불 규정은 어떻게 되나요?', default);
@@ -247,13 +247,13 @@ insert into NOTICE values (seq_notice_id.nextval, 4, 'ETC', '개인정보처리�
 insert into NOTICE values (seq_notice_id.nextval, 5, 'ETC', 'BOOTBOX 서비스 이용약관 개정 안내 (2024년 1월 23일 시행)', '2024년 1월 23일자로 BOOTBOX 서비스 이용약관을 일부 개정하게 되어 아래와 같이 사전 안내드립니다. 서비스 이용에 참고 부탁드립니다.');
 --
 -- schedule
-insert into SCHEDULE values (seq_schedule_id.nextval, 1, 1, '2024-02-01', '15:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 1, 2, '2024-02-01', '20:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 1, 3, '2024-02-03', '10:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 1, 4, '2024-02-04', '22:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 1, 5, '2024-02-06', '19:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 1, 6, '2024-01-24', '12:30');
-insert into SCHEDULE values (seq_schedule_id.nextval, 1, 6, '2024-01-29', '20:30');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, '2024-02-01', '15:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 2, '2024-02-01', '20:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 3, '2024-02-03', '10:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 4, '2024-02-04', '22:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 5, '2024-02-06', '19:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 6, '2024-01-24', '12:30');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 6, '2024-01-29', '20:30');
 --
 -- reservation
 insert into RESERVATION values ('box16443', 1, 1, 'CONFIRM');
@@ -263,6 +263,7 @@ insert into RESERVATION values ('box42217', 4, 4, 'CONFIRM');
 insert into RESERVATION values ('box34332', 4, 6, 'CONFIRM');
 insert into RESERVATION values ('box32582', 5, 5, 'CONFIRM');
 insert into RESERVATION values ('box21482', 5, 7, 'CONFIRM');
+insert into RESERVATION values ('box47211', 2, 2, 'CONFIRM');
 --
 -- reservation_seat
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box16443', 1);
@@ -290,21 +291,22 @@ insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 4, 12000, 'card');
 insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 5, 12000, 'card');
 --
 -- movie_list
-insert into MOVIE_LIST values (seq_movie_list_id.nextval, 1, 1);
-insert into MOVIE_LIST values (seq_movie_list_id.nextval, 1, 2);
-insert into MOVIE_LIST values (seq_movie_list_id.nextval, 2, 2);
-insert into MOVIE_LIST values (seq_movie_list_id.nextval, 2, 4);
-insert into MOVIE_LIST values (seq_movie_list_id.nextval, 3, 3);
-insert into MOVIE_LIST values (seq_movie_list_id.nextval, 3, 4);
-insert into MOVIE_LIST values (seq_movie_list_id.nextval, 3, 5);
-insert into MOVIE_LIST values (seq_movie_list_id.nextval, 4, 3);
-insert into MOVIE_LIST values (seq_movie_list_id.nextval, 4, 1);
-insert into MOVIE_LIST values (seq_movie_list_id.nextval, 5, 5);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 1, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 1, 03101);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 2, 03101);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 2, 04201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 3, 03201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 3, 04201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 3, 05101);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 4, 03201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 4, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 5, 05101);
 --
 -- review
 insert into REVIEW values (seq_review_id.nextval, 'box16443', 1, 1, 3, '너무 지루해요', default);
 insert into REVIEW values (seq_review_id.nextval, 'box25822', 2, 2, 4, '최고', default);
 insert into REVIEW values (seq_review_id.nextval, 'box47220', 3, 3, 5, '시간 가는 줄 모르고 봤어용', default);
+insert into REVIEW values (seq_review_id.nextval, 'box47211', 2, 3, 2, '시간 가는 줄 모르고 봤어용', default);
 insert into REVIEW values (seq_review_id.nextval, 'box42217', 4, 4, 5, '짱짱', default);
 insert into REVIEW values (seq_review_id.nextval, 'box34332', 4, 6, 5, '짱짱', default);
 insert into REVIEW values (seq_review_id.nextval, 'box34332', 5, 6, 3, '무난무난', default);

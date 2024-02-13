@@ -14,5 +14,5 @@ public class MovieListDto {
     private String trailer;
     private String poster;
     private double advanceReservation;
-    private double avgReviewScore;
+    private Double avgReviewScore;
 }

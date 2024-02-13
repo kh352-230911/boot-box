@@ -118,7 +118,7 @@ CREATE TABLE THEATER (
     name varchar2(50)	 NOT NULL, --상영관명
     seat 	number	NOT NULL,--총 좌석수
     constraints pk_theater_id primary key(id), --pk로 지정
-    constraints fk_theater_cinema_id foreign key(cinema_id) references theater(id) on delete set null
+    constraints fk_theater_cinema_id foreign key(cinema_id) references cinema(id) on delete set null
 );
 --
 --15.장르
