@@ -12,8 +12,8 @@ spring:
     password: ${PROD_DB_PASSWORD}
 #    driver-class-name: oracle.jdbc.driver.OracleDriver
 #    url: jdbc:oracle:thin:@localhost:1521:xe
-#    username: guys
-#    password: guys
+#    username: bootbox
+#    password: bootbox
   jpa:
     generate-ddl: true
     show-sql: true #만들어진 쿼리를 보여줄것인가? true or false

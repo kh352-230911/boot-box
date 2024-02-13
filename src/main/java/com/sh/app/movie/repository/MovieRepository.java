@@ -1,6 +1,7 @@
 package com.sh.app.movie.repository;
 
 import com.sh.app.genre.entity.Genre;
+import com.sh.app.movie.dto.MovieListDto;
 import com.sh.app.movie.entity.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,21 +16,21 @@ import java.util.Optional;
 
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     @Query(value = """
-    select 
+    select
         *
-    from(select 
+    from(select
             *
-        from 
+        from
             movie
-        order by 
+        order by
             advance_reservation desc)
-    where 
+    where
         rownum between 1 and 5
     """, nativeQuery = true)
     List<Movie> findFirst5ByOrderByAdvanceReservation();
 
     @Query(value = """
-    select 
+    select distinct 
         *
     from(select 
             *

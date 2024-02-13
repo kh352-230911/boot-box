@@ -1,9 +1,10 @@
 package com.sh.app.movie.service;
 
 import com.sh.app.movie.dto.MovieDetailDto;
+import com.sh.app.movie.dto.MovieListDto;
 import com.sh.app.movie.entity.Movie;
-import lombok.extern.slf4j.Slf4j;
 import com.sh.app.movie.repository.MovieRepository;
+import com.sh.app.review.repository.ReviewRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -19,10 +21,8 @@ public class MovieService {
     private MovieRepository movieRepository;
     @Autowired
     private ModelMapper modelMapper;
-
-    public List<Movie> findFirst5ByOrderByAdvanceReservation() {
-        return movieRepository.findFirst5ByOrderByAdvanceReservation();
-    }
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     public MovieDetailDto findById(Long id) {
         return movieRepository.findById(id)
@@ -44,7 +44,22 @@ public class MovieService {
         return movieRepository.findByGenreList(genre);
     }
 
-    public List<Movie> findByTitleContaining(String search) {
-        return movieRepository.findByTitleContaining(search);
+    public List<MovieListDto> findByTitleContaining(String search) {
+        return movieRepository.findByTitleContaining(search)
+                .stream().map((movie) -> convertToMovieListDto(movie))
+                .collect(Collectors.toList());
+    }
+
+    public List<MovieListDto> findFirst5ByOrderByAdvanceReservation() {
+        return movieRepository.findFirst5ByOrderByAdvanceReservation()
+                .stream().map((movie) -> convertToMovieListDto(movie))
+                .collect(Collectors.toList());
+    }
+
+    private MovieListDto convertToMovieListDto(Movie movie) {
+        MovieListDto movieListDto = modelMapper.map(movie, MovieListDto.class);
+        double avgReviewScore = reviewRepository.getAverageRatingByMovieId(movie.getId());
+        movieListDto.setAvgReviewScore(avgReviewScore);
+        return movieListDto;
     }
 }
