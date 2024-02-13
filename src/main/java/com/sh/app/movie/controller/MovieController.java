@@ -38,17 +38,16 @@ public class MovieController {
     @GetMapping("/movieList.do")
     public void movieList(String genre, Model model) {
         log.debug("genre = {}", genre);
+
+        List<Movie> movies;
         if (genre == null) {
-            List<Movie> movies = movieService.findAll();
-            model.addAttribute("movies", movies);
-            log.debug("movies = {}", movies);
+            movies = movieService.findAll();
         }
         else {
-            List<Movie> movies = movieService.findByGenreList(genre);
-            model.addAttribute("movies", movies);
-            log.debug("movies = {}", movies);
+            movies = movieService.findByGenreList(genre);
         }
-
+        log.debug("movies = {}", movies);
+        model.addAttribute("movies", movies);
     }
     // ------------------------------------------ //
 }

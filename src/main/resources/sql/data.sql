@@ -1,5 +1,23 @@
 -- DML 작성
 
+-- location
+insert into LOCATION values (02, '서울');
+insert into LOCATION values (031, '경기');
+insert into LOCATION values (032, '인천');
+insert into LOCATION values (033, '강원');
+insert into LOCATION values (042, '대전/충청');
+insert into LOCATION values (053, '대구');
+insert into LOCATION values (051, '부산/울산');
+insert into LOCATION values (054, '경상');
+insert into LOCATION values (062, '광주/전라/제주');
+--
+-- cinema
+insert into CINEMA values (0201, 02, '강남점', 1, '서울특별시 강남구 강남대로 438', 127.02629392376384, 37.501674084777505, '1544-1122');
+insert into CINEMA values (03101, 031, '고양백석점', 1, '경기도 고양시 일산동구 백석동 1242', 126.78965179914998, 37.643461526992546, '1544-1122');
+insert into CINEMA values (03201, 032, '청라점', 1, '인천광역시 서구 청라동 155-7 스퀘어세븐', 126.64164011661255, 37.53237333861732, '1544-1122');
+insert into CINEMA values (04201, 042, '대전점', 1, '대전광역시 중구 문화동 1-16', 127.40842431841456, 36.32061814895665, '1544-1122');
+insert into CINEMA values (05101, 051, '센텀시티점', 1, '부산광역시 해운대구 우동 1495번지 신세계센텀시티', 129.13033686916697 , 35.16911956001504, '1544-1122');
+--
 -- member
 insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
 values(seq_member_id.nextVal, 'rhgPwls','1234','update_set@naver.com','고혜진','01012341234','1990') ;
@@ -12,13 +30,26 @@ values(seq_member_id.nextVal, 'honggd','1234','honggd@naver.com','홍길동','01
 insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
 values(seq_member_id.nextVal, 'less','1234','leess@naver.com','이순신','01013225521','1989');
 --
--- location
-insert into LOCATION values (seq_location_id.nextval, '서울');
-insert into LOCATION values (seq_location_id.nextval, '경기');
-insert into LOCATION values (seq_location_id.nextval, '인천');
-insert into LOCATION values (seq_location_id.nextval, '대전/충청');
-insert into LOCATION values (seq_location_id.nextval, '부산/울산');
+-- admin
+insert into ADMIN values (seq_admin_id.nextval, 1, 'adm220932', '1234');
+insert into ADMIN values (seq_admin_id.nextval, 2, 'adm650704', '1234');
+insert into Admin values (seq_admin_id.nextval, 3, 'adm392258', '1234');
+insert into ADMIN values (seq_admin_id.nextval, 4, 'adm852542', '1234');
+insert into ADMIN values (seq_admin_id.nextval, 5, 'adm724198', '1234');
+insert into ADMIN values (seq_admin_id.nextval, null, 'adm322100', '1234');
 --
+-- authority
+insert into AUTHORITY values (seq_authority_id.nextval, 1, null, 'ROLE_USER');
+insert into AUTHORITY values (seq_authority_id.nextval, 2, null, 'ROLE_USER');
+insert into AUTHORITY values (seq_authority_id.nextval, 3, null, 'ROLE_USER');
+insert into AUTHORITY values (seq_authority_id.nextval, 4, null, 'ROLE_USER');
+insert into AUTHORITY values (seq_authority_id.nextval, 5, null, 'ROLE_USER');
+insert into AUTHORITY values (seq_authority_id.nextval, null, 1, 'ROLE_MANAGER');
+insert into AUTHORITY values (seq_authority_id.nextval, null, 2, 'ROLE_MANAGER');
+insert into AUTHORITY values (seq_authority_id.nextval, null, 3, 'ROLE_MANAGER');
+insert into AUTHORITY values (seq_authority_id.nextval, null, 4, 'ROLE_MANAGER');
+insert into AUTHORITY values (seq_authority_id.nextval, null, 5, 'ROLE_MANAGER');
+insert into AUTHORITY values (seq_authority_id.nextval, null, 6, 'ROLE_ADMIN');
 -- seat
 insert into SEAT values (seq_seat_id.nextval, 'A01');
 insert into SEAT values (seq_seat_id.nextval, 'B01');
@@ -26,19 +57,12 @@ insert into SEAT values (seq_seat_id.nextval, 'C01');
 insert into SEAT values (seq_seat_id.nextval, 'D01');
 insert into SEAT values (seq_seat_id.nextval, 'E01');
 --
--- cinema
-insert into CINEMA values (seq_cinema_id.nextval, 1, '강남점', 1, '서울특별시 강남구 강남대로 438', 127.02629392376384, 37.501674084777505, '1544-1122');
-insert into CINEMA values (seq_cinema_id.nextval, 2, '고양백석점', 1, '경기도 고양시 일산동구 백석동 1242', 126.78965179914998, 37.643461526992546, '1544-1122');
-insert into CINEMA values (seq_cinema_id.nextval, 3, '청라점', 1, '인천광역시 서구 청라동 155-7 스퀘어세븐', 126.64164011661255, 37.53237333861732, '1544-1122');
-insert into CINEMA values (seq_cinema_id.nextval, 4, '대전점', 1, '대전광역시 중구 문화동 1-16', 127.40842431841456, 36.32061814895665, '1544-1122');
-insert into CINEMA values (seq_cinema_id.nextval, 5, '센텀시티점', 1, '부산광역시 해운대구 우동 1495번지 신세계센텀시티', 129.13033686916697 , 35.16911956001504, '1544-1122');
---
 -- theater
-insert into THEATER values (seq_theater_id.nextval, 1, '1관', 60);
-insert into THEATER values (seq_theater_id.nextval, 2, '1관', 60);
-insert into THEATER values (seq_theater_id.nextval, 3, '1관', 60);
-insert into THEATER values (seq_theater_id.nextval, 4, '1관', 60);
-insert into THEATER values (seq_theater_id.nextval, 5, '1관', 60);
+insert into THEATER values (020101, 0201, '1관', 60);
+insert into THEATER values (0310101, 03101, '1관', 60);
+insert into THEATER values (0320101, 03201, '1관', 60);
+insert into THEATER values (0420101, 04201, '1관', 60);
+insert into THEATER values (0510101, 05101, '1관', 60);
 --
 -- genre
 insert into GENRE values (seq_genre_id.nextval, '드라마');
@@ -187,6 +211,41 @@ insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 4, 14);
 insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 12, 14);
 insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 6, 14);
 --
+-- member_like_genre
+insert into MEMBER_LIKE_GENRE values (seq_member_like_genre_id.nextval, 1, 1);
+insert into MEMBER_LIKE_GENRE values (seq_member_like_genre_id.nextval, 2, 1);
+insert into MEMBER_LIKE_GENRE values (seq_member_like_genre_id.nextval, 3, 4);
+insert into MEMBER_LIKE_GENRE values (seq_member_like_genre_id.nextval, 4, 3);
+insert into MEMBER_LIKE_GENRE values (seq_member_like_genre_id.nextval, 5, 2);
+--
+-- member_like_cinema
+insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 1, 1, 2, 3);
+insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 2, 1, null, null);
+insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 3, 2, 5, null);
+insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 4, 4, null, null);
+insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 5, 2, 3, 5);
+--
+-- ask
+insert into ASK values (seq_ask_id.nextval, 1, '예매 취소 및 환불', '예매 취소 및 환불 규정은 어떻게 되나요?', default);
+insert into ASK values (seq_ask_id.nextval, 2, '영화 시간보다 늦었어요.', ' 영화 시간보다 늦었어요. 입장 가능한가요?', default);
+insert into ASK values (seq_ask_id.nextval, 3, '음식물 반입', '상영관 내 다른 음식물의 반입이 되나요?', default);
+insert into ASK values (seq_ask_id.nextval, 4, '관람 등급', '관람 등급에 대해 알고 싶습니다.', default);
+insert into ASK values (seq_ask_id.nextval, 5, '영화 관람을 하다 소지품을 분실했어요', '영화 관람을 하다 소지품을 분실했어요. 분실물은 어떻게 찾나요?', default);
+--
+-- answer
+insert into ANSWER values (seq_answer_id.nextval, 1, 6, '상영시간 이전까지만 가능하며, 상영시간 이후 취소나 환불은 되지 않습니다.', default);
+insert into ANSWER values (seq_answer_id.nextval, 2, 6, '영화 시간 내 언제든 입장이 가능합니다.', default);
+insert into ANSWER values (seq_answer_id.nextval, 3, 6, '상영관 내 외부 음식물 반입은 가능합니다.', default);
+insert into ANSWER values (seq_answer_id.nextval, 4, 6, 'CGV는 영화진흥법에 의한 영화별 관람등급을 철저히 준수하고 있습니다.', default);
+insert into ANSWER values (seq_answer_id.nextval, 5, 6, '분실물의 경우 발견 즉시 현장에서 보관을 진행하고 있으며, 확인 요청시 본인 확인 후 물품 확인을 도와드리고 있습니다.', default);
+--
+-- notice
+insert into NOTICE values (seq_notice_id.nextval, 1, 'SYSTEM', '2023년 12월 시스템점검 안내', '원활하고 안정된 서비스 제공을 위하여 2023년 12월 새벽 시스템 점검 작업이 예정되어 있습니다.');
+insert into NOTICE values (seq_notice_id.nextval, 2, 'CINEMA', '[센텀시티] 백화점 휴점에 따른 극장 이용 안내', '22.09.09(금)~22.09.10(토) 신세계 백화점 센텀시티점 휴점에 따라 극장이용 동선 안내를 공지하오니 이용에 착오 없으시길 바랍니다.');
+insert into NOTICE values (seq_notice_id.nextval, 3, 'EVENT', '신규 초콜릿향 진행극장 변경 안내 ', '4DX 신규 초콜릿향 진행 극장 (1/31~2/6) CGV 계양, 광교, 광주터미널, 김해, 대구, 대구스타디움');
+insert into NOTICE values (seq_notice_id.nextval, 4, 'ETC', '개인정보처리방침 개정 공지 (23.11.06 시행)', '2023년 11월 6일 자로 BOOTBOX의 개인정보처리방침이 개정됨에 따라 회원님께 주요 개정 내용과 적용 일정을 아래와 같이 안내 드립니다.');
+insert into NOTICE values (seq_notice_id.nextval, 5, 'ETC', 'BOOTBOX 서비스 이용약관 개정 안내 (2024년 1월 23일 시행)', '2024년 1월 23일자로 BOOTBOX 서비스 이용약관을 일부 개정하게 되어 아래와 같이 사전 안내드립니다. 서비스 이용에 참고 부탁드립니다.');
+--
 -- schedule
 insert into SCHEDULE values (seq_schedule_id.nextval, 1, 1, '2024-02-01', '15:00');
 insert into SCHEDULE values (seq_schedule_id.nextval, 1, 2, '2024-02-01', '20:00');
@@ -223,6 +282,25 @@ insert into ORDER_PAY values ('order2142311845122', 'box42217', 4, 'imp32105587'
 insert into ORDER_PAY values ('order2244325135126', 'box32582', 5, 'imp32105587', 'html5_inicis', 'card', 12000 , '01013225521', 'CONFIRM');
 insert into ORDER_PAY values ('order2178238136122', 'box21482', 5, 'imp32105587', 'html5_inicis', 'card', 12000 , '01013225521', 'CONFIRM');
 --
+-- cancel_pay
+insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 1, 12000, 'card');
+insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 2, 12000, 'card');
+insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 3, 12000, 'card');
+insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 4, 12000, 'card');
+insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 5, 12000, 'card');
+--
+-- movie_list
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 1, 1);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 1, 2);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 2, 2);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 2, 4);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 3, 3);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 3, 4);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 3, 5);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 4, 3);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 4, 1);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 5, 5);
+--
 -- review
 insert into REVIEW values (seq_review_id.nextval, 'box16443', 1, 1, 3, '너무 지루해요', default);
 insert into REVIEW values (seq_review_id.nextval, 'box25822', 2, 2, 4, '최고', default);
@@ -231,80 +309,3 @@ insert into REVIEW values (seq_review_id.nextval, 'box42217', 4, 4, 5, '짱짱',
 insert into REVIEW values (seq_review_id.nextval, 'box34332', 4, 6, 5, '짱짱', default);
 insert into REVIEW values (seq_review_id.nextval, 'box34332', 5, 6, 3, '무난무난', default);
 insert into REVIEW values (seq_review_id.nextval, 'box32582', 5, 5, 2, '재미없어요', default);
---
--- -- admin
--- insert into ADMIN values (seq_admin_id.nextval, 1, 'adm220932', '1234');
--- insert into ADMIN values (seq_admin_id.nextval, 2, 'adm650704', '1234');
--- insert into Admin values (seq_admin_id.nextval, 3, 'adm392258', '1234');
--- insert into ADMIN values (seq_admin_id.nextval, 4, 'adm852542', '1234');
--- insert into ADMIN values (seq_admin_id.nextval, 5, 'adm724198', '1234');
--- insert into ADMIN values (seq_admin_id.nextval, null, 'adm322100', '1234');
---
--- -- authority
--- insert into AUTHORITY values (seq_authority_id.nextval, 1, null, 'ROLE_USER');
--- insert into AUTHORITY values (seq_authority_id.nextval, 2, null, 'ROLE_USER');
--- insert into AUTHORITY values (seq_authority_id.nextval, 3, null, 'ROLE_USER');
--- insert into AUTHORITY values (seq_authority_id.nextval, 4, null, 'ROLE_USER');
--- insert into AUTHORITY values (seq_authority_id.nextval, 5, null, 'ROLE_USER');
--- insert into AUTHORITY values (seq_authority_id.nextval, null, 1, 'ROLE_MANAGER');
--- insert into AUTHORITY values (seq_authority_id.nextval, null, 2, 'ROLE_MANAGER');
--- insert into AUTHORITY values (seq_authority_id.nextval, null, 3, 'ROLE_MANAGER');
--- insert into AUTHORITY values (seq_authority_id.nextval, null, 4, 'ROLE_MANAGER');
--- insert into AUTHORITY values (seq_authority_id.nextval, null, 5, 'ROLE_MANAGER');
--- insert into AUTHORITY values (seq_authority_id.nextval, null, 6, 'ROLE_ADMIN');
---
--- -- ask
---insert into ASK values (seq_ask_id.nextval, 1, '예매 취소 및 환불', '예매 취소 및 환불 규정은 어떻게 되나요?');
---insert into ASK values (seq_ask_id.nextval, 2, '영화 시간보다 늦었어요.', ' 영화 시간보다 늦었어요. 입장 가능한가요?');
---insert into ASK values (seq_ask_id.nextval, 3, '음식물 반입', '상영관 내 다른 음식물의 반입이 되나요?');
---insert into ASK values (seq_ask_id.nextval, 4, '관람 등급', '관람 등급에 대해 알고 싶습니다.');
---insert into ASK values (seq_ask_id.nextval, 5, '영화 관람을 하다 소지품을 분실했어요', '영화 관람을 하다 소지품을 분실했어요. 분실물은 어떻게 찾나요?');
---
--- -- answer
---insert into ANSWER values (seq_answer_id.nextval, 1, 6, '상영시간 이전까지만 가능하며, 상영시간 이후 취소나 환불은 되지 않습니다.');
---insert into ANSWER values (seq_answer_id.nextval, 2, 6, '영화 시간 내 언제든 입장이 가능합니다.');
---insert into ANSWER values (seq_answer_id.nextval, 3, 6, '상영관 내 외부 음식물 반입은 가능합니다.');
---insert into ANSWER values (seq_answer_id.nextval, 4, 6, 'CGV는 영화진흥법에 의한 영화별 관람등급을 철저히 준수하고 있습니다.');
---insert into ANSWER values (seq_answer_id.nextval, 5, 6, '분실물의 경우 발견 즉시 현장에서 보관을 진행하고 있으며, 확인 요청시 본인 확인 후 물품 확인을 도와드리고 있습니다.');
---
--- -- notice
---insert into NOTICE values (seq_notice_id.nextval, 1, 6, 'SYSTEM', '2023년 12월 시스템점검 안내', '원활하고 안정된 서비스 제공을 위하여 2023년 12월 새벽 시스템 점검 작업이 예정되어 있습니다.');
---insert into NOTICE values (seq_notice_id.nextval, 2, 6, 'CINEMA', '[센텀시티] 백화점 휴점에 따른 극장 이용 안내', '22.09.09(금)~22.09.10(토) 신세계 백화점 센텀시티점 휴점에 따라 극장이용 동선 안내를 공지하오니 이용에 착오 없으시길 바랍니다.');
---insert into NOTICE values (seq_notice_id.nextval, 3, 6, 'EVENT', '신규 초콜릿향 진행극장 변경 안내 ', '4DX 신규 초콜릿향 진행 극장 (1/31~2/6) CGV 계양, 광교, 광주터미널, 김해, 대구, 대구스타디움');
---insert into NOTICE values (seq_notice_id.nextval, 4, 6, 'ETC', '개인정보처리방침 개정 공지 (23.11.06 시행)', '2023년 11월 6일 자로 BOOTBOX의 개인정보처리방침이 개정됨에 따라 회원님께 주요 개정 내용과 적용 일정을 아래와 같이 안내 드립니다.');
---insert into NOTICE values (seq_notice_id.nextval, 5, 6, 'ETC', 'BOOTBOX 서비스 이용약관 개정 안내 (2024년 1월 23일 시행)', '2024년 1월 23일자로 BOOTBOX 서비스 이용약관을 일부 개정하게 되어 아래와 같이 사전 안내드립니다. 서비스 이용에 참고 부탁드립니다.');
---
- -- -- cancel_pay
---insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 1, 12000, 'card');
---insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 2, 12000, 'card');
---insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 3, 12000, 'card');
---insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 4, 12000, 'card');
---insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 5, 12000, 'card');
---
--- 브릿지
---
--- -- member_like_genre
--- insert into MEMBER_LIKE_GENRE values (seq_member_like_genre_id.nextval, 1, 1);
--- insert into MEMBER_LIKE_GENRE values (seq_member_like_genre_id.nextval, 2, 1);
--- insert into MEMBER_LIKE_GENRE values (seq_member_like_genre_id.nextval, 3, 4);
--- insert into MEMBER_LIKE_GENRE values (seq_member_like_genre_id.nextval, 4, 3);
--- insert into MEMBER_LIKE_GENRE values (seq_member_like_genre_id.nextval, 5, 2);
---
--- -- movie_list
--- insert into MOVIE_LIST values (seq_movie_list_id.nextval, 1, 1);
--- insert into MOVIE_LIST values (seq_movie_list_id.nextval, 1, 2);
--- insert into MOVIE_LIST values (seq_movie_list_id.nextval, 2, 2);
--- insert into MOVIE_LIST values (seq_movie_list_id.nextval, 2, 4);
--- insert into MOVIE_LIST values (seq_movie_list_id.nextval, 3, 3);
--- insert into MOVIE_LIST values (seq_movie_list_id.nextval, 3, 4);
--- insert into MOVIE_LIST values (seq_movie_list_id.nextval, 3, 5);
--- insert into MOVIE_LIST values (seq_movie_list_id.nextval, 4, 3);
--- insert into MOVIE_LIST values (seq_movie_list_id.nextval, 4, 1);
--- insert into MOVIE_LIST values (seq_movie_list_id.nextval, 5, 5);
---
--- -- member_like_cinema
---insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 1, 1, 2, 3);
---insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 2, 1, null, null);
---insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 3, 2, 5, null);
---insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 4, 4, null, null);
---insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 5, 2, 3, 5);
