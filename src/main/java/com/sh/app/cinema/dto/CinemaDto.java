@@ -1,5 +1,7 @@
 package com.sh.app.cinema.dto;
 
+import com.sh.app.location.entity.Location;
+
 import lombok.Data;
 
 @Data

@@ -164,6 +164,7 @@ function isDateInRange(date) {
 function renderCalendar(date) {
     updateMonthElement(date);
     calendarContainer.innerHTML = '';
+
     for (let i = 0; i < 7; i++) {
         const day = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + i);
         const dayElement = document.createElement('li');
@@ -202,5 +203,8 @@ todayButton.addEventListener('click', () => {
     selectedDateElement.textContent = formatDate(currentDate);
 });
 
-renderCalendar(currentDate);
+document.addEventListener('DOMContentLoaded', () => {
+        renderCalendar(currentDate);
+        selectedDateElement.textContent = formatDate(new Date()); // 페이지 로드 시 오늘 날짜를 선택하도록 설정
+});
 
