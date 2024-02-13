@@ -3,8 +3,14 @@ import com.sh.app.reservation1.service.ReservationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 0206
@@ -26,9 +32,24 @@ public class ReservationController {
     @Autowired
     ReservationService reservationService;
 
-    @GetMapping("/reservationBooking1.do")
-    public void reservationMain()
+    //        System.out.println("0213 booking test - 1단계 (영화,지역등등 선택하는 페이지..)");
+
+    @GetMapping("/reservationBooking3.do")
+    public void reservationMain(Model model)
     {
-        
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        List<String> dateList = new ArrayList<>();
+        for (int i = 0; i < 14; i++) {
+            dateList.add(currentDate.plusDays(i).format(formatter));
+        }
+        model.addAttribute("dateList", dateList);
+
+    }
+    @GetMapping("/reservationBooking4.do")
+    public void reservationMain2(Model model)
+    {
+
     }
 }

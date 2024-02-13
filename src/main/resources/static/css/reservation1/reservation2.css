@@ -1,0 +1,389 @@
+/*body {*/
+/*    width: 100%;*/
+/*    height: 100vh;*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*}*/
+/*.center {*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    background: linear-gradient(*/
+/*            to right,*/
+/*            rgb(162, 216, 162),*/
+/*            rgb(102, 194, 102)*/
+/*    );*/
+/*}*/
+/*.tickets {*/
+/*    width: 550px;*/
+/*    height: fit-content;*/
+/*    border: 0.4mm solid rgba(0, 0, 0, 0.08);*/
+/*    border-radius: 3mm;*/
+/*    box-sizing: border-box;*/
+/*    padding: 10px;*/
+/*    font-family: poppins;*/
+/*    max-height: 96vh;*/
+/*    overflow: auto;*/
+/*    background: white;*/
+/*    box-shadow: 0px 25px 50px -12px rgba(0, 0, 0, 0.25);*/
+/*}*/
+/*.ticket-selector {*/
+/*    background: rgb(243, 243, 243);*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: space-between;*/
+/*    flex-direction: column;*/
+/*    box-sizing: border-box;*/
+/*    padding: 20px;*/
+/*}*/
+/*.head {*/
+/*    width: 100%;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    margin-bottom: 30px;*/
+/*}*/
+/*.title {*/
+/*    font-size: 16px;*/
+/*    font-weight: 600;*/
+/*}*/
+/*.seats {*/
+/*    width: 100%;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    flex-direction: column;*/
+/*    min-height: 150px;*/
+/*    position: relative;*/
+/*}*/
+/*.status {*/
+/*    width: 100%;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: space-evenly;*/
+/*}*/
+/*.seats::before {*/
+/*    content: "";*/
+/*    position: absolute;*/
+/*    bottom: 0;*/
+/*    left: 50%;*/
+/*    transform: translate(-50%, 0);*/
+/*    width: 220px;*/
+/*    height: 7px;*/
+/*    background: rgb(141, 198, 255);*/
+/*    border-radius: 0 0 3mm 3mm;*/
+/*    border-top: 0.3mm solid rgb(180, 180, 180);*/
+/*}*/
+/*.item {*/
+/*    font-size: 20px;*/
+/*    position: relative;*/
+/*}*/
+/*.item::before {*/
+/*    content: "";*/
+/*    position: absolute;*/
+/*    top: 50%;*/
+/*    left: -20px;*/
+/*    transform: translate(0, -50%);*/
+/*    width: 20px;*/
+/*    height: 20px;*/
+/*    background: rgb(255, 255, 255);*/
+/*    outline: 0.2mm solid rgb(120, 120, 120);*/
+/*    border-radius: 0.3mm;*/
+/*}*/
+/*.item:nth-child(2)::before {*/
+/*    background: #212121;*/
+/*    outline: none;*/
+/*}*/
+/*.item:nth-child(3)::before {*/
+/*    background: firebrick;*/
+/*    outline: none;*/
+/*}*/
+/*.all-seats {*/
+/*    display: grid;*/
+/*    grid-template-columns: repeat(10, 1fr);*/
+/*    grid-gap: 15px;*/
+/*    margin: 60px 0;*/
+/*    margin-top: 20px;*/
+/*    position: relative;*/
+/*}*/
+/*.seat {*/
+/*    width: 20px;*/
+/*    height: 20px;*/
+/*    background: white;*/
+/*    border-radius: 0.5mm;*/
+/*    outline: 0.3mm solid rgb(180, 180, 180);*/
+/*    cursor: pointer;*/
+/*}*/
+/*.all-seats input:checked + label {*/
+/*    background: rgb(28, 185, 120);*/
+/*    outline: none;*/
+/*}*/
+/*.seat.booked {*/
+/*    background: rgb(180, 180, 180);*/
+/*    outline: none;*/
+/*}*/
+/*input {*/
+/*    display: none;*/
+/*}*/
+/*.timings {*/
+/*    width: 100%;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    margin-top: 30px;*/
+/*}*/
+/*.dates {*/
+/*    width: 100%;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: space-between;*/
+/*}*/
+/*.dates-item {*/
+/*    width: 50px;*/
+/*    height: 40px;*/
+/*    background: rgb(233, 233, 233);*/
+/*    text-align: center;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    flex-direction: column;*/
+/*    padding: 10px 0;*/
+/*    border-radius: 2mm;*/
+/*    cursor: pointer;*/
+/*}*/
+/*.day {*/
+/*    font-size: 12px;*/
+/*}*/
+/*.times {*/
+/*    width: 100%;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: space-between;*/
+/*    margin-top: 10px;*/
+/*}*/
+/*.time {*/
+/*    font-size: 14px;*/
+/*    width: fit-content;*/
+/*    padding: 7px 14px;*/
+/*    background: rgb(233, 233, 233);*/
+/*    border-radius: 2mm;*/
+/*    cursor: pointer;*/
+/*}*/
+/*.timings input:checked + label {*/
+/*    background: rgb(28, 185, 120);*/
+/*    color: white;*/
+/*}*/
+/*.price {*/
+/*    width: 100%;*/
+/*    box-sizing: border-box;*/
+/*    padding: 10px 20px;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: space-between;*/
+/*}*/
+/*.total {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: flex-start;*/
+/*    justify-content: center;*/
+/*    font-size: 16px;*/
+/*    font-weight: 500;*/
+/*}*/
+/*.total span {*/
+/*    font-size: 11px;*/
+/*    font-weight: 400;*/
+/*}*/
+/*.price button {*/
+/*    background: rgb(60, 60, 60);*/
+/*    color: white;*/
+/*    font-family: poppins;*/
+/*    font-size: 14px;*/
+/*    padding: 7px 14px;*/
+/*    border-radius: 2mm;*/
+/*    outline: none;*/
+/*    border: none;*/
+/*    cursor: pointer;*/
+/*}*/
+/*==============================================================*/
+.custom-checkbox {
+    display: none; /* 기본 체크박스 숨기기 */
+}
+
+/*행 알파벳 라벨 속성*/
+/*label*/
+/*{*/
+/*    display:inline-block;*/
+/*    background-color: #e2e2e2;*/
+/*    width: 50px; !* 체크박스 크기 조절 *!*/
+/*    height: 50px;*/
+/*    border: 2px solid white; !* 네모모양으로 스타일링 *!*/
+/*    margin-top: 5px;*/
+/*    border-radius: 10px 10px 10px 10px;*/
+/*    text-align: center;*/
+/*}*/
+.info-seats
+{
+    background-image: linear-gradient(to right, #232323, #6b645e, #232323); /* 그라데이션 적용 *
+    /*background-color: darkcyan;*/
+    display: flex;
+    flex-direction: column; /* 자식 요소들을 세로로 정렬 */
+    justify-content: center;
+    align-items: center;
+
+}
+
+.select-people-title
+{
+    /*background-color: coral;*/
+    width: 40vw;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* span과 button을 좌우에 붙이기 */
+    margin-bottom: 5px;
+}
+/* 초기화 버튼 선택한 인원 , 좌석 모두 clear */
+#btn-clear
+{
+    border: 2px solid blue;
+    height: 50px;
+}
+
+/*관람인원 증감버튼이 있는 영역*/
+.select-people-content
+{
+    display: flex;
+    /*background-color: green;*/
+    width: 40vw;
+    margin-bottom: 5px;
+}
+
+.all-seats
+{
+    width :fit-content;
+    background-color: #ffffff;
+    /*visibility: hidden;*/
+    display: flex;
+    flex-direction: column; /* 자식 요소들을 세로로 정렬 */
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px 10px 10px 10px;
+    margin-bottom: 30px;
+}
+
+/* 스크린 영역 */
+.screen-div
+{
+    margin-bottom: 30px;
+    width: 40vw;
+    height: 30px;
+    background-color: cadetblue;
+    text-align: center;
+}
+
+/* ABCDEF 행을 나타내줄 label에 대한 속성 */
+label_row
+{
+    display:inline-block;
+    background-color: darkred;
+    width: 40px; /* 체크박스 크기 조절 */
+    height: 40px;
+    border: 2px solid #777777; /* 네모모양으로 스타일링 */
+    margin-top: 5px;
+    border-radius: 10px 10px 10px 10px;
+    text-align: center;
+    margin-right: 20px;
+}
+
+.custom-checkbox + label {
+    display: inline-block;
+    width: 40px; /* 체크박스 크기 조절 */
+    height: 40px;
+    border: 2px solid #777777; /* 네모모양으로 스타일링 */
+    cursor: pointer;
+    background-color: gainsboro;
+    margin-left: 5px;
+    margin-top: 5px;
+    border-radius: 10px 10px 10px 10px;
+    color : #6b645e;
+    font-size: small;
+}
+
+/*체크박스 즉, 좌석을 선택했을 때...*/
+.custom-checkbox:checked + label {
+    background-color: firebrick; /* 체크되었을 때 배경색 빨간색으로 변경 */
+    border: 2px solid #777777; /* 네모모양으로 스타일링 */
+    color : white;
+}
+
+/* 이미 예약된 좌석은 표시 */
+.custom-checkbox:disabled + label {
+    /* 비활성화된 체크박스의 스타일 */
+    /*opacity: 0.5; !* 투명도를 줘서 비활성화된 상태를 나타낼 수 있음 *!*/
+    background-color: #212121;
+    color : white;
+}
+
+/*예매가능,불가능,선택한좌석등을 알려주는 표(단순 정보용)*/
+.state-seat
+{
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.item::before {
+    content: '';
+    display: inline-block;
+    width: 20px; /* 작은 네모의 가로 길이 */
+    height: 20px; /* 작은 네모의 세로 길이 */
+    margin-left: 10px;
+    margin-right: 10px; /* 작은 네모와 글자 사이의 간격 */
+}
+
+.item:nth-child(1)::before {
+
+    background-color: gainsboro; /* 선택 가능 상태의 작은 네모 색상 */
+}
+
+.item:nth-child(2)::before {
+    border: 1px solid #e2e2e2;
+    background-color: #212121; /* 선택 불가 상태의 작은 네모 색상 */
+}
+
+.item:nth-child(3)::before {
+    background-color: firebrick; /* 선택 좌석 상태의 작은 네모 색상 */
+}
+
+/*예매 정보를 보여주는 하단의 div */
+
+.select-seats {
+    width : 100vw;
+    height: 200px;
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.prev-button,
+.next-button {
+    padding: 10px;
+    background-color: lightgray;
+    border: none;
+    cursor: pointer;
+}
+
+.center-content {
+    display: flex;
+    gap: 20px;
+}
+
+.seat-container {
+    padding: 10px;
+    border: 1px solid lightgray;
+}
+
+/*=======================================================================================================================================*/

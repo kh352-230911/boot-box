@@ -27,8 +27,8 @@ spring:
       database-platform: org.hibernate.dialect.OracleDialect
   sql:
     init:
-      schema-locations: classpath:/sql/schema.sql
-      data-locations: classpath:/sql/data.sql
+#      schema-locations: classpath:/sql/schema.sql
+#      data-locations: classpath:/sql/data.sql
       mode: always
     database: oracle
     database-platform: org.hibernate.dialect.OracleDialect
