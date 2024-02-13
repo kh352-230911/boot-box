@@ -19,6 +19,10 @@ import java.util.List;
 public class Cinema implements Comparable<Cinema>{
 
     @Id
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1b6b4f080b44550d25f13efbd053eefae71a70d8
     private Long id;
     @Column(nullable = false, unique = true)
     private String region_cinema;

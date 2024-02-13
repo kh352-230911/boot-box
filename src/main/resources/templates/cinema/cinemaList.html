@@ -17,67 +17,12 @@
     <div class = "theater-box">
         <div class = "location-area">
             <ul>
-                <li class="on">
-                    <button type="button" class="select_location">서울</button>
+                <li th:each="cinema, status : ${cinemas}">
+                    <button type="button" class="select_location" th:text="${cinema.location_name}"></button>
                     <div class="theater-list">
                         <ul>
                             <li>
-                                <a th:href="@{/cinema/cinemaDetail.do}" title="강남 상세보기">강남점</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class>
-                    <button type="button" class="select_location">경기</button>
-                    <div class="theater-list">
-                        <ul>
-                            <li>
-                                <a herf="#" title="고양 상세보기">고양백석점</a>
-                            </li>
-                            <li>
-                                <a herf="#" title="판교 상세보기">판교점</a>
-                            </li>
-                            <li>
-                                <a herf="#" title="모란 상세보기">모란점</a>
-                            </li>
-                            <li>
-                                <a herf="#" title="미금 상세보기">미금점</a>
-                            </li>
-                            <li>
-                                <a herf="#" title="야탑 상세보기">야탑점</a>
-                            </li>
-                            <li>
-                                <a herf="#" title="야탑 상세보기">분당점</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class>
-                    <button type="button" class="select_location">인천</button>
-                    <div class="theater-list">
-                        <ul>
-                            <li>
-                                <a herf="#" title="청라 상세보기">청라점</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class>
-                    <button type="button" class="select_location">대전/충청</button>
-                    <div class="theater-list">
-                        <ul>
-                            <li>
-                                <a herf="#" title="대전 상세보기">대전점</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class>
-                    <button type="button" class="select_location">부산/울산</button>
-                    <div class="theater-list">
-                        <ul>
-                            <li>
-                                <a herf="#">센텀시티점</a>
+                                <a th:href="@{/cinema/cinemaDetail.do}" th:text="${cinema.region_cinema}"></a>
                             </li>
                         </ul>
                     </div>
