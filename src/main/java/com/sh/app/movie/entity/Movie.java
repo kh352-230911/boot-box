@@ -1,6 +1,7 @@
 package com.sh.app.movie.entity;
 
 import com.sh.app.genre.entity.Genre;
+import com.sh.app.review.entity.Review;
 import com.sh.app.schedule.entity.Schedule;
 
 import jakarta.persistence.*;
@@ -55,5 +56,9 @@ public class Movie {
     @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
     @Builder.Default
     private List<Schedule> schedules = new ArrayList<>();
+
+    @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<Review> reviews = new ArrayList<>();
 
 }

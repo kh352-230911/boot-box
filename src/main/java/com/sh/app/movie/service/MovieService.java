@@ -2,15 +2,13 @@ package com.sh.app.movie.service;
 
 import com.sh.app.movie.dto.MovieDetailDto;
 import com.sh.app.movie.entity.Movie;
-import lombok.extern.slf4j.Slf4j;
 import com.sh.app.movie.repository.MovieRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @Transactional
@@ -28,6 +26,7 @@ public class MovieService {
         return movieRepository.findById(id)
                 .map((movie) -> convertToMovieDetailDto(movie))
                 .orElseThrow();
+
     }
 
     private MovieDetailDto convertToMovieDetailDto(Movie movie) {
