@@ -49,12 +49,12 @@ public class ScheduleRepositoryTest {
     }
 
     private void insertScheduleData() {
-        Movie movie = Movie.builder().title("웡카").fileRatings(Rating.G).releaseDate("2024.01.31").runningTime(116)
+        Movie movie = Movie.builder().title("웡카").filmRatings(Rating.ALL).releaseDate("2024.01.31").runningTime(116)
                 .trailer("https://www.kmdb.or.kr/trailer/trailerPlayPop?pFileNm=MK060560_P02.mp4")
                 .poster("http://file.koreafilm.or.kr/thm/02/99/18/30/tn_DPF028589.jpg")
                 .director("폴 킹").actor("티모시 샬라메").summary("세상에서 가장 달콤한 여정 좋은 일은 모두 꿈에서부터 시작된다!")
                 .advanceReservation(98).build();
-        Movie movie2 = Movie.builder().title("시민덕희").fileRatings(Rating.PG).releaseDate("2024.01.24").runningTime(114)
+        Movie movie2 = Movie.builder().title("시민덕희").filmRatings(Rating.ALL).releaseDate("2024.01.24").runningTime(114)
                 .trailer("https://www.kmdb.or.kr/trailer/trailerPlayPop?pFileNm=MK060515_P02.mp4")
                 .poster("http://file.koreafilm.or.kr/thm/02/99/18/28/tn_DPK021526.jpg")
                 .director("박영주").actor("라미란").summary("내 돈을 사기 친 그 놈이 구조 요청을 해왔다!")
