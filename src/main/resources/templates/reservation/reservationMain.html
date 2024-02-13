@@ -8,9 +8,7 @@
     <!-- 페이지별 css -->
     <link rel="stylesheet" th:href="@{/css/reservationMain/reservation.css}" />
 </head>
-<style layout:fragment="style">
-
-</style>
+<style layout:fragment="style"></style>
 
 <div layout:fragment="content">
     <span class="text-white" >영화 예매</span>
@@ -18,71 +16,100 @@
     <hr style="height: 1px">
     <br>
 
-    <div id="cinemaReservation" class="grid grid-cols-4 ml-30">  <!-- 전체 정보 -->
-        <div id="movie" style="width: 300px; margin-left: 15px">
+    <div id="cinemaReservation" class="grid grid-cols-4 row-span-2 ml-30">  <!-- 전체 정보 -->
+
+        <div id="movie" style="width: 300px; margin-left: 50px">
             <div><h2>영화</h2></div>
             <div id="movie1" style="height: 400px; width: 280px;">
-                <div id="movie2" class="ml-1">
-                    <a href="#" th:onclick="" >예매율순 </a>
-                    <a href="#" class="ml-2" th:onclick="" >가나다순</a>
-                </div>
-<!--                <div id="movieList" class="has-scrollbar has-scrollbar-y">-->
-                    <ul>
-                        <li><a href="#" class="ml-3" th:onclick="" >웡카</a></li>
-                        <li><a href="#" class="ml-3" th:onclick="" >시민덕희</a></li>
-                        <li><a href="#" class="ml-3" th:onclick="" >외계+인 2부</a></li>
-                        <li><a href="#" class="ml-3" th:onclick="" >추락의 해부</a></li>
-                    </ul>
-                </div>
-            </div>
-
-
-        <div id="cinema" class="col-body ml-6" style="width: 300px;">
-            <div><h2>극장</h2></div>
-            <div id="cinema1" class="col-body" style="height: 400px; width: 280px;">
-                <div id="cinema2" class="ml-2 mt-2">
-                    <a href="#" th:onclick="" >전체 </a>
-                    <a href="#" class="ml-2" th:onclick="" >자주가는극장</a>
-                </div>
-                <div id="locationAndCinemaList">
-                    <ul id="locationList" >지역
-                        <li><a href="#" th:onclick="" >서울 </a></li>
-                        <li><a href="#" th:onclick="" >경기 </a></li>
-                    </ul>
-                    <ul id="cinemaList">극장
-                        <li><a href="#" th:onclick="" >강남 </a></li>
-                        <li><a href="#" th:onclick="" >강변 </a></li>
+                <div id="movie2" class="ml-3 mt-2">
+                    <button th:onclick="movieByRationg()" >예매율순 </button>
+                    <button th:onclick="movieByAlphabetically()" class="ml-2">가나다순</button>
+                    <ul id="movieList" class="mt-2">
+                        <li><a href="#" th:onclick="selectedMovie('웡카')" >웡카</a></li>
+                        <li><a href="#" th:onclick="selectedMovie('시민덕희')" >시민덕희</a></li>
+                        <li><a href="#" th:onclick="selectedMovie('외계+인 2부')" >외계+인 2부</a></li>
+                        <li><a href="#" th:onclick="selectedMovie('추락의 해부')" >추락의 해부</a></li>
+                        <li><a href="#" th:onclick="selectedMovie('도그데이즈')" >도그데이즈</a></li>
+                        <li><a href="#" th:onclick="selectedMovie('듄-파트2')" >듄-파트2</a></li>
+                        <li><a href="#" th:onclick="selectedMovie('파묘')" >파묘</a></li>
+                        <li><a href="#" th:onclick="selectedMovie('소풍')" >소풍</a></li>
+                        <li><a href="#" th:onclick="selectedMovie('아가일')" >아가일</a></li>
+                        <li><a href="#" th:onclick="selectedMovie('서울의봄')" >서울의봄</a></li>
+                        <li><a href="#" th:onclick="selectedMovie('건국전쟁')" >건국전쟁</a></li>
+                        <li><a href="#" th:onclick="selectedMovie('검은소년')" >검은소년</a></li>
+                        <li><a href="#" th:onclick="selectedMovie('기적의시작')" >기적의시작</a></li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <div id="date" class="ml-6" style="width: 300px;">
+        <div id="cinema" class="col-body ml-6" style="width: 300px;">
+            <div><h2>극장</h2></div>
+            <div id="cinema1" class="col-body" style="height: 400px; width: 280px;">
+                <div id="cinema2" class="ml-2 mt-2">
+                    <a href="#" th:onclick="cinemaAll()" >전체 </a>
+                    <a href="#" class="ml-6" th:onclick="cinemaLike()" >자주가는극장</a>
+                </div>
+                <div id="locationAndCinemaList" style="display: flex;">
+                    <ul id="locationList" class="ml-2 mt-2">
+                        <li><a href="#" th:onclick="showRegion('seoul')">서울</a></li>
+                        <li><a href="#" th:onclick="showRegion('gyeonggi')">경기</a></li>
+                        <li><a href="#" th:onclick="showRegion('incheon')">인천</a></li>
+                    </ul>
+                    <div id="cinemaList" class="mt-2">
+                        <div id="seoulCinema" class="hidden">
+                            <ul>
+                                <li><a href="#" th:onclick="selectedCinema('강남')">강남</a></li>
+                                <li><a href="#" th:onclick="selectedCinema('건대입구')">건대입구</a></li>
+                                <li><a href="#" th:onclick="selectedCinema('명동')">명동</a></li>
+                                <li><a href="#" th:onclick="selectedCinema('송파')">송파</a></li>
+                                <li><a href="#" th:onclick="selectedCinema('영등포')">영등포</a></li>
+                                <li><a href="#" th:onclick="selectedCinema('홍대')">홍대</a></li>
+                            </ul>
+                        </div>
+                        <div id="gyeonggiCinema" class="hidden">
+                            <ul>
+                                <li><a href="#" th:onclick="selectedCinema('구리')">구리</a></li>
+                                <li><a href="#" th:onclick="selectedCinema('김포')">김포</a></li>
+                                <li><a href="#" th:onclick="selectedCinema('부천')">부천</a></li>
+                                <li><a href="#" th:onclick="selectedCinema('안산')">안산</a></li>
+                                <li><a href="#" th:onclick="selectedCinema('용인')">용인</a></li>
+                                <li><a href="#" th:onclick="selectedCinema('판교')">판교</a></li>
+                            </ul>
+                        </div>
+                        <div id="incheonCinema" class="hidden">
+                            <ul>
+                                <li><a href="#" th:onclick="selectedCinema('부평')">부평</a></li>
+                                <li><a href="#" th:onclick="selectedCinema('인천')">인천</a></li>
+                                <li><a href="#" th:onclick="selectedCinema('청라')">청라</a></li>
+                            </ul>
+                        </div>
+                        <div id="frequentCinema" class="hidden">
+                            <ul>
+                                <li><a href="#" th:onclick="">극장1</a></li>
+                                <li><a href="#" th:onclick="">극장2</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="date" class="col-body ml-6" style="width: 300px;">
             <div><h2>날짜</h2></div>
             <div id="date1" class="col-body" style="height: 400px; width: 280px;">
                 <div id="date2" class="ml-3 mt-2">
                     <div class="text-5xl flex justify-center">2024 </div>
-                    <div class="text-4xl flex justify-center">2월 </div>
                 </div>
                 <div id="dateList" style="margin-left: 100px;">
-                    <ul>
-                        <li><a href="#" th:onclick="" >토 10</a></li>
-                        <li><a href="#" th:onclick="" >일 11</a></li>
-                        <li><a href="#" th:onclick="" >월 12</a></li>
-                        <li><a href="#" th:onclick="" >화 13</a></li>
-                        <li><a href="#" th:onclick="" >수 14</a></li>
-                        <li><a href="#" th:onclick="" >목 15</a></li>
-                        <li><a href="#" th:onclick="" >금 16</a></li>
-                        <li><a href="#" th:onclick="" >토 17</a></li>
-                        <li><a href="#" th:onclick="" >일 18</a></li>
-                        <li><a href="#" th:onclick="" >월 19</a></li>
-                        <li><a href="#" th:onclick="" >화 20</a></li>
-                        <li><a href="#" th:onclick="" >수 21</a></li>
-                        <li><a href="#" th:onclick="" >목 22</a></li>
-                        <li><a href="#" th:onclick="" >금 23</a></li>
-                        <li><a href="#" th:onclick="" >토 24</a></li>
-                        <li><a href="#" th:onclick="" >일 25</a></li>
+                    <div class="text-4xl flex justify-center" style="margin-left: -60px; margin-top: 1px;">2월 </div>
+                    <ul class="ml-7" id="dateUl">
+                        <!-- 2월 -->
                     </ul>
+<!--                    <div class="text-4xl flex justify-center" style="margin-left: -60px; margin-top: 1px;">3월 </div>-->
+<!--                    <ul class="ml-7" id="dateUl1">-->
+<!--                        &lt;!&ndash; 3월 &ndash;&gt;-->
+<!--                    </ul>-->
                 </div>
             </div>
         </div>
@@ -91,22 +118,63 @@
             <div><h2>시간</h2></div>
             <div id="time1" class="col-body" style="height: 400px; width: 280px;">
                 <div id="timeList" class="ml-3 mt-2">
-                    <a href="#" th:onclick="15" >15:00 </a>
-                    <a href="#" style="margin-left: 5px" th:onclick="17" >17:00 </a>
-                    <a href="#" style="margin-left: 5px" th:onclick="20" >20:00 </a>
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <span class="time">
+                                    <span>9:00</span>
+                                </span>
+                                <span class="count">19석</span>
+                                <div class="endTime">종료시간 11:00</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="time">
+                                    <span>15:00</span>
+                                </span>
+                                <span class="count">23석</span>
+                                <div class="endTime">종료시간 17:00</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="time">
+                                    <span>17:00</span>
+                                </span>
+                                <span class="count">31석</span>
+                                <div class="endTime">종료시간 19:00</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="time">
+                                    <span>19:00</span>
+                                </span>
+                                <span class="count">4석</span>
+                                <div class="endTime">종료시간 21:00</div>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
 
+        <div id="movieSelect">
+            <br><br>
+            <div id="movieSelectionText">영화선택</div>
+            <div id="selectedMovie"></div>
+        </div>
+        <div id="cinemaSelect">
+            <br><br>
+            <div id="cinemaSelectionText">극장선택</div>
+            <div id="selectedCinema"></div>
+        </div>
     </div>
-    <div id="movieSelect" style="width: 100px; height: 100px;" th:placeholder="영화선택">
-        <div th:style="mr-auto" th:placeholder="영화선택"></div>
-    </div>
-
 
 
 </div>
-<script layout:fragment="script">
-</script>
+
+<script layout:fragment="script" th:src="@{/js/reservation/reservation.js}"></script>
 
 </html>

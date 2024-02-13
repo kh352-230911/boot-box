@@ -1,6 +1,3 @@
-/*div#cinemaReservation {*/
-/*    display: inline-grid;*/
-/*}*/
 hr {
     background-color: #ff3939;
     border: 0;
@@ -32,7 +29,10 @@ div#date
 div#time
 {
     background-color : #d6d5d2;
+    margin-bottom: 5px;
 }
+
+/* 영화 */
 div.movieSelect
 {
     background-color: darkgrey;
@@ -45,16 +45,19 @@ ul
     width: 130px;
     height: 28px;
 }
-div#dateList
+ul#movieList
 {
     overflow: scroll;
     width: 150px;
-    height: 210px;
+    height: 300px;
     -ms-overflow-style: none;
 }
-div#dateList::-webkit-scrollbar{
+ul#movieList::-webkit-scrollbar
+{
     display:none;
 }
+
+/* 극장 */
 div#cinemaList
 {
     overflow: scroll;
@@ -62,16 +65,104 @@ div#cinemaList
     height: 210px;
     -ms-overflow-style: none;
 }
-div#cinemaList::-webkit-scrollbar{
+div#cinemaList::-webkit-scrollbar
+{
     display:none;
 }
 div#locationAndCinemaList
 {
     height: 300px;
 }
-/*.col-body*/
-/*{*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*}*/
+#locationList li
+{
+    cursor: pointer;
+}
+
+#locationList li.active
+{
+    font-weight: bold;
+}
+
+#cinemaList
+{
+    margin-left: -30px;
+}
+
+.hidden
+{
+    display: none;
+}
+
+/* 날짜 */
+div#dateList
+{
+    overflow: scroll;
+    width: 150px;
+    height: 265px;
+    -ms-overflow-style: none;
+}
+div#dateList::-webkit-scrollbar
+{
+    display:none;
+}
+div#dateList1
+{
+    overflow: scroll;
+    width: 150px;
+    height: 265px;
+    -ms-overflow-style: none;
+}
+div#dateList1::-webkit-scrollbar
+{
+    display:none;
+}
+
+/* 시간 */
+.endTime
+{
+    display: none;
+}
+li:hover .endTime
+{
+    display: block;
+    color: teal;
+    font-size: medium;
+    margin-left: 5px;
+}
+
+/* 선택한 정보 */
+/* 영화 */
+#movieSelect
+{
+    margin-left: 30px;
+    width: 300px;
+    height: 150px;
+}
+#movieSelectionText
+{
+    text-align: center;
+    font-size: x-large;
+}
+#selectedMovie
+{
+    text-align: center;
+    font-size: x-large;
+}
+
+/* 극장 */
+#cinemaSelect
+{
+    margin-left: 30px;
+    width: 300px;
+    height: 150px;
+}
+#cinemaSelectionText
+{
+    text-align: center;
+    font-size: x-large;
+}
+#selectedCinema
+{
+    text-align: center;
+    font-size: x-large;
+}
