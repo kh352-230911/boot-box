@@ -57,7 +57,8 @@ public class Movie {
     @Builder.Default
     private List<Schedule> schedules = new ArrayList<>();
 
-    @OneToMany(mappedBy = "movie")
+    @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
+    @Builder.Default
     private List<Review> reviews = new ArrayList<>();
 
     public void addReview(Review review) {
