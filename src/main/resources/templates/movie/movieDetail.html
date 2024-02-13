@@ -55,9 +55,9 @@
                                                movie.filmRatings.name() == 'NONE' ? '등급 없음' : '등급 없음'}|"></div>
                         <div class="movie_des" th:text="${movie.summary}">
                             줄거리
-                            <div class="movie_action">
-                                <button class="movie_button">예매하기</button>
-                            </div>
+                        </div>
+                        <div class="movie_action">
+                            <button class="movie_button" th:onclick="|location.href = '@{/reservation/reservationMain.do}'|">예매하기</button>
                         </div>
                     </div>
 
