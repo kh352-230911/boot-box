@@ -1,8 +1,10 @@
 package com.sh.app.review.entity;
 
+import com.sh.app.member.entity.Member;
 import com.sh.app.movie.entity.Movie;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.CurrentTimestamp;
 
 import java.time.LocalDateTime;
@@ -27,16 +29,19 @@ public class Review {
     @Column(nullable = false)
     private String reservationId; // fk-예약아이디
     @Column(nullable = false)
-    private Long memberId; // fk-회원아이디
-    @Column(nullable = false)
-    private double reviewScore; // 리뷰평점
+    private int reviewScore; // 리뷰평점
     @Column(nullable = false)
     private String reviewDetail; // 리뷰내용
-    @Column(nullable = false)
-    @CurrentTimestamp
+    @CreationTimestamp
     private LocalDateTime reviewCreatedAt; // 리뷰작성날짜
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "movie_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "movie_id") // movie.movie_id 컬럼지정
     private Movie movie;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id") // movie.member_id 컬럼지정
+    private Member member;
+
+
 }

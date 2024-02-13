@@ -9,8 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
+
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -28,6 +28,7 @@ public class MovieService {
         return movieRepository.findById(id)
                 .map((movie) -> convertToMovieDetailDto(movie))
                 .orElseThrow();
+
     }
 
     private MovieDetailDto convertToMovieDetailDto(Movie movie) {
