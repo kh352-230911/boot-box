@@ -13,12 +13,12 @@ public interface CinemaRepository extends JpaRepository<Cinema, Long>{
     @Query("from Cinema c where c.region_cinema like '%' || :name || '%'")
     List<Cinema> findByNameContaining(String name);
 
-<<<<<<< HEAD
+
     List<Cinema> findByLocationId(Long locationId);
-=======
+
     @Query("from Cinema c left join fetch c.location")
     Page<Cinema> findAll(Pageable pageable);
->>>>>>> 1b6b4f080b44550d25f13efbd053eefae71a70d8
+
 
 
 }

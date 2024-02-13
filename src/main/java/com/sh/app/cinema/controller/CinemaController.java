@@ -1,10 +1,9 @@
 package com.sh.app.cinema.controller;
 
-<<<<<<< HEAD
+
 import com.sh.app.cinema.dto.CinemaDetailsDTO;
-=======
 import com.sh.app.cinema.dto.CinemaDto;
->>>>>>> 1b6b4f080b44550d25f13efbd053eefae71a70d8
+
 import com.sh.app.cinema.service.CinemaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
