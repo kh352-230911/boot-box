@@ -85,33 +85,35 @@
                 <!-- review -->
                 <div class="text-2xl">Review</div>
                 <br>
-                <figure class="max-w-screen-md">
-                    <ul class="m-2 movie_stars">
-                        <li class="movie_star rated">
-                            <i class="fa-solid fa-star"></i>
-                        </li>
-                        <li class="movie_star rated">
-                            <i class="fa-solid fa-star"></i>
-                        </li>
-                        <li class="movie_star rated">
-                            <i class="fa-solid fa-star"></i>
-                        </li>
-                        <li class="movie_star rated">
-                            <i class="fa-solid fa-star"></i>
-                        </li>
-                        <li class="movie_star"><i class="fa-solid fa-star"></i></li>
-                    </ul>
-                    <blockquote>
-                        <p class="m-2 text-xl font-semibold text-white dark:text-white">"Flowbite is just awesome. It contains tons of predesigned components and pages starting from login screen to complex dashboard. Perfect choice for your next SaaS application."</p>
-                    </blockquote>
-                    <figcaption class="mx-2 flex items-center mt-6 space-x-3 rtl:space-x-reverse">
-                        <img class="w-6 h-6 rounded-full" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png" alt="profile picture">
-                        <div class="flex items-center divide-x-2 rtl:divide-x-reverse divide-gray-300 dark:divide-gray-700">
-                            <cite class="pe-3 font-medium text-white">UserName</cite>
-                            <cite class="ps-3 text-sm text-gray-500 dark:text-gray-400">ID</cite>
-                        </div>
-                    </figcaption>
-                </figure>
+                <div th:each="review, status : ${movie.reviews}">
+                    <figure class="max-w-screen-md ">
+                        <ul class="m-2 movie_stars">
+                            <li class="movie_star rated">
+                                <i class="fa-solid fa-star"></i>
+                            </li>
+                            <li class="movie_star rated">
+                                <i class="fa-solid fa-star"></i>
+                            </li>
+                            <li class="movie_star rated">
+                                <i class="fa-solid fa-star"></i>
+                            </li>
+                            <li class="movie_star rated">
+                                <i class="fa-solid fa-star"></i>
+                            </li>
+                            <li class="movie_star"><i class="fa-solid fa-star"></i></li>
+                        </ul>
+                        <blockquote class="shadow-2xl shadow-red-100/50">
+                                <p class="m-2 text-xl font-semibold text-white dark:text-white" th:text="${review.reviewDetail}">"Flowbite is just awesome. It contains tons of predesigned components and pages starting from login screen to complex dashboard. Perfect choice for your next SaaS application."</p>
+                                <figcaption class="mx-2 flex items-center mt-6 space-x-3 rtl:space-x-reverse">
+                                    <img class="w-6 h-6 rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSokjeTAtRKHg0qff0jJb9jRcB9_MGXYOrulw&usqp=CAU" alt="profile picture">
+                                    <div class="flex items-center divide-x-2 rtl:divide-x-reverse divide-gray-300 dark:divide-gray-700">
+                                        <cite class="pe-3 font-medium text-white" th:text="${review.member.memberName}">UserName</cite>
+                                        <cite class="ps-3 text-sm text-gray-500 dark:text-gray-400" th:text="${review.member.memberLoginId}">ID</cite>
+                                    </div>
+                                </figcaption>
+                        </blockquote>
+                    </figure>
+                </div>
             </main>
         </div>
     </div>

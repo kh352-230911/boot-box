@@ -31,11 +31,13 @@ insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,membe
 values(seq_member_id.nextVal, 'less','1234','leess@naver.com','이순신','01013225521','1989');
 --
 -- admin
+
 insert into ADMIN values (seq_admin_id.nextval, 0201, 'adm220932', '1234');
 insert into ADMIN values (seq_admin_id.nextval, 03101, 'adm650704', '1234');
 insert into Admin values (seq_admin_id.nextval, 03201, 'adm392258', '1234');
 insert into ADMIN values (seq_admin_id.nextval, 04201, 'adm852542', '1234');
 insert into ADMIN values (seq_admin_id.nextval, 05101, 'adm724198', '1234');
+
 insert into ADMIN values (seq_admin_id.nextval, null, 'adm322100', '1234');
 --
 -- authority
@@ -145,7 +147,9 @@ insert into
 values (8, '정글번치-월드투어', 'ALL', '2024.01.31', 89,
         'http://h.vod.cgv.co.kr/vodCGVa/87972/87972_222612_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87972/87972_1000.jpg',
         '로랑 브루', '석승훈, 정해은, 장병관, 박시윤', '정글에 부글부글 거품 폭탄이?! 두더지 악당의 습격으로 폭발 위기에 처한 정글! 정글을 구해야만 해! 정글을 구하려면
+
       전설의 ‘알버트’ 박사를 찾아서 해독제를 만들어야 해! 눈보라 산, 사막, 비밀 동굴,
+
       대나무 숲까지 전 세계로 떠난 정글번치! 과연 두더지 악당의 추격을 피해 박사를 찾고 정글을 구할 수 있을까? 올 겨울방학, 정글 구하는 김에 세계일주 가자고!!',
         1.6);
 insert into
@@ -219,11 +223,13 @@ insert into MEMBER_LIKE_GENRE values (seq_member_like_genre_id.nextval, 4, 3);
 insert into MEMBER_LIKE_GENRE values (seq_member_like_genre_id.nextval, 5, 2);
 --
 -- member_like_cinema
+
 insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 1, 0201, 03101, 03201);
 insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 2, 0201, null, null);
 insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 3, 03101, 05101, null);
 insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 4, 04201, null, null);
 insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 5, 03101, 03201, 05101);
+
 --
 -- ask
 insert into ASK values (seq_ask_id.nextval, 1, '예매 취소 및 환불', '예매 취소 및 환불 규정은 어떻게 되나요?', default);
@@ -291,6 +297,7 @@ insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 4, 12000, 'card');
 insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 5, 12000, 'card');
 --
 -- movie_list
+
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 1, 0201);
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 1, 03101);
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 2, 03101);
@@ -301,6 +308,7 @@ insert into MOVIE_LIST values (seq_movie_list_id.nextval, 3, 05101);
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 4, 03201);
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 4, 0201);
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 5, 05101);
+
 --
 -- review
 insert into REVIEW values (seq_review_id.nextval, 'box16443', 1, 1, 3, '너무 지루해요', default);

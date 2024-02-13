@@ -1,12 +1,11 @@
 package com.sh.app.review.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.sh.app.member.entity.Member;
+import com.sh.app.movie.entity.Movie;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.CurrentTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -16,13 +15,33 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(exclude = "movie")
 public class Review {
     @Id
+    @GeneratedValue(generator = "seq_review_id_generator")
+    @SequenceGenerator(
+            name = "seq_review_id_generator",
+            sequenceName = "seq_review_id",
+            initialValue = 1,
+            allocationSize = 1
+    )
     private Long id;
+    @Column(nullable = false)
     private String reservationId; // fk-예약아이디
-    private Long memberId; // fk-회원아이디
+    @Column(nullable = false)
     private int reviewScore; // 리뷰평점
+    @Column(nullable = false)
     private String reviewDetail; // 리뷰내용
+    @CreationTimestamp
     private LocalDateTime reviewCreatedAt; // 리뷰작성날짜
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "movie_id") // movie.movie_id 컬럼지정
+    private Movie movie;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id") // movie.member_id 컬럼지정
+    private Member member;
+
 
 }

@@ -33,7 +33,6 @@
         <div class="container">
             <div class="content-container">
                 <div class="featured-content" style="background:linear-gradient(to bottom, rgba(0,0,0,0),#151515), url('https://cdn.womaneconomy.co.kr/news/photo/202301/215138_421317_3746.jpg');">
-                    <!--                <img class="featured-title" src="https://www.bt.com/content/dam/bt/portal/images/articles/tv/TV%20Film%20Venom%20hero.jpg/jcr:content/renditions/landscape-desktop.764.430.jpg" alt="">-->
                     <h1 class="active">강남</h1>
                     <p class="featured-desc">
                     <ul>
@@ -95,23 +94,39 @@
                         <i class="fas fa-chevron-right arrow"></i>
                     </div>
                 </div>
-                <div class="movie-list-container">
-                    <h2>상영 예정작</h2>
-                    <div class="movie-list-wrapper">
-                        <div class="movie-list">
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="https://search.pstatic.net/common?type=o&size=176x264&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20240125_47%2F1706183862774dy9yd_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2" alt="">
-                                <span class="movie-list-item-title">귀멸의 칼날:인연의 기적</span>
-                                <button class="movie-list-item-button">예매하기</button>
-                            </div>
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="https://search.pstatic.net/common?type=o&size=176x264&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20240125_91%2F1706161641964k2jXp_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2" alt="">
-                                <span class="movie-list-item-title">우견니</span>
-                                <button class="movie-list-item-button">예매하기</button>
-                            </div>
-                        </div>
-                        <i class="fas fa-chevron-right arrow"></i>
-                    </div>
+<!--                <div class="movie-list-container">-->
+<!--                    <h2>상영 예정작</h2>-->
+<!--                    <div class="movie-list-wrapper">-->
+<!--                        <div class="movie-list">-->
+<!--                            <div class="movie-list-item">-->
+<!--                                <img class="movie-list-item-img" src="https://search.pstatic.net/common?type=o&size=176x264&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20240125_47%2F1706183862774dy9yd_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2" alt="">-->
+<!--                                <span class="movie-list-item-title">귀멸의 칼날:인연의 기적</span>-->
+<!--                                <button class="movie-list-item-button">예매하기</button>-->
+<!--                            </div>-->
+<!--                            <div class="movie-list-item">-->
+<!--                                <img class="movie-list-item-img" src="https://search.pstatic.net/common?type=o&size=176x264&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20240125_91%2F1706161641964k2jXp_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2" alt="">-->
+<!--                                <span class="movie-list-item-title">우견니</span>-->
+<!--                                <button class="movie-list-item-button">예매하기</button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <i class="fas fa-chevron-right arrow"></i>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <!-- 한 줄 달력 일정 추가 -->
+                <div class="month-and-selection">
+                    <div class="month" id="month"></div>
+                </div>
+                <div class="calendar-container">
+                    <div>선택한 날짜</div>
+                    <div class="selected-date" id="selectedDate"></div>
+                    <div class="arrow" id="prev">&#9664;</div>
+                    <ul class="calendar" id="calendar"></ul>
+                    <div class="arrow" id="next">&#9654;</div>
+                    <button class="today-btn" id="today">Today</button>
+                </div>
+                <div class="schedule-container">
+                    <!-- 영화, 상영관, 상영일정, 좌석 정보 추가 -->
+                    <div id="movieSchedule"></div>
                 </div>
             </div>
         </div>
