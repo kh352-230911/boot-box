@@ -19,7 +19,7 @@ import java.util.List;
 public class Cinema implements Comparable<Cinema>{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private Long id;
     @Column(nullable = false, unique = true)
     private String region_cinema;
