@@ -5,6 +5,7 @@ import com.sh.app.movie.entity.Movie;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.CurrentTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
 @ToString(exclude = "movie")
 public class Review {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_review_id_generator")
+    @GeneratedValue(generator = "seq_review_id_generator")
     @SequenceGenerator(
             name = "seq_review_id_generator",
             sequenceName = "seq_review_id",
@@ -28,10 +29,6 @@ public class Review {
     @Column(nullable = false)
     private String reservationId; // fk-예약아이디
     @Column(nullable = false)
-//    private long memberId; // fk-회원아이디
-//    @Column(nullable = false)
-//    private long movieId; // fk-영화아이디
-//    @Column(nullable = false)
     private int reviewScore; // 리뷰평점
     @Column(nullable = false)
     private String reviewDetail; // 리뷰내용
@@ -45,5 +42,6 @@ public class Review {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id") // movie.member_id 컬럼지정
     private Member member;
+
 
 }

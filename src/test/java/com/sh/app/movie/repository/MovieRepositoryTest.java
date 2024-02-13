@@ -4,13 +4,13 @@ import com.sh.app.genre.entity.Genre;
 import com.sh.app.genre.repository.GenreRepository;
 import com.sh.app.movie.entity.Movie;
 import com.sh.app.movie.entity.Rating;
-import org.junit.jupiter.api.Disabled;
+import com.sh.app.review.entity.Review;
+import com.sh.app.review.repository.ReviewRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,9 +25,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class MovieRepositoryTest {
     @Autowired
-    MovieRepository movieRepository;
+    private MovieRepository movieRepository;
     @Autowired
-    GenreRepository genreRepository;
+    private GenreRepository genreRepository;
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     @DisplayName("영화 전체 조회")
     @Test
@@ -61,7 +63,7 @@ public class MovieRepositoryTest {
                         .poster("http://file.koreafilm.or.kr/thm/02/99/18/28/tn_DPK021526.jpg")
                         .director("박영주").actor("라미란").summary("내 돈을 사기 친 그 놈이 구조 요청을 해왔다!")
                         .advanceReservation(99).build(),
-                Movie.builder().title("외계인2").filmRatings(Rating.FIFTEEN).releaseDate("2024.01.10").runningTime(122)
+                Movie.builder().title("외계인2").filmRatings(Rating.ALL).releaseDate("2024.01.10").runningTime(122)
                         .trailer("https://tv.naver.com/v/44600469")
                         .poster("http://file.koreafilm.or.kr/thm/02/99/18/28/tn_DPK021526.jpg")
                         .director("류준열").actor("최동훈").summary("반드시 돌아가야한다. 모두를 지키기 위해!")
@@ -71,12 +73,12 @@ public class MovieRepositoryTest {
                         .poster("http://file.koreafilm.or.kr/thm/02/99/18/28/tn_DPK021526.jpg")
                         .director("김성수").actor("황정민").summary("1979년 12월 12일, 수도 서울 군사반란 발생 그날, 대한민국의 운명이 바뀌었다!")
                         .advanceReservation(96).build(),
-                Movie.builder().title("위시").filmRatings(Rating.EIGHTEEN).releaseDate("2024.01.03").runningTime(95)
+                Movie.builder().title("위시").filmRatings(Rating.ALL).releaseDate("2024.01.03").runningTime(95)
                         .trailer("https://www.kmdb.or.kr/trailer/trailerPlayPop?pFileNm=MK060515_P02.mp4")
                         .poster("http://file.koreafilm.or.kr/thm/02/99/18/28/tn_DPK021526.jpg")
                         .director("크리스벅").actor("아사이나").summary("디즈니 100주년 기념작!")
                         .advanceReservation(92).build(),
-                Movie.builder().title("추락의 해부").filmRatings(Rating.NONE).releaseDate("2024.01.31").runningTime(152)
+                Movie.builder().title("추락의 해부").filmRatings(Rating.FIFTEEN).releaseDate("2024.01.31").runningTime(152)
                         .trailer("https://www.kmdb.or.kr/trailer/trailerPlayPop?pFileNm=MK060515_P02.mp4")
                         .poster("http://file.koreafilm.or.kr/thm/02/99/18/28/tn_DPK021526.jpg")
                         .director("쥐스틴").actor("산드라").summary("1남편의 추락사로 한순간에 유력한 용의자로 지목된 유명 작가 ‘산드라’!")
@@ -85,7 +87,7 @@ public class MovieRepositoryTest {
         movies.forEach(movieRepository::save);
 
     }
-    @Disabled
+
     @DisplayName("영화 등록")
     @Test
     void test2() {
@@ -98,13 +100,13 @@ public class MovieRepositoryTest {
                 .summary("반드시 돌아가야한다. 모두를 지키기 위해!")
                 .actor("류준열").director("최동훈")
                 .advanceReservation(100)
-                .filmRatings(Rating.TWELVE)
+                .filmRatings(Rating.ALL)
                 .build();
 
         movie = movieRepository.save(movie);
         assertThat(movie.getId()).isNotNull().isNotZero();
     }
-    @Disabled
+
     @DisplayName("영화 수정")
     @Test
     void test3() {
@@ -114,7 +116,7 @@ public class MovieRepositoryTest {
                 .releaseDate("2024.01.10")
                 .runningTime(122)
                 .advanceReservation(100)
-                .filmRatings(Rating.EIGHTEEN)
+                .filmRatings(Rating.ALL)
                 .build();
 
         movieRepository.save(movie);
@@ -138,7 +140,7 @@ public class MovieRepositoryTest {
                     assertThat(_movie.getFilmRatings()).isEqualTo(newRating);
                 });
     }
-    @Disabled
+
     @DisplayName("영화 삭제")
     @Test
     void test4() {
@@ -187,15 +189,15 @@ public class MovieRepositoryTest {
         genreRepository.save(genre1);
 
         Movie movie = Movie.builder().title("웡카").filmRatings(Rating.ALL).releaseDate("2024.01.31").runningTime(116)
-                        .trailer("https://www.kmdb.or.kr/trailer/trailerPlayPop?pFileNm=MK060560_P02.mp4")
-                        .poster("http://file.koreafilm.or.kr/thm/02/99/18/30/tn_DPF028589.jpg")
-                        .director("폴 킹").actor("티모시 샬라메").summary("세상에서 가장 달콤한 여정 좋은 일은 모두 꿈에서부터 시작된다!")
-                        .advanceReservation(98).build();
-        Movie movie1 = Movie.builder().title("시민덕희").filmRatings(Rating.TWELVE).releaseDate("2024.01.24").runningTime(114)
-                        .trailer("https://www.kmdb.or.kr/trailer/trailerPlayPop?pFileNm=MK060515_P02.mp4")
-                        .poster("http://file.koreafilm.or.kr/thm/02/99/18/28/tn_DPK021526.jpg")
-                        .director("박영주").actor("라미란").summary("내 돈을 사기 친 그 놈이 구조 요청을 해왔다!")
-                        .advanceReservation(99).build();
+                .trailer("https://www.kmdb.or.kr/trailer/trailerPlayPop?pFileNm=MK060560_P02.mp4")
+                .poster("http://file.koreafilm.or.kr/thm/02/99/18/30/tn_DPF028589.jpg")
+                .director("폴 킹").actor("티모시 샬라메").summary("세상에서 가장 달콤한 여정 좋은 일은 모두 꿈에서부터 시작된다!")
+                .advanceReservation(98).build();
+        Movie movie1 = Movie.builder().title("시민덕희").filmRatings(Rating.FIFTEEN).releaseDate("2024.01.24").runningTime(114)
+                .trailer("https://www.kmdb.or.kr/trailer/trailerPlayPop?pFileNm=MK060515_P02.mp4")
+                .poster("http://file.koreafilm.or.kr/thm/02/99/18/28/tn_DPK021526.jpg")
+                .director("박영주").actor("라미란").summary("내 돈을 사기 친 그 놈이 구조 요청을 해왔다!")
+                .advanceReservation(99).build();
 
 
         System.out.println(genre);
@@ -232,10 +234,48 @@ public class MovieRepositoryTest {
                     assertThat(movie.getTitle().contains(title));
                 }));
     }
-    @DisplayName("영화상세페이지에서 관람평 조회와 함께 회원 이름도 조회된다.")
+    @DisplayName("영화상세페이지에 관람평 조회")
     @Test
     void test8() {
 
     }
 
+//    @DisplayName("영화 별 별점 평균을 확인 할 수 있다.")
+//    @Test
+//    void test9() {
+//        // given
+//        Movie movie = Movie.builder()
+//                .id(10L)
+//                .title("외계인")
+//                .poster("resources/static/images/외계인2부.jpg")
+//                .trailer("https://tv.naver.com/v/44600469")
+//                .releaseDate("2024.01.10")
+//                .runningTime(122)
+//                .summary("반드시 돌아가야한다. 모두를 지키기 위해!")
+//                .actor("류준열").director("최동훈")
+//                .advanceReservation(100)
+//                .filmRatings(Rating.ALL)
+//                .build();
+//        movieRepository.save(movie);
+//
+//        List<Review> reviews = Arrays.asList(
+//                Review.builder()
+//                        .reservationId("box16243")
+//                        .memberId(1L)
+//                        .reviewScore(3.0)
+//                        .reviewDetail("너무 지루해요")
+//                        .build(),
+//                Review.builder()
+//                        .reservationId("box23322")
+//                        .memberId(1L)
+//                        .reviewScore(4.0)
+//                        .reviewDetail("최고")
+//                        .build()
+//        );
+//        reviews.forEach(reviewRepository::save);
+//        // when
+//        Movie movie1 = (Movie) movieRepository.findFirst5ByOrderByAdvanceReservationByReviewScore();
+//        System.out.println(movie1);
+        // then
+    }
 }

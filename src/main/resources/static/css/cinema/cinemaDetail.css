@@ -288,3 +288,117 @@ footer.active {
         font-size: 75px;
     }
 }
+
+/*영화, 상영관, 상영일정, 좌석정보*/
+.schedule-container {
+    width: 80%;
+    margin: 0 auto;
+    background-color: #000;
+    color: #fff;
+    padding: 20px;
+}
+
+.movie-schedule {
+    margin-bottom: 20px;
+    border: 1px solid #fff;
+    padding: 10px;
+}
+
+.movie-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.theater-info {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.time-slot {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid #fff;
+    background-color: #333;
+}
+
+.seats-available {
+    color: #fff;
+    font-size: 0.8em;
+}
+
+/*한줄달력*/
+.calendar-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.month-and-selection {
+    display: flex;
+    align-items: center;
+}
+.month {
+    text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 5px;
+    flex-grow: 1;
+}
+.selected-date {
+    font-size: 1.2em;
+    margin-left: 20px;
+    padding: 5px;
+    background-color: #d9534f;
+    border-radius: 4px;
+    color: white;
+}
+.calendar {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0 10px;
+    background-color: #333;
+}
+.calendar li {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    padding: 0;
+    text-align: center;
+    color: white;
+    border-right: 1px solid #555;
+}
+.calendar li:not(.disabled) {
+    cursor: pointer;
+}
+.calendar li.disabled {
+    color: #555;
+}
+
+.calendar li.today {
+    background-color: #555;
+    color: white; /* Ensures text color is white */
+    border-radius: 4px;
+}
+
+.calendar .today, .calendar li:not(.disabled):hover {
+    background-color: #666;
+    color: white;
+    border-radius: 4px;
+}
+.arrow, .today-btn {
+    cursor: pointer;
+    user-select: none;
+    font-size: 1.5em;
+    margin: 0 5px;
+}
+.today-btn {
+    background-color: #555;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 1em;
+    line-height: 30px;
+    height: 50px;
+}

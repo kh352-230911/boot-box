@@ -1,7 +1,11 @@
 package com.sh.app;
 
+import com.sh.app.movie.dto.MovieListDto;
 import com.sh.app.movie.entity.Movie;
 import com.sh.app.movie.service.MovieService;
+import com.sh.app.review.entity.Review;
+import com.sh.app.review.repository.ReviewRepository;
+import com.sh.app.review.service.ReviewService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,14 +18,21 @@ import java.util.List;
 @Slf4j
 public class HomeController {
     @Autowired
-    MovieService movieService;
+    private MovieService movieService;
+    @Autowired
+    private ReviewService reviewService;
 
     @GetMapping("/")
-    public String home(Model model) {
-        List<Movie> movies = movieService.findFirst5ByOrderByAdvanceReservation();
-        log.debug("movies = {}", movies);
-
-        model.addAttribute("movies", movies);
+    public String home(String search, Model model) {
+        List<MovieListDto> movieListDtos;
+        if(search == null) {
+            movieListDtos = movieService.findFirst5ByOrderByAdvanceReservation();
+        }
+        else {
+            movieListDtos = movieService.findByTitleContaining(search);
+        }
+        log.debug("movies = {}", movieListDtos);
+        model.addAttribute("movies", movieListDtos);
         return "index";
     }
 

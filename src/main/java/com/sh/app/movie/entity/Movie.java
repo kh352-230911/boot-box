@@ -53,7 +53,7 @@ public class Movie {
             this.genres.add(genre);
     }
 
-    @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
     @Builder.Default
     private List<Schedule> schedules = new ArrayList<>();
 
@@ -61,4 +61,8 @@ public class Movie {
     @Builder.Default
     private List<Review> reviews = new ArrayList<>();
 
+    public void addReview(Review review) {
+        review.setMovie(this);
+        this.reviews.add(review);
+    }
 }

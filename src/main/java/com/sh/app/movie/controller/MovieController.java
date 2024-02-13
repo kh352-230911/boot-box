@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.awt.print.Pageable;
 import java.util.List;
@@ -44,14 +45,19 @@ public class MovieController {
     // ------------------------------------------ //
 
     // 정호
-
     @GetMapping("/movieList.do")
-    public void movieList(Model model) {
-        List<Movie> movies = movieService.findAll();
-        log.debug("movies = {}", movies);
+    public void movieList(String genre, Model model) {
+        log.debug("genre = {}", genre);
 
+        List<Movie> movies;
+        if (genre == null) {
+            movies = movieService.findAll();
+        }
+        else {
+            movies = movieService.findByGenreList(genre);
+        }
+        log.debug("movies = {}", movies);
         model.addAttribute("movies", movies);
     }
-
     // ------------------------------------------ //
 }
