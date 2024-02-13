@@ -1,5 +1,60 @@
 -- DML 작성
 
+-- member
+insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
+values(seq_member_id.nextVal, 'rhgPwls','1234','update_set@naver.com','고혜진','01012341234','1990') ;
+insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
+values(seq_member_id.nextVal, 'testUser','1234','testUser1234@naver.com','김테스트','01012345678','1993') ;
+insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
+values(seq_member_id.nextVal, 'sinsa','1234','sinsa@naver.com','신사임당','01011112222','1996');
+insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
+values(seq_member_id.nextVal, 'honggd','1234','honggd@naver.com','홍길동','01022221111','2000');
+insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
+values(seq_member_id.nextVal, 'less','1234','leess@naver.com','이순신','01013225521','1989');
+--
+-- location
+insert into LOCATION values (seq_location_id.nextval, '서울');
+insert into LOCATION values (seq_location_id.nextval, '경기');
+insert into LOCATION values (seq_location_id.nextval, '인천');
+insert into LOCATION values (seq_location_id.nextval, '대전/충청');
+insert into LOCATION values (seq_location_id.nextval, '부산/울산');
+--
+-- seat
+insert into SEAT values (seq_seat_id.nextval, 'A01');
+insert into SEAT values (seq_seat_id.nextval, 'B01');
+insert into SEAT values (seq_seat_id.nextval, 'C01');
+insert into SEAT values (seq_seat_id.nextval, 'D01');
+insert into SEAT values (seq_seat_id.nextval, 'E01');
+--
+-- cinema
+insert into CINEMA values (seq_cinema_id.nextval, 1, '강남점', 1, '서울특별시 강남구 강남대로 438', 127.02629392376384, 37.501674084777505, '1544-1122');
+insert into CINEMA values (seq_cinema_id.nextval, 2, '고양백석점', 1, '경기도 고양시 일산동구 백석동 1242', 126.78965179914998, 37.643461526992546, '1544-1122');
+insert into CINEMA values (seq_cinema_id.nextval, 3, '청라점', 1, '인천광역시 서구 청라동 155-7 스퀘어세븐', 126.64164011661255, 37.53237333861732, '1544-1122');
+insert into CINEMA values (seq_cinema_id.nextval, 4, '대전점', 1, '대전광역시 중구 문화동 1-16', 127.40842431841456, 36.32061814895665, '1544-1122');
+insert into CINEMA values (seq_cinema_id.nextval, 5, '센텀시티점', 1, '부산광역시 해운대구 우동 1495번지 신세계센텀시티', 129.13033686916697 , 35.16911956001504, '1544-1122');
+--
+-- theater
+insert into THEATER values (seq_theater_id.nextval, 1, '1관', 60);
+insert into THEATER values (seq_theater_id.nextval, 2, '1관', 60);
+insert into THEATER values (seq_theater_id.nextval, 3, '1관', 60);
+insert into THEATER values (seq_theater_id.nextval, 4, '1관', 60);
+insert into THEATER values (seq_theater_id.nextval, 5, '1관', 60);
+--
+-- genre
+insert into GENRE values (seq_genre_id.nextval, '드라마');
+insert into GENRE values (seq_genre_id.nextval, '액션');
+insert into GENRE values (seq_genre_id.nextval, '코미디');
+insert into GENRE values (seq_genre_id.nextval, '판타지');
+insert into GENRE values (seq_genre_id.nextval, '범죄');
+insert into GENRE values (seq_genre_id.nextval, '멜로');
+insert into GENRE values (seq_genre_id.nextval, '느와르');
+insert into GENRE values (seq_genre_id.nextval, '스릴러');
+insert into GENRE values (seq_genre_id.nextval, '공포');
+insert into GENRE values (seq_genre_id.nextval, '전쟁');
+insert into GENRE values (seq_genre_id.nextval, '애니메이션');
+insert into GENRE values (seq_genre_id.nextval, '로맨스');
+insert into GENRE values (seq_genre_id.nextval, '호러');
+--
 -- movie
 insert into 
     movie 
@@ -107,19 +162,75 @@ values (14, '상견니 ', 'FIFTEEN', '2024.01.25', 107,
       'http://h.vod.cgv.co.kr/vodCGVa/86750/86750_211203_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000086/86750/86750_1000.jpg',
       '황천인', '가가연, 허광한, 시백우', '드라마 스토리를 영화 버전으로 확장시킨 멀티버스 판타지 로맨스 완전히 새로운 세계관, 완전히 새로운 스토리의 <상견니> 2009년, 리쯔웨이와 황위쉬안은 밀크티 가게에서 우연히 재회한다. 처음 만났지만 마치 오래전부터 알고 있었던 것 같은 기시감과 묘한 설렘을 느끼는 두 사람. 이들은 사계절을 함께 보내며 가까워지고, 2010년의 마지막 날, 함께 새해를 맞이하며 연인이 된다. 2017년, 황위쉬안의 인생에 예상치 못한 변화가 생긴다. 해외 발령을 받게 된 것. 황위쉬안은 이 제안을 받아들이고 새로운 여정을 시작하지만 이 선택은 그녀의 미래를 바꿀 뿐만 아니라, 리쯔웨이와 모쥔제, 그리고 그녀가 아직 모르는 천윈루의 운명까지 뒤바꿔 놓는데… 이제, 이들은 수없이 뒤엉킨 타임라인 속에서 서로를 구하기 위해 낡은 테이프 속 들려오는 노래 ‘라스트 댄스’를 따라 달려가기 시작한다.',
     0.2);
--- -- location
--- insert into LOCATION values (seq_location_id.nextval, '서울');
--- insert into LOCATION values (seq_location_id.nextval, '경기');
--- insert into LOCATION values (seq_location_id.nextval, '인천');
--- insert into LOCATION values (seq_location_id.nextval, '대전/충청');
--- insert into LOCATION values (seq_location_id.nextval, '부산/울산');
 --
--- -- cinema
--- insert into CINEMA values (seq_cinema_id.nextval, 1, '강남점', 1, '서울특별시 강남구 강남대로 438', 127.02629392376384, 37.501674084777505, '1544-1122');
--- insert into CINEMA values (seq_cinema_id.nextval, 2, '고양백석점', 1, '경기도 고양시 일산동구 백석동 1242', 126.78965179914998, 37.643461526992546, '1544-1122');
--- insert into CINEMA values (seq_cinema_id.nextval, 3, '청라점', 1, '인천광역시 서구 청라동 155-7 스퀘어세븐', 126.64164011661255, 37.53237333861732, '1544-1122');
--- insert into CINEMA values (seq_cinema_id.nextval, 4, '대전점', 1, '대전광역시 중구 문화동 1-16', 127.40842431841456, 36.32061814895665, '1544-1122');
--- insert into CINEMA values (seq_cinema_id.nextval, 5, '센텀시티점', 1, '부산광역시 해운대구 우동 1495번지 신세계센텀시티', 129.13033686916697 , 35.16911956001504, '1544-1122');
+-- movie_genre
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 4, 1);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 1);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 2);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 3);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 5, 4);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 2, 5);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 3, 5);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 6);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 11, 7);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 11, 8);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 9);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 8, 9);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 3, 11);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 11);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 2, 11);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 11, 12);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 13, 13);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 8, 13);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 14);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 4, 14);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 12, 14);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 6, 14);
+--
+-- schedule
+insert into SCHEDULE values (seq_schedule_id.nextval, 1, 1, '2024-02-01', '15:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 1, 2, '2024-02-01', '20:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 1, 3, '2024-02-03', '10:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 1, 4, '2024-02-04', '22:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 1, 5, '2024-02-06', '19:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 1, 6, '2024-01-24', '12:30');
+insert into SCHEDULE values (seq_schedule_id.nextval, 1, 6, '2024-01-29', '20:30');
+--
+-- reservation
+insert into RESERVATION values ('box16443', 1, 1, 'CONFIRM');
+insert into RESERVATION values ('box25822', 2, 2, 'CONFIRM');
+insert into RESERVATION values ('box47220', 3, 3, 'CONFIRM');
+insert into RESERVATION values ('box42217', 4, 4, 'CONFIRM');
+insert into RESERVATION values ('box34332', 4, 6, 'CONFIRM');
+insert into RESERVATION values ('box32582', 5, 5, 'CONFIRM');
+insert into RESERVATION values ('box21482', 5, 7, 'CONFIRM');
+--
+-- reservation_seat
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box16443', 1);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box25822', 2);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box47220', 3);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box42217', 4);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box34332', 4);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box32582', 5);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box21482', 5);
+--
+-- order_pay
+insert into ORDER_PAY values ('order1644325835123', 'box16443', 1, 'imp32105587', 'html5_inicis', 'card', 12000 , '01012341234', 'CONFIRM');
+insert into ORDER_PAY values ('order1414325835223', 'box25822', 2, 'imp32105587', 'html5_inicis', 'card', 12000 , '01012345678', 'CONFIRM');
+insert into ORDER_PAY values ('order1544325425262', 'box47220', 3, 'imp32105587', 'html5_inicis', 'card', 12000 , '01011112222', 'CONFIRM');
+insert into ORDER_PAY values ('order2142325845122', 'box34332', 4, 'imp32105587', 'html5_inicis', 'card', 12000 , '01022221111', 'CONFIRM');
+insert into ORDER_PAY values ('order2142311845122', 'box42217', 4, 'imp32105587', 'html5_inicis', 'card', 12000 , '01022221111', 'CONFIRM');
+insert into ORDER_PAY values ('order2244325135126', 'box32582', 5, 'imp32105587', 'html5_inicis', 'card', 12000 , '01013225521', 'CONFIRM');
+insert into ORDER_PAY values ('order2178238136122', 'box21482', 5, 'imp32105587', 'html5_inicis', 'card', 12000 , '01013225521', 'CONFIRM');
+--
+-- review
+insert into REVIEW values (seq_review_id.nextval, 'box16443', 1, 1, 3, '너무 지루해요', default);
+insert into REVIEW values (seq_review_id.nextval, 'box25822', 2, 2, 4, '최고', default);
+insert into REVIEW values (seq_review_id.nextval, 'box47220', 3, 3, 5, '시간 가는 줄 모르고 봤어용', default);
+insert into REVIEW values (seq_review_id.nextval, 'box42217', 4, 4, 5, '짱짱', default);
+insert into REVIEW values (seq_review_id.nextval, 'box34332', 4, 6, 5, '짱짱', default);
+insert into REVIEW values (seq_review_id.nextval, 'box34332', 5, 6, 3, '무난무난', default);
+insert into REVIEW values (seq_review_id.nextval, 'box32582', 5, 5, 2, '재미없어요', default);
 --
 -- -- admin
 -- insert into ADMIN values (seq_admin_id.nextval, 1, 'adm220932', '1234');
@@ -128,47 +239,6 @@ values (14, '상견니 ', 'FIFTEEN', '2024.01.25', 107,
 -- insert into ADMIN values (seq_admin_id.nextval, 4, 'adm852542', '1234');
 -- insert into ADMIN values (seq_admin_id.nextval, 5, 'adm724198', '1234');
 -- insert into ADMIN values (seq_admin_id.nextval, null, 'adm322100', '1234');
---
--- -- seat
--- insert into SEAT values (seq_seat_id.nextval, 'A01');
--- insert into SEAT values (seq_seat_id.nextval, 'B01');
--- insert into SEAT values (seq_seat_id.nextval, 'C01');
--- insert into SEAT values (seq_seat_id.nextval, 'D01');
--- insert into SEAT values (seq_seat_id.nextval, 'E01');
---
--- -- theater
--- insert into THEATER values (seq_theater_id.nextval, 1, '1관', 60);
--- insert into THEATER values (seq_theater_id.nextval, 2, '1관', 60);
--- insert into THEATER values (seq_theater_id.nextval, 3, '1관', 60);
--- insert into THEATER values (seq_theater_id.nextval, 4, '1관', 60);
--- insert into THEATER values (seq_theater_id.nextval, 5, '1관', 60);
---
--- -- member
--- insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
--- values(seq_member_id.nextVal, 'rhgPwls','1234','update_set@naver.com','고혜진','01012341234','1990') ;
--- insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
--- values(seq_member_id.nextVal, 'testUser','1234','testUser1234@naver.com','김테스트','01012345678','1993') ;
--- insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
--- values(seq_member_id.nextVal, 'sinsa','1234','sinsa@naver.com','신사임당','01011112222','1996');
--- insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
--- values(seq_member_id.nextVal, 'honggd','1234','honggd@naver.com','홍길동','01022221111','2000');
--- insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
--- values(seq_member_id.nextVal, 'less','1234','leess@naver.com','이순신','01013225521','1989');
---
--- genre
-insert into GENRE values (seq_genre_id.nextval, '드라마');
-insert into GENRE values (seq_genre_id.nextval, '액션');
-insert into GENRE values (seq_genre_id.nextval, '코미디');
-insert into GENRE values (seq_genre_id.nextval, '판타지');
-insert into GENRE values (seq_genre_id.nextval, '범죄');
-insert into GENRE values (seq_genre_id.nextval, '멜로');
-insert into GENRE values (seq_genre_id.nextval, '느와르');
-insert into GENRE values (seq_genre_id.nextval, '스릴러');
-insert into GENRE values (seq_genre_id.nextval, '공포');
-insert into GENRE values (seq_genre_id.nextval, '전쟁');
-insert into GENRE values (seq_genre_id.nextval, '애니메이션');
-insert into GENRE values (seq_genre_id.nextval, '로맨스');
-insert into GENRE values (seq_genre_id.nextval, '호러');
 --
 -- -- authority
 -- insert into AUTHORITY values (seq_authority_id.nextval, 1, null, 'ROLE_USER');
@@ -204,72 +274,14 @@ insert into GENRE values (seq_genre_id.nextval, '호러');
 --insert into NOTICE values (seq_notice_id.nextval, 4, 6, 'ETC', '개인정보처리방침 개정 공지 (23.11.06 시행)', '2023년 11월 6일 자로 BOOTBOX의 개인정보처리방침이 개정됨에 따라 회원님께 주요 개정 내용과 적용 일정을 아래와 같이 안내 드립니다.');
 --insert into NOTICE values (seq_notice_id.nextval, 5, 6, 'ETC', 'BOOTBOX 서비스 이용약관 개정 안내 (2024년 1월 23일 시행)', '2024년 1월 23일자로 BOOTBOX 서비스 이용약관을 일부 개정하게 되어 아래와 같이 사전 안내드립니다. 서비스 이용에 참고 부탁드립니다.');
 --
--- -- schedule
---insert into SCHEDULE values (seq_schedule_id.nextval, 1, 1, '2024-02-01', '15:00');
---insert into SCHEDULE values (seq_schedule_id.nextval, 2, 1, '2024-02-01', '20:00');
---insert into SCHEDULE values (seq_schedule_id.nextval, 3, 1, '2024-02-03', '10:00');
---insert into SCHEDULE values (seq_schedule_id.nextval, 4, 1, '2024-02-04', '22:00');
---insert into SCHEDULE values (seq_schedule_id.nextval, 5, 1, '2024-02-06', '19:00');
---
--- -- reservation
---insert into RESERVATION values ('box16443', 1, 1, 'PENDING');
---insert into RESERVATION values ('box25822', 2, 2, 'CONFIRM');
---insert into RESERVATION values ('box47220', 3, 3, 'CONFIRM');
---insert into RESERVATION values ('box42217', 4, 4, 'CONFIRM');
---insert into RESERVATION values ('box32582', 5, 5, 'PENDING');
---
--- -- reservation_seat
---insert into reservation_seat values (seq_reservation_seat_id.nextval, 'order1644325835123', 1);
---insert into reservation_seat values (seq_reservation_seat_id.nextval, 'order1644325822914', 2);
---insert into reservation_seat values (seq_reservation_seat_id.nextval, 'order1722018573211', 3);
---insert into reservation_seat values (seq_reservation_seat_id.nextval, 'order1882210442217', 4);
---insert into reservation_seat values (seq_reservation_seat_id.nextval, 'order1644325822955', 5);
---
--- -- order_pay
---insert into ORDER_PAY values ('order1644325835123', 'box16443', 1, 'imp32105587', 'html5_inicis', 'card', 12000 , '01012341234', 'PENDING');
---insert into ORDER_PAY values ('order1414325835223', 'box25822', 2, 'imp32105587', 'html5_inicis', 'card', 12000 , '01012345678', 'PENDING');
---insert into ORDER_PAY values ('order1544325425262', 'box47220', 3, 'imp32105587', 'html5_inicis', 'card', 12000 , '01011112222', 'PENDING');
---insert into ORDER_PAY values ('order2142325845122', 'box42217', 4, 'imp32105587', 'html5_inicis', 'card', 12000 , '01022221111', 'PENDING');
---insert into ORDER_PAY values ('order2244325135126', 'box32582', 5, 'imp32105587', 'html5_inicis', 'card', 12000 , '01013225521', 'PENDING');
---
--- -- cancel_pay
+ -- -- cancel_pay
 --insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 1, 12000, 'card');
 --insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 2, 12000, 'card');
 --insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 3, 12000, 'card');
 --insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 4, 12000, 'card');
 --insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 5, 12000, 'card');
 --
--- -- review
-insert into REVIEW values (seq_review_id.nextval, 'box16443', 1, 1, 3, '너무 지루해요', default);
-insert into REVIEW values (seq_review_id.nextval, 'box25822', 2, 2, 4, '최고', default);
-insert into REVIEW values (seq_review_id.nextval, 'box47220', 3, 3, 5, '시간 가는 줄 모르고 봤어용', default);
-insert into REVIEW values (seq_review_id.nextval, 'box42217', 4, 4, 5, '짱짱', default);
-insert into REVIEW values (seq_review_id.nextval, 'box32582', 5, 5, 2, '재미없어요', default);
--- -- 브릿지
---
--- movie_genre
-insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 4, 1);
-insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 1);
-insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 2);
-insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 3);
-insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 5, 4);
-insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 2, 5);
-insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 3, 5);
-insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 6);
-insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 11, 7);
-insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 11, 8);
-insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 9);
-insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 8, 9);
-insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 3, 11);
-insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 11);
-insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 2, 11);
-insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 11, 12);
-insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 13, 13);
-insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 8, 13);
-insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 14);
-insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 4, 14);
-insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 12, 14);
-insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 6, 14);
+-- 브릿지
 --
 -- -- member_like_genre
 -- insert into MEMBER_LIKE_GENRE values (seq_member_like_genre_id.nextval, 1, 1);

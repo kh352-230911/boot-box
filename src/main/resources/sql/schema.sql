@@ -130,7 +130,7 @@ create sequence seq_genre_id;
 --
 -- 1.예매 가능한 영화
 CREATE TABLE MOVIE(
-	id number NOT NULL, --영화 id (api로 받아올 때 - 고유값이라 겹치지 않음)
+	id number NOT NULL , --영화 id (api로 받아올 때 - 고유값이라 겹치지 않음)
 	title varchar2(500) NOT NULL, --영화 제목
 	film_ratings varchar2(20) default 'NONE' NOT NULL, -- 관람등급
 	release_date varchar2(20) NOT NULL, -- 개봉일(상영가능한 날짜의 첫 날)
@@ -140,7 +140,7 @@ CREATE TABLE MOVIE(
 	director varchar2(100) NULL, --감독
 	actor	varchar2(500) NULL, --배우
 	summary varchar2(4000) NULL, --줄거리(5000자 length에러 나서 4000으로 수정)
-    advance_reservation number(3,1) NOT NULL, -- 예매율
+    advance_reservation number(4,1) NOT NULL, -- 예매율
     constraints pk_movie_id primary key(id), -- pk
     constraints ck_movie_film_ratings check(film_ratings in('ALL', 'TWELVE', 'FIFTEEN', 'EIGHTEEN', 'NONE')) -- ck
 );
@@ -302,7 +302,7 @@ CREATE TABLE REVIEW(
     reservation_id varchar2(100)	NOT NULL, -- 예약내역 fk
     member_id number NOT NULL, --회원id fk
     movie_id number NOT NULL, -- 영화 id fk
-    review_score number NOT NULL,--리뷰 평점
+    review_score number(2, 1) default 0 NOT NULL,--리뷰 평점
     review_detail varchar2(2000) NOT NULL,--리뷰 내용
     review_created_at date DEFAULT current_date NOT NULL,--리뷰 작성날짜
     constraints pk_review_id primary key(id), --pk
