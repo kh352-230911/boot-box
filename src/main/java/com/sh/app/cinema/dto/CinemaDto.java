@@ -1,6 +1,11 @@
 package com.sh.app.cinema.dto;
 
+import com.sh.app.location.entity.Location;
+import com.sh.app.theater.entity.Theater;
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class CinemaDto {
@@ -8,8 +13,12 @@ public class CinemaDto {
     private String region_cinema;
     private int theater_number;
     private String address;
-    private Double location_lo;
-    private Double location_la;
+    private Double location_lo; // 지도 경도
+    private Double location_la; // 지도 위도
     private String phone;
-    private String location_name; // Location#location_name
+
+    private Location location;
+    private String location_name;
+
+    private List<Theater> theaters = new ArrayList<>();
 }

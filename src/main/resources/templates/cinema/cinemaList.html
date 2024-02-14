@@ -13,21 +13,35 @@
     <span>전체극장</span>
     <br>
     <hr style="height: 1px">
-    <br>
-    <div class = "theater-box">
+    <div class = "theater-box" >
+<!--        <div class="favorite-area">-->
+<!--            <div class="favorite-title">-->
+<!--                <h1>나의 BootBox</h1>-->
+<!--            </div>-->
+<!--            <div class="favorite-list">-->
+<!--                <ul>-->
+<!--                    <li>-->
+<!--                        <a href="#">강남점</a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a href="#"></a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a href="#"></a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a href="#"></a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a href="#"></a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <button type="button">자주가는 영화관 설정</button>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
         <div class = "location-area">
-<!--            <ul>-->
-<!--                <li th:each="cinema, status : ${cinemas}">-->
-<!--                    <button type="button" class="select_location" th:text="${cinema.location_name}"></button>-->
-<!--                    <div class="theater-list">-->
-<!--                        <ul>-->
-<!--                            <li>-->
-<!--                                <a th:href="@{'/cinema/cinemaDetail.do'(id=${cinema.id})}" th:text="${cinema.region_cinema}"></a>-->
-<!--                            </li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-<!--                </li>-->
-<!--            </ul>-->
             <ul>
                 <li th:each="location : ${locations}">
                     <button type="button" class="select_location" th:text="${location.location_name}"></button>
@@ -43,28 +57,7 @@
         </div>
     </div>
     <br><br><br><br><br>
-<!--    <span class="notice-span">극장 공지사항</span>-->
-<!--    <br>-->
-<!--    <hr style="height: 1px">-->
-<!--    <br>-->
-<!--    <table id="notice_tb">-->
-<!--        <thead>-->
-<!--            <tr>-->
-<!--                <th>번호</th>-->
-<!--                <th>유형</th>-->
-<!--                <th>제목</th>-->
-<!--                <th>작성일</th>-->
-<!--            </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--            <tr>-->
-<!--                <td>1</td>-->
-<!--                <td>system</td>-->
-<!--                <td class="notice-content">제목</td>-->
-<!--                <td>작성일</td>-->
-<!--            </tr>-->
-<!--        </tbody>-->
-<!--    </table>-->
+
 </div>
 <br>
 
