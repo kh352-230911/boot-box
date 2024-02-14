@@ -36,13 +36,12 @@
         </div>
         <div class="container">
             <div class="content-container">
-                <div class="featured-content" style="background:linear-gradient(to bottom, rgba(0,0,0,0),#151515), url('https://cdn.womaneconomy.co.kr/news/photo/202301/215138_421317_3746.jpg');">
-
+                <div class="featured-content" style="background:linear-gradient(to bottom, rgba(0,0,0,0),#151515);">
                     <h1 class="active" th:text="${cinema.region_cinema}"></h1><!--극장명-->
                         <p class="featured-desc">
                         <ul>
                             <li th:text="'주소 : ' + ${cinema.address}"></li><!--극장주소-->
-                            <li>로맨틱 멀티플렉스! 젊은 도시 강남이 한 눈에 보이는 최상의 View를 제공</li>
+                            <li>로맨틱 멀티플렉스! 한 눈에 보이는 최상의 View를 제공</li>
                             <li th:text="'전화번호 : ' + ${cinema.phone}"></li><!--극장전화번호-->
                         </ul>
                         </p>
@@ -128,5 +127,18 @@
     </div>
 </div>
 
-<script layout:fragment="script" th:src="@{/js/cinema/cinemaDetail.js}"></script>
+<script layout:fragment="script" th:src="@{/js/cinema/cinemaDetail.js}">
+    // 랜덤하게 이미지 파일 이름을 배열에 저장
+    const images = ["영화관사진1.jpg", "영화관사진2.jpg", "영화관사진3.jpg", "영화관사진4.jpg"];
+
+    // 배열에서 랜덤하게 하나의 이미지를 선택
+    const chosenImage = images[Math.floor(Math.random() * images.length)];
+
+    // .featured-content 클래스를 가진 div를 선택
+    const featuredContent = document.querySelector('.featured-content');
+
+    // 선택된 div의 배경 이미지를 설정
+    // 여기서 'url(/static/images/${chosenImage})'는 실제 이미지 파일의 웹 서버 상의 경로를 가리킴
+    featuredContent.style.backgroundImage = `url('/images/${chosenImage}'), linear-gradient(to bottom, rgba(0,0,0,0),#151515)`;
+</script>
 </html>

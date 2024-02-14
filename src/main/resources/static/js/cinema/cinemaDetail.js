@@ -209,6 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedDateElement.textContent = formatDate(new Date()); // 페이지 로드 시 오늘 날짜를 선택하도록 설정
 });
 
+// 위도, 경도로 네이버 지도에서 극장 실시간 위치 찾기
 function openMap(event, element) {
     event.preventDefault();
     const locationLo = element.getAttribute('data-location-lo');
@@ -217,4 +218,5 @@ function openMap(event, element) {
     const mapUrl = `https://m.map.naver.com/map.naver?lng=${locationLo}&lat=${locationLa}&level=2`;
     window.open(mapUrl, '_blank');
 }
+
 
