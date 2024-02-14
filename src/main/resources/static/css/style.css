@@ -15,7 +15,7 @@ hr {
     border: 0;
 }
 
-div, section, header, aside, footer {
+section, header, aside, footer {
     /*padding: 10px;*/
     color: white;
 }

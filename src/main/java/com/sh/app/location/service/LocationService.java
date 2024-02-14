@@ -61,6 +61,7 @@ public class LocationService {
         cinemaDto.setPhone(cinema.getPhone());
         cinemaDto.setLocation_lo(cinema.getLocation_lo());
         cinemaDto.setLocation_la(cinema.getLocation_la());
+        cinemaDto.setTheater_number(cinema.getTheater_number());
         return cinemaDto;
     }
 
