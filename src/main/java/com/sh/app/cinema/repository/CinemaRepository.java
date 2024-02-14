@@ -1,11 +1,11 @@
 package com.sh.app.cinema.repository;
 
-import com.sh.app.cinema.dto.CinemaProjection;
 import com.sh.app.cinema.entity.Cinema;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,13 +19,19 @@ public interface CinemaRepository extends JpaRepository<Cinema, Long>{
     @Query("from Cinema c left join fetch c.location")
     Page<Cinema> findAll(Pageable pageable);
 
-    @Query(value = "SELECT new CinemaProjection(s.schDate, c.regionCinema, m.title, t.name, s.time, (t.seat - (SELECT COUNT(rs) FROM ReservationSeat rs WHERE rs.seat.id IN (SELECT seat.id FROM Seat seat WHERE seat.schedule.id = s.id)))) " +
-            "FROM Schedule s " +
-            "JOIN s.cinema c " +
-            "JOIN s.movie m " +
-            "JOIN s.theater t " +
-            "WHERE s.schDate = :schDate AND c.regionCinema = :regionCinema AND m.title = :title", nativeQuery = true)
-    List<CinemaProjection> findCinemaDetails(LocalDate schDate, String regionCinema, String title);
-
+    @Query(value = "SELECT " +
+            "S.sch_date AS schDate, " +
+            "C.region_cinema AS regionCinema, " +
+            "M.title AS title, " +
+            "T.name AS theaterName, " +
+            "S.time AS startTime, " +
+            "(T.seat_count - (SELECT COUNT(*) FROM reservation_seat RS WHERE RS.seat_id IN (SELECT ST.id FROM seat ST WHERE ST.theater_id = T.id AND S.id = RS.schedule_id))) AS remainingSeats " +
+            "FROM schedule S " +
+            "JOIN cinema C ON S.cinema_id = C.id " +
+            "JOIN movie M ON S.movie_id = M.id " +
+            "JOIN theater T ON S.theater_id = T.id " +
+            "WHERE S.sch_date = :schDate AND C.region_cinema = :regionCinema", nativeQuery = true)
+    List<Object[]> findCinemaDetailsNative(@Param("schDate") LocalDate schDate,
+                                           @Param("regionCinema") String regionCinema);
 
 }
