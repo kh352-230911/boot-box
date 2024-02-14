@@ -13,12 +13,38 @@
     <span>전체극장</span>
     <br>
     <hr style="height: 1px">
-    <br>
-    <div class = "theater-box">
+    <div class = "theater-box" >
+<!--        <div class="favorite-area">-->
+<!--            <div class="favorite-title">-->
+<!--                <h1>나의 BootBox</h1>-->
+<!--            </div>-->
+<!--            <div class="favorite-list">-->
+<!--                <ul>-->
+<!--                    <li>-->
+<!--                        <a href="#">강남점</a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a href="#"></a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a href="#"></a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a href="#"></a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a href="#"></a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <button type="button">자주가는 영화관 설정</button>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
         <div class = "location-area">
             <ul>
-                <li th:each="cinema, status : ${cinemas}">
-                    <button type="button" class="select_location" th:text="${cinema.location_name}"></button>
+                <li th:each="location, status : ${locations}">
+                    <button type="button" class="select_location" th:text="${location.location_name}"></button>
                     <div class="theater-list">
                         <ul>
                             <li>
