@@ -37,17 +37,23 @@
         <div class="container">
             <div class="content-container">
                 <div class="featured-content" style="background:linear-gradient(to bottom, rgba(0,0,0,0),#151515), url('https://cdn.womaneconomy.co.kr/news/photo/202301/215138_421317_3746.jpg');">
-                    <h1 class="active" th:text="${regionCinema}"></h1>
+
+                    <h1 class="active" th:text="${cinema.region_cinema}"></h1><!--극장명-->
                         <p class="featured-desc">
                         <ul>
-                            <li>위치 : 서울 강남구 역삼동</li>
+                            <li th:text="'주소 : ' + ${cinema.address}"></li><!--극장주소-->
                             <li>로맨틱 멀티플렉스! 젊은 도시 강남이 한 눈에 보이는 최상의 View를 제공</li>
-                            <li>tel : 02-1111-2222</li>
+                            <li th:text="'전화번호 : ' + ${cinema.phone}"></li><!--극장전화번호-->
                         </ul>
                         </p>
-                        <button class="featured-button">
-                            예매하기
-                        </button>
+                    <a href="#" class="featured-button"
+                       th:data-location-lo="${cinema.location_lo}"
+                       th:data-location-la="${cinema.location_la}"
+                       onclick="openMap(event, this)">
+<!--                        <span th:text="${cinema.location_lo}"/>-->
+<!--                        <span th:text="${cinema.location_la}"/>-->
+                        실시간 길찾기
+                    </a>
                 </div>
                     <div class="movie-list-container">
                         <h2>현재 상영작</h2>

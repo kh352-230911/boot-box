@@ -30,10 +30,10 @@ public class CinemaController {
     private CinemaService cinemaService;
 
     @GetMapping("/cinemaDetail.do")
-    public String cinemaDetail(@RequestParam("regionCinema") String regionCinema, Model model) {
-        model.addAttribute("regionCinema", regionCinema); // 모델에 극장 지점명 추가
-        // 추가적인 로직 (예: 해당 지점의 상영 정보 조회 등)
-        return "cinema/cinemaDetail"; // Thymeleaf 템플릿 이름
+    public String cinemaDetail(@RequestParam("id") Long id, Model model) {
+        CinemaDto cinemaDto = cinemaService.getCinemaDetails(id);
+        model.addAttribute("cinema", cinemaDto);
+        return "cinema/cinemaDetail";
     }
 
     @GetMapping("/cinemaList.do")

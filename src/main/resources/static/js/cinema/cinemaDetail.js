@@ -203,7 +203,18 @@ todayButton.addEventListener('click', () => {
     selectedDateElement.textContent = formatDate(currentDate);
 });
 
+
 document.addEventListener('DOMContentLoaded', () => {
         renderCalendar(currentDate);
         selectedDateElement.textContent = formatDate(new Date()); // 페이지 로드 시 오늘 날짜를 선택하도록 설정
 });
+
+function openMap(event, element) {
+    event.preventDefault();
+    const locationLo = element.getAttribute('data-location-lo');
+    const locationLa = element.getAttribute('data-location-la');
+
+    const mapUrl = `https://m.map.naver.com/map.naver?lng=${locationLo}&lat=${locationLa}&level=2`;
+    window.open(mapUrl, '_blank');
+}
+
