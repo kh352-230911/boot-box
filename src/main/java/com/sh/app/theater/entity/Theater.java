@@ -18,7 +18,6 @@ import java.util.List;
 @ToString(exclude = "schedules")
 public class Theater {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cinema_id")

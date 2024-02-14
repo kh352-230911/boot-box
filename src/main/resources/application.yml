@@ -12,8 +12,8 @@ spring:
     password: ${PROD_DB_PASSWORD}
 #    driver-class-name: oracle.jdbc.driver.OracleDriver
 #    url: jdbc:oracle:thin:@localhost:1521:xe
-#    username: guys
-#    password: guys
+#    username: bootbox
+#    password: bootbox
   jpa:
     generate-ddl: true
     show-sql: true #만들어진 쿼리를 보여줄것인가? true or false
@@ -27,11 +27,18 @@ spring:
       database-platform: org.hibernate.dialect.OracleDialect
   sql:
     init:
+<<<<<<< HEAD
 #      schema-locations: classpath:/sql/schema.sql
 #      data-locations: classpath:/sql/data.sql
       mode: always
     database: oracle
     database-platform: org.hibernate.dialect.OracleDialect
+=======
+      schema-locations: classpath:/sql/schema.sql
+      data-locations: classpath:/sql/data.sql
+      mode: never
+
+>>>>>>> 139fbdae8efabb4a807d8783bc97494e50de9706
 # logback (logging)
 logging:
   level:

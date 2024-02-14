@@ -34,11 +34,8 @@ drop sequence seq_admin_id;
 drop table schedule;
 drop sequence seq_schedule_id;
 drop table theater;
-drop sequence seq_theater_id;
 drop table cinema;
-drop sequence seq_cinema_id;
 drop table location;
-drop sequence seq_location_id;
 drop table movie;
 
 
@@ -47,9 +44,69 @@ CREATE TABLE LOCATION(
                          id number NOT NULL,
                          location_name varchar2(50) NOT NULL,
                          constraints pk_location_id primary key(id) --pk
+<<<<<<< HEAD
+=======
 );
-create sequence seq_location_id;
 --
+-- 3.극장(ex강남점,성수점...)
+CREATE TABLE CINEMA(
+                       id number	NOT NULL, --지점 아이디
+                       location_id number NOT NULL, --지역 아이디
+                       region_cinema varchar2(50) NOT NULL,--지점명
+                       theater_number number	NOT NULL, --상영관 수(1관,2관..)
+                       address	varchar2(500) NOT NULL, --주소
+                       location_lo number NOT NULL, --지도 경도
+                       location_la number NOT NULL, --지도 위도
+                       phone varchar2(100) NOT NULL, --전화번호
+                       constraints pk_cinema_id primary key(id), --pk
+                       constraints fk_cinema_location_id foreign key(location_id) references location(id) on delete set null, --지역 아이디 수정,삭제 시 자식 null로됨
+                       constraints uq_cinema_region_cinema unique(region_cinema) -- uq
+);
+--6.회원
+CREATE TABLE MEMBER(
+                       id number NOT NULL, --시퀀스(pk)
+                       member_login_id varchar2(100) NOT NULL, --아이디(uq)
+                       member_pwd	varchar2(100) NOT NULL, --비밀번호
+                       member_email varchar2(100) NOT NULL,	--이메일(uq)
+                       member_name varchar2(50) NOT NULL, --이름
+                       member_phone varchar2(100) NOT NULL, --핸드폰번호
+                       birthyear varchar2(50) NOT NULL, -- 출생년도
+                       constraints pk_member_id primary key(id),
+                       constraints uq_member_member_login_id unique(member_login_id),
+                       constraints uq_member_member_email unique(member_email),
+                       constraints uq_member_member_phone unique(member_phone)
+);
+create sequence seq_member_id; --회원 시퀀스
+--
+--2.관리자
+CREATE TABLE ADMIN(
+                      id number NOT NULL, --관리자 아이디
+                      cinema_id number, -- 극장 아이디
+                      username varchar2(50) NOT NULL, -- 관리자 로그인 아이디
+                      password varchar2(255)	NOT NULL, --비밀번호
+                      constraints pk_admin_id primary key(id), --pk
+                      constraints fk_admin_cinema_id foreign key(cinema_id) references cinema(id) on delete set null, -- fk
+                      constraints uq_admin_username unique(username) -- uq
+>>>>>>> 139fbdae8efabb4a807d8783bc97494e50de9706
+);
+create sequence seq_admin_id; -- 관리자 시퀀스
+--
+-- 18.권한
+--0201 관리자1(최상위)/관리자2(지점)/회원
+--일반회원  table / 관리자 table이 분리 되어있기 때문에 컬럼도 user/ admin으로 나뉘어있음
+CREATE TABLE AUTHORITY(
+                          id number NOT NULL,
+                          member_id number NULL,
+                          admin_id number NULL,
+                          name varchar2(50) NOT NULL,
+                          constraints pk_authority_id primary key(id),
+                          constraints fk_authority_user_id foreign key(member_id) references member(id) on delete set null,
+                          constraints fk_authority_admin_id foreign key(admin_id) references admin(id) on delete set null,
+                          constraints ck_authority_name check(name in('ROLE_ADMIN','ROLE_MANAGER', 'ROLE_USER'))
+);
+create sequence seq_authority_id;
+--
+<<<<<<< HEAD
 -- 3.극장(ex강남점,성수점...)
 CREATE TABLE CINEMA(
                        id number	NOT NULL, --지점 아이디
@@ -108,6 +165,8 @@ CREATE TABLE AUTHORITY(
 );
 create sequence seq_authority_id;
 --
+=======
+>>>>>>> 139fbdae8efabb4a807d8783bc97494e50de9706
 --4.좌석
 CREATE TABLE SEAT(
                      id number NOT NULL, --pk
@@ -123,10 +182,13 @@ CREATE TABLE THEATER (
                          name varchar2(50)	 NOT NULL, --상영관명
                          seat 	number	NOT NULL,--총 좌석수
                          constraints pk_theater_id primary key(id), --pk로 지정
+<<<<<<< HEAD
                          constraints fk_theater_cinema_id foreign key(cinema_id) references theater(id) on delete set null
+=======
+                         constraints fk_theater_cinema_id foreign key(cinema_id) references cinema(id) on delete set null
+>>>>>>> 139fbdae8efabb4a807d8783bc97494e50de9706
 );
-create sequence seq_theater_id; --상영관 시퀀스
-
+--
 --15.장르
 CREATE TABLE GENRE(
                       id	number NOT NULL, --pk
