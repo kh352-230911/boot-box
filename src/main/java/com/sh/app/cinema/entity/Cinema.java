@@ -19,7 +19,6 @@ import java.util.List;
 public class Cinema implements Comparable<Cinema>{
 
     @Id
-
     private Long id;
     @Column(nullable = false, unique = true)
     private String region_cinema;
@@ -28,9 +27,9 @@ public class Cinema implements Comparable<Cinema>{
     @Column(nullable = false)
     private String address;
     @Column(nullable = false)
-    private int location_lo; // 지도 경도
+    private Double location_lo; // 지도 경도
     @Column(nullable = false)
-    private int location_la; // 지도 위도
+    private Double location_la; // 지도 위도
     @Column(nullable = false)
     private String phone;
 

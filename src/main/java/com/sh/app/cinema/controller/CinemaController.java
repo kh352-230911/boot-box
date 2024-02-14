@@ -1,17 +1,26 @@
 package com.sh.app.cinema.controller;
 
+import com.sh.app.cinema.dto.CinemaDetailDto;
 import com.sh.app.cinema.dto.CinemaDto;
+
 import com.sh.app.cinema.service.CinemaService;
+import com.sh.app.location.dto.LocationDto;
+import com.sh.app.location.service.LocationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -22,15 +31,27 @@ public class CinemaController {
     @Autowired
     private CinemaService cinemaService;
 
-    @GetMapping("/cinemaDetail.do")
-    public void cinemaDetail() {
+    @Autowired
+    private LocationService locationService;
 
+    @GetMapping("/cinemaDetail.do")
+    public String cinemaDetail(@RequestParam("id") Long id, Model model) {
+        CinemaDto cinemaDto = cinemaService.getCinemaDetails(id);
+        model.addAttribute("cinema", cinemaDto);
+        return "cinema/cinemaDetail";
     }
 
+//    @GetMapping("/cinemaList.do")
+//    public void cinemaList(@PageableDefault(size = 15, page = 0) Pageable pageable, Model model) {
+//        Page<CinemaDto> cinemaDtoPage = cinemaService.findAll(pageable);
+//        model.addAttribute("cinemas", cinemaDtoPage.getContent());
+//    }
+
     @GetMapping("/cinemaList.do")
-    public void cinemaList(@PageableDefault(size = 15, page = 0) Pageable pageable, Model model) {
-        Page<CinemaDto> cinemaDtoPage = cinemaService.findAll(pageable);
-        model.addAttribute("cinemas", cinemaDtoPage.getContent());
+    public String cinemaList(Model model) {
+        List<LocationDto> locationsWithCinemas = locationService.findAllLocationsWithCinemas();
+        model.addAttribute("locations", locationsWithCinemas);
+        return "cinema/cinemaList"; // 해당하는 Thymeleaf 템플릿 이름
     }
 
 }
