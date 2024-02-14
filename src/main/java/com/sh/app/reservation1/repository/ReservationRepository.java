@@ -1,8 +1,7 @@
-package com.sh.app.reservation.repository;
+package com.sh.app.reservation1.repository;
 
-import com.sh.app.reservation.entity.Reservation;
+import com.sh.app.reservation1.entity.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 /**
  *  <Entity객체클래스,해당 객체클래스의 pk DataType>

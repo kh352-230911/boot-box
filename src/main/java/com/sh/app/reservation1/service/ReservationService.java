@@ -1,6 +1,6 @@
-package com.sh.app.reservation.service;
+package com.sh.app.reservation1.service;
 
-import com.sh.app.reservation.repository.ReservationRepository;
+import com.sh.app.reservation1.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
