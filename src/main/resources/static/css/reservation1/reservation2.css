@@ -226,6 +226,7 @@
 /*}*/
 .info-seats
 {
+    border: 1px solid green;
     background-image: linear-gradient(to right, #232323, #6b645e, #232323); /* 그라데이션 적용 *
     /*background-color: darkcyan;*/
     display: flex;
@@ -358,32 +359,85 @@ label_row
 }
 
 /*예매 정보를 보여주는 하단의 div */
-
 .select-seats {
-    width : 100vw;
+    border: 1px solid red;
     height: 200px;
     background-color: black;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    /*   align-items: center;: 수직 중앙 정렬 */
 }
-
-.prev-button,
-.next-button {
+/*이전버튼 다음버튼*/
+.select-seats-prev-button
+{
     padding: 10px;
     background-color: lightgray;
     border: none;
     cursor: pointer;
 }
+.select-seats-next-button {
+    padding: 10px;
+    background-color: darkred;
+    border: none;
+    cursor: pointer;
+}
 
+/* 선택된 영화나 정보를 출력할 가운데 부분 */
 .center-content {
     display: flex;
     gap: 20px;
 }
 
-.seat-container {
+/*영화 정보 컨테이너*/
+.seat-container1 {
+    display : flex;
     padding: 10px;
-    border: 1px solid lightgray;
+    /*border: 1px solid lightgray;*/
+    border-right: 2px solid red; /* 오른쪽 세로선 설정 */
+    align-items: center;
+    width: 20vw;
 }
 
+.seat-container1-img {
+    width: 150px;
+    height: 150px;
+    border: 0px solid transparent;
+}
+.seat-container1-title {
+    margin-left: 40px;
+    font-size : 13px;
+}
+
+/*극장,날짜(상영스케쥴),상영관 컨테이너*/
+.seat-container2 {
+    padding: 10px;
+    /*border: 1px solid lightgray;*/
+    border-right: 2px solid red; /* 오른쪽 세로선 설정 */
+    width: 20vw;
+}
+/*좌석 위치, 총 결제금액 */
+.seat-container3 {
+    padding: 10px;
+    /*border: 1px solid lightgray;*/
+    width: 20vw;
+}
+th
+{
+    background-color: black;
+}
 /*=======================================================================================================================================*/
+/* 예매 첫 페이지 영화 ,극장, 상영관 , 시간 ,스케쥴[상영시간표] 관련 css */
+.info-movies
+{
+    display: flex;
+}
+
+table{
+    border-collapse: collapse; /* 테이블 셀 테두리를 합칩니다. */
+    border: 2px solid red;
+}
+
+.highlighted {
+    background-color: yellow;
+}

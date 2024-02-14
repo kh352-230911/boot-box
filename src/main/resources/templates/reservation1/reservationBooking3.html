@@ -14,68 +14,98 @@
     <br>
     <hr style="height: 1px">
     <br>
-    <div class = "info-movies">영화테이블 정보 출력</div>
-    <table>
-        <thead>
-        <tr>
-            <th>날짜</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="date : ${dateList}">
-            <td th:text="${date}" onclick="showAlert(this)"></td>
-        </tr>
-        </tbody>
-    </table>
-    <!-- 좌석 관련 정보를 모두 감싸는 부모 div -->
-    <div class = "info-seats" >
-        <!-- 1.관람인원 선택 div -->
-        <div class = "select-people-title">
-            <span>관람 인원을 선택해주세요.(최대 8명)</span>
-            <button id="btn-clear" type="button" th:onclick="myFunction()">초기화 btn</button>
-        </div>
+    <!-- 4개의 영역을 감싸는 최상단 div -->
+    <div class = "info-movies">
 
-        <div class = "select-people-content">
-            <span>일반 </span>
-            <input type='button'
-                   onclick='count("plus")'
-                   value='+'/>
-            <div id='result'>0</div>
-            <input type='button'
-                   onclick='count("minus")'
-                   value='-'/>
+        <table>
+            <thead>
+            <tr>
+                <th colspan="2">영화 리스트</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="movie, status : ${dataMap.movies}">
+                <img th:src="${movie.poster}" th:style="'display:none;'">
+                <td>
+                    <th:block th:if="|${movie.filmRatings.name() == 'ALL'}|">
+                        <span style="font-size: 0.2em" class="grade bg-gradient-to-r shadow-lg shadow-green-100/50 bg-green-100 text-green-800 text-m font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">ALL</span>
+                    </th:block>
+                    <th:block th:if="|${movie.filmRatings.name() == 'TWELVE'}|">
+                        <span style="font-size: 0.2em" class="grade bg-gradient-to-r shadow-lg shadow-yellow-100/50 bg-yellow-100 text-yellow-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">12</span>
+                    </th:block>
+                    <th:block th:if="|${movie.filmRatings.name() == 'FIFTEEN'}|">
+                        <span style="font-size: 0.2em" class="grade bg-gradient-to-r shadow-lg shadow-purple-100/50 bg-purple-100 text-purple-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-purple-400 border border-purple-400">15</span>
+                    </th:block>
+                    <th:block th:if="|${movie.filmRatings.name() == 'EIGHTEEN'}|">
+                        <span style="font-size: 0.2em" class="grade bg-gradient-to-r shadow-lg shadow-red-100/50 bg-red-100 text-red-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">18</span>
+                    </th:block>
+                    <th:block th:if="|${movie.filmRatings.name() == 'NONE'}|">
+                        <span style="font-size: 0.2em" class="grade bg-gradient-to-r shadow-lg shadow-gray-100/50 bg-gray-100 text-gray-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-500">미정</span>
+                    </th:block>
+                </td>
+                <td th:text="${#strings.abbreviate(movie.title, 10)}"
+                    th:data-poster="${movie.poster}"
+                    th:data-title="${movie.title}"
+                    onclick="showPoster(this.getAttribute('data-poster'), this.getAttribute('data-title'))">
+                    Movie Title
+                </td>
+<!--                <td th:text="${#strings.abbreviate(movie.title, 10)}" -->
+<!--                    onclick="showPoster(this.getAttribute('data-poster'))" th:attr="data-poster=${movie.poster}">Movie Title</td>-->
+            </tr>
+            </tbody>
+        </table>
+<!--        <div class="img" th:style="'background-image: url(' + ${movie.poster} + ');'"></div>-->
+        <table>
+            <thead>
+            <tr>
+                <th colspan="2">극장 리스트</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="date, index : ${dataMap.dateList}">
+                <td th:text="${date}" onclick="highlightCell(this)"/>
+<!--                    onclick="showAlert(this)"/>-->
+                <td th:text="${dataMap.dayOfWeekList[__${index.index}__]}" onclick="showAlert(this)"></td>
+            </tr>
+            </tbody>
+        </table>
 
-        </div>
-        <!-- 2.좌석 정보 및 선택 div -->
-        <div class="all-seats" >
-            <div class = "screen-div">
-                <span>Screen</span>
+        <table>
+            <thead>
+            <tr>
+                <th colspan="2">날짜 리스트</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="date, index : ${dataMap.dateList}">
+                <td th:text="${date}" onclick="highlightCell(this)"/>
+                <!--                    onclick="showAlert(this)"/>-->
+                <td th:text="${dataMap.dayOfWeekList[__${index.index}__]}" onclick="showAlert(this)"></td>
+            </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+
+    <!--  4. 하단에 선택한 좌석 정보 출력   -->
+    <div class="select-seats">
+        <button class="select-seats-prev-button">이전</button>
+        <div class="center-content">
+            <div class="seat-container1">
+                <img class="seat-container1-img"/>
+                <div class="seat-container1-title"></div>
             </div>
-            <table>
-                <tbody id="seatTableBody">
-                </tbody>
-            </table>
+            <div class="seat-container2">극장 일시 상영관 인원</div>
+            <div class="seat-container3">선택한 좌석</div>
         </div>
-
-        <!-- 3. 좌석 상태 정보(예매가능,불가능 등을 알려주는 표) -->
-        <div class="state-seat">
-            <div class="item">선택가능</div>
-            <div class="item">선택불가</div>
-            <div class="item">선택좌석</div>
-        </div>
-        <!--  4. 하단에 선택한 좌석 정보 출력   -->
-        <div class="select-seats">
-            <button class="prev-button">이전</button>
-            <div class="center-content">
-                <div class="seat-container">Seat 1</div>
-                <div class="seat-container">Seat 2</div>
-                <div class="seat-container">Seat 3</div>
-            </div>
-            <button class="next-button">다음</button>
-        </div>
+        <button class="select-seats-next-button">다음</button>
     </div>
 
 </div>
-<script layout:fragment="script" th:src="@{/js/reservation1/reservation2.js}"></script>
+<script th:inline="javascript" layout:fragment="script" th:src="@{/js/reservation1/reservation2.js}">
+
+
+</script>
 
 </html>

@@ -44,8 +44,6 @@ CREATE TABLE LOCATION(
                          id number NOT NULL,
                          location_name varchar2(50) NOT NULL,
                          constraints pk_location_id primary key(id) --pk
-<<<<<<< HEAD
-=======
 );
 --
 -- 3.극장(ex강남점,성수점...)
@@ -87,7 +85,6 @@ CREATE TABLE ADMIN(
                       constraints pk_admin_id primary key(id), --pk
                       constraints fk_admin_cinema_id foreign key(cinema_id) references cinema(id) on delete set null, -- fk
                       constraints uq_admin_username unique(username) -- uq
->>>>>>> 139fbdae8efabb4a807d8783bc97494e50de9706
 );
 create sequence seq_admin_id; -- 관리자 시퀀스
 --
@@ -106,7 +103,6 @@ CREATE TABLE AUTHORITY(
 );
 create sequence seq_authority_id;
 --
-<<<<<<< HEAD
 -- 3.극장(ex강남점,성수점...)
 CREATE TABLE CINEMA(
                        id number	NOT NULL, --지점 아이디
@@ -165,8 +161,6 @@ CREATE TABLE AUTHORITY(
 );
 create sequence seq_authority_id;
 --
-=======
->>>>>>> 139fbdae8efabb4a807d8783bc97494e50de9706
 --4.좌석
 CREATE TABLE SEAT(
                      id number NOT NULL, --pk
@@ -182,11 +176,9 @@ CREATE TABLE THEATER (
                          name varchar2(50)	 NOT NULL, --상영관명
                          seat 	number	NOT NULL,--총 좌석수
                          constraints pk_theater_id primary key(id), --pk로 지정
-<<<<<<< HEAD
                          constraints fk_theater_cinema_id foreign key(cinema_id) references theater(id) on delete set null
-=======
                          constraints fk_theater_cinema_id foreign key(cinema_id) references cinema(id) on delete set null
->>>>>>> 139fbdae8efabb4a807d8783bc97494e50de9706
+
 );
 --
 --15.장르

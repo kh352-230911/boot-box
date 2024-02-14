@@ -1,5 +1,10 @@
 package com.sh.app.reservation1.controller;
+import com.sh.app.movie.dto.MovieDetailDto;
+import com.sh.app.movie.dto.MovieListDto;
+import com.sh.app.movie.entity.Movie;
+import com.sh.app.movie.service.MovieService;
 import com.sh.app.reservation1.service.ReservationService;
+import com.sh.app.review.service.ReviewService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,10 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.format.TextStyle;
+import java.util.*;
 
 /**
  * 0206
@@ -29,22 +35,52 @@ import java.util.List;
  */
 public class ReservationController {
 
+    // 의존 주입 영역
+    @Autowired
+    private MovieService movieService;
+
     @Autowired
     ReservationService reservationService;
 
     //        System.out.println("0213 booking test - 1단계 (영화,지역등등 선택하는 페이지..)");
 
+
+
+
+
+    //첫 예매 페이지 진입 시 날짜(로컬)
     @GetMapping("/reservationBooking3.do")
     public void reservationMain(Model model)
     {
         LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
         List<String> dateList = new ArrayList<>();
-        for (int i = 0; i < 14; i++) {
-            dateList.add(currentDate.plusDays(i).format(formatter));
+        List<String> dayOfWeekList = new ArrayList<>();
+
+        for (int i = 0; i < 21; i++) {
+            LocalDate date = currentDate.plusDays(i);
+            dateList.add(date.format(formatter));
+            DayOfWeek dayOfWeek = date.getDayOfWeek();
+            dayOfWeekList.add(dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN)); //영문 요일을 한글요일[축약버전]으로
         }
-        model.addAttribute("dateList", dateList);
+//        model.addAttribute("dateList", dateList);
+
+
+        //0214 db 조회하여 현재 table에 있는 모든 영화 가져오기.
+        List<Movie> movies;
+        movies = movieService.findAll();
+        log.debug("movies = {}", movies);
+//        model.addAttribute("movies", movies);
+
+        //0214 db조회 영화 결과값+ 날짜값 묶어서 두 그룹의 값을 보내주고싶을때
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("movies", movies);
+        dataMap.put("dateList", dateList);
+        dataMap.put("dayOfWeekList", dayOfWeekList);
+
+        // Model에 데이터 저장
+        model.addAttribute("dataMap", dataMap);
 
     }
     @GetMapping("/reservationBooking4.do")

@@ -34,9 +34,62 @@
 //         document.querySelector(".count").innerHTML = count;
 //     });
 // });
+//=====================================================
+//th 영화 제목 클릭시 하단 div에 해당 영화 포스터 이름, 포스터 동적으로 출력
+const seatContainer1Div = document.querySelector(".seat-container1");
+// seatContainer1Div.style.backgroundColor = 'red';
+
+function showPoster(posterUrl,movieTitle) {
+    console.log("출력할 포스터:"+posterUrl);
+    console.log("출력할 영화명:"+movieTitle);
+    // 외부의 <div> 요소를 찾습니다.
+    const posterContainer = document.querySelector(".seat-container1");//getElementById("posterContainer");
+
+    // 해당 포스터 이미지를 표시하는 <img> 요소를 생성합니다.
+    let imgElement = document.querySelector(".seat-container1-img");
+    let textElement = document.querySelector(".seat-container1-title");
+    // 이전에 표시된 이미지가 있다면 제거합니다.
+    posterContainer.innerHTML = "";
+    imgElement.src = posterUrl;
+    //movieTitle을 전체 출력하되, 제목이 길면 자른다.
+
+    if(movieTitle.length>=10)
+    {
+        textElement.innerHTML = addLineBreaks(movieTitle,10);
+    }
+    else
+    {
+        textElement.innerHTML = movieTitle;
+    }
+
+
+    posterContainer.appendChild(imgElement);
+    posterContainer.appendChild(textElement);
+}
+
+function addLineBreaks(str, charsPerLine) {
+    var result = '';
+    for (var i = 0; i < str.length; i++) {
+        result += str[i];
+        if ((i + 1) % charsPerLine === 0) {
+            result += '<br>';
+        }
+    }
+    return result;
+}
+//======================================================================================
+document.querySelector(".select-seats-prev-button").addEventListener('click',function ()
+{
+    alert('이전버튼');
+});
+document.querySelector(".select-seats-next-button").addEventListener('click',function ()
+{
+    alert('다음버튼');
+});
+
 
 //============================================================================================================================
-// 알파벳 배열
+// 알파벳 배열(좌석행)
 let alphabet = ['A', 'B', 'C', 'D', 'E', 'F'];
 function createSeats(rows, cols) {
     const seatTableBody = document.getElementById('seatTableBody');
@@ -121,8 +174,6 @@ function createSeats(rows, cols) {
         seatTableBody.appendChild(row);
     }
 }
-// 6행 10열의 좌석 생성
-createSeats(6, 10);
 
 function toClear()
 {
@@ -134,6 +185,7 @@ function toClear()
     numberOfPeople = 0; //지정한 인원수도 초기화
     resultElement.innerText = numberOfPeople;
 }
+
 document.getElementById('btn-clear').addEventListener('click', function() {
     // 페이지 내의 모든 체크박스를 선택
     toClear();
@@ -179,11 +231,10 @@ function showAlert(element) {
     let date = element.innerText;
     alert('선택한 날짜: ' + date);
 
-
-    var infoSeats = document.querySelectorAll(".info-seats");
-    infoSeats.forEach(function(seat) {
-        seat.style.display = "none";
-    });
+    // var infoSeats = document.querySelectorAll(".info-seats");
+    // infoSeats.forEach(function(seat) {
+    //     seat.style.display = "none";
+    // });
 }
 
 //체크된 체크박수 갯수 확인하는 메소드
@@ -192,3 +243,28 @@ var checkedCount = 0;
 
 
 
+function highlightCell(cell) {
+    // 클릭된 td의 클래스에 "highlighted" 클래스가 있는지 확인
+    console.log(cell.classList);
+    var isHighlighted = cell.classList.contains("highlighted");
+
+    // 클래스가 있으면 제거하고, 없으면 추가하여 배경색 변경
+    if (isHighlighted) {
+        cell.classList.remove("highlighted");
+    } else {
+        cell.classList.add("highlighted");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+// 6행 10열의 좌석 생성
+createSeats(6, 10);
