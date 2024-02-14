@@ -1,14 +1,15 @@
 package com.sh.app.cinema.controller;
 
+import com.sh.app.cinema.dto.CinemaDetailDto;
 import com.sh.app.cinema.dto.CinemaDto;
 
-import com.sh.app.cinema.dto.CinemaProjection;
 import com.sh.app.cinema.service.CinemaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,18 +29,11 @@ public class CinemaController {
     @Autowired
     private CinemaService cinemaService;
 
-//    @GetMapping("/cinemaDetail.do")
-//    public ResponseEntity<List<CinemaProjection>> getScheduleDetails(@RequestParam LocalDate schDate,
-//                                                                     @RequestParam String regionCinema,
-//                                                                     @RequestParam String title) {
-//        List<CinemaProjection> scheduleDetails = cinemaService.getScheduleDetails(schDate, regionCinema, title);
-//        log.debug("scheduleDetails = {}", scheduleDetails);
-//
-//        return ResponseEntity.ok(scheduleDetails);
-//    }
     @GetMapping("/cinemaDetail.do")
-    public void cinemaDetail() {
-
+    public String cinemaDetail(@RequestParam("regionCinema") String regionCinema, Model model) {
+        model.addAttribute("regionCinema", regionCinema); // 모델에 극장 지점명 추가
+        // 추가적인 로직 (예: 해당 지점의 상영 정보 조회 등)
+        return "cinema/cinemaDetail"; // Thymeleaf 템플릿 이름
     }
 
     @GetMapping("/cinemaList.do")

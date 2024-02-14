@@ -50,41 +50,41 @@ arrows.forEach((arrow, i) => {
 
 
 // 상영 시간표 데이터 - 실제로는 서버에서 가져오는 데이터를 사용.
-const scheduleData = [
-    {
-        title: "데드맨",
-        totalDuration: 120,
-        schedules: [
-            {
-                theater: "1관",
-                times: [
-                    { time: "19:20", seatsAvailable: 50},
-                    { time: "21:50", seatsAvailable: 43},
-                ],
-
-            },
-            {
-                theater: "2관",
-                times: [{ time: "19:40", seatsAvailable: 58 }],
-            }
-        ]
-    },
-    {
-        title: "시민덕희",
-        totalDuration: 120,
-        schedules: [
-            {
-                theater: "5관",
-                times: [{ time: "19:20", seatsAvailable: 50 }],
-            },
-            {
-                theater: "6관",
-                times: [{ time: "19:40", seatsAvailable: 58 }],
-            }
-        ]
-    },
-    // ...기타 영화 및 상영 시간 데이터 추가..
-];
+// const scheduleData = [
+//     {
+//         title: "데드맨",
+//         totalDuration: 120,
+//         schedules: [
+//             {
+//                 theater: "1관",
+//                 times: [
+//                     { time: "19:20", seatsAvailable: 50},
+//                     { time: "21:50", seatsAvailable: 43},
+//                 ],
+//
+//             },
+//             {
+//                 theater: "2관",
+//                 times: [{ time: "19:40", seatsAvailable: 58 }],
+//             }
+//         ]
+//     },
+//     {
+//         title: "시민덕희",
+//         totalDuration: 120,
+//         schedules: [
+//             {
+//                 theater: "5관",
+//                 times: [{ time: "19:20", seatsAvailable: 50 }],
+//             },
+//             {
+//                 theater: "6관",
+//                 times: [{ time: "19:40", seatsAvailable: 58 }],
+//             }
+//         ]
+//     },
+//     // ...기타 영화 및 상영 시간 데이터 추가..
+// ];
 
 function renderSchedule(scheduleData) {
     const scheduleContainer = document.getElementById('movieSchedule');
@@ -207,4 +207,3 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCalendar(currentDate);
         selectedDateElement.textContent = formatDate(new Date()); // 페이지 로드 시 오늘 날짜를 선택하도록 설정
 });
-

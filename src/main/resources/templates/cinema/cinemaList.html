@@ -22,7 +22,7 @@
                     <div class="theater-list">
                         <ul>
                             <li>
-                                <a th:href="@{/cinema/cinemaDetail.do}" th:text="${cinema.region_cinema}"></a>
+                                <a th:href="@{'/cinema/cinemaDetail.do'(regionCinema=${cinema.region_cinema})}" th:text="${cinema.region_cinema}"></a>
                             </li>
                         </ul>
                     </div>

@@ -1,17 +1,15 @@
 package com.sh.app.schedule.dto;
 
 import com.sh.app.movie.entity.Movie;
-import com.sh.app.theater.dto.TheaterDTO;
-import com.sh.app.theater.entity.Theater;
-import jakarta.persistence.*;
+import com.sh.app.theater.dto.TheaterDto;
 import lombok.Data;
 
 @Data
-public class ScheduleDTO {
+public class ScheduleDto {
 
     private long id;
 
-    private TheaterDTO theater;
+    private TheaterDto theater;
 
     private Movie movie;
 
