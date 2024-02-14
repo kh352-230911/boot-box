@@ -55,17 +55,16 @@
             </tbody>
         </table>
 <!--        <div class="img" th:style="'background-image: url(' + ${movie.poster} + ');'"></div>-->
-        <table>
+
+        <table class="location-area">
             <thead>
             <tr>
                 <th colspan="2">극장 리스트</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="date, index : ${dataMap.dateList}">
-                <td th:text="${date}" onclick="highlightCell(this)"/>
-<!--                    onclick="showAlert(this)"/>-->
-                <td th:text="${dataMap.dayOfWeekList[__${index.index}__]}" onclick="showAlert(this)"></td>
+            <tr th:each="location, status : ${dataMap.locations}">
+                <td class = "select_location" th:text="${location.location_name}"/>
             </tr>
             </tbody>
         </table>

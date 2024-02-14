@@ -1,4 +1,6 @@
 package com.sh.app.reservation1.controller;
+import com.sh.app.location.dto.LocationDto;
+import com.sh.app.location.service.LocationService;
 import com.sh.app.movie.dto.MovieDetailDto;
 import com.sh.app.movie.dto.MovieListDto;
 import com.sh.app.movie.entity.Movie;
@@ -42,10 +44,8 @@ public class ReservationController {
     @Autowired
     ReservationService reservationService;
 
-    //        System.out.println("0213 booking test - 1단계 (영화,지역등등 선택하는 페이지..)");
-
-
-
+    @Autowired
+    LocationService locationService;
 
 
     //첫 예매 페이지 진입 시 날짜(로컬)
@@ -64,20 +64,25 @@ public class ReservationController {
             DayOfWeek dayOfWeek = date.getDayOfWeek();
             dayOfWeekList.add(dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN)); //영문 요일을 한글요일[축약버전]으로
         }
-//        model.addAttribute("dateList", dateList);
-
 
         //0214 db 조회하여 현재 table에 있는 모든 영화 가져오기.
         List<Movie> movies;
         movies = movieService.findAll();
         log.debug("movies = {}", movies);
-//        model.addAttribute("movies", movies);
 
-        //0214 db조회 영화 결과값+ 날짜값 묶어서 두 그룹의 값을 보내주고싶을때
+        //0214 db 조회하여 지역정보 가져오기
+        List<LocationDto> locationsWithCinemas = locationService.findAllLocationsWithCinemas();
+//        model.addAttribute("locations", locationsWithCinemas);
+
+
+        //0214 db조회 영화 결과값+ 날짜값 + 지역 결과값 묶어서 model값을 보내주고싶을때
         Map<String, Object> dataMap = new HashMap<>();
-        dataMap.put("movies", movies);
-        dataMap.put("dateList", dateList);
-        dataMap.put("dayOfWeekList", dayOfWeekList);
+        dataMap.put("movies", movies); //영화정보
+        dataMap.put("dateList", dateList); // 날짜 [로컬에서 계산함]
+        dataMap.put("dayOfWeekList", dayOfWeekList); //요일 [로컬에서 계산함]
+        dataMap.put("locations",locationsWithCinemas); //지역정보
+
+
 
         // Model에 데이터 저장
         model.addAttribute("dataMap", dataMap);

@@ -32,11 +32,8 @@ insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,membe
 values(seq_member_id.nextVal, 'honggd','1234','honggd@naver.com','홍길동','01022221111','2000');
 insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
 values(seq_member_id.nextVal, 'less','1234','leess@naver.com','이순신','01013225521','1989');
-<<<<<<< HEAD
 
-=======
 --
->>>>>>> f8fce2ba6c70d83f95237d6b72a985fba70a1001
 -- admin
 insert into ADMIN values (seq_admin_id.nextval, 0201, 'adm220932', '1234');
 insert into ADMIN values (seq_admin_id.nextval, 03101, 'adm650704', '1234');
@@ -240,10 +237,7 @@ insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 2, 020
 insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 3, 03101, 05101, null);
 insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 4, 04201, null, null);
 insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 5, 03101, 03201, 05101);
-<<<<<<< HEAD
 
-=======
->>>>>>> f8fce2ba6c70d83f95237d6b72a985fba70a1001
 --
 -- ask
 insert into ASK values (seq_ask_id.nextval, 1, '예매 취소 및 환불', '예매 취소 및 환불 규정은 어떻게 되나요?', default);
@@ -321,11 +315,7 @@ insert into MOVIE_LIST values (seq_movie_list_id.nextval, 3, 05101);
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 4, 03201);
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 4, 0201);
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 5, 05101);
-<<<<<<< HEAD
 
-=======
---
->>>>>>> f8fce2ba6c70d83f95237d6b72a985fba70a1001
 -- review
 insert into REVIEW values (seq_review_id.nextval, 'box16443', 1, 1, 3, '너무 지루해요', default);
 insert into REVIEW values (seq_review_id.nextval, 'box25822', 2, 2, 4, '최고', default);

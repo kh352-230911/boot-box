@@ -36,6 +36,17 @@
 // });
 //=====================================================
 //th 영화 제목 클릭시 하단 div에 해당 영화 포스터 이름, 포스터 동적으로 출력
+
+
+
+$('.select_location').on('click', function () {
+    console.log("0214......2");
+    $("table.location-area li.on").removeClass('on');
+    $(this).parent().addClass('on');
+});
+
+
+
 const seatContainer1Div = document.querySelector(".seat-container1");
 // seatContainer1Div.style.backgroundColor = 'red';
 
