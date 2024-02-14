@@ -16,13 +16,25 @@
     <br>
     <div class = "theater-box">
         <div class = "location-area">
+<!--            <ul>-->
+<!--                <li th:each="cinema, status : ${cinemas}">-->
+<!--                    <button type="button" class="select_location" th:text="${cinema.location_name}"></button>-->
+<!--                    <div class="theater-list">-->
+<!--                        <ul>-->
+<!--                            <li>-->
+<!--                                <a th:href="@{'/cinema/cinemaDetail.do'(id=${cinema.id})}" th:text="${cinema.region_cinema}"></a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </li>-->
+<!--            </ul>-->
             <ul>
-                <li th:each="cinema, status : ${cinemas}">
-                    <button type="button" class="select_location" th:text="${cinema.location_name}"></button>
+                <li th:each="location : ${locations}">
+                    <button type="button" class="select_location" th:text="${location.location_name}"></button>
                     <div class="theater-list">
                         <ul>
-                            <li>
-                                <a th:href="@{/cinema/cinemaDetail.do}" th:text="${cinema.region_cinema}"></a>
+                            <li th:each="cinema : ${location.cinemas}">
+                                <a th:href="@{'/cinema/cinemaDetail.do'(id=${cinema.id})}" th:text="${cinema.region_cinema}"></a>
                             </li>
                         </ul>
                     </div>

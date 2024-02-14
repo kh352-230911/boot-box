@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html
         xmlns:th="http://www.thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
         layout:decorate="~{layout/default}">
 <head>
     <title>cinema</title>
@@ -36,26 +36,24 @@
         </div>
         <div class="container">
             <div class="content-container">
-                <div class="featured-content" style="background:linear-gradient(to bottom, rgba(0,0,0,0),#151515), url('https://cdn.womaneconomy.co.kr/news/photo/202301/215138_421317_3746.jpg');">
-
-                        <h1 class="active">강남</h1>
+                <div class="featured-content" style="background:linear-gradient(to bottom, rgba(0,0,0,0),#151515);">
+                    <h1 class="active" th:text="${cinema.region_cinema}"></h1><!--극장명-->
                         <p class="featured-desc">
                         <ul>
-                            <li>
-                                위치 : 서울 강남구 역삼동
-                            </li>
-                            <li>
-                                로맨틱 멀티플렉스! 젊은 도시 강남이 한 눈에 보이는 최상의 View를 제공
-                            </li>
-                            <li>
-                                tel : 02-1111-2222
-                            </li>
+                            <li th:text="'주소 : ' + ${cinema.address}"></li><!--극장주소-->
+                            <li>로맨틱 멀티플렉스! 한 눈에 보이는 최상의 View를 제공</li>
+                            <li th:text="'전화번호 : ' + ${cinema.phone}"></li><!--극장전화번호-->
                         </ul>
                         </p>
-                        <button class="featured-button">
-                            예매하기
-                        </button>
-                    </div>
+                    <a href="#" class="featured-button"
+                       th:data-location-lo="${cinema.location_lo}"
+                       th:data-location-la="${cinema.location_la}"
+                       onclick="openMap(event, this)">
+<!--                        <span th:text="${cinema.location_lo}"/>-->
+<!--                        <span th:text="${cinema.location_la}"/>-->
+                        실시간 길찾기
+                    </a>
+                </div>
                     <div class="movie-list-container">
                         <h2>현재 상영작</h2>
                         <div class="movie-list-wrapper">
@@ -99,25 +97,48 @@
                             <i class="fas fa-chevron-right arrow"></i>
                         </div>
                     </div>
-                <!-- 한 줄 달력 일정 추가 -->
-                <div class="month-and-selection">
-                    <div class="month" id="month"></div>
-                </div>
-                <div class="calendar-container" >
-                    <div>선택한 날짜</div>
-                    <div class="selected-date" id="selectedDate"></div>
-                    <div class="arrow" id="prev">&#9664;</div>
-                    <ul class="calendar" id="calendar"></ul>
-                    <div class="arrow" id="next">&#9654;</div>
-                    <button class="today-btn" id="today">Today</button>
-                </div>
-                <div class="schedule-container" id="movieSchedule">
-                    <!-- 영화, 상영관, 상영일정, 좌석 정보가 여기에 동적으로 추가 -->
-                </div>
+                    <!-- 한 줄 달력 일정 추가 -->
+                    <div class="month-and-selection">
+                        <div class="month" id="month"></div>
+                    </div>
+                    <div class="calendar-container" >
+                        <div>선택한 날짜</div>
+                        <div class="selected-date" id="selectedDate"></div>
+                        <div class="arrow" id="prev">&#9664;</div>
+                        <ul class="calendar" id="calendar"></ul>
+                        <div class="arrow" id="next">&#9654;</div>
+                        <button class="today-btn" id="today">Today</button>
+                    </div>
+<!--                &lt;!&ndash; 영화 스케줄 컨테이너 &ndash;&gt;-->
+<!--                <div class="schedule-container" id="movieSchedule" th:each="detail : ${scheduleDetails}">-->
+<!--                    <div class="movie-title" th:text="${detail.title} + ' 상영시간 ' + ${detail.runningTime} + '분'">데드맨 상영시간 120분</div>-->
+<!--                    <div class="movie-schedule">-->
+<!--                        <div class="theater-info" th:text="'&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; ' + ${detail.theaterName} + ' &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;'">&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; 1관 &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</div>-->
+<!--                        <div class="time-slots">-->
+<!--                            <div class="time-slot">-->
+<!--                                <span th:text="${detail.startTime}">19:20</span>-->
+<!--                                <div class="seats-available" th:text="'남은 좌석 : ' + ${detail.remainingSeats} + '석'">남은 좌석 : 50석</div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
         </div>
     </div>
 </div>
 
-<script layout:fragment="script" th:src="@{/js/cinema/cinemaDetail.js}"></script>
+<script layout:fragment="script" th:src="@{/js/cinema/cinemaDetail.js}">
+    // 랜덤하게 이미지 파일 이름을 배열에 저장
+    const images = ["영화관사진1.jpg", "영화관사진2.jpg", "영화관사진3.jpg", "영화관사진4.jpg"];
+
+    // 배열에서 랜덤하게 하나의 이미지를 선택
+    const chosenImage = images[Math.floor(Math.random() * images.length)];
+
+    // .featured-content 클래스를 가진 div를 선택
+    const featuredContent = document.querySelector('.featured-content');
+
+    // 선택된 div의 배경 이미지를 설정
+    // 여기서 'url(/static/images/${chosenImage})'는 실제 이미지 파일의 웹 서버 상의 경로를 가리킴
+    featuredContent.style.backgroundImage = `url('/images/${chosenImage}'), linear-gradient(to bottom, rgba(0,0,0,0),#151515)`;
+</script>
 </html>

@@ -1,17 +1,14 @@
 package com.sh.app.theater.dto;
 
 import com.sh.app.cinema.entity.Cinema;
-import com.sh.app.schedule.dto.ScheduleDTO;
-import com.sh.app.schedule.entity.Schedule;
-import jakarta.persistence.*;
-import lombok.Builder;
+import com.sh.app.schedule.dto.ScheduleDto;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class TheaterDTO {
+public class TheaterDto {
     private Long id;
 
     private Cinema cinema;
@@ -20,5 +17,5 @@ public class TheaterDTO {
 
     private int seat;
 
-    private List<ScheduleDTO> schedules = new ArrayList<>();
+    private List<ScheduleDto> schedules = new ArrayList<>();
 }
