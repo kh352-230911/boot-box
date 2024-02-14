@@ -53,8 +53,8 @@ CREATE TABLE CINEMA(
                        region_cinema varchar2(50) NOT NULL,--지점명
                        theater_number number	NOT NULL, --상영관 수(1관,2관..)
                        address	varchar2(500) NOT NULL, --주소
-                       location_lo number NOT NULL, --지도 경도
-                       location_la number NOT NULL, --지도 위도
+                       location_lo number NULL, --지도 경도
+                       location_la number NULL, --지도 위도
                        phone varchar2(100) NOT NULL, --전화번호
                        constraints pk_cinema_id primary key(id), --pk
                        constraints fk_cinema_location_id foreign key(location_id) references location(id) on delete set null, --지역 아이디 수정,삭제 시 자식 null로됨
