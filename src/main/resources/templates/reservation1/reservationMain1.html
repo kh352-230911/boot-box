@@ -26,7 +26,7 @@
                     <button th:onclick="movieByRating()" >예매율순 </button>
                     <button th:onclick="movieByAlphabetically()" class="ml-3">가나다순</button>
                     <ul id="movieList" class="mt-2">
-                        <li><button th:onclick="selectedMovie('웡카')">웡카</button></li>
+                        <li><button th:onclick="selectedMovie('웡카')" value="웡카">웡카</button></li>
                         <li><button th:onclick="selectedMovie('시민덕희')" >시민덕희</button></li>
                         <li><button th:onclick="selectedMovie('데드맨')" >데드맨</button></li>
                         <li><button th:onclick="selectedMovie('추락의 해부')" >추락의 해부</button></li>
@@ -37,13 +37,13 @@
                         <li><button th:onclick="selectedMovie('아가일')" >아가일</button></li>
                         <li><button th:onclick="selectedMovie('건국전쟁')" >건국전쟁</button></li>
                         <li><button th:onclick="selectedMovie('검은소년')" >검은소년</button></li>
-                        <li><button th:onclick="selectedMovie('기적의시작')" >기적의시작</button></li>
+                        <li><button th:onclick="selectedMovie('킹덤-엑소더스')" >킹덤-엑소더스</button></li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <div id="cinema" class="col-body">
+        <div id="cinema">
             <div class="section-cinema"><h2>극장</h2></div>
             <div id="cinema1">
                 <div id="cinema2" class="ml-10 mt-2">
@@ -52,7 +52,7 @@
                 </div>
                 <div id="locationAndCinemaList" style="display: flex;">
                     <ul id="locationList" class="ml-10 mt-2">
-                        <li><button th:onclick="showRegion('seoul')">서울</button></li>
+                        <li><button th:onclick="showRegion('seoul')" value="서울">서울</button></li>
                         <li><button th:onclick="showRegion('gyeonggi')">경기</button></li>
                         <li><button th:onclick="showRegion('incheon')">인천</button></li>
                         <li><button th:onclick="showRegion('kangwon')">강원</button></li>
@@ -65,7 +65,7 @@
                     <div id="cinemaList" class="mt-2">
                         <div id="seoulCinema" class="hidden">
                             <ul>
-                                <li><button th:onclick="selectedCinema('강남')">강남</button></li>
+                                <li><button th:onclick="selectedCinema('강남')" value="강남">강남</button></li>
                                 <li><button th:onclick="selectedCinema('건대입구')">건대입구</button></li>
                                 <li><button th:onclick="selectedCinema('명동')">명동</button></li>
                                 <li><button th:onclick="selectedCinema('송파')">송파</button></li>
@@ -143,7 +143,7 @@
             </div>
         </div>
 
-        <div id="date" class="col-body ml-6">
+        <div id="date" class="ml-6">
             <div class="section-date"><h2>날짜</h2></div>
             <div id="date1">
                 <div id="date2" class="ml-3 mt-2">
@@ -162,17 +162,18 @@
             </div>
         </div>
 
-        <div id="time" class="col-body ml-6">
+        <div id="time" class="ml-6">
             <div class="section-time"><h2>시간</h2></div>
             <div id="time1">
 <!--                <div id="timeList" class="ml-3 mt-2" >-->
-                <div id="timeList" class="ml-3 mt-2" th:if="${movie != null and cinema != null and date != null}">
+                <div id="timeList" class="ml-3 mt-2">
+<!--                    <th:block th:if="${movie != null and cinema != null and date != null}">-->
                     <ul style="margin-left: 10px">
                         <li style="width: 200px;">
                             <div  style="font-weight: bold; color: darkgreen">3관 1층</div>
-                            <button>
+                            <button th:onclick="selectedTime('9:00')">
                                 <span class="time">
-                                    <span><a href="#" th:onclick="selectedTime('9:00')">9:00</a></span>
+                                    <span>9:00</span>
                                 </span>
                                 <span class="count">19석
                                     <span class="endTime">종료 11:00</span>
@@ -180,10 +181,10 @@
                             </button>
                         </li>
                         <li style="width: 200px;">
-                            <div  style="font-weight: bold; color: darkgreen; margin-top: 5px">2관 1층</div>
-                            <button>
+                            <div  style="font-weight: bold; color: darkgreen; margin-top: 6px">2관 1층</div>
+                            <button th:onclick="selectedTime('15:00')">
                                 <span class="time">
-                                    <span><a href="#" th:onclick="selectedTime('15:00')">15:00</a></span>
+                                    <span>15:00</span>
                                 </span>
                                 <span class="count">23석
                                     <span class="endTime">종료 17:00</span>
@@ -191,10 +192,10 @@
                             </button>
                         </li>
                         <li style="width: 200px;">
-                            <div style="font-weight: bold; color: darkgreen; margin-top: 5px">1관 3층</div>
-                            <button>
+                            <div style="font-weight: bold; color: darkgreen; margin-top: 6px">1관 3층</div>
+                            <button th:onclick="selectedTime('17:00')">
                                 <span class="time">
-                                    <span><a href="#" th:onclick="selectedTime('17:00')">17:00</a></span>
+                                    <span>17:00</span>
                                 </span>
                                 <span class="count">31석
                                     <span class="endTime">종료 19:00</span>
@@ -202,9 +203,9 @@
                             </button>
                         </li>
                         <li style="width: 200px;">
-                            <button>
+                            <button th:onclick="selectedTime('19:00')">
                                 <span class="time">
-                                    <span><a href="#" th:onclick="selectedTime('19:00')">19:00</a></span>
+                                    <span>19:00</span>
                                 </span>
                                 <span class="count">4석
                                     <span class="endTime">종료 21:00</span>
@@ -212,6 +213,7 @@
                             </button>
                         </li>
                     </ul>
+<!--                    </th:block>-->
                 </div>
             </div>
         </div>
