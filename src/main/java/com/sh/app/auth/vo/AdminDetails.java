@@ -13,14 +13,14 @@ import java.util.Collection;
 import java.util.Map;
 
 @Data
-public class MemberDetails implements UserDetails, OAuth2User, Serializable {
-    final Member member;
+public class AdminDetails implements UserDetails, OAuth2User, Serializable {
+    final Admin admin;
 
     private Map<String, Object> attributes;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.member.getAuthorities().stream()
+        return this.admin.getAuthorities().stream()
                 .map((authority -> authority.getName().name()))
                 .map((roleAuth) -> new SimpleGrantedAuthority(roleAuth))
                 .toList();
@@ -28,12 +28,12 @@ public class MemberDetails implements UserDetails, OAuth2User, Serializable {
 
     @Override
     public String getPassword() {
-        return this.member.getMemberPwd();
+        return this.admin.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return this.member.getMemberLoginId();
+        return this.admin.getUsername();
     }
 
     @Override
@@ -58,7 +58,7 @@ public class MemberDetails implements UserDetails, OAuth2User, Serializable {
 
     @Override
     public String getName() {
-        return this.member.getMemberLoginId();
+        return this.admin.getUsername();
     }
 
     @Override

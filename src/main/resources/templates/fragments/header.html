@@ -60,9 +60,9 @@
                                         <a href="#" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">고객센터</a>
                                     </li>
                                 </ul>
-                                <div class="py-1">
-                                    <a href="#" class="block text-xl font-semibold px-4 py-2 text-sm text-white md:hover:text-red-600">My Boot</a>
-                                </div>
+<!--                                <div class="py-1">-->
+<!--                                    <a href="#" class="block text-xl font-semibold px-4 py-2 text-sm text-white md:hover:text-red-600">My Boot</a>-->
+<!--                                </div>-->
                             </div>
                         </li>
                     </th:block>
@@ -76,8 +76,13 @@
                             <!-- Dropdown menu -->
                             <div id="dropdownNavbar1" class="z-10 hidden  font-normal divide-y divide-red-500 rounded-lg shadow w-44">
                                 <ul class="py-2 text-sm text-white dark:text-gray-200" aria-labelledby="dropdownLargeButton">
-                                    <li class="text-xs">-->
-                                        <a href="#" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">My Boot</a>
+                                    <th:block sec:authorize="hasAuthority('ROLE_USER')">
+                                        <li class="text-xs">
+                                            <a th:href="@{/member/memberDetail.do(id=${#authentication.name})}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">My Boot</a>
+                                        </li>
+                                    </th:block>
+                                    <li>
+                                        <a href="#" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">고객센터</a>
                                     </li>
                                     <li>
                                         <form th:action="@{/auth/logout.do}" method="post" class="d-inline">

@@ -36,6 +36,7 @@
         </div>
         <hr style="height: 1px">
         <br>
+        <br>
         <div class="section-1-2 flex flex-wrap w-full h-auto">
             <div th:each="movie, status : ${movies}">
                 <div><a th:href="@{/movie/movieDetail.do(id=${movie.id})}">
