@@ -10,14 +10,17 @@ insert into LOCATION values (053, '대구');
 insert into LOCATION values (051, '부산/울산');
 insert into LOCATION values (054, '경상');
 insert into LOCATION values (062, '광주/전라/제주');
---
+
 -- cinema
 insert into CINEMA values (0201, 02, '강남점', 1, '서울특별시 강남구 강남대로 438', 127.02629392376384, 37.501674084777505, '1544-1122');
 insert into CINEMA values (03101, 031, '고양백석점', 1, '경기도 고양시 일산동구 백석동 1242', 126.78965179914998, 37.643461526992546, '1544-1122');
 insert into CINEMA values (03201, 032, '청라점', 1, '인천광역시 서구 청라동 155-7 스퀘어세븐', 126.64164011661255, 37.53237333861732, '1544-1122');
 insert into CINEMA values (04201, 042, '대전점', 1, '대전광역시 중구 문화동 1-16', 127.40842431841456, 36.32061814895665, '1544-1122');
 insert into CINEMA values (05101, 051, '센텀시티점', 1, '부산광역시 해운대구 우동 1495번지 신세계센텀시티', 129.13033686916697 , 35.16911956001504, '1544-1122');
---
+--0214 test용으로 극장 2개 추가했습니다.
+insert into CINEMA values (0233, 02, '왕십리점', 33, '서울특별시 성동구 왕십리광장로 17 (행당동, 왕십리 민자역사 5층)', 127.038416, 37.5610558, '1544-1122');
+insert into CINEMA values (04202, 042, '논산점', 2, '충청남도 논산시 시민로 181 시네마타워 3층', 127.097331, 36.1833641, '1544-1122');
+
 -- member
 insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
 values(seq_member_id.nextVal, 'rhgPwls','$2a$10$9B5JXlO9iyWBdFrRc0u5C.T1gyOAdVNM.7RFKU1Kf9jM69HfzbrzK','update_set@naver.com','고혜진','01012341234','1990') ;
@@ -50,6 +53,14 @@ insert into AUTHORITY values (seq_authority_id.nextval, null, 3, 'ROLE_MANAGER')
 insert into AUTHORITY values (seq_authority_id.nextval, null, 4, 'ROLE_MANAGER');
 insert into AUTHORITY values (seq_authority_id.nextval, null, 5, 'ROLE_MANAGER');
 insert into AUTHORITY values (seq_authority_id.nextval, null, 6, 'ROLE_ADMIN');
+
+-- seat
+insert into SEAT values (seq_seat_id.nextval, 'A01');
+insert into SEAT values (seq_seat_id.nextval, 'B01');
+insert into SEAT values (seq_seat_id.nextval, 'C01');
+insert into SEAT values (seq_seat_id.nextval, 'D01');
+insert into SEAT values (seq_seat_id.nextval, 'E01');
+
 -- seat
 insert into SEAT values (seq_seat_id.nextval, 'A01');
 insert into SEAT values (seq_seat_id.nextval, 'B01');
@@ -63,6 +74,7 @@ insert into THEATER values (0310101, 03101, '1관', 60);
 insert into THEATER values (0320101, 03201, '1관', 60);
 insert into THEATER values (0420101, 04201, '1관', 60);
 insert into THEATER values (0510101, 05101, '1관', 60);
+
 --
 -- genre
 insert into GENRE values (seq_genre_id.nextval, '드라마');

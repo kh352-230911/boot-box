@@ -10,10 +10,10 @@ spring:
     url: ${PROD_DB_URL}
     username: ${PROD_DB_USERNAME}
     password: ${PROD_DB_PASSWORD}
-#    driver-class-name: oracle.jdbc.driver.OracleDriver
-#    url: jdbc:oracle:thin:@localhost:1521:xe
-#    username: bootbox
-#    password: bootbox
+  #    driver-class-name: oracle.jdbc.driver.OracleDriver
+  #    url: jdbc:oracle:thin:@localhost:1521:xe
+  #    username: bootbox
+  #    password: bootbox
   jpa:
     generate-ddl: true
     show-sql: true #만들어진 쿼리를 보여줄것인가? true or false
@@ -22,7 +22,7 @@ spring:
         format_sql: true #false일시 한 줄로 나옴
         hbm2ddl:
           #create:entity로 등록한 모든 테이블을 생성하기때문에 member table만 작업하는것따윈없다..
-          auto: update #ddl 생성옵션 (개발극초기:create,create-drop/개발중:update/종료후:validate
+          auto: none #ddl 생성옵션 (개발극초기:create,create-drop/개발중:update/종료후:validate/none: 데이터베이스 스키마 생성이나 변경을 하지 않음
       database: oracle
       database-platform: org.hibernate.dialect.OracleDialect
   sql:
@@ -61,5 +61,5 @@ logging:
   # profile 관리
   spring:
     profiles:
-#      default: test
+      #      default: test
       active: prod
