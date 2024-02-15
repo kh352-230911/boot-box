@@ -1,5 +1,8 @@
 package com.sh.app.auth.service;
 
+import com.sh.app.admin.entity.Admin;
+import com.sh.app.admin.service.AdminService;
+import com.sh.app.auth.vo.AdminDetails;
 import com.sh.app.auth.vo.MemberDetails;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
@@ -20,14 +23,21 @@ import org.springframework.stereotype.Service;
 public class AuthService implements UserDetailsService {
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private AdminService adminService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member member = memberService.findByMemberLoginId(username);
-        log.debug("member = {}", member);
-        if(member == null)
+        Admin admin = adminService.findByUsername(username);
+        log.debug("admin = {}", admin);
+        if (admin == null) {
+            Member member = memberService.findByMemberLoginId(username);
+            log.debug("member = {}", member);
+            if (member == null)
                 throw new UsernameNotFoundException(username);
-        return new MemberDetails(member);
+            return new MemberDetails(member);
+        }
+        return new AdminDetails(admin);
     }
 
     public void updateAuthentication(String username) {
