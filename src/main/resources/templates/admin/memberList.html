@@ -6,21 +6,32 @@
 <head>
     <title>회원목록</title>
 </head>
-<style layout:fragment="style"></style>
+<style layout:fragment="style">
+    th
+    {
+        width: 300px;
+    }
+    td
+    {
+        text-align: center;
+        vertical-align : middle;
+    }
+</style>
 
 <div layout:fragment="content">
-    <table id="memberList">
+    <p style="margin-top: 30px; margin-right: 300px" align="right">지금까지 총 [[${totalCount}]]명의 회원이 가입했습니다.</p>
+    <table id="memberList" style="margin-top: 30px">
         <thead>
         <tr>
-            <th>회원번호</th>
+            <th style="margin: auto">회원번호</th>
             <th>회원아이디</th>
             <th>회원이름</th>
             <th>회원이메일</th>
             <th>회원전화번호</th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="member, status : ${member}" th:data-member-id="${member.id}">
+        <tbody style="margin: auto">
+        <tr th:each="member : ${members}" th:data-member-id="${member.id}">
             <td th:text="${member.id}"></td>
             <td th:text="${member.memberLoginId}"></td>
             <td th:text="${member.memberName}"></td>
@@ -29,21 +40,23 @@
         </tr>
         </tbody>
     </table>
-    <div id="pagebar">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <a class="page-link">Previous</a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+
+    <!-- 페이지바 -->
+<!--    <div id="pagebar">-->
+<!--        <nav aria-label="Page navigation example">-->
+<!--            <ul class="pagination justify-content-center">-->
+<!--                <li class="page-item disabled">-->
+<!--                    <a class="page-link">Previous</a>-->
+<!--                </li>-->
+<!--                <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
+<!--                <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--                <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--                <li class="page-item">-->
+<!--                    <a class="page-link" href="#">Next</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </nav>-->
+<!--    </div>-->
 </div>
 
 <script layout:fragment="script" th:src="@{/js/admin/adminn.js}"></script>

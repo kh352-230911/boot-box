@@ -1,6 +1,7 @@
 package com.sh.app.admin.entity;
 
 import com.sh.app.authority.entity.Authority;
+import com.sh.app.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,7 +36,9 @@ public class Admin implements Serializable {
     private String username;
     @Column(nullable = false)
     private String password;
-
+//    @ManyToOne(fetch = FetchType.LAZY) // 기본값은 FetchType.EAGER
+//    @JoinColumn(name = "admin_id")
+//    private Member member;
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id") // authority.member_id 컬럼 작성
     private List<Authority> authorities;
