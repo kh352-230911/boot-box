@@ -1,11 +1,13 @@
 package com.sh.app.member.entity;
 
+import com.sh.app.authority.entity.Authority;
 import com.sh.app.review.entity.Review;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +24,7 @@ import java.util.List;
 @DynamicInsert //null이 아닌 필드값만 insert한다.
 @DynamicUpdate //영속성 컨텍스트의 엔티티와 달라진 필드만 update한다.
 @ToString(exclude = "reviews")
-public class Member {
+public class Member implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_member_id_generator")
@@ -54,4 +56,9 @@ public class Member {
     @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
     @Builder.Default
     private List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id") // authority.member_id 컬럼 작성
+    private List<Authority> authorities;
+
 }

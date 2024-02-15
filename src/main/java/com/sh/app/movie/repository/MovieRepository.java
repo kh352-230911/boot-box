@@ -36,15 +36,15 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     List<Movie> findFirst5ByOrderByAdvanceReservationDesc();
 
     @Query(value = """
-    select distinct 
+    select distinct
         *
-    from(select 
+    from(select
             *
-        from 
+        from
             movie
-        order by 
+        order by
             advance_reservation desc)
-    where 
+    where
         rownum between 1 and 5
     and
         title like %:title%
@@ -53,6 +53,5 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     @Query("select m, g from Movie m join fetch m.genres g where g.genreList = :genreList")
     List<Movie> findByGenreList(String genreList);
-
 
 }

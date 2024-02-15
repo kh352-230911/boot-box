@@ -305,7 +305,7 @@ CREATE TABLE REVIEW(
     movie_id number NOT NULL, -- 영화 id fk
     review_score number(2, 1) default 0 NOT NULL,--리뷰 평점
     review_detail varchar2(2000) NOT NULL,--리뷰 내용
-    review_created_at date DEFAULT current_date NOT NULL,--리뷰 작성날짜
+    review_created_at date DEFAULT sysdate NOT NULL,--리뷰 작성날짜
     constraints pk_review_id primary key(id), --pk
     constraints fk_review_reservation_id foreign key(reservation_id) references reservation(id) on delete set null,
     constraints fk_review_member_id foreign key(member_id) references member(id) on delete set null,

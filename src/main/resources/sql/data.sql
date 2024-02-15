@@ -20,15 +20,15 @@ insert into CINEMA values (05101, 051, '센텀시티점', 1, '부산광역시 �
 --
 -- member
 insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
-values(seq_member_id.nextVal, 'rhgPwls','1234','update_set@naver.com','고혜진','01012341234','1990') ;
+values(seq_member_id.nextVal, 'rhgPwls','$2a$10$9B5JXlO9iyWBdFrRc0u5C.T1gyOAdVNM.7RFKU1Kf9jM69HfzbrzK','update_set@naver.com','고혜진','01012341234','1990') ;
 insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
-values(seq_member_id.nextVal, 'testUser','1234','testUser1234@naver.com','김테스트','01012345678','1993') ;
+values(seq_member_id.nextVal, 'testUser','$2a$10$ht3O5/jiFv31l6fOXMCFaeq.qc1V66N5Ok2XJ0LYV1Dq4XKwVPCAi','testUser1234@naver.com','김테스트','01012345678','1993') ;
 insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
-values(seq_member_id.nextVal, 'sinsa','1234','sinsa@naver.com','신사임당','01011112222','1996');
+values(seq_member_id.nextVal, 'sinsa','$2a$10$uZXJvi3TRlnYlWXa8RXlhu1MZe7A8lWFlyolaBCcukPygChuy6pge','sinsa@naver.com','신사임당','01011112222','1996');
 insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
-values(seq_member_id.nextVal, 'honggd','1234','honggd@naver.com','홍길동','01022221111','2000');
+values(seq_member_id.nextVal, 'honggd','$2a$10$.jBRzR3RXRO0iXRS0lVtX.rdXH6H/.pDUzV6.Bs93pMToywUaeT/O','honggd@naver.com','홍길동','01022221111','2000');
 insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
-values(seq_member_id.nextVal, 'less','1234','leess@naver.com','이순신','01013225521','1989');
+values(seq_member_id.nextVal, 'less','$2a$10$WqWrsGjPJEVkLV8TCCiIe.EPTEZrCE7iVNRFA7DkNnxnBrSFHiSPm','leess@naver.com','이순신','01013225521','1989');
 --
 -- admin
 insert into ADMIN values (seq_admin_id.nextval, 0201, 'adm220932', '1234');
