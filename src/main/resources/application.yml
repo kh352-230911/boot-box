@@ -30,7 +30,29 @@ spring:
       schema-locations: classpath:/sql/schema.sql
       data-locations: classpath:/sql/data.sql
       mode: never
-
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: b01bd8d24bd31d50e3202dfe20900871
+            client-secret: 0qL7cVTSU3GZ5l0SZogkd4QGpuAM2Wr3
+            redirect-uri: http://localhost:8080/spring/login/oauth2/code/kakao
+            client-authentication-method: 'client_secret_post'
+            client-name: kakao
+            authorization-grant-type: authorization_code
+          google:
+            client-id: 391591937965-gj682k5kpfu6cp5l6oem3u56fikb5k1l.apps.googleusercontent.com
+            client-secret: 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
+            scope: email, profile
+            authorization-grant-type: authorization_code
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize # 인증 서버
+            token-uri: https://kauth.kakao.com/oauth/token # 인증 서버
+            user-info-uri: https://kapi.kakao.com/v2/user/me # resource 서버
+            user-info-authentication-method: POST
+            user-name-attribute: id
 # logback (logging)
 logging:
   level:
