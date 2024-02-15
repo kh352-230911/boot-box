@@ -28,8 +28,7 @@ public class MemberCreateDto {
     @Email(message="이메일 형식으로 작성하세요.")
     private String memberEmail;
 
-    public Member toMember()
-    {
+    public Member toMember() {
         return Member.builder()
                 .memberLoginId(memberLoginId)
                 .memberPwd(memberPwd)

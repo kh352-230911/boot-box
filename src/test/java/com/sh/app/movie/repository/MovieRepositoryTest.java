@@ -166,7 +166,8 @@ public class MovieRepositoryTest {
     @Test
     void test5() {
         insertMovieData();
-        List<Movie> movies = movieRepository.findFirst5ByOrderByAdvanceReservation();
+//        List<Movie> movies = movieRepository.findFirst5ByOrderByAdvanceReservation();
+        List<Movie> movies = movieRepository.findFirst5ByOrderByAdvanceReservationDesc();
         System.out.println(movies);
 
         assertThat(movies)
@@ -218,7 +219,7 @@ public class MovieRepositoryTest {
     @DisplayName("영화 검색 조회")
     @Test
     void test7() {
-        // given
+         given
         insertMovieData();
         String title = "시민";
 
@@ -234,48 +235,6 @@ public class MovieRepositoryTest {
                     assertThat(movie.getTitle().contains(title));
                 }));
     }
-    @DisplayName("영화상세페이지에 관람평 조회")
-    @Test
-    void test8() {
 
-    }
-
-//    @DisplayName("영화 별 별점 평균을 확인 할 수 있다.")
-//    @Test
-//    void test9() {
-//        // given
-//        Movie movie = Movie.builder()
-//                .id(10L)
-//                .title("외계인")
-//                .poster("resources/static/images/외계인2부.jpg")
-//                .trailer("https://tv.naver.com/v/44600469")
-//                .releaseDate("2024.01.10")
-//                .runningTime(122)
-//                .summary("반드시 돌아가야한다. 모두를 지키기 위해!")
-//                .actor("류준열").director("최동훈")
-//                .advanceReservation(100)
-//                .filmRatings(Rating.ALL)
-//                .build();
-//        movieRepository.save(movie);
-//
-//        List<Review> reviews = Arrays.asList(
-//                Review.builder()
-//                        .reservationId("box16243")
-//                        .memberId(1L)
-//                        .reviewScore(3.0)
-//                        .reviewDetail("너무 지루해요")
-//                        .build(),
-//                Review.builder()
-//                        .reservationId("box23322")
-//                        .memberId(1L)
-//                        .reviewScore(4.0)
-//                        .reviewDetail("최고")
-//                        .build()
-//        );
-//        reviews.forEach(reviewRepository::save);
-//        // when
-//        Movie movie1 = (Movie) movieRepository.findFirst5ByOrderByAdvanceReservationByReviewScore();
-//        System.out.println(movie1);
-        // then
-    }
+}
 

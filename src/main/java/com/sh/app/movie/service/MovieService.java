@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -51,15 +50,20 @@ public class MovieService {
                 .collect(Collectors.toList());
     }
 
-    public List<MovieListDto> findFirst5ByOrderByAdvanceReservation() {
-        return movieRepository.findFirst5ByOrderByAdvanceReservation()
+//    public List<MovieListDto> findFirst5ByOrderByAdvanceReservation() {
+//        return movieRepository.findFirst5ByOrderByAdvanceReservationByDesc()
+//                .stream().map((movie) -> convertToMovieListDto(movie))
+//                .collect(Collectors.toList());
+//    }
+    public List<MovieListDto> findFirst5ByOrderByAdvanceReservationDesc() {
+        return movieRepository.findFirst5ByOrderByAdvanceReservationDesc()
                 .stream().map((movie) -> convertToMovieListDto(movie))
                 .collect(Collectors.toList());
     }
 
     private MovieListDto convertToMovieListDto(Movie movie) {
         MovieListDto movieListDto = modelMapper.map(movie, MovieListDto.class);
-        double avgReviewScore = reviewRepository.getAverageRatingByMovieId(movie.getId());
+        Double avgReviewScore = reviewRepository.getAverageRatingByMovieId(movie.getId());
         movieListDto.setAvgReviewScore(avgReviewScore);
         return movieListDto;
     }

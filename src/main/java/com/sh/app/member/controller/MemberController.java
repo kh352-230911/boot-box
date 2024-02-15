@@ -7,13 +7,15 @@ import com.sh.app.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Map;
 
 /**
  * 0206 hyejin
@@ -27,15 +29,40 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MemberController {
     @Autowired
     MemberService memberService;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @GetMapping("/createMember.do")
+    public void createMember() {}
 
     //회원가입 post - 이후 리다이렉트
     @PostMapping("/createMember.do")
-    public String CreateMember(@Valid
-                                   MemberCreateDto memberCreateDto,
-                               BindingResult bindingResult,
-                               RedirectAttributes redirectAttributes)
-    {
+    public String CreateMember(
+            @Valid MemberCreateDto memberCreateDto,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            String message = bindingResult.getAllErrors().get(0).getDefaultMessage();
+            throw new RuntimeException(message);
+        }
+        log.debug("memberCreateDto = {}", memberCreateDto);
+
         Member member = memberCreateDto.toMember();
+        String encodedPassword = passwordEncoder.encode(member.getMemberPwd());
+        member.setMemberPwd(encodedPassword);
+
+        member = memberService.createMember(member);
+
+        redirectAttributes.addFlashAttribute("msg", "반갑습니다." + member.getMemberName() + "님😀");
         return "redirect:/";
+    }
+
+    @PostMapping("/checkIdDuplicate.do")
+    public ResponseEntity<?> checkIdDuplicate(@RequestParam("username") String username) { // ? -> Object
+        Map<String, Object> resultMap = Map.of(
+                "available",
+                memberService.findByMemberLoginId(username) == null
+        );
+        return ResponseEntity.ok(resultMap);
     }
 }
