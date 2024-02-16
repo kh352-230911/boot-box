@@ -226,9 +226,8 @@
 /*}*/
 .info-seats
 {
-    border: 1px solid green;
-    background-image: linear-gradient(to right, #232323, #6b645e, #232323); /* 그라데이션 적용 *
-    /*background-color: darkcyan;*/
+    border: 1px solid pink;
+    background-image: linear-gradient(to right, #232323, #6b645e, #232323); /* 그라데이션 적용 */
     display: flex;
     flex-direction: column; /* 자식 요소들을 세로로 정렬 */
     justify-content: center;
@@ -271,7 +270,7 @@
     flex-direction: column; /* 자식 요소들을 세로로 정렬 */
     justify-content: center;
     align-items: center;
-    border-radius: 10px 10px 10px 10px;
+    border-radius: 5px 5px 5px 5px;
     margin-bottom: 30px;
 }
 
@@ -294,7 +293,7 @@ label_row
     height: 40px;
     border: 2px solid #777777; /* 네모모양으로 스타일링 */
     margin-top: 5px;
-    border-radius: 10px 10px 10px 10px;
+    border-radius: 5px 5px 5px 5px;
     text-align: center;
     margin-right: 20px;
 }
@@ -308,7 +307,7 @@ label_row
     background-color: gainsboro;
     margin-left: 5px;
     margin-top: 5px;
-    border-radius: 10px 10px 10px 10px;
+    border-radius: 5px 5px 5px 5px;
     color : #6b645e;
     font-size: small;
 }
@@ -393,7 +392,7 @@ label_row
 .seat-container1 {
     display : flex;
     padding: 10px;
-    /*border: 1px solid lightgray;*/
+
     border-right: 2px solid red; /* 오른쪽 세로선 설정 */
     align-items: center;
     width: 20vw;
@@ -401,8 +400,7 @@ label_row
 
 .seat-container1-img {
     width: 150px;
-    height: 150px;
-    border: 0px solid transparent;
+    height: 170px;
 }
 .seat-container1-title {
     margin-left: 40px;
@@ -426,15 +424,21 @@ th
 {
     background-color: black;
 }
-td
-{
-    border-right: 1px solid red;
-}
+/*td*/
+/*{*/
+/*    border-right: 1px solid red;*/
+/*}*/
 /*=======================================================================================================================================*/
-/* 예매 첫 페이지 영화 ,극장, 상영관 , 시간 ,스케쥴[상영시간표] 관련 css */
+
+/*
+예매 첫 페이지 최상단 div
+영화 ,극장, 상영관 , 시간 ,스케쥴[상영시간표] 관련 css */
 .info-movies
 {
     display: flex;
+    height: 500px;
+    justify-content: center; /* 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
 }
 
 table{
@@ -443,5 +447,41 @@ table{
 }
 
 .highlighted {
-    background-color: yellow;
+    background-color: black;
+}
+
+.theater-list
+{
+    width:200px;
+    /*display: none;*/
+}
+.mytr
+{
+
+}
+
+/* info-movies 하위의 모든 테이블들의 높이 고정 , 스크롤 추가 */
+.info-movies table {
+    height: 400px;
+    /*overflow: auto;*/
+}
+
+.info-movies tbody{
+    /* 각 테이블의 스타일 */
+    width: 250px;
+    display: block;
+    overflow-y: auto;
+    height: 400px;
+}
+
+/* 수직 스크롤바 */
+::-webkit-scrollbar {
+    width: 10px;  /* 스크롤바의 폭 변경 */
+}
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(coral, firebrick);  /* 스크롤바의 색상 변경 */
+    border-radius: 25px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;  /* 스크롤바 트랙의 배경색 변경 */
 }

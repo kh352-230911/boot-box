@@ -36,13 +36,57 @@
 // });
 //=====================================================
 //th 영화 제목 클릭시 하단 div에 해당 영화 포스터 이름, 포스터 동적으로 출력
+//예매 페이지 첫 진입시 info-seats none 처리
+const infoMoviesNone = document.querySelector(".info-movies");
+const infoSeatsNone = document.querySelector(".info-seats");
+ infoSeatsNone.style.display='none';
 
+//영화 선택 시..
+$(document).ready(function(){
+    $(".movie-area tbody tr").click(function() {
+        console.log("영화 선택");
+        // 모든 행의 선택을 취소하고 선택된 행에만 'selected' 클래스를 추가
+        $(this).siblings().removeClass("highlighted");
+        $(this).addClass("highlighted");
+    });
+});
 
+//지역 선택 시 ..1
+// $(document).ready(function(){
+//     $(".location-area tbody tr").click(function() {
+//         console.log("지역 선택");
+//         // 모든 행의 선택을 취소하고 선택된 행에만 'selected' 클래스를 추가
+//         $(this).siblings().removeClass("highlighted");
+//         $(this).addClass("highlighted");
+//         $(".cinema-area tbody tr").remove();
+//     });
+// });
 
-$('.select_location').on('click', function () {
-    console.log("0214......2");
-    $("table.location-area li.on").removeClass('on');
-    $(this).parent().addClass('on');
+//지역 선택시 .. 2
+$(document).ready(function(){
+    $(".select_location").click(function()
+    {
+        //수정한 거
+        
+        
+        
+        
+        
+        
+        
+        
+        //기존 
+        // $(".select_location").eq(index).css("background-color", "yellow");
+        // // 선택된 행의 인덱스 가져오기
+        // var index = $(this).closest("tr").index();
+        // console.log("선택한 지역의 인덱스:",index);
+        // // 모든 행의 지점 목록 숨기기
+        // $(".theater-list").hide();
+        //
+        // // 현재 선택된 행의 지점 목록 표시
+        // $(".theater-list").eq(index).show();
+        // //$(".theater-list").eq(index).css("background-color", "yellow");
+    });
 });
 
 
@@ -92,10 +136,26 @@ function addLineBreaks(str, charsPerLine) {
 document.querySelector(".select-seats-prev-button").addEventListener('click',function ()
 {
     alert('이전버튼');
+    if (infoMoviesNone.style.display === 'none') {
+        infoMoviesNone.style.display = 'block'; //보이고
+        infoMoviesNone.style.display = 'flex'; //flex속성
+        infoSeatsNone.style.display='none';
+    } else {
+        // div.style.display = 'none';
+    }
 });
 document.querySelector(".select-seats-next-button").addEventListener('click',function ()
 {
     alert('다음버튼');
+
+    if (infoSeatsNone.style.display === 'none') {
+        infoSeatsNone.style.display = 'block';
+        infoSeatsNone.style.display = 'flex';
+        infoMoviesNone.style.display='none';
+    } else {
+        // div.style.display = 'none';
+    }
+
 });
 
 
@@ -171,10 +231,23 @@ function createSeats(rows, cols) {
             label.textContent = j; // 열 번호 추가
 
             // 4번과 20번 체크박스는 disabled 처리
-            if (seatId === 'A6' || seatId === 'F1') {
-                checkbox.disabled = true;
-                //this.parentNode.style.backgroundColor = 'red';
-            }
+            // if (seatId === 'A6' || seatId === 'F1') {
+            //     checkbox.disabled = true;
+            //     //this.parentNode.style.backgroundColor = 'red';
+            // }
+            //0215 isreservationSeat 배열에 예약된 좌석값을 넣은 후 반복문처리.
+            let isReservationSeat = [];
+            isReservationSeat.push('A6');
+            isReservationSeat.push('B3');
+            isReservationSeat.push('B4');
+            isReservationSeat.push('E10');
+            isReservationSeat.push('F1');
+
+            isReservationSeat.forEach(function(seat) {
+                if(seat===seatId)
+                    checkbox.disabled = true;
+            });
+
 
             // 테이블에 추가
             var col = document.createElement('td');
@@ -254,12 +327,13 @@ var checkedCount = 0;
 
 
 
-function highlightCell(cell) {
+function highlightCell(cell)
+{
     // 클릭된 td의 클래스에 "highlighted" 클래스가 있는지 확인
     console.log(cell.classList);
     var isHighlighted = cell.classList.contains("highlighted");
 
-    // 클래스가 있으면 제거하고, 없으면 추가하여 배경색 변경
+    // 클래스가 있으면 제거하고, 없으면 추가하여 배경색 변경(on,off)
     if (isHighlighted) {
         cell.classList.remove("highlighted");
     } else {
