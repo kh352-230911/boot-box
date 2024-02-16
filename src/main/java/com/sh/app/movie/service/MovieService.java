@@ -46,11 +46,19 @@ public class MovieService {
 
     public List<MovieListDto> findByTitleContaining(String search) {
         return movieRepository.findByTitleContaining(search)
-                .stream().map((movie) -> convertToMovieListDto(movie))
+                .stream().map((movie) -> convertToMovieListDto2(movie))
                 .collect(Collectors.toList());
     }
 
-//    public List<MovieListDto> findFirst5ByOrderByAdvanceReservation() {
+    private MovieListDto convertToMovieListDto2(Movie movie) {
+        MovieListDto movieListDto = modelMapper.map(movie, MovieListDto.class);
+        Double avgReviewScore = reviewRepository.getAverageRatingByMovieId(movie.getId());
+        movieListDto.setAvgReviewScore(avgReviewScore);
+        movieListDto.setSearchResult(true);
+        return movieListDto;
+    }
+
+    //    public List<MovieListDto> findFirst5ByOrderByAdvanceReservation() {
 //        return movieRepository.findFirst5ByOrderByAdvanceReservationByDesc()
 //                .stream().map((movie) -> convertToMovieListDto(movie))
 //                .collect(Collectors.toList());

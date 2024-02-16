@@ -1,6 +1,5 @@
 package com.sh.app.cinema.service;
 
-import com.sh.app.cinema.dto.CinemaDetailDto;
 import com.sh.app.cinema.entity.Cinema;
 import com.sh.app.cinema.repository.CinemaRepository;
 import com.sh.app.cinema.dto.CinemaDto;
@@ -12,11 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional

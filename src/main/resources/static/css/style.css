@@ -19,6 +19,9 @@ section, header, aside, footer {
     /*padding: 10px;*/
     color: white;
 }
+.header-container{
+    z-index: 100;
+}
 
 #white-color1 {
     margin: 0px;

@@ -1,7 +1,6 @@
 package com.sh.app.location.dto;
 
 import com.sh.app.cinema.dto.CinemaDto;
-import com.sh.app.cinema.entity.Cinema;
 import lombok.Data;
 
 import java.util.ArrayList;
