@@ -67,4 +67,17 @@ public class MovieService {
         movieListDto.setAvgReviewScore(avgReviewScore);
         return movieListDto;
     }
+
+    public List<MovieListDto> getCurrentMovies() {
+        return movieRepository.findAll().stream() // 현재는 findAll을 사용했지만, 실제로는 현재 상영 중인 영화를 필터링하는 로직
+                .map(movie -> {
+                    MovieListDto dto = new MovieListDto();
+                    dto.setId(movie.getId());
+                    dto.setTitle(movie.getTitle());
+                    dto.setPoster(movie.getPoster());
+                    // 필요한 정보만 설정
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
 }

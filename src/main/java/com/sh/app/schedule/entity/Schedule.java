@@ -8,6 +8,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Locale;
+
 @Entity
 @Table(name = "schedule")
 @Data
@@ -25,9 +29,9 @@ public class Schedule {
     @JoinColumn(name = "movie_id")
     private Movie movie;
     @Column(nullable = false)
-    private String schDate;
+    private LocalDate schDate;
     @Column(nullable = false)
-    private String time;
+    private LocalDateTime time;
     
     public void setTheater(Theater theater) {
         this.theater = theater;
