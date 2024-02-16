@@ -25,7 +25,7 @@ public class HomeController {
     private ReviewService reviewService;
 
     @GetMapping("/")
-    public String home(String search, Model model) {
+    public String home(@RequestParam(value = "search", required = false) String search, Model model) {
         List<MovieListDto> movieListDtos;
         if(search == null) {
             movieListDtos = movieService.findFirst5ByOrderByAdvanceReservationDesc();
@@ -33,6 +33,7 @@ public class HomeController {
         }
         else {
             movieListDtos = movieService.findByTitleContaining(search);
+            model.addAttribute("search", search);
         }
         log.debug("movies = {}", movieListDtos);
         model.addAttribute("movies", movieListDtos);
