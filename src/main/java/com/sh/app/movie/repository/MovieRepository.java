@@ -16,8 +16,27 @@ import java.util.Optional;
 
 
 public interface MovieRepository extends JpaRepository<Movie, Long> {
+    // nativeQuery
+//    @Query(value = """
+//    select
+//        *
+//    from(select
+//            *
+//        from
+//            movie
+//        order by
+//            advance_reservation desc)
+//    where
+//        rownum between 1 and 5
+//    """, nativeQuery = true)
+//    List<Movie> findFirst5ByOrderByAdvanceReservation();
+    // jpql
+//    @Query("from Movie m order by m.advanceReservation desc limit 5")
+    // 쿼리 메소드
+    List<Movie> findFirst5ByOrderByAdvanceReservationDesc();
+
     @Query(value = """
-    select
+    select distinct
         *
     from(select
             *
@@ -27,20 +46,6 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
             advance_reservation desc)
     where
         rownum between 1 and 5
-    """, nativeQuery = true)
-    List<Movie> findFirst5ByOrderByAdvanceReservation();
-
-    @Query(value = """
-    select distinct 
-        *
-    from(select 
-            *
-        from 
-            movie
-        order by 
-            advance_reservation desc)
-    where 
-        rownum between 1 and 5
     and
         title like %:title%
     """, nativeQuery = true)
@@ -48,6 +53,5 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     @Query("select m, g from Movie m join fetch m.genres g where g.genreList = :genreList")
     List<Movie> findByGenreList(String genreList);
-
 
 }

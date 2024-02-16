@@ -42,7 +42,10 @@ body#container {
 header div#header-container {
     height: 100px;
 }
-header div#dropdownNavbar {
+header div#dropdownNavbar{
+    background-color: #212121;
+}
+header div#dropdownNavbar1{
     background-color: #212121;
 }
 nav {
@@ -57,11 +60,13 @@ section#content {
 footer {
     background-color: #212121;
     /*background-clip: content-box;*/
-    height: 10vh;
+    /*height: 10vh;*/
+    height: 60px;
+    position: relative;
+    transform: translateY(0%);
 }
 
-
-/* section-1-1 */d
+/* section-1-1 */
 .section-1 {
     width:100%;
     height:462px;

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>회원가입</title>
+    <link rel="stylesheet" th:href="@{/css/member/createMember.css}" />
+</head>
+<style layout:fragment="style"></style>
+
+<div layout:fragment="content" class="wrap-container">
+    <div class="home-container">
+        <div class="login-box">
+            <h2>Register</h2>
+            <form name="memberCreateFrm" th:action="@{/member/createMember.do}" method="POST">
+                <div id="user-box1" class="user-box">
+                    <input type="text" class="form-control" name="memberLoginId" id="memberLoginId" pattern="^\w{4,}$" required>
+                    <!-- 아이디중복검사 코멘트추가 -->
+                    <span class="flex mb-3 guide ok text-sm">이 아이디는 사용 가능 합니다.</span>
+                    <span class="flex mb-3 guide error text-sm">이 아이디는 사용할 수 없습니다.</span>
+                    <input type="hidden" name="idDuplicateCheck" id="idDuplicateCheck" value="0"/>
+                    <label for="memberLoginId">Username</label>
+                </div>
+                <div class="user-box">
+                    <input type="password" id="memberPwd" name="memberPwd" required>
+                    <label for="memberPwd">Password</label>
+                </div>
+                <div class="user-box">
+                    <input type="password" id="passwordConfirmation" required>
+                    <label for="passwordConfirmation">PasswordConfirm</label>
+                </div>
+                <div class="user-box">
+                    <input type="text" id="memberName" name="memberName" required>
+                    <label for="memberName">name</label>
+                </div>
+                <div class="user-box">
+                    <input type="text" id="birthyear" name="birthyear" required>
+                    <label for="birthyear">birthyear</label>
+                </div>
+                <div class="user-box">
+                    <input type="email" id="memberEmail" name="memberEmail" required>
+                    <label for="memberEmail">email</label>
+                </div>
+                <div class="user-box">
+                    <input type="text" id="memberPhone" name="memberPhone" required>
+                    <label for="memberPhone">phone</label>
+                </div>
+
+                <button type="submit" class="submit">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Submit
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script layout:fragment="script" th:src="@{/js/member/createMember.js}"></script>
+</html>

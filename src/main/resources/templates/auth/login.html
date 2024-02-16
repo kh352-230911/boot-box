@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>로그인</title>
+    <link rel="stylesheet" th:href="@{/css/auth/login.css}" />
+</head>
+<style layout:fragment="style"></style>
+
+<div layout:fragment="content" class="wrap-container">
+    <div class="home-container">
+        <div class="login-box">
+            <button type="button" th:onclick="|location.href='@{/auth/adminLogin.do}';|">
+                <i class="fa fa-key" aria-hidden="true"></i>
+            </button>
+            <h2>Login</h2>
+            <form
+                th:action="@{/auth/login.do}"
+                method="post">
+                <div class="user-box">
+                    <input type="text" name="username" required>
+                    <label>Username</label>
+                </div>
+                <div class="user-box">
+                    <input type="password" name="password" required>
+                    <label>Password</label>
+                </div>
+                <button type="submit" class="submit">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Submit
+                </button>
+                <button type="button" class="register" style="font-size: 13px" th:onclick="|location.href='@{/member/createMember.do}';|">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Register
+                </button>
+                <div class="flex justify-around">
+                    <a style="font-size: 10px"  th:href="@{/oauth2/authorization/google}">google login</a>
+                    <a style="font-size: 10px" th:href="@{/oauth2/authorization/kakao}">kakao login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="script"></script>
+</html>
