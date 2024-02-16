@@ -1,4 +1,4 @@
-package com.sh.app.reservation1.entity;
+package com.sh.app.reservation.entity;
 import com.sh.app.common.Status;
 import com.sh.app.pay.entity.OrderPay;
 import com.sh.app.seat.entity.Seat;

@@ -35,6 +35,7 @@
 //     });
 // });
 //=====================================================
+
 //th 영화 제목 클릭시 하단 div에 해당 영화 포스터 이름, 포스터 동적으로 출력
 //예매 페이지 첫 진입시 info-seats none 처리
 const infoMoviesNone = document.querySelector(".info-movies");
@@ -44,7 +45,7 @@ const infoSeatsNone = document.querySelector(".info-seats");
 //영화 선택 시..
 $(document).ready(function(){
     $(".movie-area tbody tr").click(function() {
-        console.log("영화 선택");
+        console.log("영화 선택1");
         // 모든 행의 선택을 취소하고 선택된 행에만 'selected' 클래스를 추가
         $(this).siblings().removeClass("highlighted");
         $(this).addClass("highlighted");
@@ -67,9 +68,9 @@ $(document).ready(function(){
     $(".select_location").click(function()
     {
         //수정한 거
-        
-        
-        
+        console.log("지역선택");
+
+
         
         
         
@@ -135,7 +136,21 @@ function addLineBreaks(str, charsPerLine) {
 //======================================================================================
 document.querySelector(".select-seats-prev-button").addEventListener('click',function ()
 {
-    alert('이전버튼');
+    //alert('이전버튼');
+    console.log("...이전 버튼...");
+    var cookieValue = getCookie("myCookie");
+
+    if (cookieValue !== null) {
+        // 쿠키에서 가져온 JSON 형식의 문자열을 배열로 변환
+        var myArray = JSON.parse(cookieValue);
+
+        // 배열 값을 사용하여 필요한 작업 수행
+        console.log(myArray); // 배열 값 콘솔 출력
+    } else {
+        console.log("쿠키를 찾을 수 없습니다.");
+    }
+
+
     if (infoMoviesNone.style.display === 'none') {
         infoMoviesNone.style.display = 'block'; //보이고
         infoMoviesNone.style.display = 'flex'; //flex속성
@@ -146,15 +161,43 @@ document.querySelector(".select-seats-prev-button").addEventListener('click',fun
 });
 document.querySelector(".select-seats-next-button").addEventListener('click',function ()
 {
-    alert('다음버튼');
-
+    /*
+    * 0216
+    * //1페이지에서 2페이지로 넘어가는 경우
+    *
+    *
+    *
+    * */
+    console.log("...다음 버튼...");
+    let testArray = ['Aa', 'Bb', 'Cc', 'Dd', 'Ee', 'Ff'];
+    setCookieForList("myCookie", testArray, 1); //1일
     if (infoSeatsNone.style.display === 'none') {
         infoSeatsNone.style.display = 'block';
         infoSeatsNone.style.display = 'flex';
+
         infoMoviesNone.style.display='none';
     } else {
         // div.style.display = 'none';
     }
+
+    //비동기 test
+    $.ajax({
+        url: `${contextPath}reservation/scheduleTest`,
+        type: 'get',
+        data:{
+            scheduleId:41
+        },
+        success(response){
+            console.log("~~~~success~~~~",response);
+            $()
+        },
+        error(error) {
+            console.error('~~~~Ajax request failed~~~~:', error);
+        }
+    });
+
+
+
 
 });
 
@@ -186,7 +229,8 @@ function createSeats(rows, cols) {
             //var seatId = i * cols + j;
 
             //좌석 번호에서 알파벳+번호로 처리 a1 b5 이런식으로.
-            let seatId =alphabet[i] + j;
+            //0216 한자리 수 인 경우 앞에 0 추가 1->01
+            let seatId =alphabet[i] +  (j < 10 ? '0' + j : j);
             // 좌석 생성
             var checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
@@ -237,11 +281,11 @@ function createSeats(rows, cols) {
             // }
             //0215 isreservationSeat 배열에 예약된 좌석값을 넣은 후 반복문처리.
             let isReservationSeat = [];
-            isReservationSeat.push('A6');
-            isReservationSeat.push('B3');
-            isReservationSeat.push('B4');
+            isReservationSeat.push('A06');
+            isReservationSeat.push('B03');
+            isReservationSeat.push('B04');
             isReservationSeat.push('E10');
-            isReservationSeat.push('F1');
+            isReservationSeat.push('F01');
 
             isReservationSeat.forEach(function(seat) {
                 if(seat===seatId)
@@ -353,3 +397,42 @@ function highlightCell(cell)
 
 // 6행 10열의 좌석 생성
 createSeats(6, 10);
+
+
+//0216 내가 선택한 값 저장할 용도로 쓰일 쿠키 test
+//쿠키설정
+function setCookieForList(name, value, days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); //기간 1일
+        expires = "; expires=" + date.toUTCString();
+    }
+    // 배열을 JSON 문자열로 변환하여 저장
+    var jsonValue = JSON.stringify(value);
+    document.cookie = name + "=" + (jsonValue || "") + expires + "; path=/";
+}
+
+//쿠키가져오기.
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var cookies = document.cookie.split(';');
+    for(var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        while (cookie.charAt(0) === ' ') {
+            cookie = cookie.substring(1, cookie.length);
+        }
+        if (cookie.indexOf(nameEQ) === 0) {
+            return cookie.substring(nameEQ.length, cookie.length);
+        }
+    }
+    return null;
+}
+
+//0216 로그인한 회원만 보이는 선호극장을 클릭시 실행하는 이벤트
+function select_member_like_cinema()
+{
+    alert('선호극장 클릭!');
+    //선호극장이 등록되어있든 안되어있든 이 부분을 누르면 지점쪽은 초기화가 되어있어야 함.
+
+}

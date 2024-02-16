@@ -226,7 +226,6 @@
 /*}*/
 .info-seats
 {
-    border: 1px solid pink;
     background-image: linear-gradient(to right, #232323, #6b645e, #232323); /* 그라데이션 적용 */
     display: flex;
     flex-direction: column; /* 자식 요소들을 세로로 정렬 */
@@ -248,7 +247,6 @@
 /* 초기화 버튼 선택한 인원 , 좌석 모두 clear */
 #btn-clear
 {
-    border: 2px solid blue;
     height: 50px;
 }
 
@@ -359,7 +357,7 @@ label_row
 
 /*예매 정보를 보여주는 하단의 div */
 .select-seats {
-    border: 1px solid red;
+    /*border: 1px solid red;*/
     height: 200px;
     background-color: black;
     display: flex;

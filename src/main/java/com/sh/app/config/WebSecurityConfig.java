@@ -33,7 +33,7 @@ public class WebSecurityConfig {
                     .requestMatchers("/auth/**").permitAll()
                     .requestMatchers("/cinema/**").permitAll()
                     .requestMatchers("/movie/**").permitAll()
-                    .requestMatchers("/reservation1/**").permitAll()
+                    .requestMatchers("/reservation/**").permitAll()
                     .requestMatchers("/member/createMember.do", "/member/checkIdDuplicate.do").anonymous()
 //                    .requestMatchers("/board/**").authenticated()
 //                    .requestMatchers("/admin/**").hasRole("ADMIN")

@@ -4,6 +4,8 @@ import com.sh.app.movie.entity.Movie;
 import com.sh.app.theater.dto.TheaterDto;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 //0215
 /**
  * schedule entity 기반 dto만드는 방법
@@ -25,5 +27,5 @@ public class ScheduleDto {
 
     private String schDate;
 
-    private String time;
+    private LocalDateTime time;
 }

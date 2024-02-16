@@ -1,6 +1,6 @@
-package com.sh.app.reservation1.repository;
+package com.sh.app.reservation.repository;
 
-import com.sh.app.reservation1.entity.Reservation;
+import com.sh.app.reservation.entity.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
