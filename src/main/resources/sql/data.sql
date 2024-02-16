@@ -74,10 +74,6 @@ insert into CINEMA values (06206, 062, '전주효자점', 9, '전라북도 전�
 insert into CINEMA values (06207, 062, '제주점', 8, '제주특별자치도 제주시 서광로 288, 3층~7층(이도2동)', 126.527393, 33.5000977, '1544-1122');
 
 
-
-
-
-
 --
 -- member
 insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)

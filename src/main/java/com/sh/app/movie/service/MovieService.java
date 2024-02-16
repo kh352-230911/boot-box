@@ -64,7 +64,7 @@ public class MovieService {
         return movieDetailDto;
     }
 
-    public List<MovieDetailDto> findFirst5ByOrderByAdvanceReservation() {
+    public List<MovieDetailDto> findFirst5ByOrderByAdvanceReservationDesc() {
         return movieRepository.findFirst5ByOrderByAdvanceReservationDesc()
                 .stream().map((movie) -> convertToMovieListDto(movie))
                 .collect(Collectors.toList());

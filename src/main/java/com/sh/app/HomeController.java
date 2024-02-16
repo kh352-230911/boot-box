@@ -33,7 +33,7 @@ public class HomeController {
     public String home(@RequestParam(value = "search", required = false) String search, Model model) {
         List<MovieDetailDto> movieDetailDtos;
         if(search == null) {
-            movieDetailDtos = movieService.findFirst5ByOrderByAdvanceReservation();
+            movieDetailDtos = movieService.findFirst5ByOrderByAdvanceReservationDesc();
         }
         else {
             movieDetailDtos = movieService.findByTitleContaining(search);

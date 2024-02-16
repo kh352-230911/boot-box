@@ -28,7 +28,6 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     // 쿼리 메소드
     List<Movie> findFirst5ByOrderByAdvanceReservationDesc();
 
-
     @Query(value = """  
  SELECT
      m.id,
