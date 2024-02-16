@@ -46,7 +46,9 @@ public class WebSecurityConfig {
         http.formLogin((formLoginConfigurer -> {
             formLoginConfigurer
                     .loginPage("/auth/login.do") // 로그인 폼페이지(GET) (작업필요)
+//                    .loginPage("/auth/adminLogin.do")
                     .loginProcessingUrl("/auth/login.do") // 로그인 처리 (POST)
+//                    .loginProcessingUrl("/auth/adminLogin.do")
                     .successHandler(new CustomSuccessHandler())
                     .permitAll();
         }));

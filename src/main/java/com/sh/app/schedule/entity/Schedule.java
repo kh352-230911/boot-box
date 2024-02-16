@@ -8,7 +8,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+<<<<<<< HEAD
 import java.time.LocalDateTime;
+=======
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Locale;
+>>>>>>> 8f64a24f04c405bc5818260f56409be0b51d862a
 
 @Entity
 @Table(name = "schedule")
@@ -27,7 +33,7 @@ public class Schedule {
     @JoinColumn(name = "movie_id")
     private Movie movie;
     @Column(nullable = false)
-    private String schDate;
+    private LocalDate schDate;
     @Column(nullable = false)
     private LocalDateTime time;
     

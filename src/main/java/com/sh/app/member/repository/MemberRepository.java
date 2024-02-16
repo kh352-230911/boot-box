@@ -4,8 +4,12 @@ import com.sh.app.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface MemberRepository extends JpaRepository<Member,Long> {
 
     @Query("from Member m join fetch m.authorities where m.memberLoginId = :username")
     Member findByMemberLoginId(String username);
+
+    List<Member> findAll();
 }
