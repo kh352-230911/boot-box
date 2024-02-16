@@ -6,13 +6,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Entity
-@Table(name = "notice")
+@Table(
+        name = "notice",
+        uniqueConstraints =
+        @UniqueConstraint(
+                name = "uq_notice_name",
+                columnNames = {"notice_title"}))
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Notice {
+public class Notice implements Serializable {
     @Id
     @GeneratedValue(generator = "seq_notice_id_generator")
     @SequenceGenerator(
@@ -21,11 +28,13 @@ public class Notice {
             initialValue = 1,
             allocationSize = 1
     )
-    @Column
     private Long id;
     private Long adminId;
+    @Column(nullable = false, name = "notice_title")
     private String noticeTitle;
     private String noticeContent;
-    private String noticeType;
 
+    @Column(nullable = false, name = "notice_type")
+    @Enumerated(EnumType.STRING)
+    private NoticeType noticeType;
 }

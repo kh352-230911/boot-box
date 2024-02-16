@@ -287,11 +287,11 @@ insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 4, 042
 insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 5, 03101, 03201, 05101);
 --
 -- ask
-insert into ASK values (seq_ask_id.nextval, 1, '예매 취소 및 환불', '예매 취소 및 환불 규정은 어떻게 되나요?', default);
-insert into ASK values (seq_ask_id.nextval, 2, '영화 시간보다 늦었어요.', ' 영화 시간보다 늦었어요. 입장 가능한가요?', default);
-insert into ASK values (seq_ask_id.nextval, 3, '음식물 반입', '상영관 내 다른 음식물의 반입이 되나요?', default);
-insert into ASK values (seq_ask_id.nextval, 4, '관람 등급', '관람 등급에 대해 알고 싶습니다.', default);
-insert into ASK values (seq_ask_id.nextval, 5, '영화 관람을 하다 소지품을 분실했어요', '영화 관람을 하다 소지품을 분실했어요. 분실물은 어떻게 찾나요?', default);
+insert into ASK values (seq_ask_id.nextval, 'rhgPwls', '예매 취소 및 환불', '예매 취소 및 환불 규정은 어떻게 되나요?', 'RESERVATION', default);
+insert into ASK values (seq_ask_id.nextval, 'testUser', '영화 시간보다 늦었어요.', ' 영화 시간보다 늦었어요. 입장 가능한가요?', 'MOVIE', default);
+insert into ASK values (seq_ask_id.nextval, 'sinsa', '음식물 반입', '상영관 내 다른 음식물의 반입이 되나요?', 'MOVIE', default);
+insert into ASK values (seq_ask_id.nextval, 'honggd', '관람 등급', '관람 등급에 대해 알고 싶습니다.', 'MOVIE', default);
+insert into ASK values (seq_ask_id.nextval, 'less', '영화 관람을 하다 소지품을 분실했어요', '영화 관람을 하다 소지품을 분실했어요. 분실물은 어떻게 찾나요?', 'CINEMA', default);
 --
 -- answer
 insert into ANSWER values (seq_answer_id.nextval, 1, 6, '상영시간 이전까지만 가능하며, 상영시간 이후 취소나 환불은 되지 않습니다.', default);

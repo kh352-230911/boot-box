@@ -1,7 +1,6 @@
 package com.sh.app.admin.entity;
 
 import com.sh.app.authority.entity.Authority;
-import com.sh.app.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

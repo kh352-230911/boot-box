@@ -14,34 +14,41 @@
     }
     th#noticeNumber
     {
-        width: 60px;
+        width: 50px;
+        padding-left: 5px;
     }
     th#noticeTitle
     {
-        width: 500px;
+        width: 490px;
     }
     th#noticeContent
     {
-        width: 1200px;
+        width: 1150px;
+    }
+    th#noticeType
+    {
+        padding-left: 8px;
+        text-align: center;
     }
     td
     {
         text-align: left;
         vertical-align : middle;
-        padding-left: 30px;
+        padding-left: 24px;
         padding-top: 8px;
     }
 </style>
 
 <div layout:fragment="content">
-    <input type="button" value="추가" id="createNotice" th:onclick="|location.href = '@{/admin/createNotice.do}';|" />
-    <input type="button" value="삭제" id="deleteNotice" th:onclick="|location.href = '@{/admin/deleteNotice.do}';|" />
+    <button id="createNotice" th:onclick="|location.href = '@{/admin/createNotice.do}';|">추가</button>
+    <button id="deleteNotice" th:onclick="|location.href = '@{/admin/deleteNotice.do}';|">삭제</button>
     <table id="notice">
         <thead>
         <tr>
             <th id="noticeNumber">번호</th>
             <th id="noticeTitle">제목</th>
-            <th id="noticeContent">공지내용</th>
+            <th id="noticeContent">공지 내용</th>
+            <th id="noticeType">공지 유형</th>
         </tr>
         </thead>
         <tbody>
@@ -49,6 +56,7 @@
             <td th:text="${notice.id}"></td>
             <td th:text="${notice.noticeTitle}"></td>
             <td id="noticeContent1" th:text="${notice.noticeContent}"></td>
+            <td th:text="${notice.noticeType}"></td>
         </tr>
         </tbody>
     </table>
