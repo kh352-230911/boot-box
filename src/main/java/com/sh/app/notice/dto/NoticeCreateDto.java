@@ -13,4 +13,5 @@ public class NoticeCreateDto {
     @NotEmpty(message = "유형을 선택해주세요.")
     private NoticeType noticeType;
 
+
 }
