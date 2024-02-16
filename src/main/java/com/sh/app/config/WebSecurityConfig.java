@@ -33,6 +33,7 @@ public class WebSecurityConfig {
                     .requestMatchers("/auth/**").permitAll()
                     .requestMatchers("/cinema/**").permitAll()
                     .requestMatchers("/movie/**").permitAll()
+                    .requestMatchers("/reservation/**").permitAll()
                     .requestMatchers("/reservation1/**").permitAll()
                     .requestMatchers("/admin/adminAuth.do").permitAll()
                     .requestMatchers("/member/memberDetail.do").permitAll() // 마이페이지 작업 끝나면 삭제
