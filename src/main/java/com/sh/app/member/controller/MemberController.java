@@ -1,6 +1,7 @@
 package com.sh.app.member.controller;
 
 
+import com.sh.app.auth.vo.MemberDetails;
 import com.sh.app.member.dto.MemberCreateDto;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
@@ -8,6 +9,8 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -64,5 +67,11 @@ public class MemberController {
                 memberService.findByMemberLoginId(username) == null
         );
         return ResponseEntity.ok(resultMap);
+    }
+
+    @GetMapping("/memberDetail.do")
+    public void memberDetail(Authentication authentication, @AuthenticationPrincipal MemberDetails memberDetails) {
+        log.debug("authentication = {}", authentication);
+        log.debug("memberDetails = {}", memberDetails);
     }
 }

@@ -1,5 +1,7 @@
 package com.sh.app.admin.controller;
 
+import com.sh.app.admin.entity.Admin;
+import com.sh.app.admin.service.AdminService;
 import com.sh.app.ask.entity.Ask;
 import com.sh.app.ask.service.AskService;
 import com.sh.app.member.entity.Member;
@@ -8,11 +10,14 @@ import com.sh.app.notice.entity.Notice;
 import com.sh.app.notice.service.NoticeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -27,6 +32,8 @@ public class AdminController {
     private NoticeService noticeService;
     @Autowired
     private AskService askService;
+    @Autowired
+    private AdminService adminService;
 
     @GetMapping("/memberList.do")
     public void memberList(Model model) {
@@ -60,4 +67,26 @@ public class AdminController {
         model.addAttribute("asks", asks);
         System.out.println("문의조회 controller" + asks);
     }
+    @PostMapping("/adminAuth.do")
+    public String findByUsername(@RequestParam(value = "username") String username, RedirectAttributes redirectAttributes) {
+        log.debug("username = {}", username);
+        Admin admin = adminService.findByUsername(username);
+        log.debug("admin = {}", admin);
+        if (admin == null) {
+            throw new UsernameNotFoundException(username);
+        }
+        return "redirect:/auth/adminLogin.do";
+    }
 }
+
+//    @GetMapping("/adminAuth.do")
+//    public String findByUsername(@RequestParam(value = "username") String username, RedirectAttributes redirectAttributes) {
+//        log.debug("username = {}", username);
+//        Admin admin = adminService.findByUsername(username);
+//        log.debug("admin = {}", admin);
+//        if (admin == null) {
+//            throw new UsernameNotFoundException(username);
+//        }
+//        return "/auth/adminLogin";
+//    }
+
