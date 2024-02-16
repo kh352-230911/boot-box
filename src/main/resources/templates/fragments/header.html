@@ -102,6 +102,17 @@
                                     <li>
                                         <a href="#" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">고객센터</a>
                                     </li>
+<!--                                    <th:block sec:authorize="hasAuthority('ROLE_ADMIN')">-->
+                                        <li>
+                                            <a th:href="@{/admin/memberList.do(id=${#authentication.name})}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">회원목록</a>
+                                        </li>
+                                        <li>
+                                            <a th:href="@{/admin/noticeList.do(name=${#authentication.name})}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">공지사항</a>
+                                        </li>
+                                        <li>
+                                            <a th:href="@{/admin/askList.do(name=${#authentication.name})}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">문의사항</a>
+                                        </li>
+<!--                                    </th:block>-->
                                     <li>
                                         <form th:action="@{/auth/logout.do}" method="post" class="d-inline">
                                             <button type="submit" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">

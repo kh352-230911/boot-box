@@ -55,7 +55,7 @@ function movieByRating() { // 예매율순으로 조회
         { title: '아가일', rating: 0.9 },
         { title: '건국전쟁', rating: 5.5 },
         { title: '검은소년', rating: 0.4 },
-        { title: '기적의시작', rating: 0.1 }
+        { title: '킹덤-엑소더스', rating: 0.1 }
         // 각 영화와 해당하는 예매율 정보를 포함하는 데이터를 추가해야 합니다.
     ];
 
@@ -79,19 +79,21 @@ function movieByRating() { // 예매율순으로 조회
 }
 
 // 영화선택하면 색상 변경
-// function selectedMovie(movieName) {
-//     // 모든 영화 버튼에서 글씨색을 초기화합니다.
-//     var movieButtons = document.getElementsByTagName("button");
-//     for (var i = 0; i < movieButtons.length; i++) {
-//         movieButtons[i].style.color = "black"; // 모든 버튼의 글씨색을 검은색으로 변경합니다.
-//     }
-//
-//     // 선택한 영화 버튼의 글씨색을 변경합니다.
-//     var selectedButton = document.querySelector("button");
-//     if(selectedButton.innerHTML === movieName){
-//         selectedButton.style.color = "forestgreen";
-//     }
-// }
+document.addEventListener("DOMContentLoaded", function() {
+    var allMovies = document.querySelectorAll(".movie"); // 모든 영화 요소 선택
+
+    allMovies.forEach(function(movie) {
+        movie.addEventListener("click", function() {
+            // 모든 영화 요소의 클래스 초기화
+            allMovies.forEach(function(m) {
+                m.classList.remove("selected-movie");
+            });
+
+            // 선택된 요소의 클래스 변경
+            movie.classList.add("selected-movie");
+        });
+    });
+});
 
 // 극장
 function cinemaAll() {
@@ -140,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var ulMar = document.getElementById("dateUl1");
 
     var today = new Date();
-    today.setDate(13); // 오늘 날짜를 오늘의 첫째 날로 설정
+    today.setDate(today.getDate() - 1);
 
     var startDateFeb = new Date(2024, 1, 1); // 2월 시작 날짜 -> javascript는 0월부터 시작
     var endDateFeb = new Date(2024, 1, 29); // 2월 종료 날짜
@@ -229,32 +231,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-// 영화, 극장, 날짜 선택완료하면 시간 보여주기
-// document.addEventListener("DOMContentLoaded", function() {
-//     var time = document.getElementById("timeList");
-//
-//     function showTime() {
-//         var movie = document.getElementById("selectedMovie").value;
-//         var cinema = document.getElementById("selectedCinema").value;
-//         var date = document.getElementById("selectedDate").value;
-//
-//         if (movie && cinema && date) {
-//             time.style.display = "block"; // 모든 변수가 선택되었을 때 시간 요소 보이기
-//         } else {
-//             time.style.display = "none"; // 아직 모든 변수가 선택되지 않았을 때 시간 요소 숨기기
-//         }
-//         console.log(movie)
-//         console.log(cinema)
-//         console.log(date)
-//     }
-//     // 페이지가 로드될 때와 변수가 변경될 때마다 showTime 함수 호출
-//     showTime();
-//     // movie, cinema, date 변수가 변경되었을 때 showTime 함수를 호출
-//     movie.addEventListener("change", showTime);
-//     cinema.addEventListener("change", showTime);
-//     date.addEventListener("change", showTime);
-// });
-
 // 모든정보
 function selectedMovie(pickMovie) { // 영화
     var selectedMovieDiv = document.getElementById('selectedMovie');
@@ -298,6 +274,18 @@ function selectedDate(pickDate) {
     var selectedDateDiv = document.getElementById('selectedDate');
     selectedDateDiv.textContent = "관람일 : " + pickDate;
     selectedDateDiv.style.display = 'block'; // 선택된 날짜 보여주기
+}
+function showTime() {
+    var selectedMovie = document.getElementById('selectedMovie').textContent.trim();
+    var selectedCinema = document.getElementById('selectedCinema').textContent.trim();
+    var selectedDate = document.getElementById('selectedDate').textContent.trim();
+
+    // 모든 정보가 선택되었을 때에만 시간 보여주기
+    if (selectedMovie && selectedCinema && selectedDate) {
+        document.getElementById('timeList').style.display = 'block';
+    } else {
+        document.getElementById('timeList').style.display = 'none';
+    }
 }
 
 function selectedTime(pickTime) {

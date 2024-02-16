@@ -203,12 +203,14 @@ create sequence seq_member_like_cinema_id; --선호극장 등록시 시퀀스
 --7.문의
 CREATE TABLE ASK(
     id number NOT NULL, --pk
-    member_id number	NOT NULL, --회원 아이디 fk
+    member_login_id varchar2(100) NOT NULL, --회원 아이디 fk
     ask_title varchar2(100) NOT NULL,
     ask_detail varchar2(500) NOT NULL,
+    ask_type varchar2(200) default 'ETC' NOT NULL, -- 문의유형 ck
     created_at date DEFAULT current_date NOT NULL,
     constraints pk_ask_id primary key(id), --pk
-    constraints fk_ask_member_id foreign key(member_id) references member(id) on delete set null --fk
+    constraints fk_ask_member_login_id foreign key(member_login_id) references member(member_login_id) on delete set null, --fk
+    constraint ck_ask_type check(ask_type in ('CINEMA', 'MOVIE', 'RESERVATION', 'ETC'))
 );
 create sequence seq_ask_id; --문의 시퀀스
 --

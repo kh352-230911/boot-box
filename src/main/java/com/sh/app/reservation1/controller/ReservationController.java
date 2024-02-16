@@ -93,4 +93,8 @@ public class ReservationController {
     {
 
     }
+    @GetMapping("/reservationMain1.do")
+    public void reservationMain() {
+
+    }
 }

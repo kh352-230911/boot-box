@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>문의사항관리</title>
+</head>
+<style layout:fragment="style">
+    table
+    {
+        margin-top: 30px;
+        margin-left: 120px;
+    }
+    th#askNumber
+    {
+        width: 90px;
+    }
+    th#memberId
+    {
+        width: 140px;
+        padding-left: 20px;
+    }
+    th#askTitle
+    {
+        width: 400px;
+    }
+    th#askType
+    {
+        padding-left: 24px;
+    }
+    th#askDate
+    {
+        padding-left: 24px;
+    }
+    td
+    {
+        text-align: left;
+        vertical-align : middle;
+        padding-left: 30px;
+        padding-top: 8px;
+    }
+    button#answer
+    {
+        border-radius: 10px 10px 10px 10px;
+        width: 68px;
+        height: 30px;
+        background-color: darkslateblue;
+    }
+    button#answer:active {
+        /* 버튼클릭하면 색 바뀜 */
+        background-color: steelblue;
+    }
+</style>
+
+<div layout:fragment="content">
+    <table id="ask">
+        <thead>
+        <tr>
+            <th id="askNumber">문의번호</th>
+            <th id="memberId">회원아이디</th>
+            <th id="askTitle">문의 제목</th>
+            <th id="askDetail">문의 내용</th>
+            <th id="askType">문의 유형</th>
+            <th id="askDate">문의 날짜</th>
+            <th><!-- 답변버튼 --></th>
+            <th><!-- 답변 확인 --></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ask : ${asks}" th:data-ask-id="${ask.id}">
+            <td th:text="${ask.id}" style="padding-left: 40px"></td>
+            <td th:text="${ask.memberLoginId}" style="padding-left: 60px"></td>
+            <td th:text="${ask.askTitle}"></td>
+            <td th:text="${ask.askDetail}"></td>
+            <td th:text="${ask.askType}"></td>
+            <td th:text="${ask.createdAt}"></td>
+            <td><button id="answer" th:onclick="|location.href = '@{/admin/answer.do'|" style="font-size: small">답변하기</button></td>
+            <td id="answerCheck">0</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script layout:fragment="script"></script>
+</html>
