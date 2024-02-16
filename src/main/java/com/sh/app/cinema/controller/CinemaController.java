@@ -7,7 +7,6 @@ import com.sh.app.location.dto.LocationDto;
 import com.sh.app.location.service.LocationService;
 import com.sh.app.movie.dto.MovieListDto;
 import com.sh.app.movie.service.MovieService;
-import com.sh.app.reservation1.service.ReservationService;
 import com.sh.app.schedule.dto.IScheduleInfoDto;
 import com.sh.app.schedule.dto.ScheduleInfoDto;
 import com.sh.app.schedule.dto.TheaterScheduleDto;

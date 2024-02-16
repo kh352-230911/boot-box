@@ -6,11 +6,9 @@ import com.sh.app.seat.entity.Seat;
 import jakarta.persistence.*;
 import lombok.*;
 
-<<<<<<< HEAD:src/main/java/com/sh/app/reservation/entity/Reservation.java
 import java.util.HashSet;
-=======
 import java.util.LinkedHashSet;
->>>>>>> 8f64a24f04c405bc5818260f56409be0b51d862a:src/main/java/com/sh/app/reservation1/entity/Reservation.java
+
 import java.util.Set;
 
 /**
@@ -48,22 +46,19 @@ public class Reservation {
     @OneToOne(mappedBy = "reservation", fetch = FetchType.EAGER)
     private OrderPay orderPay;
 
-<<<<<<< HEAD:src/main/java/com/sh/app/reservation/entity/Reservation.java
     @ManyToMany //다대다 - 브릿지 사용시
     @JoinTable(name = "reservation_seat", //브릿지 테이블 이름
             joinColumns = @JoinColumn(name = "res_id"),//조인할 fk중 현재 entity의 pk - 외래키
             inverseJoinColumns = @JoinColumn(name = "seat_id"))//상대 entity의 pk - 상대 외래키
     private Set<Seat> seats = new HashSet<>();//브릿지를 통해 연결할 상대entity
-=======
     // 브릿지 테이블 : reservation_seat
-    @ManyToMany
-    @JoinTable(
-            name = "reservation_seat",
-            joinColumns = @JoinColumn(name = "res_id"),
-            inverseJoinColumns = @JoinColumn(name = "seat_id"))
-    @Builder.Default
-    private Set<Seat> seats = new LinkedHashSet<>();
->>>>>>> 8f64a24f04c405bc5818260f56409be0b51d862a:src/main/java/com/sh/app/reservation1/entity/Reservation.java
+//    @ManyToMany
+//    @JoinTable(
+//            name = "reservation_seat",
+//            joinColumns = @JoinColumn(name = "res_id"),
+//            inverseJoinColumns = @JoinColumn(name = "seat_id"))
+//    @Builder.Default
+//    private Set<Seat> seats = new LinkedHashSet<>();
 }
 
 //public class Reservation {

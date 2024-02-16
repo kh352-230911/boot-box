@@ -189,7 +189,7 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
         },
         success(response){
             console.log("~~~~success~~~~",response);
-            $()
+            hohohoho();
         },
         error(error) {
             console.error('~~~~Ajax request failed~~~~:', error);
@@ -201,6 +201,13 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
 
 });
 
+
+function hohohoho()
+{
+    console.log("ajax에서 함수 불러오기~~~~~~~~~~~~~~~~~");
+    
+
+}
 
 //============================================================================================================================
 // 알파벳 배열(좌석행)

@@ -110,12 +110,8 @@ public class ReservationController {
         //reservationBooking 페이지 내의 갱신하려는 특
         return "reservation/reservationBooking :: #testTable";
     }
-<<<<<<< HEAD:src/main/java/com/sh/app/reservation/controller/ReservationController.java
-
-=======
     @GetMapping("/reservationMain1.do")
     public void reservationMain() {
 
     }
->>>>>>> 8f64a24f04c405bc5818260f56409be0b51d862a:src/main/java/com/sh/app/reservation1/controller/ReservationController.java
 }
