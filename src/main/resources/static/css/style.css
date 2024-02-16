@@ -19,6 +19,9 @@ section, header, aside, footer {
     /*padding: 10px;*/
     color: white;
 }
+.header-container{
+    z-index: 100;
+}
 
 #white-color1 {
     margin: 0px;
@@ -103,12 +106,24 @@ footer {
     height: 301px;
     border-radius:10px;
 }
+.section-2-2 > img {
+    width: 210px;
+    height: 301px;
+    border-radius:10px;
+}
 .section-1-2 > div > div {
     position:relative;
     width: auto;
     height: auto;
     margin-right: 10px;
 }
+.section-2-1 {
+    position:relative;
+    width: auto;
+    height: auto;
+    margin-right: 10px;
+}
+
 .section-1-2 > div:nth-child(5) > div{
     margin-right:0;
 }
@@ -150,6 +165,10 @@ footer {
 }
 
 .section-1-2 > div > div:hover .section-1-2-btn {
+    display:block;
+    cursor:pointer;
+}
+.section-2-2:hover .section-1-2-btn {
     display:block;
     cursor:pointer;
 }
@@ -223,3 +242,52 @@ footer {
     height: 498px;
 }
 
+/* slider 영역 */
+.small {
+    overflow: hidden;
+    position: relative;
+}
+.small-ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    transition: transform 0.5s ease;
+}
+.small-ul li {
+    margin-right: 30px;
+    margin-top: 50px;
+}
+.small-span {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #070707;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 5px;
+    border-radius: 50%;
+}
+.small-span:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+i.arrow {
+    position: absolute;
+    top: 45%;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    color: lightgray;
+    font-size: 100px;
+    transition: 0.5s all ease;
+}
+i.arrow:hover {
+    transform: scale(1.2);
+}
+.right {
+    right: 0;
+}
+.left{
+    left: 0;
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>마이페이지</title>
+    <link rel="stylesheet" th:href="@{/css/member/memberDetail.css}" />
+</head>
+<style layout:fragment="style"></style>
+
+<div layout:fragment="content" class="wrap-container">
+    <div class="home-container">
+        <aside class="profile-card">
+            <header>
+                <!-- the username -->
+                <h1>Sriijon Sarker</h1>
+
+                <!-- and role or location -->
+                <h2>Web Developer</h2>
+
+            </header>
+
+            <!-- bit of a bio; who are you? -->
+            <div class="profile-bio">
+                <!-- MIDDLE-CONTAINER -->
+                <div class="middle-container container">
+                    <div class="profile block"> <!-- PROFILE (MIDDLE-CONTAINER) -->
+                        <div class="profile-picture big-profile-picture clear">
+                            <img width="150px" alt="Anne Hathaway picture" src="http://upload.wikimedia.org/wikipedia/commons/e/e1/Anne_Hathaway_Face.jpg" >
+                        </div>
+                        <h1 class="user-name">Anne Hathaway</h1>
+                        <div class="profile-description">
+                            <p class="scnd-font-color">Lorem ipsum dolor sit amet consectetuer adipiscing</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+    </div>
+</div>
+
+<script layout:fragment="script"></script>
+</html>
