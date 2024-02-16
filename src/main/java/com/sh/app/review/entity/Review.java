@@ -32,7 +32,6 @@ public class Review {
     private int reviewScore; // 리뷰평점
     @Column(nullable = false)
     private String reviewDetail; // 리뷰내용
-    @CreationTimestamp
     private LocalDateTime reviewCreatedAt; // 리뷰작성날짜
 
     @ManyToOne(fetch = FetchType.LAZY)

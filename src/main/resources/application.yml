@@ -29,7 +29,7 @@ spring:
     init:
       schema-locations: classpath:/sql/schema.sql
       data-locations: classpath:/sql/data.sql
-      mode: always
+      mode: never
       
 # logback (logging)
 logging:
@@ -41,3 +41,5 @@ logging:
     profiles:
 #      default: test
       active: prod
+
+
