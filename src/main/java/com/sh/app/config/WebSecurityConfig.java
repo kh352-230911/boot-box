@@ -35,6 +35,7 @@ public class WebSecurityConfig {
                     .requestMatchers("/movie/**").permitAll()
                     .requestMatchers("/reservation1/**").permitAll()
                     .requestMatchers("/admin/adminAuth.do").permitAll()
+                    .requestMatchers("/member/memberDetail.do").permitAll() // 마이페이지 작업 끝나면 삭제
                     .requestMatchers("/member/createMember.do", "/member/checkIdDuplicate.do").anonymous()
 //                    .requestMatchers("/board/**").authenticated()
 //                    .requestMatchers("/admin/**").hasRole("ADMIN")
