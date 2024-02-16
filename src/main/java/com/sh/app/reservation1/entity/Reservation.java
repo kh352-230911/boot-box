@@ -1,8 +1,13 @@
 package com.sh.app.reservation1.entity;
 import com.sh.app.common.Status;
+import com.sh.app.genre.entity.Genre;
 import com.sh.app.pay.entity.OrderPay;
+import com.sh.app.seat.entity.Seat;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * 0206
@@ -38,6 +43,15 @@ public class Reservation {
     //mappedBy = 외래키가 존재하는 테이블
     @OneToOne(mappedBy = "reservation", fetch = FetchType.EAGER)
     private OrderPay orderPay;
+
+    // 브릿지 테이블 : reservation_seat
+    @ManyToMany
+    @JoinTable(
+            name = "reservation_seat",
+            joinColumns = @JoinColumn(name = "res_id"),
+            inverseJoinColumns = @JoinColumn(name = "seat_id"))
+    @Builder.Default
+    private Set<Seat> seats = new LinkedHashSet<>();
 }
 
 //public class Reservation {

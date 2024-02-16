@@ -2,6 +2,7 @@ package com.sh.app.movie.service;
 
 import com.sh.app.genre.repository.GenreRepository;
 import com.sh.app.movie.dto.MovieDetailDto;
+import com.sh.app.movie.dto.MovieListDto;
 import com.sh.app.movie.entity.Movie;
 import com.sh.app.movie.repository.MovieRepository;
 import com.sh.app.review.repository.ReviewRepository;
@@ -79,5 +80,17 @@ public class MovieService {
         return movieDetailDto;
     }
 
+    public List<MovieListDto> getCurrentMovies() {
+        return movieRepository.findAll().stream() // 현재는 findAll을 사용했지만, 실제로는 현재 상영 중인 영화를 필터링하는 로직
+                .map(movie -> {
+                    MovieListDto dto = new MovieListDto();
+                    dto.setId(movie.getId());
+                    dto.setTitle(movie.getTitle());
+                    dto.setPoster(movie.getPoster());
+                    // 필요한 정보만 설정
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
 
 }
