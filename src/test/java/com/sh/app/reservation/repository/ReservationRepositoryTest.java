@@ -4,7 +4,6 @@ import com.sh.app.pay.entity.OrderPay;
 import com.sh.app.pay.repository.OrderPayRepository;
 import com.sh.app.reservation.entity.Reservation;
 import org.junit.jupiter.api.Disabled;
-import com.sh.app.reservation.entity.Reservation;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Date;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 
 /**

@@ -1,0 +1,196 @@
+/* movie detail영역 */
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    font-size: 16px;
+    font-family: "Agency FB";
+    color: var(--color-white);
+    box-sizing: border-box;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol,
+ul {
+    list-style: none;
+}
+blockquote,
+q {
+    quotes: none;
+}
+blockquote {
+    position: relative;
+
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: "";
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+:root {
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-primary: #ff003b;
+    --color-gray-1: #a9a9a9;
+}
+
+<<<<<<< HEAD
+=======
+* {
+    font-size: 16px;
+    font-family: "Agency FB";
+    color: var(--color-white);
+}
+>>>>>>> 705c0c8ba11cd4808bfb9de3d2ddc122805fe207
+button {
+    cursor: pointer;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+
+}
+.createAt {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+.content {
+    display: flex;
+    justify-content: center;
+}
+
+.movie_info {
+    display: flex;
+    margin-top: 70px;
+    align-items: center;
+    flex-direction: row-reverse;
+}
+div {
+    padding: 10px;
+}
+
+.movie_info-left {
+    /*margin-right: 100px;*/
+}
+.movie_title {
+    position: relative;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 24px;
+    display: inline-flex;
+}
+.movie_title::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    height: 2px;
+    background-color: var(--color-primary);
+    width: 100%;
+}
+.movie_rate {
+    display: flex;
+    margin-top: 30px;
+    font-size: 10px;
+}
+.movie_stars {
+    display: flex;
+}
+.movie_star {
+    margin-right: 10px;
+    margin-bottom: 0px;
+}
+.movie_star i {
+    color: var(--color-gray-1);
+}
+.movie_star.rated i {
+    color: yellow;
+}
+.movie_comment {
+    font-size: 14px;
+    color: var(--color-gray-1);
+    margin-bottom: 2px;
+}
+.movie_des {
+    margin-top: 3px;
+    width: 450px;
+    color: var(--color-gray-1);
+}
+.movie_action {
+    position: relative;
+}
+.movie_button {
+    font-weight: 300;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: 4px;
+    text-transform: uppercase;
+    padding: 7px 23px;
+}
+
+.movie_info-right {
+    margin-left: 30px;
+    width: 400px;
+}
+.movie_infos{
+    margin-top: -0.5rem;
+}
+.movie_img {
+    position: relative;
+    height: 650px;
+}
+.movie_img-item {
+    position: absolute;
+    height: 350px;
+}
+.movie_img-item.movie_img-first {
+    top: 0px;
+    left: 0px;
+    width: 314px;
+}
+.line{
+    border-top: #ff3939 1px solid;
+    margin: 0px;
+}
+figure {
+    width: 100%; /* 전체 너비를 사용하도록 설정 */
+    max-width: 1200px; /* 최대 너비를 설정하여 너무 넓어지는 것을 방지 */
+    margin: 0 auto; /* 위 아래 마진은 0, 좌우 마진은 자동으로 설정하여 중앙에 배치 */
+    padding: 10px; /* 리뷰 내부 여백 */
+
+}
+
+/* 트레일러 영역 */
+.trailer-container {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+}

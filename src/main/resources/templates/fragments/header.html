@@ -5,13 +5,13 @@
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <header th:fragment="header" id="header-container">
     <nav class="border-gray-200 dark:bg-gray-900 dark:border-gray-700">
-        <div class="w-full h-full flex flex-wrap items-center justify-between mx-auto px-2 py-2.5">
-            <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-2 py-2.5">
+            <a th:href="@{/}" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img th:src="@{/images/free-icon-play-button-260446.png}" class="h-8" />
-                <span class="self-center text-2xl text-red-500 font-semibold whitespace-nowrap">B</span>
-                <span id="white-color1" class="self-center text-2xl text-white font-semibold whitespace-nowrap dark:text-white">oot</span>
-                <span id="red-color" class="self-center text-2xl text-red-500 font-semibold whitespace-nowrap dark:text-white">B</span>
-                <span id="white-color2" class="self-center text-2xl text-white font-semibold whitespace-nowrap dark:text-white">ox</span>
+                <span class="self-center text-3xl text-red-500 font-semibold whitespace-nowrap">B</span>
+                <span id="white-color1" class="self-center text-3xl text-white font-semibold whitespace-nowrap dark:text-white">oot</span>
+                <span id="red-color" class="self-center text-3xl text-red-500 font-semibold whitespace-nowrap dark:text-white">B</span>
+                <span id="white-color2" class="self-center text-3xl text-white font-semibold whitespace-nowrap dark:text-white">ox</span>
             </a>
             <button data-collapse-toggle="navbar-dropdown" type="button" class="inline-flex items-center p-2 ms-3 w-10 h-10 justify-center text-sm text-white-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-dropdown" aria-expanded="false">
                 <span class="sr-only">Open main menu</span>
@@ -22,39 +22,105 @@
             <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
                 <ul class="flex flex-col font-medium p-4 mt-4 border border-gray-100 rounded-lg md:flex-row md:mt-0 md:text-sm  md:border-0 md:space-x-8 md:rtl:space-x-reverse">
                     <li>
-                        <a href="#" class="block py-2 px-3 text-white rounded md:bg-transparent md:text-white md:p-0 md:dark:text-white dark:bg-blue-600 md:dark:bg-transparent" aria-current="page" th:href="@{/}" >Home</a>
+                        <a th:href="@{/}" class="block text-xl font-semibold py-2 px-3 text-white rounded md:bg-transparent md:text-white md:p-0 md:dark:text-white md:hover:text-red-600 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Home</a>
                     </li>
                     <li>
-                        <a href="#" class="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">영화</a>
+                        <a th:href="@{/movie/movieList.do}" class="block text-xl font-semibold py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">영화</a>
                     </li>
                     <li>
-                        <a href="#" class="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">극장</a>
+                        <a th:href="@{/cinema/cinemaList.do}" class="block text-xl font-semibold py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">극장</a>
                     </li>
+                    <!-- 0208 임시 링크 - 예매 진행중 / 기능 9할정도 구현시 정식 메뉴명으로 정정-->
                     <li>
-                        <a class="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" th:href="@{/reservation/reservationMain.do}">예매</a>
+                        <a class="block text-xl font-semibold py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"  th:href="@{/reservation/reservationBooking.do}">예매</a>
                     </li>
-                    <li>
-                        <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-full py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-white md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">Dropdown <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path class="text-white" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                        </svg></button>
-                        <!-- Dropdown menu -->
-                        <div id="dropdownNavbar" class="z-10 hidden  font-normal divide-y divide-red-500 rounded-lg shadow w-44">
-                            <ul class="py-2 text-sm text-white dark:text-gray-200" aria-labelledby="dropdownLargeButton">
-                                <li>
-                                    <a href="#" class="block px-4 py-2 text-white hover:bg-gray-900 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="block px-4 py-2 text-white hover:bg-gray-900 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="block px-4 py-2 text-white hover:bg-gray-900 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
-                                </li>
-                            </ul>
-                            <div class="py-1">
-                                <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-gray-900">Sign out</a>
+<!--                    <li>-->
+<!--                        <a class="block text-xl font-semibold py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"  th:href="@{/reservation1/reservationBooking4.do}">임시2</a>-->
+<!--                    </li>-->
+                    <th:block sec:authorize="isAnonymous()">
+                        <li>
+                            <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between text-xl font-semibold w-full py-2 px-3 text-white rounded  hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-600 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">Login/Register
+                                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <path class="text-white" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                </svg>
+                            </button>
+                            <!-- Dropdown menu -->
+                            <div id="dropdownNavbar" class="z-10 hidden  font-normal divide-y divide-red-500 rounded-lg shadow w-44">
+                                <ul class="py-2 text-sm text-white dark:text-gray-200" aria-labelledby="dropdownLargeButton">
+                                    <li>
+                                        <a th:href="@{/auth/login.do}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">로그인</a>
+                                    </li>
+                                    <li>
+                                        <a th:href="@{/member/createMember.do}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">회원가입</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">고객센터</a>
+                                    </li>
+                                </ul>
+<!--                                <div class="py-1">-->
+<!--                                    <a href="#" class="block text-xl font-semibold px-4 py-2 text-sm text-white md:hover:text-red-600">My Boot</a>-->
+<!--                                </div>-->
                             </div>
-                        </div>
-                    </li>
+                        </li>
+                    </th:block>
+                    <th:block sec:authorize="isAuthenticated()">
+                        <li>
+                            <button id="dropdownNavbarLink1" data-dropdown-toggle="dropdownNavbar1" class="flex items-center justify-between text-xl font-semibold w-full py-2 px-3 text-white rounded  hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-600 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
+                                <th:block sec:authorize="hasAuthority('ROLE_USER')">
+                                    <span sec:authentication="principal.username" th:title="${#authentication.authorities}"></span>
+                                    <img th:src="@{/images/icons8-다스-베이더-50(1).png}" width="30px" height="30px" class="ml-3">
+                                    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                        <path class="text-white" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                    </svg>
+                                </th:block>
+                                <th:block sec:authorize="hasAuthority('ROLE_ADMIN')">
+                                    <span sec:authentication="principal.username" th:title="${#authentication.authorities}"></span>
+                                    <img th:src="@{/images/icons8-별똥별-64.png}" width="30px" height="30px" class="ml-3">
+                                    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                        <path class="text-white" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                    </svg>
+                                </th:block>
+                                <th:block sec:authorize="hasAuthority('ROLE_MANAGER')">
+                                    <span sec:authentication="principal.username" th:title="${#authentication.authorities}"></span>
+                                    <img th:src="@{/images/icons8-관리자-설정-남성-50.png}" width="30px" height="30px" class="ml-3">
+                                    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                        <path class="text-white" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                    </svg>
+                                </th:block>
+                            </button>
+                            <!-- Dropdown menu -->
+                            <div id="dropdownNavbar1" class="z-10 hidden  font-normal divide-y divide-red-500 rounded-lg shadow w-44">
+                                <ul class="py-2 text-sm text-white dark:text-gray-200" aria-labelledby="dropdownLargeButton">
+                                    <th:block sec:authorize="hasAuthority('ROLE_USER')">
+                                        <li class="text-xs">
+                                            <a th:href="@{/member/memberDetail.do}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">My Boot</a>
+                                        </li>
+                                    </th:block>
+                                    <li>
+                                        <a href="#" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">고객센터</a>
+                                    </li>
+<!--                                    <th:block sec:authorize="hasAuthority('ROLE_ADMIN')">-->
+                                        <li>
+                                            <a th:href="@{/admin/memberList.do(id=${#authentication.name})}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">회원목록</a>
+                                        </li>
+                                        <li>
+                                            <a th:href="@{/admin/noticeList.do(name=${#authentication.name})}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">공지사항</a>
+                                        </li>
+                                        <li>
+                                            <a th:href="@{/admin/askList.do(name=${#authentication.name})}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">문의사항</a>
+                                        </li>
+<!--                                    </th:block>-->
+                                    <li>
+                                        <form th:action="@{/auth/logout.do}" method="post" class="d-inline">
+                                            <button type="submit" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                로그아웃
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </th:block>
                 </ul>
             </div>
         </div>

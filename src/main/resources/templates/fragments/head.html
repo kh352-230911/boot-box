@@ -21,6 +21,15 @@
     <!-- 사용자작성 css -->
     <link rel="stylesheet" th:href="@{/css/style.css}" />
 
+    <script>
+        const contextPath = '[[@{/}]]';
+        const csrfHeaderName = `[[${_csrf.headerName}]]`;
+        const csrfToken = `[[${_csrf.token}]]`;
+    </script>
+    <script sec:authorize="isAuthenticated()">
+        const username = `[[${#authentication.principal.username}]]`;
+    </script>
+
     <script th:if="${msg != null}">
         alert('[[${msg}]]');
     </script>

@@ -1,6 +1,5 @@
 package com.sh.app.pay.entity;
 
-import ch.qos.logback.core.status.StatusBase;
 import com.sh.app.common.Status;
 import com.sh.app.reservation.entity.Reservation;
 import jakarta.persistence.*;

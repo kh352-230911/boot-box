@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>극장목록</title>
+   <link rel="stylesheet" th:href="@{/css/cinema/cinemaList.css}" />
+</head>
+<style layout:fragment="style"></style>
+
+<div layout:fragment="content" class="px-10">
+    <span>전체극장</span>
+    <br>
+    <hr style="height: 1px">
+    <div class = "theater-box" >
+        <div class="favorite-area">
+            <div class="favorite-title">
+                <h1>나의 BootBox</h1>
+            </div>
+            <div class="favorite-list">
+                <ul>
+                    <li>
+                        <a href="#">강남점</a>
+                    </li>
+                    <li>
+                        <a href="#"></a>
+                    </li>
+                    <li>
+                        <a href="#"></a>
+                    </li>
+                    <li>
+                        <button type="button">자주가는 영화관 설정</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class = "location-area">
+            <ul>
+                <li th:each="location : ${locations}">
+                    <button type="button" class="select_location" th:text="${location.location_name}"></button>
+                    <div class="theater-list">
+                        <ul>
+                            <li th:each="cinema : ${location.cinemas}">
+                                <a th:href="@{'/cinema/cinemaDetail.do'(id=${cinema.id})}" th:text="${cinema.region_cinema}"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <br><br><br><br><br>
+
+</div>
+<br>
+
+
+<script layout:fragment="script" th:src="@{/js/cinema/cinemaList.js}"></script>
+
+</html>

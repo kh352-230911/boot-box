@@ -20,11 +20,15 @@ import java.util.List;
 @Builder
 public class Genre {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "genre_id")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_genre_id_generator")
+    @SequenceGenerator(
+            name = "seq_genre_id_generator",
+            sequenceName = "seq_genre_id",
+            initialValue = 1,
+            allocationSize = 1
+    )
     private Long id;
     @Column(nullable = false)
     private String genreList;
-
 
 }

@@ -1,12 +1,16 @@
 package com.sh.app.cinema.entity;
 
+import com.sh.app.genre.entity.Genre;
 import com.sh.app.location.entity.Location;
+import com.sh.app.movie.entity.Movie;
 import com.sh.app.theater.entity.Theater;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -19,7 +23,6 @@ import java.util.List;
 public class Cinema implements Comparable<Cinema>{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(nullable = false, unique = true)
     private String region_cinema;
@@ -28,9 +31,9 @@ public class Cinema implements Comparable<Cinema>{
     @Column(nullable = false)
     private String address;
     @Column(nullable = false)
-    private int location_lo; // 지도 경도
+    private Double location_lo; // 지도 경도
     @Column(nullable = false)
-    private int location_la; // 지도 위도
+    private Double location_la; // 지도 위도
     @Column(nullable = false)
     private String phone;
 
@@ -51,6 +54,15 @@ public class Cinema implements Comparable<Cinema>{
             }
         }
     }
+
+    // 극장 브릿지 테이블
+    @ManyToMany
+    @JoinTable(
+            name = "movie_list",
+            joinColumns = @JoinColumn(name = "cinema_id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_id"))
+    @Builder.Default
+    private Set<Movie> movies = new LinkedHashSet<>();
 
     @Override
     public int compareTo(Cinema other) {

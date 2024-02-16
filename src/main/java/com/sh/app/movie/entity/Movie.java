@@ -1,6 +1,7 @@
 package com.sh.app.movie.entity;
 
 import com.sh.app.genre.entity.Genre;
+import com.sh.app.review.entity.Review;
 import com.sh.app.schedule.entity.Schedule;
 
 import jakarta.persistence.*;
@@ -23,13 +24,12 @@ import java.util.Set;
 @ToString(exclude = "schedules")
 public class Movie {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "movie_id")
     private Long id;
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
-    private Rating fileRatings;
+    @Enumerated(EnumType.STRING)
+    private Rating filmRatings;
     @Column(nullable = false)
     private String releaseDate;
     @Column(nullable = false)
@@ -53,8 +53,16 @@ public class Movie {
             this.genres.add(genre);
     }
 
-    @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
     @Builder.Default
     private List<Schedule> schedules = new ArrayList<>();
 
+    @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<Review> reviews = new ArrayList<>();
+
+    public void addReview(Review review) {
+        review.setMovie(this);
+        this.reviews.add(review);
+    }
 }

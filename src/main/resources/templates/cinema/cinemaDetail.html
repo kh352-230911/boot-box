@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>cinema</title>
+    <!-- 페이지별 CSS -->
+    <link rel="stylesheet" th:href="@{/css/cinema/cinemaDetail.css}" />
+</head>
+<style layout:fragment="style"></style>
+
+<div layout:fragment="content">
+    <div class="container mx-auto p-2">
+        <nav class="navbar">
+            <div class="navbar-container">
+                <div class="menu-container">
+                    <ul class="menu-list">
+                        <li class="menu-list-item active" >
+                            <a th:href="@{/}">Home</a>
+                        </li>
+                        <li class="menu-list-item"> > </li>
+                        <li class="menu-list-item">
+                            <a th:href="@{/cinema/cinemaList.do}">전체 극장</a>
+                        </li>
+                        <li class="menu-list-item"> > </li>
+                        <li class="menu-list-item">극장 상세정보</li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="sidebar">
+            <i class="fas fa-home"></i>
+            <i class="fas fa-search" ></i>
+            <i class="fas fa-bookmark"></i>
+        </div>
+        <div class="container">
+            <div class="content-container">
+                <div class="featured-content" style="background:linear-gradient(to bottom, rgba(0,0,0,0),#151515), url('https://cdn.pixabay.com/photo/2015/12/15/08/50/theatre-1093862_1280.jpg');" >
+                    <h1 class="active" th:text="${cinema.region_cinema}" th:data-cinema-id="${cinema.id}"></h1><!--극장명-->
+                        <p class="featured-desc">
+                        <ul>
+                            <li th:text="'주소 : ' + ${cinema.address}"></li><!--극장주소-->
+                            <li th:text="'상영관수 : ' + ${cinema.theater_number} + '관 / 총좌석수 : ' + ${cinema.theater_number}*60 + '석'"></li><!--상영관 및 총좌석수-->
+                            <li th:text="'전화번호 : ' + ${cinema.phone}"></li><!--극장전화번호-->
+                        </ul>
+                        </p>
+                    <a href="#" class="featured-button"
+                       th:data-location-lo="${cinema.location_lo}"
+                       th:data-location-la="${cinema.location_la}"
+                       onclick="openMap(event, this)">
+<!--                        <span th:text="${cinema.location_lo}"/>-->
+<!--                        <span th:text="${cinema.location_la}"/>-->
+                        실시간 길찾기
+                    </a>
+                </div>
+                    <div class="movie-list-container">
+                        <h2>현재 상영작</h2>
+                        <div class="movie-list-wrapper">
+                            <div class="movie-list">
+                                <div th:each="movie : ${currentMovies}" class="movie-list-item">
+                                    <img th:src="${movie.poster}" class="movie-list-item-img" alt="" th:alt="${movie.title}">
+<!--                                    <span class="movie-list-item-title" th:text="${movie.title}"></span>-->
+<!--                                    <button class="movie-list-item-button">상세보기</button>-->
+                                </div>
+                            <i class="fas fa-chevron-right arrow"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 한 줄 달력 일정 추가 -->
+                    <div class="month-and-selection">
+                        <div class="month" id="month"></div>
+                    </div>
+                    <div class="calendar-container" >
+                        <div>선택한 날짜</div>
+                        <div class="selected-date" id="selectedDate"></div>
+                        <div class="arrow" id="prev">&#9664;</div>
+                        <ul class="calendar" id="calendar"></ul>
+                        <div class="arrow" id="next">&#9654;</div>
+                        <button class="today-btn" id="today">Today</button>
+                    </div>
+                <!-- 영화 스케줄 관리 -->
+                <!-- 1차 작업 -->
+<!--                <div th:fragment="scheduleList" id="movieSchedule">-->
+<!--                    <div th:each="movieEntry : ${movies}" class="movie-container">-->
+<!--                        <div class="movie-title" th:text="${movieEntry.key} + ' 상영시간: ' + ${movieEntry.value.get(0).times.get(0).runningTime} + '분'"></div>-->
+<!--                        <div th:each="theaterSchedule : ${movieEntry.value}" class="theater-container">-->
+<!--                            <div class="theater-info" th:text="'&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; ' + ${theaterSchedule.theater} + ' &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;'"></div>-->
+<!--                            <div class="time-slots">-->
+<!--                                <div th:each="time : ${theaterSchedule.times}" class="time-slot-container" style="display:inline-block;">-->
+<!--                                    <div class="time-slot" th:text="${time.startTime}"></div>-->
+<!--                                    <div class="seats-available" th:text="'남은좌석: ' + ${time.remainingSeats} + '석'"></div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <!--2차작업-->
+                <div th:fragment="scheduleList" id="movieSchedule">
+                    <div th:each="detail : ${scheduleDetails}" class="schedule-container">
+                        <div class="movie-title" th:text="${detail.getMovieTitle()} + ' 상영시간: ' + ${detail.getRunningTime()} + '분'"></div>
+                        <div class="movie-schedule">
+                            <div class="theater-info" th:text="'--------------------' + ${detail.getTheaterName()} + '--------------------'"></div>
+                            <div class="time-slots">
+                                <div class="time-slot">
+                                    <span th:text="${#temporals.format(detail.getStartTime(), 'HH:mm')}"></span>
+                                    <div class="seats-available" th:text="'남은좌석: ' + ${detail.getRemainingSeats()} + '석'"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 3차 작업 -->
+<!--                <div th:fragment="scheduleList" id="movieSchedule">-->
+<!--                    <div th:each="movieGroup : ${moviesGroupedByTitle}">-->
+<!--                        <div class="movie-title" th:text="${movieGroup.key.getMovieTitle()} + ' 상영시간: ' + ${movieGroup.key.getRunningTime()} + '분'"></div>-->
+<!--                        <div th:each="theaterGroup : ${movieGroup.value.groupedByTheater}">-->
+<!--                            <div class="movie-schedule">-->
+<!--                                <div class="theater-info" th:text="'&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;' + ${theaterGroup.key.getTheaterName()} + '&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;'"></div>-->
+<!--                                <div class="time-slots">-->
+<!--                                    <div th:each="scheduleDetail : ${theaterGroup.value}" class="time-slot">-->
+<!--                                        <span th:text="${scheduleDetail.getStartTime()}"></span>-->
+<!--                                        <div class="seats-available" th:text="'남은좌석: ' + ${scheduleDetail.getRemainingSeats()} + '석'"></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="script" th:src="@{/js/cinema/cinemaDetail.js}">
+    // // 랜덤하게 이미지 파일 이름을 배열에 저장
+    // const images = ["moviePicture1.jpg", "moviePicture2.jpg", "moviePicture3.jpg", "moviePicture4.jpg"];
+    //
+    // // 배열에서 랜덤하게 하나의 이미지를 선택
+    // const chosenImage = images[Math.floor(Math.random() * images.length)];
+    // console.log(chosenImage);
+    //
+    // // .featured-content 클래스를 가진 div를 선택
+    // const featuredContent = document.querySelector('.featured-content');
+    //
+    // // 선택된 div의 배경 이미지를 설정
+    // // 여기서 'url(/static/images/${chosenImage})'는 실제 이미지 파일의 웹 서버 상의 경로를 가리킴
+    // featuredContent.style = `url('/static/images/${chosenImage}'), background:linear-gradient(to bottom, rgba(0,0,0,0),#151515)`;
+</script>
+</html>
