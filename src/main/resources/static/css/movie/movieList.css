@@ -40,10 +40,10 @@
     position:relative;
     width: auto;
     height: auto;
-    margin-right: 10px;
+    margin: 10px;
 }
 .section-1-2 > div:nth-child(5) > div{
-    margin-right:0;
+    margin:10px;
 }
 /* section-1-1 */
 .section-1 {

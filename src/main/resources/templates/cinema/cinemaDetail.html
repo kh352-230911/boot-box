@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html
         xmlns:th="http://www.thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
         layout:decorate="~{layout/default}">
 <head>
     <title>cinema</title>
@@ -16,9 +16,13 @@
             <div class="navbar-container">
                 <div class="menu-container">
                     <ul class="menu-list">
-                        <li class="menu-list-item active">Home</li>
+                        <li class="menu-list-item active" >
+                            <a th:href="@{/}">Home</a>
+                        </li>
                         <li class="menu-list-item"> > </li>
-                        <li class="menu-list-item">전체 극장</li>
+                        <li class="menu-list-item">
+                            <a th:href="@{/cinema/cinemaList.do}">전체 극장</a>
+                        </li>
                         <li class="menu-list-item"> > </li>
                         <li class="menu-list-item">극장 상세정보</li>
                     </ul>
@@ -27,111 +31,114 @@
         </nav>
         <div class="sidebar">
             <i class="fas fa-home"></i>
-            <i class="fas fa-search"></i>
+            <i class="fas fa-search" ></i>
             <i class="fas fa-bookmark"></i>
         </div>
         <div class="container">
             <div class="content-container">
-                <div class="featured-content" style="background:linear-gradient(to bottom, rgba(0,0,0,0),#151515), url('https://cdn.womaneconomy.co.kr/news/photo/202301/215138_421317_3746.jpg');">
-                    <h1 class="active">강남</h1>
-                    <p class="featured-desc">
-                    <ul>
-                        <li>
-                            위치 : 서울 강남구 역삼동
-                        </li>
-                        <li>
-                            로맨틱 멀티플렉스! 젊은 도시 강남이 한 눈에 보이는 최상의 View를 제공
-                        </li>
-                        <li>
-                            tel : 02-1111-2222
-                        </li>
-                    </ul>
-                    </p>
-                    <button class="featured-button">
-                        예매하기
-                    </button>
+                <div class="featured-content" style="background:linear-gradient(to bottom, rgba(0,0,0,0),#151515);">
+                    <h1 class="active" th:text="${cinema.region_cinema}"></h1><!--극장명-->
+                        <p class="featured-desc">
+                        <ul>
+                            <li th:text="'주소 : ' + ${cinema.address}"></li><!--극장주소-->
+                            <li th:text="'상영관수 : ' + ${cinema.theater_number} + '관 / 총좌석수 : ' + ${cinema.theater_number}*60 + '석'"></li><!--극장전화번호-->
+                            <li th:text="'전화번호 : ' + ${cinema.phone}"></li><!--극장전화번호-->
+                        </ul>
+                        </p>
+                    <a href="#" class="featured-button"
+                       th:data-location-lo="${cinema.location_lo}"
+                       th:data-location-la="${cinema.location_la}"
+                       onclick="openMap(event, this)">
+<!--                        <span th:text="${cinema.location_lo}"/>-->
+<!--                        <span th:text="${cinema.location_la}"/>-->
+                        실시간 길찾기
+                    </a>
                 </div>
-                <div class="movie-list-container">
-                    <h2>현재 상영작</h2>
-                    <div class="movie-list-wrapper">
-                        <div class="movie-list">
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="https://search.pstatic.net/common?type=o&size=176x264&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20240103_132%2F1704256822900I1c3f_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2" alt="">
-                                <span class="movie-list-item-title">웡카</span>
-                                <button class="movie-list-item-button">예매하기</button>
+                    <div class="movie-list-container">
+                        <h2>현재 상영작</h2>
+                        <div class="movie-list-wrapper">
+                            <div class="movie-list">
+                                <div class="movie-list-item">
+                                    <img class="movie-list-item-img" src="https://search.pstatic.net/common?type=o&size=176x264&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20240103_132%2F1704256822900I1c3f_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2" alt="">
+                                    <span class="movie-list-item-title">웡카</span>
+                                    <button class="movie-list-item-button">예매하기</button>
+                                </div>
+                                <div class="movie-list-item">
+                                    <img class="movie-list-item-img" src="https://search.pstatic.net/common?type=o&size=176x264&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20240208_26%2F1707318899750VsEpF_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2" alt="">
+                                    <span class="movie-list-item-title">도그데이즈</span>
+                                    <button class="movie-list-item-button">예매하기</button>
+                                </div>
+                                <div class="movie-list-item">
+                                    <img class="movie-list-item-img" src="https://search.pstatic.net/common?type=o&size=176x264&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20240108_48%2F1704683871748oPovk_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2" alt="">
+                                    <span class="movie-list-item-title">데드맨</span>
+                                    <button class="movie-list-item-button">예매하기</button>
+                                </div>
+                                <div class="movie-list-item">
+                                    <img class="movie-list-item-img" src="https://search.pstatic.net/common?type=o&size=176x264&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20240112_167%2F1705027079878OkkaQ_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2" alt="">
+                                    <span class="movie-list-item-title">아가일</span>
+                                    <button class="movie-list-item-button">예매하기</button>
+                                </div>
+                                <div class="movie-list-item">
+                                    <img class="movie-list-item-img" src="https://search.pstatic.net/common?type=o&size=176x264&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20240124_126%2F1706084548964mScff_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2" alt="">
+                                    <span class="movie-list-item-title">시민덕희</span>
+                                    <button class="movie-list-item-button">예매하기</button>
+                                </div>
+                                <div class="movie-list-item">
+                                    <img class="movie-list-item-img" src="https://search.pstatic.net/common?type=o&size=176x264&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20240206_234%2F1707210318193MxCbW_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2" alt="">
+                                    <span class="movie-list-item-title">건국전쟁</span>
+                                    <button class="movie-list-item-button">예매하기</button>
+                                </div>
+                                <div class="movie-list-item">
+                                    <img class="movie-list-item-img" src="https://search.pstatic.net/common?type=o&size=176x264&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20240117_295%2F17054759508277Sn0I_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2" alt="">
+                                    <span class="movie-list-item-title">아기상어 극장판</span>
+                                    <button class="movie-list-item-button">예매하기</button>
+                                </div>
                             </div>
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="https://search.pstatic.net/common?type=o&size=176x264&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20240208_26%2F1707318899750VsEpF_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2" alt="">
-                                <span class="movie-list-item-title">도그데이즈</span>
-                                <button class="movie-list-item-button">예매하기</button>
-                            </div>
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="https://search.pstatic.net/common?type=o&size=176x264&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20240108_48%2F1704683871748oPovk_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2" alt="">
-                                <span class="movie-list-item-title">데드맨</span>
-                                <button class="movie-list-item-button">예매하기</button>
-                            </div>
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="https://search.pstatic.net/common?type=o&size=176x264&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20240112_167%2F1705027079878OkkaQ_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2" alt="">
-                                <span class="movie-list-item-title">아가일</span>
-                                <button class="movie-list-item-button">예매하기</button>
-                            </div>
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="https://search.pstatic.net/common?type=o&size=176x264&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20240124_126%2F1706084548964mScff_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2" alt="">
-                                <span class="movie-list-item-title">시민덕희</span>
-                                <button class="movie-list-item-button">예매하기</button>
-                            </div>
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="https://search.pstatic.net/common?type=o&size=176x264&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20240206_234%2F1707210318193MxCbW_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2" alt="">
-                                <span class="movie-list-item-title">건국전쟁</span>
-                                <button class="movie-list-item-button">예매하기</button>
-                            </div>
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="https://search.pstatic.net/common?type=o&size=176x264&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20240117_295%2F17054759508277Sn0I_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2" alt="">
-                                <span class="movie-list-item-title">아기상어 극장판</span>
-                                <button class="movie-list-item-button">예매하기</button>
-                            </div>
+                            <i class="fas fa-chevron-right arrow"></i>
                         </div>
-                        <i class="fas fa-chevron-right arrow"></i>
                     </div>
-                </div>
-<!--                <div class="movie-list-container">-->
-<!--                    <h2>상영 예정작</h2>-->
-<!--                    <div class="movie-list-wrapper">-->
-<!--                        <div class="movie-list">-->
-<!--                            <div class="movie-list-item">-->
-<!--                                <img class="movie-list-item-img" src="https://search.pstatic.net/common?type=o&size=176x264&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20240125_47%2F1706183862774dy9yd_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2" alt="">-->
-<!--                                <span class="movie-list-item-title">귀멸의 칼날:인연의 기적</span>-->
-<!--                                <button class="movie-list-item-button">예매하기</button>-->
-<!--                            </div>-->
-<!--                            <div class="movie-list-item">-->
-<!--                                <img class="movie-list-item-img" src="https://search.pstatic.net/common?type=o&size=176x264&quality=85&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20240125_91%2F1706161641964k2jXp_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2" alt="">-->
-<!--                                <span class="movie-list-item-title">우견니</span>-->
-<!--                                <button class="movie-list-item-button">예매하기</button>-->
+                    <!-- 한 줄 달력 일정 추가 -->
+                    <div class="month-and-selection">
+                        <div class="month" id="month"></div>
+                    </div>
+                    <div class="calendar-container" >
+                        <div>선택한 날짜</div>
+                        <div class="selected-date" id="selectedDate"></div>
+                        <div class="arrow" id="prev">&#9664;</div>
+                        <ul class="calendar" id="calendar"></ul>
+                        <div class="arrow" id="next">&#9654;</div>
+                        <button class="today-btn" id="today">Today</button>
+                    </div>
+<!--                &lt;!&ndash; 영화 스케줄 컨테이너 &ndash;&gt;-->
+<!--                <div class="schedule-container" id="movieSchedule" th:each="detail : ${scheduleDetails}">-->
+<!--                    <div class="movie-title" th:text="${detail.title} + ' 상영시간 ' + ${detail.runningTime} + '분'">데드맨 상영시간 120분</div>-->
+<!--                    <div class="movie-schedule">-->
+<!--                        <div class="theater-info" th:text="'&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; ' + ${detail.theaterName} + ' &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;'">&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; 1관 &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</div>-->
+<!--                        <div class="time-slots">-->
+<!--                            <div class="time-slot">-->
+<!--                                <span th:text="${detail.startTime}">19:20</span>-->
+<!--                                <div class="seats-available" th:text="'남은 좌석 : ' + ${detail.remainingSeats} + '석'">남은 좌석 : 50석</div>-->
 <!--                            </div>-->
 <!--                        </div>-->
-<!--                        <i class="fas fa-chevron-right arrow"></i>-->
 <!--                    </div>-->
 <!--                </div>-->
-                <!-- 한 줄 달력 일정 추가 -->
-                <div class="month-and-selection">
-                    <div class="month" id="month"></div>
-                </div>
-                <div class="calendar-container">
-                    <div>선택한 날짜</div>
-                    <div class="selected-date" id="selectedDate"></div>
-                    <div class="arrow" id="prev">&#9664;</div>
-                    <ul class="calendar" id="calendar"></ul>
-                    <div class="arrow" id="next">&#9654;</div>
-                    <button class="today-btn" id="today">Today</button>
-                </div>
-                <div class="schedule-container">
-                    <!-- 영화, 상영관, 상영일정, 좌석 정보 추가 -->
-                    <div id="movieSchedule"></div>
-                </div>
             </div>
         </div>
     </div>
 </div>
 
-<script layout:fragment="script" th:src="@{/js/cinema/cinemaDetail.js}"></script>
+<script layout:fragment="script" th:src="@{/js/cinema/cinemaDetail.js}">
+    // 랜덤하게 이미지 파일 이름을 배열에 저장
+    const images = ["영화관사진1.jpg", "영화관사진2.jpg", "영화관사진3.jpg", "영화관사진4.jpg"];
+
+    // 배열에서 랜덤하게 하나의 이미지를 선택
+    const chosenImage = images[Math.floor(Math.random() * images.length)];
+
+    // .featured-content 클래스를 가진 div를 선택
+    const featuredContent = document.querySelector('.featured-content');
+
+    // 선택된 div의 배경 이미지를 설정
+    // 여기서 'url(/static/images/${chosenImage})'는 실제 이미지 파일의 웹 서버 상의 경로를 가리킴
+    featuredContent.style.backgroundImage = `url('/images/${chosenImage}'), linear-gradient(to bottom, rgba(0,0,0,0),#151515)`;
+</script>
 </html>

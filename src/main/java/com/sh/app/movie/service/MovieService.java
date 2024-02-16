@@ -55,6 +55,7 @@ public class MovieService {
                 .collect(Collectors.toList());
     }
 
+
     private MovieDetailDto convertToMovieListDto2(Movie movie) {
         MovieDetailDto movieDetailDto = modelMapper.map(movie, MovieDetailDto.class);
         Double avgReviewScore = reviewRepository.getAverageRatingByMovieId(movie.getId());
@@ -64,10 +65,12 @@ public class MovieService {
     }
 
     public List<MovieDetailDto> findFirst5ByOrderByAdvanceReservation() {
-        return movieRepository.findFirst5ByOrderByAdvanceReservation()
+        return movieRepository.findFirst5ByOrderByAdvanceReservationDesc()
                 .stream().map((movie) -> convertToMovieListDto(movie))
                 .collect(Collectors.toList());
+
     }
+
 
     private MovieDetailDto convertToMovieListDto(Movie movie) {
         MovieDetailDto movieDetailDto = modelMapper.map(movie, MovieDetailDto.class);
@@ -75,9 +78,6 @@ public class MovieService {
         movieDetailDto.setAvgReviewScore(avgReviewScore);
         return movieDetailDto;
     }
-
-
-
 
 
 }

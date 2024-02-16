@@ -12,31 +12,92 @@ insert into LOCATION values (054, '경상');
 insert into LOCATION values (062, '광주/전라/제주');
 --
 -- cinema
-insert into CINEMA values (0201, 02, '강남점', 1, '서울특별시 강남구 강남대로 438', 127.02629392376384, 37.501674084777505, '1544-1122');
-insert into CINEMA values (03101, 031, '고양백석점', 1, '경기도 고양시 일산동구 백석동 1242', 126.78965179914998, 37.643461526992546, '1544-1122');
-insert into CINEMA values (03201, 032, '청라점', 1, '인천광역시 서구 청라동 155-7 스퀘어세븐', 126.64164011661255, 37.53237333861732, '1544-1122');
-insert into CINEMA values (04201, 042, '대전점', 1, '대전광역시 중구 문화동 1-16', 127.40842431841456, 36.32061814895665, '1544-1122');
-insert into CINEMA values (05101, 051, '센텀시티점', 1, '부산광역시 해운대구 우동 1495번지 신세계센텀시티', 129.13033686916697 , 35.16911956001504, '1544-1122');
+insert into CINEMA values (0201, 02, '강남점', 10, '서울특별시 강남구 강남대로 438', 127.026353, 37.5016383, '1544-1122');
+insert into CINEMA values (0202, 02, '왕십리점', 33, '서울특별시 성동구 왕십리광장로 17 (행당동, 왕십리 민자역사 5층)', 127.038416, 37.5610558, '1544-1122');
+insert into CINEMA values (03101, 031, '고양백석점', 7, '경기도 고양시 일산동구 백석동 1242', 126.789637, 37.6431586, '1544-1122');
+insert into CINEMA values (03201, 032, '청라점', 8, '인천광역시 서구 청라동 155-7 스퀘어세븐', 126.641333, 37.5324919, '1544-1122');
+insert into CINEMA values (04201, 042, '대전점', 9, '대전광역시 중구 문화동 1-16', 127.408797, 36.3206265, '1544-1122');
+insert into CINEMA values (04202, 042, '논산점', 6, '충청남도 논산시 시민로 181 시네마타워 3층', 127.097331, 36.1833641, '1544-1122');
+insert into CINEMA values (05101, 051, '센텀시티점', 8, '부산광역시 해운대구 우동 1495번지 신세계센텀시티', 129.129529 , 35.1688397, '1544-1122');
+--지역에 극장 추가, 지역마다 최소 극장 2개 이상 , 광역시 이상 단위는 5개, 추가한 극장목록
+insert into CINEMA values (0203, 02, '건대입구점', 12, '서울시 광진구 아차산로 30길 26 몰오브케이 3층', 127.066919, 37.5397710, '1544-1122');
+insert into CINEMA values (0204, 02, '대학로점', 11, '서울특별시 종로구 명륜2가 41-9', 126.999820, 37.5834422, '1544-1122');
+insert into CINEMA values (0205, 02, '명동점', 15, '서울특별시 중구 명동길 14 (명동)', 126.982866, 37.5633937, '1544-1122');
+insert into CINEMA values (0206, 02, '상봉점', 15, '서울시 중랑구 상봉동 79-9 상봉듀오트리스 B2F', 127.087104, 37.5984575, '1544-1122');
+insert into CINEMA values (0207, 02, '수유점', 9, '서울시 강북구 수유동 168-12', 127.029788, 37.6423901, '1544-1122');
+insert into CINEMA values (0208, 02, '여의도점', 9, '	서울특별시 영등포구 여의도동 국제금융로 10번지 국제금융센터 지하3층', 126.925282, 37.5249613, '1544-1122');
+insert into CINEMA values (0209, 02, '영등포점', 10, '서울특별시 영등포구 영등포동 4가 441-10번지 경방 타임스퀘어 4~7층', 126.903560, 37.5178725, '1544-1122');
+insert into CINEMA values (0210, 02, '용산아이파크몰', 11, '서울특별시 용산구 한강대로23길 55, 6층(한강로동)', 126.963935, 37.5295840, '1544-1122');
+
+insert into CINEMA values (03102, 031, '광교점', 6, '경기도 수원시 영통구 광교중앙로 124 갤러리아백화점 광교점 10층', 127.057405, 37.2851854, '1544-1122');
+insert into CINEMA values (03103, 031, '광명역', 7, '경기도 광명시 일직로 43 GIDC B동 지하2층', 126.886862, 37.4228105, '1544-1122');
+insert into CINEMA values (03104, 031, '구리갈매', 6, '경기도 구리시 갈매순환로 180, 힐스테이트 갈매역 스칸센 B동 B1~B2', 127.122664, 37.6355378, '1544-1122');
+insert into CINEMA values (03105, 031, '부천역', 8, '경기도 부천시 부일로 460(심곡동, 시네마존 6층~11층)', 126.780991, 37.4858571, '1544-1122');
+insert into CINEMA values (03106, 031, '성남모란', 6, '경기도 성남시 중원구 성남대로1136 뉴코아아울렛 9~10층', 127.129746, 37.4313739, '1544-1122');
+
+insert into CINEMA values (03202, 032, '계양점', 8, '인천광역시 계양구 장제로 738, 8층(작전동)', 126.734644, 37.5338297, '1544-1122');
+insert into CINEMA values (03203, 032, '부평점', 10, '인천 광역시 부평구 청천동 386번지 아이즈빌아울렛 2층', 126.703601, 37.5217993, '1544-1122');
+insert into CINEMA values (03204, 032, '연수역', 10, '인천광역시 연수구 벚꽃로 106 8층', 126.677094, 37.4177089, '1544-1122');
+insert into CINEMA values (03205, 032, '인천점', 10, '인천광역시 남동구 예술로 198, 4층(구월동)', 126.701923, 37.4520127, '1544-1122');
+
+insert into CINEMA values (03301, 033, '강릉점', 8, '강원특별자치도 강릉시 옥천동 189 씨네몰 6~8층', 128.898619, 37.7556963, '1544-1122');
+insert into CINEMA values (03302, 033, '기린점', 2, '강원특별자치도 인제군 기린면 대내로 34-14 기린체육문화센터 2층', 128.318854, 37.9649355, '1544-1122');
+insert into CINEMA values (03303, 033, '원통점', 3, '강원특별자치도 인제군 북면 금강로 11번길 19, 2층', 128.206682, 38.1201419, '1544-1122');
+insert into CINEMA values (03304, 033, '인제점', 2, '강원특별자치도 인제군 인제읍 비봉로 44번길 100 1층', 128.165224, 38.0607516, '1544-1122');
+insert into CINEMA values (03305, 033, '춘천점', 12, '강원특별자치도 춘천시 지석로 80 (퇴계동, 투탑시티 3층)', 127.743728, 37.8505094, '1544-1122');
+
+insert into CINEMA values (04203, 042, '세종점', 7, '세종특별자치시 도움1로 108 몰리브 7층', 127.247563, 36.5025886, '1544-1122');
+insert into CINEMA values (04204, 042, '천안점', 8, '충청남도 천안시 동남구 명동길 47, 5층(대흥동)', 127.148375, 36.8076849, '1544-1122');
+insert into CINEMA values (04205, 042, '청주터미널', 9, '충청북도 청주시 흥덕구 2순환로 1233 8층 (가경동)', 127.431227, 36.6261727, '1544-1122');
+
+insert into CINEMA values (05301, 053, '대구점', 7, '대구광역시 북구 침산로 93 스펙트럼시티 4층', 128.589806, 35.8852191, '1544-1122');
+insert into CINEMA values (05302, 053, '대구스타디움', 10, '대구광역시 수성구 유니버시아드로 140 (대흥동)', 128.688863, 35.8306656, '1544-1122');
+insert into CINEMA values (05303, 053, '대구월성점', 6, '대구광역시 달서구 조암로 29 (월성동) 이래타워 4F', 128.526809, 35.8245685, '1544-1122');
+
+insert into CINEMA values (05102, 051, '서면점', 7, '부산광역시 부산진구 동천로 4, 6층(전포동)', 129.063950, 35.1494282, '1544-1122');
+insert into CINEMA values (05103, 051, '울산동구점', 6, '울산광역시 동구 등대로50', 129.430952, 35.4899085, '1544-1122');
+insert into CINEMA values (05104, 051, '울산신천점', 6, '울산광역시 북구 매산1로 17 LEEPLEX 6층 (신천동)', 129.355783, 35.6350260, '1544-1122');
+insert into CINEMA values (05105, 051, '해운대점', 8, '부산광역시 해운대구 해운대로 620 라뮤에뜨 2층', 129.158501, 35.1630014, '1544-1122');
+
+insert into CINEMA values (05401, 054, '거제점', 7, '경상남도 거제시 장평로 12, 6층 (장평동, 디큐브백화점)', 128.616558, 34.8911623, '1544-1122');
+insert into CINEMA values (05402, 054, '구미점', 10, '경상북도 구미시 구미중앙로 44, 4층(원평동)', 128.327701, 36.1300887, '1544-1122');
+insert into CINEMA values (05403, 054, '김해점', 9, '경상남도 김해시 내외중앙로 137, 4층(내동)', 128.868586, 35.2421843, '1544-1122');
+insert into CINEMA values (05404, 054, '마산점', 9, '경상남도 창원시 마산회원구 3·15대로 736, 8층(합성동)', 128.582381, 35.2375747, '1544-1122');
+insert into CINEMA values (05405, 054, '창원점', 6, '경상남도 창원시 의창구 창원대로397번길 6, 8층~11층(팔용동)', 128.642011, 35.2346180, '1544-1122');
+
+insert into CINEMA values (06201, 062, '광주금남로', 9, '광주광역시 동구 중앙로 160번길 16-7 부로타워 2층', 126.914690, 35.1469101, '1544-1122');
+insert into CINEMA values (06202, 062, '광주첨단점', 9, '광주 광산구 임방울대로826번길 29-31 2층', 126.850364, 35.2164672, '1544-1122');
+insert into CINEMA values (06203, 062, '광주터미널', 11, '광주광역시 서구 무진대로 904, 2층~6층(광천동)', 126.878697, 35.1603362, '1544-1122');
+insert into CINEMA values (06204, 062, '목포점', 5, '전라남도 목포시 교육로 63 (상동)', 126.419894, 34.8025037, '1544-1122');
+insert into CINEMA values (06205, 062, '전주고사점', 10, '전라북도 전주시 완산구 전주객사3길 72(고사동)', 127.142306, 35.8202422, '1544-1122');
+insert into CINEMA values (06206, 062, '전주효자점', 9, '전라북도 전주시 완산구 효자동 1가 434 Mall of Hyoja 2층', 127.115585, 35.8069230, '1544-1122');
+insert into CINEMA values (06207, 062, '제주점', 8, '제주특별자치도 제주시 서광로 288, 3층~7층(이도2동)', 126.527393, 33.5000977, '1544-1122');
+
+
+
+
+
+
 --
 -- member
 insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
-values(seq_member_id.nextVal, 'rhgPwls','1234','update_set@naver.com','고혜진','01012341234','1990') ;
+values(seq_member_id.nextVal, 'rhgPwls','$2a$10$9B5JXlO9iyWBdFrRc0u5C.T1gyOAdVNM.7RFKU1Kf9jM69HfzbrzK','update_set@naver.com','고혜진','01012341234','1990') ;
 insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
-values(seq_member_id.nextVal, 'testUser','1234','testUser1234@naver.com','김테스트','01012345678','1993') ;
+values(seq_member_id.nextVal, 'testUser','$2a$10$ht3O5/jiFv31l6fOXMCFaeq.qc1V66N5Ok2XJ0LYV1Dq4XKwVPCAi','testUser1234@naver.com','김테스트','01012345678','1993') ;
 insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
-values(seq_member_id.nextVal, 'sinsa','1234','sinsa@naver.com','신사임당','01011112222','1996');
+values(seq_member_id.nextVal, 'sinsa','$2a$10$uZXJvi3TRlnYlWXa8RXlhu1MZe7A8lWFlyolaBCcukPygChuy6pge','sinsa@naver.com','신사임당','01011112222','1996');
 insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
-values(seq_member_id.nextVal, 'honggd','1234','honggd@naver.com','홍길동','01022221111','2000');
+values(seq_member_id.nextVal, 'honggd','$2a$10$.jBRzR3RXRO0iXRS0lVtX.rdXH6H/.pDUzV6.Bs93pMToywUaeT/O','honggd@naver.com','홍길동','01022221111','2000');
 insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
-values(seq_member_id.nextVal, 'less','1234','leess@naver.com','이순신','01013225521','1989');
+values(seq_member_id.nextVal, 'less','$2a$10$WqWrsGjPJEVkLV8TCCiIe.EPTEZrCE7iVNRFA7DkNnxnBrSFHiSPm','leess@naver.com','이순신','01013225521','1989');
 --
 -- admin
-insert into ADMIN values (seq_admin_id.nextval, 0201, 'adm220932', '1234');
-insert into ADMIN values (seq_admin_id.nextval, 03101, 'adm650704', '1234');
-insert into Admin values (seq_admin_id.nextval, 03201, 'adm392258', '1234');
-insert into ADMIN values (seq_admin_id.nextval, 04201, 'adm852542', '1234');
-insert into ADMIN values (seq_admin_id.nextval, 05101, 'adm724198', '1234');
-insert into ADMIN values (seq_admin_id.nextval, null, 'adm322100', '1234');
+insert into ADMIN values (seq_admin_id.nextval, 0201, 'adm220932', '$2a$10$uMDn8AayoMTQxT9BpXqPKuD04epPWQZQZDYVfj6moSOa.PmO5I1SS');
+insert into ADMIN values (seq_admin_id.nextval, 03101, 'adm650704', '$2a$10$9RItpz0gE.7jj.nEPr6haOuIqnOh7K/M..PeAy9qfviXKMIhb0mi6');
+insert into Admin values (seq_admin_id.nextval, 03201, 'adm392258', '$2a$10$zqEP3U9PTAFjyNTd7bgldeBmCBcSVIeZbIw/uLhhRtV8gg2RutChO');
+insert into ADMIN values (seq_admin_id.nextval, 04201, 'adm852542', '$2a$10$uOpP/wdt8/bkTqXlKqu3JeqyIDqvnD3sF5S8xHEYHBxKYvy80HCvW');
+insert into ADMIN values (seq_admin_id.nextval, 05101, 'adm724198', '$2a$10$taKBaHUBRTNKEAUq.zu1lOTX2uvuoUqLnJvJRAaTKcUJbzNJOZtxm');
+insert into ADMIN values (seq_admin_id.nextval, null, 'adm322100', '$2a$10$Ix/RI6AiRdQEhOHd3nrQX.PxOua2R5kFYZxt67hmBiamIPqFfLhi2');
 --
 -- authority
 insert into AUTHORITY values (seq_authority_id.nextval, 1, null, 'ROLE_USER');
@@ -80,36 +141,36 @@ insert into GENRE values (seq_genre_id.nextval, '로맨스');
 insert into GENRE values (seq_genre_id.nextval, '호러');
 --
 -- movie
-insert into 
-    movie 
-values (1, '웡카', 'ALL', '2024.01.31', 116,
-    'http://h.vod.cgv.co.kr/vodCGVa/87937/87937_222373_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87937/87937_1000.jpg',
-    '폴 킹', '티모시 샬라메, 칼라 레인, 올리비아 콜맨, 톰 데이비스', '세상에서 가장 달콤한 여정 좋은 일은 모두 꿈에서부터 시작된다! 마법사이자 초콜릿 메이커 ‘윌리 웡카’의 꿈은 디저트의 성지, ‘달콤 백화점’에 자신만의 초콜릿 가게를 여는 것.
-    가진 것이라고는 낡은 모자 가득한 꿈과 단돈 12소버린 뿐이지만 특별한 마법의 초콜릿으로 사람들을 사로잡을 자신이 있다.
-    하지만 먹을 것도, 잠잘 곳도, 의지할 사람도 없는 상황 속에서 낡은 여인숙에 머물게 된 ‘웡카’는
-    ‘스크러빗 부인’과 ‘블리처’의 계략에 빠져 눈더미처럼 불어난 숙박비로 인해 순식간에 빚더미에 오른다.
-    게다가 밤마다 초콜릿을 훔쳐가는 작은 도둑 ‘움파 룸파’의 등장과 ‘달콤 백화점’을 독점한 초콜릿 카르텔의 강력한 견제까지.
-    세계 최고의 초콜릿 메이커가 되는 길은 험난하기만 한데…',
-    17.3);
-insert into 
-    movie 
-values (2, '시민덕희', 'FIFTEEN', '2024.01.24', 114,
-    'http://h.vod.cgv.co.kr/vodCGVa/87866/87866_222813_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87866/87866_1000.jpg',
-    '박영주', '라미란, 공명, 염혜란, 안은진', '내 돈을 사기 친 그 놈이 구조 요청을 해왔다! 세탁소 화재로 인해 대출상품을 알아보던 생활력 만렙 덕희에게 어느 날, 거래은행의 손대리가 합리적인 대출상품을 제안하겠다며 전화를 걸어온다.
-    대출에 필요하다며 이런저런 수수료를 요구한 손대리에게 돈을 보낸 덕희는 이 모든 과정이 보이스피싱이었음을 뒤늦게 인지하고 충격에 빠진다.
-    전 재산을 잃고 아이들과 거리로 나앉게 생긴 덕희에게 어느 날 손대리가 다시 전화를 걸어오는데… 이번엔 살려달라는 전화다!
-    경찰도 포기한 사건, 덕희는 손대리도 구출하고 잃어버린 돈도 찾겠다는 일념으로
-    필살기 하나씩 장착한 직장 동료들과 함께 중국 칭다오로 직접 날아간다.',
-    5.9);
 insert into
-    movie
+   movie
+values (1, '웡카', 'ALL', '2024.01.31', 116,
+       'http://h.vod.cgv.co.kr/vodCGVa/87937/87937_222373_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87937/87937_1000.jpg',
+       '폴 킹', '티모시 샬라메, 칼라 레인, 올리비아 콜맨, 톰 데이비스', '세상에서 가장 달콤한 여정 좋은 일은 모두 꿈에서부터 시작된다! 마법사이자 초콜릿 메이커 ‘윌리 웡카’의 꿈은 디저트의 성지, ‘달콤 백화점’에 자신만의 초콜릿 가게를 여는 것.
+   가진 것이라고는 낡은 모자 가득한 꿈과 단돈 12소버린 뿐이지만 특별한 마법의 초콜릿으로 사람들을 사로잡을 자신이 있다.
+   하지만 먹을 것도, 잠잘 곳도, 의지할 사람도 없는 상황 속에서 낡은 여인숙에 머물게 된 ‘웡카’는
+   ‘스크러빗 부인’과 ‘블리처’의 계략에 빠져 눈더미처럼 불어난 숙박비로 인해 순식간에 빚더미에 오른다.
+   게다가 밤마다 초콜릿을 훔쳐가는 작은 도둑 ‘움파 룸파’의 등장과 ‘달콤 백화점’을 독점한 초콜릿 카르텔의 강력한 견제까지.
+   세계 최고의 초콜릿 메이커가 되는 길은 험난하기만 한데…',
+       17.3);
+insert into
+   movie
+values (2, '시민덕희', 'FIFTEEN', '2024.01.24', 114,
+       'http://h.vod.cgv.co.kr/vodCGVa/87866/87866_222813_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87866/87866_1000.jpg',
+       '박영주', '라미란, 공명, 염혜란, 안은진', '내 돈을 사기 친 그 놈이 구조 요청을 해왔다! 세탁소 화재로 인해 대출상품을 알아보던 생활력 만렙 덕희에게 어느 날, 거래은행의 손대리가 합리적인 대출상품을 제안하겠다며 전화를 걸어온다.
+   대출에 필요하다며 이런저런 수수료를 요구한 손대리에게 돈을 보낸 덕희는 이 모든 과정이 보이스피싱이었음을 뒤늦게 인지하고 충격에 빠진다.
+   전 재산을 잃고 아이들과 거리로 나앉게 생긴 덕희에게 어느 날 손대리가 다시 전화를 걸어오는데… 이번엔 살려달라는 전화다!
+   경찰도 포기한 사건, 덕희는 손대리도 구출하고 잃어버린 돈도 찾겠다는 일념으로
+   필살기 하나씩 장착한 직장 동료들과 함께 중국 칭다오로 직접 날아간다.',
+       5.9);
+insert into
+   movie
 values (3, '도그데이즈', 'TWELVE', '2024.02.07', 120,
     'http://h.vod.cgv.co.kr/vodCGVa/87978/87978_222744_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87978/87978_1000.jpg',
     '김덕민', '윤여정, 유혜진, 김윤진, 김서형', '깔끔한 성격의 계획형 싱글남 ‘민상’(유해진).영끌까지 모아 산 건물을 개똥밭으로 만드는 세입자 수의사 ‘진영’(김서형) 때문에 매일 머리가 아프다.
      오늘도‘진영’과 티격태격하던 ‘민상’은 동물병원에서 한 성격하는 할머니를 만나는데...',
     8.3);
 insert into
-    movie
+   movie
 values (4, '데드맨', 'FIFTEEN', '2024.02.07', 108,
     'http://h.vod.cgv.co.kr/vodCGVa/87981/87981_222534_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87981/87981_1000.jpg',
     '하준원', '조진웅, 김희애, 이수경', '목숨값 단돈 500만원! 이름값 1000억? 이름에 살고, 이름에 죽는다! 살아있지만 죽은 사람, 즉 ‘데드맨’이 되어 영문도 모른 채 중국의 사설감옥에 끌려간 ‘이만재’.

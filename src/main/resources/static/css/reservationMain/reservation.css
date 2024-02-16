@@ -1,0 +1,260 @@
+hr {
+    background-color: #ff3939;
+    border: 0;
+}
+#reset-button
+{
+    margin-right: 150px;
+}
+div
+{
+    font-family: "Bahnschrift";
+}
+h2
+{
+    height: 38px;
+    font-family: "Bahnschrift";
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+#movie1 #cinema1 #date1 #time1
+{
+    height: 300px;
+    width: 400px;
+}
+div#movie
+{
+    height: 455px;
+    margin-left: 100px;
+    width: 400px;
+    margin-top: 50px;
+    background-color: #d6d5d2;
+    color: black;
+
+}
+div#cinema
+{
+    height: 455px;
+    width: 400px;
+    margin-top: 50px;
+    margin-left: 56px;
+    background-color : #d6d5d2;
+    color: black;
+}
+div#date
+{
+    height: 455px;
+    width: 400px;
+    margin-top: 50px;
+    margin-left: 50px;
+    background-color : #d6d5d2;
+}
+.blue-text {
+    color: blue;
+}
+
+.red-text {
+    color: red;
+}
+
+.black-text {
+    color: black;
+}
+div#time
+{
+    height: 455px;
+    width: 400px;
+    margin-top: 50px;
+    margin-right: 50px;
+    background-color : #d6d5d2;
+    color: black;
+}
+
+/* 영화 */
+div.movieSelect
+{
+    background-color: darkgrey;
+    height: 108px;
+    width: 212px;
+    display: block;
+}
+ul
+{
+    width: 130px;
+    height: 28px;
+}
+ul#movieList
+{
+    overflow: scroll;
+    width: 150px;
+    height: 310px;
+    -ms-overflow-style: none;
+}
+ul#movieList::-webkit-scrollbar
+{
+    display:none;
+}
+
+/* 극장 */
+div#cinemaList
+{
+    overflow: scroll;
+    width: 150px;
+    height: 210px;
+    -ms-overflow-style: none;
+}
+div#cinemaList::-webkit-scrollbar
+{
+    display:none;
+}
+div#locationAndCinemaList
+{
+    width: 285px;
+    height: 300px;
+}
+#locationList li
+{
+    cursor: pointer;
+}
+
+#locationList li.active
+{
+    font-weight: bold;
+}
+
+#cinemaList
+{
+    margin-left: 23px;
+}
+
+.hidden
+{
+    display: none;
+}
+
+/* 날짜 */
+div#dateList
+{
+    overflow: scroll;
+    width: 150px;
+    height: 310px;
+    -ms-overflow-style: none;
+}
+div#dateList::-webkit-scrollbar
+{
+    display:none;
+}
+div#dateList1
+{
+    overflow: scroll;
+    width: 150px;
+    height: 265px;
+    -ms-overflow-style: none;
+}
+div#dateList1::-webkit-scrollbar
+{
+    display:none;
+}
+#dateUl
+{
+    list-style-type: none;
+    width: 90px;
+    margin-left: 74px;
+    margin-top: 1px;
+}
+#dateUl1
+{
+    list-style-type: none;
+    width: 90px;
+    margin-left: 80px;
+    margin-top: 1px;
+}
+
+/* 시간 */
+.endTime
+{
+    display: none;
+}
+span:hover .endTime
+{
+    display: inline-block;
+    color: teal;
+    font-size: medium;
+    margin-left: 5px;
+}
+
+/* 선택한 정보 */
+/* 영화 */
+#movieSelect
+{
+    margin-left: 30px;
+    width: 300px;
+    height: 150px;
+}
+#movieSelectionText
+{
+    text-align: center;
+    font-size: x-large;
+}
+#selectedMovie
+{
+    width: 150px;
+    text-align: center;
+    font-size: x-large;
+}
+#movieAge
+{
+    display: none;
+}
+
+/* 극장 */
+#cinemaSelect
+{
+    margin-left: 30px;
+    width: 300px;
+    height: 150px;
+    text-align: center;
+}
+#cinemaSelectionText
+{
+    text-align: center;
+    font-size: x-large;
+}
+#selectedCinema
+{
+    margin-top: -15px;
+    font-size: large;
+}
+/* 날짜 */
+#selectedDate
+{
+    margin-top: -5px;
+    margin-left: 20px;
+    text-align: center;
+    font-size: large;
+}
+
+/* 시간 */
+#selectedTime
+{
+    margin-top: -1px;
+    margin-left: -15px;
+    text-align: center;
+    font-size: large;
+}
+
+/* 선택하면 글씨색 변경 */
+.selected-movie {
+    color: forestgreen;
+}
+.selected-date {
+    color: forestgreen;
+}
+
+/* 좌석페이지로 넘어가는 버튼 */
+#seatSelectionText
+{
+    font-size: x-large;
+    margin-left: 230px;
+}

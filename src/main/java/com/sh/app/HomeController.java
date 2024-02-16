@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import java.util.List;
 
 @Controller
@@ -42,7 +43,6 @@ public class HomeController {
         model.addAttribute("movies", movieDetailDtos);
         return "index";
     }
-
 
 
 

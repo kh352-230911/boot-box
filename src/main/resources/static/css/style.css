@@ -15,9 +15,12 @@ hr {
     border: 0;
 }
 
-div, section, header, aside, footer {
+section, header, aside, footer {
     /*padding: 10px;*/
     color: white;
+}
+.header-container{
+    z-index: 100;
 }
 
 #white-color1 {
@@ -42,7 +45,10 @@ body#container {
 header div#header-container {
     height: 100px;
 }
-header div#dropdownNavbar {
+header div#dropdownNavbar{
+    background-color: #212121;
+}
+header div#dropdownNavbar1{
     background-color: #212121;
 }
 nav {
@@ -57,9 +63,11 @@ section#content {
 footer {
     background-color: #212121;
     /*background-clip: content-box;*/
-    height: 10vh;
+    /*height: 10vh;*/
+    height: 60px;
+    position: relative;
+    transform: translateY(0%);
 }
-
 
 /* section-1-1 */
 .section-1 {
