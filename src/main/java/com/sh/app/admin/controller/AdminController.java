@@ -1,5 +1,7 @@
 package com.sh.app.admin.controller;
 
+import com.sh.app.answer.entity.Answer;
+import com.sh.app.answer.service.AnswerService;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
 import com.sh.app.notice.entity.Notice;
@@ -22,6 +24,8 @@ public class AdminController {
     private MemberService memberService;
     @Autowired
     private NoticeService noticeService;
+    @Autowired
+    private AnswerService answerService;
 
     @GetMapping("/memberList.do")
     public void memberList(Model model) {
@@ -31,17 +35,20 @@ public class AdminController {
         System.out.println("회원조회 controller" + members);
     }
 
-    @GetMapping("/notice.do")
+    @GetMapping("/noticeList.do")
     public void notice(Model model) {
         List<Notice> notices = noticeService.findAll();
         log.debug("notices = {}", notices);
         model.addAttribute("notices", notices);
         System.out.println("공지조회 controller" + notices);
-
     }
 
-    @GetMapping("/answer.do")
-    public void answer() {
+    @GetMapping("/answerList.do")
+    public void answer(Model model) {
+        List<Answer> answers = answerService.findAll();
+        log.debug("answers = {}", answers);
+        model.addAttribute("answers", answers);
+        System.out.println("문의조회 controller" + answers);
 
     }
 }

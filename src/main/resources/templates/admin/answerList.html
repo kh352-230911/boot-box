@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>문의사항관리</title>
+</head>
+<style layout:fragment="style">
+    table
+    {
+        margin-top: 30px;
+        margin-left: 20px;
+    }
+    th#answerContent
+    {
+        width: 900px;
+    }
+    th#answerDate
+    {
+        padding-left: 24px;
+    }
+    td
+    {
+        text-align: left;
+        vertical-align : middle;
+        padding-left: 30px;
+        padding-top: 8px;
+    }
+</style>
+
+<div layout:fragment="content">
+    <table id="answer">
+        <thead>
+        <tr>
+            <th id="answerNumber">답변갯수</th>
+            <th id="answerContent">답변내용</th>
+            <th id="answerDate">답변날짜</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="answer : ${answers}" th:data-answer-id="${answer.id}">
+            <td th:text="${answer.id}"></td>
+            <td th:text="${answer.content}"></td>
+            <td th:text="${answer.createdAt}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script layout:fragment="script"></script>
+</html>

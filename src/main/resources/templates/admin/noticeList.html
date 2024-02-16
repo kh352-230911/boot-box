@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>공지사항관리</title>
+</head>
+<style layout:fragment="style">
+    table
+    {
+        margin-top: 30px;
+        margin-left: 20px;
+    }
+    th#noticeNumber
+    {
+        width: 60px;
+    }
+    th#noticeTitle
+    {
+        width: 500px;
+    }
+    th#noticeContent
+    {
+        width: 1200px;
+    }
+    td
+    {
+        text-align: left;
+        vertical-align : middle;
+        padding-left: 30px;
+        padding-top: 8px;
+    }
+</style>
+
+<div layout:fragment="content">
+    <input type="button" value="추가" id="createNotice" th:onclick="|location.href = '@{/admin/createNotice.do}';|" />
+    <input type="button" value="삭제" id="deleteNotice" th:onclick="|location.href = '@{/admin/deleteNotice.do}';|" />
+    <table id="notice">
+        <thead>
+        <tr>
+            <th id="noticeNumber">번호</th>
+            <th id="noticeTitle">제목</th>
+            <th id="noticeContent">공지내용</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="notice : ${notices}" th:data-notice-id="${notice.id}">
+            <td th:text="${notice.id}"></td>
+            <td th:text="${notice.noticeTitle}"></td>
+            <td id="noticeContent1" th:text="${notice.noticeContent}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script layout:fragment="script"></script>
+</html>

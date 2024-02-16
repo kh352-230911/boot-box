@@ -14,10 +14,16 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Notice {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "seq_notice_id_generator")
+    @SequenceGenerator(
+            name = "seq_notice_id_generator",
+            sequenceName = "seq_notice_id",
+            initialValue = 1,
+            allocationSize = 1
+    )
     @Column
-    private long id;
-    private long adminId;
+    private Long id;
+    private Long adminId;
     private String noticeTitle;
     private String noticeContent;
     private String noticeType;
