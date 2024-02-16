@@ -189,6 +189,7 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
         },
         success(response){
             console.log("~~~~success~~~~",response);
+            //기존 : 제이쿼리로 화면단 일부 갱신
             hohohoho();
         },
         error(error) {
@@ -205,8 +206,6 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
 function hohohoho()
 {
     console.log("ajax에서 함수 불러오기~~~~~~~~~~~~~~~~~");
-    
-
 }
 
 //============================================================================================================================
