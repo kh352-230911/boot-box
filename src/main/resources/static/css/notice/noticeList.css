@@ -47,7 +47,7 @@ table {
 
 th,
 td {
-    padding: 15px;
+    padding: 10px;
     background-color: rgba(255,255,255,0.2);
     color: #fff;
 }
@@ -61,6 +61,11 @@ thead >tr>th{
     border-top: 2px solid #ff003b;
     border-bottom: 2px solid #ff003b;
     text-align: center;
+}
+tbody > tr{
+    text-align: center;
+    font-size: 0.8em;
+    cursor: pointer;
 }
 
 tbody {
