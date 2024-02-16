@@ -257,8 +257,8 @@ CREATE TABLE SCHEDULE(
     id number NOT NULL,--pk
     theater_id number NOT NULL, --상영관아이디 fk
     movie_id number NOT NULL, --영화 id [코드값] fk
-    sch_date varchar2(50) NOT NULL, --날짜
-    time varchar2(50)	NOT NULL, --시작시간
+    sch_date date NOT NULL, --날짜
+    time timestamp NOT NULL, --시작시간
     constraints pk_schedule_id primary key(id), --pk
     constraints fk_schedule_theater_id foreign key(theater_id) references theater(id) on delete set null,
     constraints fk_schedule_movie_id foreign key(movie_id) references movie(id) on delete set null

@@ -73,11 +73,6 @@ insert into CINEMA values (06205, 062, '전주고사점', 10, '전라북도 전�
 insert into CINEMA values (06206, 062, '전주효자점', 9, '전라북도 전주시 완산구 효자동 1가 434 Mall of Hyoja 2층', 127.115585, 35.8069230, '1544-1122');
 insert into CINEMA values (06207, 062, '제주점', 8, '제주특별자치도 제주시 서광로 288, 3층~7층(이도2동)', 126.527393, 33.5000977, '1544-1122');
 
-
-
-
-
-
 --
 -- member
 insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
@@ -112,11 +107,16 @@ insert into AUTHORITY values (seq_authority_id.nextval, null, 4, 'ROLE_MANAGER')
 insert into AUTHORITY values (seq_authority_id.nextval, null, 5, 'ROLE_MANAGER');
 insert into AUTHORITY values (seq_authority_id.nextval, null, 6, 'ROLE_ADMIN');
 -- seat
-insert into SEAT values (seq_seat_id.nextval, 'A01');
-insert into SEAT values (seq_seat_id.nextval, 'B01');
-insert into SEAT values (seq_seat_id.nextval, 'C01');
-insert into SEAT values (seq_seat_id.nextval, 'D01');
-insert into SEAT values (seq_seat_id.nextval, 'E01');
+-- 프로시저 반복문, 좌석 총 60개 (A~F열, 한 열당 10개)
+ set serveroutput on; 
+ BEGIN
+ FOR i IN ASCII('A')..ASCII('F') LOOP
+     FOR j IN 1..10 LOOP
+       INSERT INTO SEAT VALUES (seq_seat_id.nextval, CHR(i) || LPAD(TO_CHAR(j), 2, '0'));
+ END LOOP;
+ END LOOP;
+ COMMIT;
+ END;
 --
 -- theater
 insert into THEATER values (020101, 0201, '1관', 60);
@@ -124,7 +124,12 @@ insert into THEATER values (0310101, 03101, '1관', 60);
 insert into THEATER values (0320101, 03201, '1관', 60);
 insert into THEATER values (0420101, 04201, '1관', 60);
 insert into THEATER values (0510101, 05101, '1관', 60);
---
+-- 강남점 상영관 추가
+insert into THEATER values (020102, 0201, '2관', 60);
+insert into THEATER values (020103, 0201, '3관', 60);
+insert into THEATER values (020104, 0201, '4관', 60);
+
+
 -- genre
 insert into GENRE values (seq_genre_id.nextval, '드라마');
 insert into GENRE values (seq_genre_id.nextval, '액션');
@@ -315,7 +320,20 @@ insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 4, '2024-02-04', '
 insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 5, '2024-02-06', '19:00');
 insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 6, '2024-01-24', '12:30');
 insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 6, '2024-01-29', '20:30');
---
+-- 강남점 영화 추가
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, '2024-02-16', '12:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, '2024-02-16', '16:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, '2024-02-16', '20:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 1, '2024-02-16', '14:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 1, '2024-02-16', '18:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 4, '2024-02-16', '20:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 4, '2024-02-16', '23:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020103, 5, '2024-02-16', '13:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020103, 5, '2024-02-16', '17:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020103, 5, '2024-02-16', '21:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020104, 6, '2024-02-16', '14:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020104, 6, '2024-02-16', '17:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020104, 6, '2024-02-16', '20:00');
 -- reservation
 insert into RESERVATION values ('box16443', 1, 1, 'CONFIRM');
 insert into RESERVATION values ('box25822', 2, 2, 'CONFIRM');
@@ -325,7 +343,13 @@ insert into RESERVATION values ('box34332', 4, 6, 'CONFIRM');
 insert into RESERVATION values ('box32582', 5, 5, 'CONFIRM');
 insert into RESERVATION values ('box21482', 5, 7, 'CONFIRM');
 insert into RESERVATION values ('box47211', 2, 2, 'CONFIRM');
---
+-- 강남점 sample 예약 데이터 추가
+insert into RESERVATION values ('box57869', 1, 41, 'CONFIRM');
+insert into RESERVATION values ('box49687', 1, 42, 'CONFIRM');
+insert into RESERVATION values ('box68574', 1, 43, 'CONFIRM');
+insert into RESERVATION values ('box78960', 2, 45, 'CONFIRM');
+insert into RESERVATION values ('box27586', 2, 47, 'CONFIRM');
+insert into RESERVATION values ('box83657', 2, 53, 'CONFIRM');
 -- reservation_seat
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box16443', 1);
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box25822', 2);
@@ -334,7 +358,24 @@ insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box42217'
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box34332', 4);
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box32582', 5);
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box21482', 5);
---
+-- 강남점 좌석 여러개 추가
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box57869', 1);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box57869', 2);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box57869', 3);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box49687', 1);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box49687', 2);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box68574', 1);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box68574', 2);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box68574', 3);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box68574', 4);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box78960', 1);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box27586', 1);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box27586', 2);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box83657', 1);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box83657', 2);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box83657', 3);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box83657', 4);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box83657', 5);
 -- order_pay
 insert into ORDER_PAY values ('order1644325835123', 'box16443', 1, 'imp32105587', 'html5_inicis', 'card', 12000 , '01012341234', 'CONFIRM');
 insert into ORDER_PAY values ('order1414325835223', 'box25822', 2, 'imp32105587', 'html5_inicis', 'card', 12000 , '01012345678', 'CONFIRM');
@@ -362,7 +403,10 @@ insert into MOVIE_LIST values (seq_movie_list_id.nextval, 3, 05101);
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 4, 03201);
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 4, 0201);
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 5, 05101);
---
+-- 강남점 영화 추가
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 5, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 6, 0201);
+
 -- review
 insert into REVIEW values (seq_review_id.nextval, 'box16443', 1, 1, 3, '너무 지루해요', default);
 insert into REVIEW values (seq_review_id.nextval, 'box25822', 2, 2, 4, '최고', default);
