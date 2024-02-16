@@ -2,7 +2,6 @@ package com.sh.app.location.service;
 
 import com.sh.app.cinema.dto.CinemaDto;
 import com.sh.app.cinema.entity.Cinema;
-import com.sh.app.cinema.service.CinemaService;
 import com.sh.app.location.dto.LocationDto;
 import com.sh.app.location.entity.Location;
 import com.sh.app.location.repository.LocationRepository;

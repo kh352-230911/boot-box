@@ -244,7 +244,7 @@ const scheduleManager= () => {
     console.log(selectedDate);
 
     $.ajax({
-        url: `${contextPath}cinema/scheduleByDate`,
+        url: `/bootbox/cinema/scheduleByDate`, // Uncaught SyntaxError: Identifier 'contextPath' has already been declared 오류는 'contextPath'라는 식별자가 같은 스코프 내에서 두 번 선언 오류
         type: 'GET',
         data: {
             id: id,

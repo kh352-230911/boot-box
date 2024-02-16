@@ -15,4 +15,6 @@ public class MovieListDto {
     private String poster;
     private double advanceReservation;
     private Double avgReviewScore;
+    private boolean searchResult;
+
 }

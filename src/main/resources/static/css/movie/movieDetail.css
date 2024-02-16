@@ -1,13 +1,14 @@
 /* movie detail영역 */
 * {
-    box-sizing: border-box;
-}
-* {
     margin: 0;
     padding: 0;
     border: 0;
     font-size: 100%;
     vertical-align: baseline;
+    font-size: 16px;
+    font-family: "Agency FB";
+    color: var(--color-white);
+    box-sizing: border-box;
 }
 
 article,
@@ -33,6 +34,10 @@ blockquote,
 q {
     quotes: none;
 }
+blockquote {
+    position: relative;
+
+}
 blockquote:before,
 blockquote:after,
 q:before,
@@ -52,11 +57,14 @@ table {
     --color-gray-1: #a9a9a9;
 }
 
+<<<<<<< HEAD
+=======
 * {
     font-size: 16px;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Agency FB";
     color: var(--color-white);
 }
+>>>>>>> 705c0c8ba11cd4808bfb9de3d2ddc122805fe207
 button {
     cursor: pointer;
 }
@@ -65,6 +73,13 @@ button {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+
+
+}
+.createAt {
+    position: absolute;
+    right: 0;
+    bottom: 0;
 }
 .content {
     display: flex;
@@ -165,6 +180,14 @@ div {
     border-top: #ff3939 1px solid;
     margin: 0px;
 }
+figure {
+    width: 100%; /* 전체 너비를 사용하도록 설정 */
+    max-width: 1200px; /* 최대 너비를 설정하여 너무 넓어지는 것을 방지 */
+    margin: 0 auto; /* 위 아래 마진은 0, 좌우 마진은 자동으로 설정하여 중앙에 배치 */
+    padding: 10px; /* 리뷰 내부 여백 */
+
+}
+
 /* 트레일러 영역 */
 .trailer-container {
     max-width: 100%;

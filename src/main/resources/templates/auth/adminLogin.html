@@ -2,6 +2,7 @@
 <html
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
         layout:decorate="~{layout/default}">
 <head>
     <title>관리자 로그인</title>
@@ -20,11 +21,11 @@
             </div>
             <form th:action="@{/auth/login.do}" method="post">
                 <div class="user-box">
-                    <input type="text" name="" required="">
+                    <input type="text" name="username" required>
                     <label>Username</label>
                 </div>
                 <div class="user-box">
-                    <input type="password" name="" required="">
+                    <input type="password" name="password" required>
                     <label>Password</label>
                 </div>
                 <button type="submit" class="submit">

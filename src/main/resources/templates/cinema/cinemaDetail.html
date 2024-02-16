@@ -103,7 +103,7 @@
                             <div class="theater-info" th:text="'--------------------' + ${detail.getTheaterName()} + '--------------------'"></div>
                             <div class="time-slots">
                                 <div class="time-slot">
-                                    <span th:text="${detail.getStartTime()}"></span>
+                                    <span th:text="${#temporals.format(detail.getStartTime(), 'HH:mm')}"></span>
                                     <div class="seats-available" th:text="'남은좌석: ' + ${detail.getRemainingSeats()} + '석'"></div>
                                 </div>
                             </div>
@@ -112,19 +112,15 @@
                 </div>
                 <!-- 3차 작업 -->
 <!--                <div th:fragment="scheduleList" id="movieSchedule">-->
-<!--                    <div th:each="movieGroup : ${#aggregates.groupBy(scheduleDetails, 'getMovieTitle()')}">-->
-<!--                        <div class="movie-schedule">-->
-<!--                            <div class="movie-title" th:text="${movieGroup.key} + ' 상영시간: ' + ${movieGroup.value[0].getRunningTime()} + '분'"></div>-->
-<!--                            <div th:each="theaterGroup : ${#aggregates.groupBy(movieGroup.value, 'getTheaterName()')}">-->
-<!--                                <div class="theater-info" th:if="${theaterGroupStat.index == 0}" th:text="'&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;' + ${theaterGroup.key} + '&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;'"></div>-->
+<!--                    <div th:each="movieGroup : ${moviesGroupedByTitle}">-->
+<!--                        <div class="movie-title" th:text="${movieGroup.key.getMovieTitle()} + ' 상영시간: ' + ${movieGroup.key.getRunningTime()} + '분'"></div>-->
+<!--                        <div th:each="theaterGroup : ${movieGroup.value.groupedByTheater}">-->
+<!--                            <div class="movie-schedule">-->
+<!--                                <div class="theater-info" th:text="'&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;' + ${theaterGroup.key.getTheaterName()} + '&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;'"></div>-->
 <!--                                <div class="time-slots">-->
-<!--                                    <div th:each="detail, detailStat : ${theaterGroup.value}" class="time-slot" th:if="${detailStat.index == 0}">-->
-<!--                                        <span th:text="${detail.getStartTime()}"></span>-->
-<!--                                        <div class="seats-available" th:text="'남은좌석: ' + ${detail.getRemainingSeats()} + '석'"></div>-->
-<!--                                    </div>-->
-<!--                                    <div th:if="${detailStat.index > 0}" style="display:inline-block;">-->
-<!--                                        <span th:text="${detail.getStartTime()} + ', '"></span>-->
-<!--                                        <span th:text="'남은좌석: ' + ${detail.getRemainingSeats()} + '석'"></span>-->
+<!--                                    <div th:each="scheduleDetail : ${theaterGroup.value}" class="time-slot">-->
+<!--                                        <span th:text="${scheduleDetail.getStartTime()}"></span>-->
+<!--                                        <div class="seats-available" th:text="'남은좌석: ' + ${scheduleDetail.getRemainingSeats()} + '석'"></div>-->
 <!--                                    </div>-->
 <!--                                </div>-->
 <!--                            </div>-->
