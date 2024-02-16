@@ -48,6 +48,19 @@ CREATE TABLE LOCATION(
 --
 -- 3.극장(ex강남점,성수점...)
 CREATE TABLE CINEMA(
+<<<<<<< HEAD
+                       id number	NOT NULL, --지점 아이디
+                       location_id number NOT NULL, --지역 아이디
+                       region_cinema varchar2(50) NOT NULL,--지점명
+                       theater_number number	NOT NULL, --상영관 수(1관,2관..)
+                       address	varchar2(500) NOT NULL, --주소
+                       location_lo number NULL, --지도 경도
+                       location_la number NULL, --지도 위도
+                       phone varchar2(100) NOT NULL, --전화번호
+                       constraints pk_cinema_id primary key(id), --pk
+                       constraints fk_cinema_location_id foreign key(location_id) references location(id) on delete set null, --지역 아이디 수정,삭제 시 자식 null로됨
+                       constraints uq_cinema_region_cinema unique(region_cinema) -- uq
+=======
     id number	NOT NULL, --지점 아이디
     location_id number NOT NULL, --지역 아이디
     region_cinema varchar2(50) NOT NULL,--지점명
@@ -59,6 +72,7 @@ CREATE TABLE CINEMA(
     constraints pk_cinema_id primary key(id), --pk
     constraints fk_cinema_location_id foreign key(location_id) references location(id) on delete set null, --지역 아이디 수정,삭제 시 자식 null로됨
     constraints uq_cinema_region_cinema unique(region_cinema) -- uq
+>>>>>>> 0eb399ebd683acf9ddebabc47be37436ad5f3324
 );
 --6.회원
 CREATE TABLE MEMBER(
@@ -203,12 +217,14 @@ create sequence seq_member_like_cinema_id; --선호극장 등록시 시퀀스
 --7.문의
 CREATE TABLE ASK(
     id number NOT NULL, --pk
-    member_id number	NOT NULL, --회원 아이디 fk
+    member_login_id varchar2(100) NOT NULL, --회원 아이디 fk
     ask_title varchar2(100) NOT NULL,
     ask_detail varchar2(500) NOT NULL,
+    ask_type varchar2(200) default 'ETC' NOT NULL, -- 문의유형 ck
     created_at date DEFAULT current_date NOT NULL,
     constraints pk_ask_id primary key(id), --pk
-    constraints fk_ask_member_id foreign key(member_id) references member(id) on delete set null --fk
+    constraints fk_ask_member_login_id foreign key(member_login_id) references member(member_login_id) on delete set null, --fk
+    constraint ck_ask_type check(ask_type in ('CINEMA', 'MOVIE', 'RESERVATION', 'ETC'))
 );
 create sequence seq_ask_id; --문의 시퀀스
 --
@@ -243,8 +259,8 @@ CREATE TABLE SCHEDULE(
     id number NOT NULL,--pk
     theater_id number NOT NULL, --상영관아이디 fk
     movie_id number NOT NULL, --영화 id [코드값] fk
-    sch_date varchar2(50) NOT NULL, --날짜
-    time varchar2(50)	NOT NULL, --시작시간
+    sch_date date NOT NULL, --날짜
+    time timestamp NOT NULL, --시작시간
     constraints pk_schedule_id primary key(id), --pk
     constraints fk_schedule_theater_id foreign key(theater_id) references theater(id) on delete set null,
     constraints fk_schedule_movie_id foreign key(movie_id) references movie(id) on delete set null

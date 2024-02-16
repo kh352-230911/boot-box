@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>예매메인페이지</title>
+    <!-- 페이지별 css -->
+    <link rel="stylesheet" th:href="@{/css/reservationMain/reservation.css}" />
+</head>
+<style layout:fragment="style"></style>
+
+<div layout:fragment="content">
+    <span class="text-white" >영화 예매</span>
+    <br>
+    <hr style="height: 1px">
+    <br>
+    <button id="reset-button" style="background-position: 0 -120px;">초기화</button>
+
+    <div id="ReservationAll" class="grid grid-cols-4 ml-30">  <!-- 전체 정보 -->
+
+        <div id="movie">
+            <div class="section-movie"><h2>영화</h2></div>
+            <div id="movie1">
+                <div id="movie2" class="ml-10 mt-2">
+                    <button th:onclick="movieByRating()" >예매율순 </button>
+                    <button th:onclick="movieByAlphabetically()" class="ml-3">가나다순</button>
+                    <ul id="movieList" class="mt-2">
+                        <li><button th:onclick="selectedMovie('웡카')" value="웡카">웡카</button></li>
+                        <li><button th:onclick="selectedMovie('시민덕희')" >시민덕희</button></li>
+                        <li><button th:onclick="selectedMovie('데드맨')" >데드맨</button></li>
+                        <li><button th:onclick="selectedMovie('추락의 해부')" >추락의 해부</button></li>
+                        <li><button th:onclick="selectedMovie('도그데이즈')" >도그데이즈</button></li>
+                        <li><button th:onclick="selectedMovie('듄-파트2')" >듄-파트2</button></li>
+                        <li><button th:onclick="selectedMovie('파묘')" >파묘</button></li>
+                        <li><button th:onclick="selectedMovie('소풍')" >소풍</button></li>
+                        <li><button th:onclick="selectedMovie('아가일')" >아가일</button></li>
+                        <li><button th:onclick="selectedMovie('건국전쟁')" >건국전쟁</button></li>
+                        <li><button th:onclick="selectedMovie('검은소년')" >검은소년</button></li>
+                        <li><button th:onclick="selectedMovie('킹덤-엑소더스')" >킹덤-엑소더스</button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="cinema">
+            <div class="section-cinema"><h2>극장</h2></div>
+            <div id="cinema1">
+                <div id="cinema2" class="ml-10 mt-2">
+                    <button th:onclick="cinemaAll()" >전체 </button>
+                    <button style="margin-left: 110px;" th:onclick="cinemaLike()" >자주가는극장</button>
+                </div>
+                <div id="locationAndCinemaList" style="display: flex;">
+                    <ul id="locationList" class="ml-10 mt-2">
+                        <li><button th:onclick="showRegion('seoul')" value="서울">서울</button></li>
+                        <li><button th:onclick="showRegion('gyeonggi')">경기</button></li>
+                        <li><button th:onclick="showRegion('incheon')">인천</button></li>
+                        <li><button th:onclick="showRegion('kangwon')">강원</button></li>
+                        <li><button th:onclick="showRegion('daejeon')">대전/충청</button></li>
+                        <li><button th:onclick="showRegion('daegu')">대구</button></li>
+                        <li><button th:onclick="showRegion('busan')">부산/울산</button></li>
+                        <li><button th:onclick="showRegion('gyeongsang')">경상</button></li>
+                        <li style="width: 145px;"><button th:onclick="showRegion('gwangju')">광주/전라/제주</button></li>
+                    </ul>
+                    <div id="cinemaList" class="mt-2">
+                        <div id="seoulCinema" class="hidden">
+                            <ul>
+                                <li><button th:onclick="selectedCinema('강남')" value="강남">강남</button></li>
+                                <li><button th:onclick="selectedCinema('건대입구')">건대입구</button></li>
+                                <li><button th:onclick="selectedCinema('명동')">명동</button></li>
+                                <li><button th:onclick="selectedCinema('송파')">송파</button></li>
+                                <li><button th:onclick="selectedCinema('영등포')">영등포</button></li>
+                                <li><button th:onclick="selectedCinema('홍대')">홍대</button></li>
+                            </ul>
+                        </div>
+                        <div id="gyeonggiCinema" class="hidden">
+                            <ul>
+                                <li><button th:onclick="selectedCinema('구리')">구리</button></li>
+                                <li><button th:onclick="selectedCinema('김포')">김포</button></li>
+                                <li><button th:onclick="selectedCinema('부천')">부천</button></li>
+                                <li><button th:onclick="selectedCinema('안산')">안산</button></li>
+                                <li><button th:onclick="selectedCinema('용인')">용인</button></li>
+                                <li><button th:onclick="selectedCinema('판교')">판교</button></li>
+                            </ul>
+                        </div>
+                        <div id="incheonCinema" class="hidden">
+                            <ul>
+                                <li><button th:onclick="selectedCinema('부평')">부평</button></li>
+                                <li><button th:onclick="selectedCinema('인천')">인천</button></li>
+                                <li><button th:onclick="selectedCinema('청라')">청라</button></li>
+                            </ul>
+                        </div>
+                        <div id="kangwonCinema" class="hidden">
+                            <ul>
+                                <li><button th:onclick="selectedCinema('강릉')">강릉</button></li>
+                                <li><button th:onclick="selectedCinema('인제')">인제</button></li>
+                                <li><button th:onclick="selectedCinema('춘천')">춘천</button></li>
+                            </ul>
+                        </div>
+                        <div id="daejeonCinema" class="hidden">
+                            <ul>
+                                <li><button th:onclick="selectedCinema('논산')">논산</button></li>
+                                <li><button th:onclick="selectedCinema('대전')">대전</button></li>
+                                <li><button th:onclick="selectedCinema('홍성')">홍성</button></li>
+                            </ul>
+                        </div>
+                        <div id="daeguCinema" class="hidden">
+                            <ul>
+                                <li><button th:onclick="selectedCinema('대구')">대구</button></li>
+                                <li><button th:onclick="selectedCinema('대구죽전')">대구죽전</button></li>
+                                <li><button th:onclick="selectedCinema('대구현대')">대구현대</button></li>
+                            </ul>
+                        </div>
+                        <div id="busanCinema" class="hidden">
+                            <ul>
+                                <li><button th:onclick="selectedCinema('서면')">서면</button></li>
+                                <li><button th:onclick="selectedCinema('센텀시티')">센텀시티</button></li>
+                                <li><button th:onclick="selectedCinema('해운대')">해운대</button></li>
+                            </ul>
+                        </div>
+                        <div id="gyeongsangCinema" class="hidden">
+                            <ul>
+                                <li><button th:onclick="selectedCinema('김해')">김해</button></li>
+                                <li><button th:onclick="selectedCinema('마산')">마산</button></li>
+                                <li><button th:onclick="selectedCinema('창원')">창원</button></li>
+                            </ul>
+                        </div>
+                        <div id="gwangjuCinema" class="hidden">
+                            <ul>
+                                <li><button th:onclick="selectedCinema('광주터미널')">광주터미널</button></li>
+                                <li><button th:onclick="selectedCinema('순천')">순천</button></li>
+                                <li><button th:onclick="selectedCinema('제주')">제주</button></li>
+                            </ul>
+                        </div>
+                        <div id="frequentCinema" class="hidden">
+                            <ul>
+                                <li><button th:onclick="selectedFrequentCinema('극장1')">극장1</button></li>
+                                <li><button th:onclick="selectedFrequentCinema('극장2')">극장2</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="date" class="ml-6">
+            <div class="section-date"><h2>날짜</h2></div>
+            <div id="date1">
+                <div id="date2" class="ml-3 mt-2">
+                    <div class="text-5xl flex justify-center" style="color: black;">2024 </div>
+                </div>
+                <div id="dateList" style="margin-left: 100px;">
+                    <div class="text-4xl flex justify-center" style="margin-left: 60px; margin-top: 1px;  color: black;">2월 </div>
+                    <li id="dateUl">
+                        <!-- 2월 -->
+                    </li>
+                    <span class="text-4xl flex justify-center" style="margin-left: 60px; margin-top: 8px;  color: black;">3월 </span>
+                    <li id="dateUl1">
+                        <!-- 3월 -->
+                    </li>
+                </div>
+            </div>
+        </div>
+
+        <div id="time" class="ml-6">
+            <div class="section-time"><h2>시간</h2></div>
+            <div id="time1">
+<!--                <div id="timeList" class="ml-3 mt-2" >-->
+                <div id="timeList" class="ml-3 mt-2">
+<!--                    <th:block th:if="${movie != null and cinema != null and date != null}">-->
+                    <ul style="margin-left: 10px">
+                        <li style="width: 200px;">
+                            <div  style="font-weight: bold; color: darkgreen">3관 1층</div>
+                            <button th:onclick="selectedTime('9:00')">
+                                <span class="time">
+                                    <span>9:00</span>
+                                </span>
+                                <span class="count">19석
+                                    <span class="endTime">종료 11:00</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li style="width: 200px;">
+                            <div  style="font-weight: bold; color: darkgreen; margin-top: 6px">2관 1층</div>
+                            <button th:onclick="selectedTime('15:00')">
+                                <span class="time">
+                                    <span>15:00</span>
+                                </span>
+                                <span class="count">23석
+                                    <span class="endTime">종료 17:00</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li style="width: 200px;">
+                            <div style="font-weight: bold; color: darkgreen; margin-top: 6px">1관 3층</div>
+                            <button th:onclick="selectedTime('17:00')">
+                                <span class="time">
+                                    <span>17:00</span>
+                                </span>
+                                <span class="count">31석
+                                    <span class="endTime">종료 19:00</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li style="width: 200px;">
+                            <button th:onclick="selectedTime('19:00')">
+                                <span class="time">
+                                    <span>19:00</span>
+                                </span>
+                                <span class="count">4석
+                                    <span class="endTime">종료 21:00</span>
+                                </span>
+                            </button>
+                        </li>
+                    </ul>
+<!--                    </th:block>-->
+                </div>
+            </div>
+        </div>
+
+        <!-- 선택된 전체 정보 -->
+        <div id="movieSelect">
+            <br><br>
+            <div id="movieSelectionText" style=" margin-left: 200px">영화선택</div>
+            <div id="selectedMovie" style=" margin-left: 170px"> <!-- 영화 -->
+                <span id="posterAndMovieAge">
+                    <span id="poster"><!-- 포스터 --></span>
+                    <span id="movieAge" style=" margin-left: 110px"><!-- 관람가 --></span>
+                </span>
+            </div>
+        </div>
+        <div id="cinemaSelect">
+            <br><br>
+            <div id="cinemaSelectionText" style="margin-left: 130px;">극장선택</div>
+            <div style="margin-left: 120px;">
+                <div id="selectedCinema" style="margin-left: -5px;"> <!-- 극장 --><div id="selectedFrequentCinema"> <!-- 자주가는극장 --></div></div>
+                <div id="dateSelectionText"> <!-- 날짜선택 --></div>
+                <div id="selectedDate"> <!-- 날짜 --></div>
+                <div id="selectedTime" > <!-- 시간 --></div>
+            </div>
+        </div>
+        <div></div>
+        <div id="seatSelect">
+            <br><br>
+            <div>
+                <button id="seatSelectionText" >
+                    <a href="#" >좌석선택➡️</a>
+                </button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script layout:fragment="script" th:src="@{/js/reservation/reservation.js}"></script>
+
+</html>

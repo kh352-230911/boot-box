@@ -7,6 +7,7 @@ import com.sh.app.authority.service.AuthorityService;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,4 +37,8 @@ public class MemberService {
         return member;
     }
 
+    public List<Member> findAll() {
+        System.out.println("회원조회 service");
+        return memberRepository.findAll();
+    }
 }
