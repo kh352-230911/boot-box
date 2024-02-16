@@ -61,5 +61,6 @@ logging:
   # profile 관리
   spring:
     profiles:
-      #      default: test
+#      default: test
       active: prod
+

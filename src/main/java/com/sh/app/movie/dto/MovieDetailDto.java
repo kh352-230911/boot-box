@@ -2,6 +2,7 @@ package com.sh.app.movie.dto;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sh.app.genre.entity.Genre;
 import com.sh.app.movie.entity.Rating;
 import com.sh.app.review.dto.ReviewListDto;
@@ -28,8 +29,15 @@ public class MovieDetailDto {
     private String actor;
     private String summary;
     private double advanceReservation;
+    private Double avgReviewScore;
+    private boolean searchResult;
+    private String searchVaule;
+
+    @JsonIgnore
     private List<Review> reviews = new ArrayList<>();
 
     private Set<Genre> genres = new LinkedHashSet<>();
+
+
 
 }
