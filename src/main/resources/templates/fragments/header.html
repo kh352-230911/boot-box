@@ -68,17 +68,35 @@
                     </th:block>
                     <th:block sec:authorize="isAuthenticated()">
                         <li>
-                            <button id="dropdownNavbarLink1" data-dropdown-toggle="dropdownNavbar1" class="flex items-center justify-between text-xl font-semibold w-full py-2 px-3 text-white rounded  hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-600 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent" sec:authentication="principal.username" th:title="${#authentication.authorities}">
-                                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                    <path class="text-white" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                                </svg>
+                            <button id="dropdownNavbarLink1" data-dropdown-toggle="dropdownNavbar1" class="flex items-center justify-between text-xl font-semibold w-full py-2 px-3 text-white rounded  hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-600 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
+                                <th:block sec:authorize="hasAuthority('ROLE_USER')">
+                                    <span sec:authentication="principal.username" th:title="${#authentication.authorities}"></span>
+                                    <img th:src="@{/images/icons8-다스-베이더-50(1).png}" width="30px" height="30px" class="ml-3">
+                                    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                        <path class="text-white" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                    </svg>
+                                </th:block>
+                                <th:block sec:authorize="hasAuthority('ROLE_ADMIN')">
+                                    <span sec:authentication="principal.username" th:title="${#authentication.authorities}"></span>
+                                    <img th:src="@{/images/icons8-별똥별-64.png}" width="30px" height="30px" class="ml-3">
+                                    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                        <path class="text-white" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                    </svg>
+                                </th:block>
+                                <th:block sec:authorize="hasAuthority('ROLE_MANAGER')">
+                                    <span sec:authentication="principal.username" th:title="${#authentication.authorities}"></span>
+                                    <img th:src="@{/images/icons8-관리자-설정-남성-50.png}" width="30px" height="30px" class="ml-3">
+                                    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                        <path class="text-white" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                    </svg>
+                                </th:block>
                             </button>
                             <!-- Dropdown menu -->
                             <div id="dropdownNavbar1" class="z-10 hidden  font-normal divide-y divide-red-500 rounded-lg shadow w-44">
                                 <ul class="py-2 text-sm text-white dark:text-gray-200" aria-labelledby="dropdownLargeButton">
                                     <th:block sec:authorize="hasAuthority('ROLE_USER')">
                                         <li class="text-xs">
-                                            <a th:href="@{/member/memberDetail.do(id=${#authentication.name})}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">My Boot</a>
+                                            <a th:href="@{/member/memberDetail.do}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">My Boot</a>
                                         </li>
                                     </th:block>
                                     <li>
