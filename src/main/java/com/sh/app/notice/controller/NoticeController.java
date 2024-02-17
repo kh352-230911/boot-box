@@ -1,6 +1,7 @@
 package com.sh.app.notice.controller;
 
 
+
 import com.sh.app.notice.dto.NoticeListDto;
 import com.sh.app.notice.entity.Notice;
 import com.sh.app.notice.service.NoticeService;
@@ -30,7 +31,9 @@ public class NoticeController {
     }
 
     @GetMapping("/noticeDetail.do")
-    public void noticeDetail() {
-
+    public void noticeDetail(Model model, Long id) {
+        NoticeListDto notice = noticeService.findById(id);
+        log.debug("notice = {}", notice);
+        model.addAttribute("notice", notice);
     }
 }

@@ -1,7 +1,6 @@
 package com.sh.app.notice.service;
 
 
-import com.sh.app.admin.entity.Admin;
 import com.sh.app.notice.dto.NoticeListDto;
 import com.sh.app.notice.entity.Notice;
 import com.sh.app.notice.repository.NoticeRepository;
@@ -38,4 +37,9 @@ public class NoticeService {
     }
 
 
+    public NoticeListDto findById(Long id) {
+        return noticeRepository.findById(id)
+                .map((notice) -> convertToNoticeListDto(notice))
+                .orElseThrow();
+    }
 }
