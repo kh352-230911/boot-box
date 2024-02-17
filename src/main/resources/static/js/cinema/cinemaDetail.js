@@ -37,14 +37,28 @@ arrows.forEach((arrow, i) => {
     });
 });
 
-// // 다크 모드 해제
-// const toggleBall = document.querySelector(".toggle");
-// const toToggleItems = document.querySelectorAll(
-//     ".toggle, .toggle-ball, h2, .sidebar, .navbar-container, .container, footer"
-// );
-// toggleBall.addEventListener("click", () => {
-//     toToggleItems.forEach((item) => {
-//         item.classList.toggle("active");
+// arrows.forEach((arrow, i) => {
+//     const movieListContainer = document.querySelector('.movie-list-wrapper'); // 포스터 목록 컨테이너
+//     const movieList = movieListContainer.querySelector('.movie-list'); // 포스터 목록
+//
+//     arrow.addEventListener('click', () => {
+//         const containerWidth = movieListContainer.offsetWidth; // 컨테이너 너비
+//         const itemWidth = movieList.querySelector('.movie-list-item').offsetWidth; // 각 포스터 아이템 너비
+//         const itemsToShow = Math.floor(containerWidth / itemWidth); // 한 번에 표시할 아이템 수
+//         const totalItems = movieList.querySelectorAll('.movie-list-item').length; // 전체 아이템 수
+//         const maxScrollCount = totalItems - itemsToShow; // 최대 스크롤 가능 횟수
+//
+//         if (arrow.classList.contains('fa-chevron-right')) {
+//             // 오른쪽 화살표 클릭
+//             if (clickCounter < maxScrollCount) {
+//                 movieList.style.transform = `translateX(-${++clickCounter * itemWidth}px)`;
+//             }
+//         } else if (arrow.classList.contains('fa-chevron-left')) {
+//             // 왼쪽 화살표 클릭
+//             if (clickCounter > 0) {
+//                 movieList.style.transform = `translateX(-${--clickCounter * itemWidth}px)`;
+//             }
+//         }
 //     });
 // });
 
@@ -83,53 +97,53 @@ arrows.forEach((arrow, i) => {
 //             }
 //         ]
 //     },
-//     // ...기타 영화 및 상영 시간 데이터 추가..
+//     // ...기타 영화 및 상영 시간 데이터 추가
 // ];
 
-function renderSchedule(scheduleData) {
-    const scheduleContainer = document.getElementById('movieSchedule');
-    scheduleContainer.innerHTML = ''; // 이전 내용을 지웁니다.
-
-    scheduleData.forEach((movie) => {
-        const movieScheduleElement = document.createElement('div');
-        movieScheduleElement.classList.add('movie-schedule');
-
-        const movieTitle = document.createElement('div');
-        movieTitle.classList.add('movie-title');
-        movieTitle.textContent = `${movie.title} 상영시간 ${movie.totalDuration}분`;
-        movieScheduleElement.appendChild(movieTitle);
-
-        movie.schedules.forEach((schedule) => {
-            const theaterInfo = document.createElement('div');
-            theaterInfo.classList.add('theater-info');
-            theaterInfo.textContent = `-------------------- ${schedule.theater} -------------------- `;
-            movieScheduleElement.appendChild(theaterInfo);
-
-            const timeSlots = document.createElement('div');
-            timeSlots.classList.add('time-slots');
-
-            schedule.times.forEach((time) => {
-                const timeSlot = document.createElement('div');
-                timeSlot.classList.add('time-slot');
-                timeSlot.textContent = time.time;
-
-                const seatsAvailable = document.createElement('div');
-                seatsAvailable.classList.add('seats-available');
-                seatsAvailable.textContent = `남은 좌석 : ${time.seatsAvailable}석`;
-
-                timeSlot.appendChild(seatsAvailable);
-                timeSlots.appendChild(timeSlot);
-            });
-
-            movieScheduleElement.appendChild(timeSlots);
-        });
-
-        scheduleContainer.appendChild(movieScheduleElement);
-    });
-}
-
-// 페이지가 로드될 때 상영 시간표를 렌더링.
-document.addEventListener('DOMContentLoaded', () => renderSchedule(scheduleData));
+// function renderSchedule(scheduleData) {
+//     const scheduleContainer = document.getElementById('movieSchedule');
+//     scheduleContainer.innerHTML = ''; // 이전 내용을 지웁니다.
+//
+//     scheduleData.forEach((movie) => {
+//         const movieScheduleElement = document.createElement('div');
+//         movieScheduleElement.classList.add('movie-schedule');
+//
+//         const movieTitle = document.createElement('div');
+//         movieTitle.classList.add('movie-title');
+//         movieTitle.textContent = `${movie.title} 상영시간 ${movie.totalDuration}분`;
+//         movieScheduleElement.appendChild(movieTitle);
+//
+//         movie.schedules.forEach((schedule) => {
+//             const theaterInfo = document.createElement('div');
+//             theaterInfo.classList.add('theater-info');
+//             theaterInfo.textContent = `-------------------- ${schedule.theater} -------------------- `;
+//             movieScheduleElement.appendChild(theaterInfo);
+//
+//             const timeSlots = document.createElement('div');
+//             timeSlots.classList.add('time-slots');
+//
+//             schedule.times.forEach((time) => {
+//                 const timeSlot = document.createElement('div');
+//                 timeSlot.classList.add('time-slot');
+//                 timeSlot.textContent = time.time;
+//
+//                 const seatsAvailable = document.createElement('div');
+//                 seatsAvailable.classList.add('seats-available');
+//                 seatsAvailable.textContent = `남은 좌석 : ${time.seatsAvailable}석`;
+//
+//                 timeSlot.appendChild(seatsAvailable);
+//                 timeSlots.appendChild(timeSlot);
+//             });
+//
+//             movieScheduleElement.appendChild(timeSlots);
+//         });
+//
+//         scheduleContainer.appendChild(movieScheduleElement);
+//     });
+// }
+//
+// // 페이지가 로드될 때 상영 시간표를 렌더링.
+// document.addEventListener('DOMContentLoaded', () => renderSchedule(scheduleData));
 
 
 // 한 줄 달력
@@ -174,6 +188,7 @@ function renderCalendar(date) {
             dayElement.addEventListener('click', function() {
                 selectedDateElement.textContent = formatDate(day);
                 updateMonthElement(day); // Update the month display
+                scheduleManager();
             });
         } else {
             dayElement.classList.add('disabled');
@@ -201,6 +216,7 @@ todayButton.addEventListener('click', () => {
     currentDate = new Date();
     renderCalendar(currentDate);
     selectedDateElement.textContent = formatDate(currentDate);
+    scheduleManager();
 });
 
 
@@ -219,4 +235,49 @@ function openMap(event, element) {
     window.open(mapUrl, '_blank');
 }
 
+
+// 영화 상영일정 스케줄 관리
+const scheduleManager= () => {
+    const id = $('.active:eq(1)').data('cinema-id'); // 극장 ID 가져오기, 'data-' 접두사 제외
+    const selectedDate = $('#selectedDate').text(); // 선택된 날짜
+    console.log(id);
+    console.log(selectedDate);
+
+    $.ajax({
+        url: `/bootbox/cinema/scheduleByDate`, // Uncaught SyntaxError: Identifier 'contextPath' has already been declared 오류는 'contextPath'라는 식별자가 같은 스코프 내에서 두 번 선언 오류
+        type: 'GET',
+        data: {
+            id: id,
+            selectedDate: selectedDate
+        },
+        success: function(response) {
+            $('#movieSchedule').html(response); // 응답으로 받은 HTML 조각을 페이지에 삽입
+        },
+        error: function(xhr, status, error) {
+            console.error("An error occurred: " + status + " " + error);
+            $('#movieSchedule').html('<p>스케줄을 불러오는데 문제가 발생했습니다. 나중에 다시 시도해주세요.</p>'); // 에러 메시지 표시
+        }
+    });
+};
+
+// // 영화관사진 랜덤하게 로딩
+// function changeImage() {
+//     const images = [
+//         'static/images/영화관사진1.jpg',
+//         'static/images/영화관사진2.jpg',
+//         'static/images/영화관사진3.jpg',
+//         'static/images/영화관사진4.jpg'
+//     ];
+//
+//     const index = Math.floor(Math.random() * images.length);
+//     const selectedImage = images[index];
+//
+//     const imgElement = document.getElementById('randomImage');
+//     imgElement.src = selectedImage;
+//
+//     console.log('Random image selected:', selectedImage);
+// }
+//
+// // Call the function on page load
+// window.onload = changeImage;
 

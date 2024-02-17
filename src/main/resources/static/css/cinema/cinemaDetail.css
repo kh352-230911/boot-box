@@ -220,20 +220,18 @@ i.arrow {
     font-size: 100px;
     transition: 0.5s all ease;
     cursor: pointer;
-    position: absolute;
+    position: fixed;
     top: 90px;
     right: 0px;
+    z-index: 10; /* 다른 요소 위에 표시되도록 z-index 설정 */
 }
+
 i.arrow:hover {
     transform: scale(1.2);
 }
 .featured-content {
     background-repeat: no-repeat !important;
     background-size: cover !important;
-}
-footer {
-    height: 50px;
-    background-color: #151515;
 }
 
 /* WhiteBackGround */

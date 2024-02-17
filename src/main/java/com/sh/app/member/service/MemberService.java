@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,5 +60,10 @@ public class MemberService {
 
         // 로그아웃 처리: 현재 세션 무효화 및 SecurityContext 클리어
         logoutHandler.logout(request, response, null);
+    }
+
+    public List<Member> findAll() {
+        System.out.println("회원조회 service");
+        return memberRepository.findAll();
     }
 }
