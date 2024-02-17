@@ -56,15 +56,11 @@ table {
     --color-primary: #ff003b;
     --color-gray-1: #a9a9a9;
 }
-
-<<<<<<< HEAD
-=======
 * {
     font-size: 16px;
     font-family: "Agency FB";
     color: var(--color-white);
 }
->>>>>>> 705c0c8ba11cd4808bfb9de3d2ddc122805fe207
 button {
     cursor: pointer;
 }
