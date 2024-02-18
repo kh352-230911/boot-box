@@ -50,10 +50,12 @@ td {
     color: #fff;
 }
 
-th {
+th,td {
     text-align: left;
 }
-
+td{
+    padding-left: 20px;
+}
 thead >tr>th{
     background-color: #232323;
     border-top: 2px solid #ff003b;
@@ -74,19 +76,6 @@ tbody {
     }
     td {
         position: relative;
-        &:hover {
-            &:before {
-                content: "";
-                position: absolute;
-                left: 0;
-                right: 0;
-                top: -9999px;
-                bottom: -9999px;
-                background-color: rgba(255,255,255,0.2);
-                z-index: -1;
-                text-align: center;
-            }
-        }
     }
 }
 
@@ -103,8 +92,8 @@ tbody {
     display: inline-block;
     cursor: pointer;
     position: fixed;
-    bottom: 40px;
-    right: 40px;
+    bottom: 100px;
+    right: 130px;
 }
 /* 버튼 호버 효과 */
 .back-to-list-btn:hover {
@@ -118,7 +107,7 @@ tbody {
     justify-content: flex-end;
     margin: 20px;
     position: fixed;
-    bottom: 40px;
-    right: 40px;
+    bottom: 100px;
+    right: 130px;
     margin: 0;
 }
