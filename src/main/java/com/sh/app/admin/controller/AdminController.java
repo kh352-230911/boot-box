@@ -48,13 +48,13 @@ public class AdminController {
         System.out.println("총 회원 수: " + totalMembers);
     }
 
-    @GetMapping("/noticeList.do")
-    public void notice(Model model) {
-        List<Notice> notices = noticeService.findAll();
-        log.debug("notices = {}", notices);
-        model.addAttribute("notices", notices);
-        System.out.println("공지조회 controller" + notices);
-    }
+//    @GetMapping("/noticeList.do")
+//    public void notice(Model model) {
+//        List<Notice> notices = noticeService.findAll();
+//        log.debug("notices = {}", notices);
+//        model.addAttribute("notices", notices);
+//        System.out.println("공지조회 controller" + notices);
+//    }
     @PostMapping("/createNotice.do")
     public void createNotice() {
 

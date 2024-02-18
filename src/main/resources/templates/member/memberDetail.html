@@ -2,6 +2,7 @@
 <html
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
         layout:decorate="~{layout/default}">
 <head>
     <title>마이페이지</title>
@@ -11,32 +12,78 @@
 
 <div layout:fragment="content" class="wrap-container">
     <div class="home-container">
-        <aside class="profile-card">
-            <header>
-                <!-- the username -->
-                <h1>Sriijon Sarker</h1>
-
-                <!-- and role or location -->
-                <h2>Web Developer</h2>
-
-            </header>
-
+        <aside class="profile-card flex items-center">
             <!-- bit of a bio; who are you? -->
             <div class="profile-bio">
                 <!-- MIDDLE-CONTAINER -->
                 <div class="middle-container container">
                     <div class="profile block"> <!-- PROFILE (MIDDLE-CONTAINER) -->
-                        <div class="profile-picture big-profile-picture clear">
-                            <img width="150px" alt="Anne Hathaway picture" src="http://upload.wikimedia.org/wikipedia/commons/e/e1/Anne_Hathaway_Face.jpg" >
+                        <div class="profile-picture big-profile-picture clear rounded-full border-black border w-40	ml-10">
+                            <img class="rounded-full" width="160px" alt="Anne Hathaway picture" th:src="@{/images/icons8-다스-베이더-50.png}" >
                         </div>
-                        <h1 class="user-name">Anne Hathaway</h1>
-                        <div class="profile-description">
-                            <p class="scnd-font-color">Lorem ipsum dolor sit amet consectetuer adipiscing</p>
-                        </div>
+                        <ul class="my-box profile-options horizontal-list ml-10">
+                            <li class="flex justify-center items-center">
+                                <a class="comments" th:href="@{/member/updateMember.do}">
+                                    <p class="align-middle">내 정보 수정</p>
+                                </a>
+                            </li>
+                            <li class="flex justify-center items-center">
+                                <a class="views" href="#">
+                                    <p class="align-middle">나의 문의 내역</p>
+                                </a>
+                            </li>
+                            <li class="flex justify-center items-center">
+                                <form th:action="@{/member/deleteMember.do}" method="post">
+                                    <a class="likes" href="#">
+                                        <button type="submit"><p class="align-middle">회원 탈퇴</p></button>
+                                    </a>
+                                    <input type="hidden" name="id" id="id" th:value="${#authentication.principal.member.id}">
+                                </form>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
-
+            <div class="w-96">
+                <div class="line2 border-b-2 border-t-red-700">
+                    <h2 class="text-xl font-semibold mb-5 ml-10" th:text="|${#authentication.principal.member.memberName} (${#authentication.principal.username})님|">***님</h2>
+                </div>
+                <div class="left-container container">
+                    <div class="menu-box block m-5 mt-10">
+                        <h2 class="titular">자주가는 극장</h2>
+                        <ul class="menu-box-menu">
+                            <li>
+                                <a class="menu-box-tab" href="#6"><span class="icon fontawesome-envelope scnd-font-color"></span>Messages</a>
+                            </li>
+                            <li>
+                                <a class="menu-box-tab" href="#8"><span class="icon entypo-paper-plane scnd-font-color"></span>Invites</a>
+                            </li>
+                            <li>
+                                <a class="menu-box-tab" href="#10"><span class="icon entypo-calendar scnd-font-color"></span>Events</a>
+                            </li>
+                            <li>
+                                <a class="menu-box-tab" href="#12"><span class="icon entypo-cog scnd-font-color"></span>Account Settings</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="my-box w-96 flex flex-wrap justify-center">
+                <a href="#">
+                    <div class="w-40 ml-10 mt-5 rounded-md p-3"><span>나의 예매 내역</span></div>
+                </a>
+                <a href="#">
+                    <div class="w-40 ml-10 mt-5 rounded-md p-3"><span>내가 본 영화</span></div>
+                </a>
+                <a href="#">
+                    <div class="w-40 ml-10 mt-5 rounded-md p-3"><span>나의 리뷰 내역</span></div>
+                </a>
+            </div>
+            <div class="w-10">
+                <a th:href="@{/}">
+                    <p class="home">Home</p>
+                </a>
+            </div>
         </aside>
     </div>
 </div>
