@@ -104,11 +104,11 @@ public class ReservationController {
         List<Movie> movies;
         movies = movieService.findAll();
         log.debug("tttttttttttttttttttttttttttttt- movies = {}", movies);
-        model.addAttribute("dataMap", movies);
+        model.addAttribute("testmovie", movies);
 
 
-        //reservationBooking 페이지 내의 갱신하려는 특
-        return "reservation/reservationBooking :: #testTable";
+        // 경로/파일 :: 갱신할 영역명
+        return "reservation/reservationBooking :: #test";
     }
     @GetMapping("/reservationMain1.do")
     public void reservationMain() {

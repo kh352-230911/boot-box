@@ -187,25 +187,20 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
         data:{
             scheduleId:41
         },
-        success(response){
-            console.log("~~~~success~~~~",response);
-            //기존 : 제이쿼리로 화면단 일부 갱신
-            hohohoho();
+        success(fragment){
+            console.log("~~~~success~~~~",fragment);
+            hohohoho(fragment);
         },
         error(error) {
             console.error('~~~~Ajax request failed~~~~:', error);
         }
     });
-
-
-
-
 });
-
-
-function hohohoho()
+function hohohoho(fragment)
 {
     console.log("ajax에서 함수 불러오기~~~~~~~~~~~~~~~~~");
+    //기존 : 제이쿼리로 화면단 일부 갱신
+    $('#test').html(fragment);
 }
 
 //============================================================================================================================

@@ -178,7 +178,9 @@
     </div>
 
 
-
+    <ul id="test">
+        <li th:each="val : ${testmovie}" th:text="${val}"></li>
+    </ul>
 
     <!--  4. 하단에 선택한 좌석 정보 출력   -->
     <div class="select-seats">
