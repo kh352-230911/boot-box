@@ -46,7 +46,7 @@
 
     <div class="home-container">
         <div class="login-box">
-            <button type="button" data-modal-target="popup-modal" data-modal-toggle="popup-modal">
+            <button class="key" type="button" data-modal-target="popup-modal" data-modal-toggle="popup-modal">
                 <i class="fa fa-key" aria-hidden="true"></i>
             </button>
             <h2>Login</h2>
@@ -76,7 +76,7 @@
                     <span></span>
                     Submit
                 </button>
-                <button type="button" class="register" style="font-size: 13px" th:onclick="|location.href='@{/member/createMember.do}';|">
+                <button type="button" class="register" style="font-size: 14px" th:onclick="|location.href='@{/member/createMember.do}';|">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -84,8 +84,8 @@
                     Register
                 </button>
                 <div class="flex justify-around">
-                    <a style="font-size: 10px"  th:href="@{/oauth2/authorization/google}">google login</a>
-                    <a style="font-size: 10px" th:href="@{/oauth2/authorization/kakao}">kakao login</a>
+                    <a style="font-size: 12px"  th:href="@{/oauth2/authorization/google}">google login</a>
+                    <a style="font-size: 12px" th:href="@{/oauth2/authorization/kakao}">kakao login</a>
                 </div>
             </form>
         </div>

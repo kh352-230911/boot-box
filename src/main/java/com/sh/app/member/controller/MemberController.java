@@ -61,7 +61,7 @@ public class MemberController {
         member = memberService.createMember(member);
 
         redirectAttributes.addFlashAttribute("msg", "반갑습니다." + member.getMemberName() + "님😀");
-        return "redirect:/";
+        return "redirect:/auth/login.do";
     }
 
     @PostMapping("/checkIdDuplicate.do")

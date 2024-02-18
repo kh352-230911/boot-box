@@ -27,7 +27,7 @@ footer {
     margin-left: auto;
     margin-right: auto;
     display: block;
-    padding: 20px; /* 내부 여백은 선택적 */
+    padding: 20px 0; /* 내부 여백은 선택적 */
 }
 .container {
     position: absolute;
@@ -68,8 +68,8 @@ tbody > tr{
 
 tbody {
     tr {
-        &:hover {
-            background-color: rgba(255,255,255,0.3);
+        &:hover {background-color: rgba(255,255,255,0.3);
+
         }
     }
     td {
