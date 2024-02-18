@@ -63,6 +63,7 @@ thead >tr>th{
 tbody > tr{
     text-align: center;
     font-size: 0.8em;
+    cursor: pointer;
 }
 
 tbody {
