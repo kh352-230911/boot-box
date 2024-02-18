@@ -36,7 +36,7 @@ public class WebSecurityConfig {
                     .requestMatchers("/reservation/**").permitAll()
                     .requestMatchers("/reservation1/**").permitAll()
                     .requestMatchers("/admin/adminAuth.do").permitAll()
-                    .requestMatchers("/member/memberDetail.do").permitAll() // 마이페이지 작업 끝나면 삭제
+                    .requestMatchers("/member/memberDetail.do").authenticated()
                     .requestMatchers("/notice/**").permitAll()
                     .requestMatchers("/member/createMember.do", "/member/checkIdDuplicate.do").anonymous()
 //                    .requestMatchers("/board/**").authenticated()
