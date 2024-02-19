@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>Booking 1단계</title>
+    <link th:href="@{/css/reservation1/reservation2.css}" rel="stylesheet">
+</head>
+<style layout:fragment="style"></style>
+<div layout:fragment="content" class="px-10">
+<!-- 동적으로 변할 conetent page -->
+    <span>예매</span>
+    <br>
+    <hr style="height: 1px">
+    <br>
+    <!-- 좌석 관련 정보를 모두 감싸는 부모 div -->
+    <div class = "info-seats">
+        <!-- 1.관람인원 선택 div -->
+        <div class = "select-people-title">
+            <span>관람 인원을 선택해주세요.(최대 8명)</span>
+            <button id="btn-clear" type="button" th:onclick="myFunction()">초기화 btn</button>
+        </div>
+
+        <div class = "select-people-content">
+            <span>일반 </span>
+            <input type='button'
+                   onclick='count("plus")'
+                   value='+'/>
+            <div id='result'>0</div>
+            <input type='button'
+                   onclick='count("minus")'
+                   value='-'/>
+
+        </div>
+        <!-- 2.좌석 정보 및 선택 div -->
+        <div class="all-seats" >
+            <div class = "screen-div">
+                <span>Screen</span>
+            </div>
+            <table>
+                <tbody id="seatTableBody">
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 3. 좌석 상태 정보(예매가능,불가능 등을 알려주는 표) -->
+        <div class="state-seat">
+            <div class="item">선택가능</div>
+            <div class="item">선택불가</div>
+            <div class="item">선택좌석</div>
+        </div>
+    </div>
+        <!--  4. 하단에 선택한 좌석 정보 출력   -->
+        <div class="select-seats">
+            <button class="select-seats-prev-button">이전</button>
+            <div class="center-content">
+                <div class="seat-container1">Seat 1</div>
+                <div class="seat-container2">Seat 2</div>
+                <div class="seat-container3">Seat 3</div>
+            </div>
+            <button class="select-seats-next-button">다음</button>
+        </div>
+</div>
+<script layout:fragment="script" th:src="@{/js/reservation1/reservation2.js}"></script>
+
+</html>

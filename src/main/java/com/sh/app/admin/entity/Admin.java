@@ -35,7 +35,6 @@ public class Admin implements Serializable {
     private String username;
     @Column(nullable = false)
     private String password;
-
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id") // authority.member_id 컬럼 작성
     private List<Authority> authorities;

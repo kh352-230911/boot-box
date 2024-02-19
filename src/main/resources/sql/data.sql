@@ -73,7 +73,6 @@ insert into CINEMA values (06205, 062, '전주고사점', 10, '전라북도 전�
 insert into CINEMA values (06206, 062, '전주효자점', 9, '전라북도 전주시 완산구 효자동 1가 434 Mall of Hyoja 2층', 127.115585, 35.8069230, '1544-1122');
 insert into CINEMA values (06207, 062, '제주점', 8, '제주특별자치도 제주시 서광로 288, 3층~7층(이도2동)', 126.527393, 33.5000977, '1544-1122');
 
-
 --
 -- member
 insert into MEMBER (id,member_login_id,member_pwd,member_email,member_name,member_phone,birthyear)
@@ -108,11 +107,16 @@ insert into AUTHORITY values (seq_authority_id.nextval, null, 4, 'ROLE_MANAGER')
 insert into AUTHORITY values (seq_authority_id.nextval, null, 5, 'ROLE_MANAGER');
 insert into AUTHORITY values (seq_authority_id.nextval, null, 6, 'ROLE_ADMIN');
 -- seat
-insert into SEAT values (seq_seat_id.nextval, 'A01');
-insert into SEAT values (seq_seat_id.nextval, 'B01');
-insert into SEAT values (seq_seat_id.nextval, 'C01');
-insert into SEAT values (seq_seat_id.nextval, 'D01');
-insert into SEAT values (seq_seat_id.nextval, 'E01');
+-- 프로시저 반복문, 좌석 총 60개 (A~F열, 한 열당 10개)
+ set serveroutput on; 
+ BEGIN
+ FOR i IN ASCII('A')..ASCII('F') LOOP
+     FOR j IN 1..10 LOOP
+       INSERT INTO SEAT VALUES (seq_seat_id.nextval, CHR(i) || LPAD(TO_CHAR(j), 2, '0'));
+ END LOOP;
+ END LOOP;
+ COMMIT;
+ END;
 --
 -- theater
 insert into THEATER values (020101, 0201, '1관', 60);
@@ -120,7 +124,12 @@ insert into THEATER values (0310101, 03101, '1관', 60);
 insert into THEATER values (0320101, 03201, '1관', 60);
 insert into THEATER values (0420101, 04201, '1관', 60);
 insert into THEATER values (0510101, 05101, '1관', 60);
---
+-- 강남점 상영관 추가
+insert into THEATER values (020102, 0201, '2관', 60);
+insert into THEATER values (020103, 0201, '3관', 60);
+insert into THEATER values (020104, 0201, '4관', 60);
+
+
 -- genre
 insert into GENRE values (seq_genre_id.nextval, '드라마');
 insert into GENRE values (seq_genre_id.nextval, '액션');
@@ -161,88 +170,88 @@ values (2, '시민덕희', 'FIFTEEN', '2024.01.24', 114,
 insert into
    movie
 values (3, '도그데이즈', 'TWELVE', '2024.02.07', 120,
-    'http://h.vod.cgv.co.kr/vodCGVa/87978/87978_222744_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87978/87978_1000.jpg',
-    '김덕민', '윤여정, 유혜진, 김윤진, 김서형', '깔끔한 성격의 계획형 싱글남 ‘민상’(유해진).영끌까지 모아 산 건물을 개똥밭으로 만드는 세입자 수의사 ‘진영’(김서형) 때문에 매일 머리가 아프다.
-     오늘도‘진영’과 티격태격하던 ‘민상’은 동물병원에서 한 성격하는 할머니를 만나는데...',
-    8.3);
+        'http://h.vod.cgv.co.kr/vodCGVa/87978/87978_222744_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87978/87978_1000.jpg',
+        '김덕민', '윤여정, 유혜진, 김윤진, 김서형', '깔끔한 성격의 계획형 싱글남 ‘민상’(유해진).영끌까지 모아 산 건물을 개똥밭으로 만드는 세입자 수의사 ‘진영’(김서형) 때문에 매일 머리가 아프다.
+    오늘도‘진영’과 티격태격하던 ‘민상’은 동물병원에서 한 성격하는 할머니를 만나는데...',
+        8.3);
 insert into
    movie
 values (4, '데드맨', 'FIFTEEN', '2024.02.07', 108,
-    'http://h.vod.cgv.co.kr/vodCGVa/87981/87981_222534_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87981/87981_1000.jpg',
-    '하준원', '조진웅, 김희애, 이수경', '목숨값 단돈 500만원! 이름값 1000억? 이름에 살고, 이름에 죽는다! 살아있지만 죽은 사람, 즉 ‘데드맨’이 되어 영문도 모른 채 중국의 사설감옥에 끌려간 ‘이만재’.
-    정치 컨설턴트 ‘심여사’가 그의 앞에 나타나 목숨값을 담보로 위험한 제안을 하고,
-    ‘이만재’ 때문에 아버지가 죽었다고 주장하는 ‘공희주’가 등장하면서
-    1천억짜리 설계판의 배후를 찾기 위해 의기투합한 세 사람의 추적이 시작되는데…',
-    4.0);
+        'http://h.vod.cgv.co.kr/vodCGVa/87981/87981_222534_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87981/87981_1000.jpg',
+        '하준원', '조진웅, 김희애, 이수경', '목숨값 단돈 500만원! 이름값 1000억? 이름에 살고, 이름에 죽는다! 살아있지만 죽은 사람, 즉 ‘데드맨’이 되어 영문도 모른 채 중국의 사설감옥에 끌려간 ‘이만재’.
+   정치 컨설턴트 ‘심여사’가 그의 앞에 나타나 목숨값을 담보로 위험한 제안을 하고,
+   ‘이만재’ 때문에 아버지가 죽었다고 주장하는 ‘공희주’가 등장하면서
+   1천억짜리 설계판의 배후를 찾기 위해 의기투합한 세 사람의 추적이 시작되는데…',
+        4.0);
 insert into
-    movie 
+    movie
 values (5, '아가일', 'TWELVE', '2024.02.07', 139,
-    'http://h.vod.cgv.co.kr/vodCGVa/87426/87426_220043_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87426/87426_1000.jpg',
-    '매튜 본', '헨리 카빌, 브라이스 달라스 하워드, 샘 록웰, 두아 리파', '내가 쓴 베스트셀러 스파이 소설이 현실이 되었습니다?! 현실감 넘치는 스파이 세계를 구현한 책 ‘아가일’로 엄청난 성공을 거둔 베스트셀러 작가 ‘엘리’.
-    소설의 마지막 권을 앞둔 그녀는 자기도 모르는 사이 수많은 적들에게 둘러 쌓이고 그녀 앞에 갑자기 추레한 행색의 현실 스파이 ‘에이든’이 나타나 그녀를 구해준다.
-    그는 그녀의 소설 ‘아가일’ 속 사건이 현실이 되었고 그로 인해 엘리가 전세계 스파이들이 표적이 되었다고 말한다.
-    자신을 쫓는 전세계의 스파이들로부터 벗어나기 위해, 엘리는 소설의 다음 챕터를 쓰고 그 안의 단서를 바탕으로 현실의 레전드 요원 아가일을 찾아야만 한다!',
-    3.0);
+        'http://h.vod.cgv.co.kr/vodCGVa/87426/87426_220043_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87426/87426_1000.jpg',
+        '매튜 본', '헨리 카빌, 브라이스 달라스 하워드, 샘 록웰, 두아 리파', '내가 쓴 베스트셀러 스파이 소설이 현실이 되었습니다?! 현실감 넘치는 스파이 세계를 구현한 책 ‘아가일’로 엄청난 성공을 거둔 베스트셀러 작가 ‘엘리’.
+   소설의 마지막 권을 앞둔 그녀는 자기도 모르는 사이 수많은 적들에게 둘러 쌓이고 그녀 앞에 갑자기 추레한 행색의 현실 스파이 ‘에이든’이 나타나 그녀를 구해준다.
+   그는 그녀의 소설 ‘아가일’ 속 사건이 현실이 되었고 그로 인해 엘리가 전세계 스파이들이 표적이 되었다고 말한다.
+   자신을 쫓는 전세계의 스파이들로부터 벗어나기 위해, 엘리는 소설의 다음 챕터를 쓰고 그 안의 단서를 바탕으로 현실의 레전드 요원 아가일을 찾아야만 한다!',
+        3.0);
 insert into
-    movie 
+    movie
 values (6, '소풍', 'TWELVE', '2024.02.07', 114,
-    'http://h.vod.cgv.co.kr/vodCGVa/87999/87999_222674_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87999/87999_1000.jpg',
-    '김용균', '나문희, 김영옥, 박근형, 류승수', 
-    '60년 만에 찾아간 고향, 16살의 추억을 만났다. 요즘 들어 돌아가신 엄마가 자꾸 꿈에 보이는 은심(나문희). 마침 절친이자 사돈 지간인 금순(김영옥)이 연락도 없이 불쑥 찾아오자, 은심은 금순과 함께 고향 남해로 떠나기로 한다. 그곳에서 우연히 자신을 짝사랑하던 태호(박근형)를 만나며 잊고 지낸 추억을 하나둘씩 떠올리게 되는데…“다음에 다시 태어나도 네 친구 할 끼야” 한 편의 시가 되는 우정, 어쩌면 마지막 소풍이 시작된다.',
-    3.5);
+        'http://h.vod.cgv.co.kr/vodCGVa/87999/87999_222674_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87999/87999_1000.jpg',
+        '김용균', '나문희, 김영옥, 박근형, 류승수',
+        '60년 만에 찾아간 고향, 16살의 추억을 만났다. 요즘 들어 돌아가신 엄마가 자꾸 꿈에 보이는 은심(나문희). 마침 절친이자 사돈 지간인 금순(김영옥)이 연락도 없이 불쑥 찾아오자, 은심은 금순과 함께 고향 남해로 떠나기로 한다. 그곳에서 우연히 자신을 짝사랑하던 태호(박근형)를 만나며 잊고 지낸 추억을 하나둘씩 떠올리게 되는데…“다음에 다시 태어나도 네 친구 할 끼야” 한 편의 시가 되는 우정, 어쩌면 마지막 소풍이 시작된다.',
+        3.5);
 insert into
-    movie 
+    movie
 values (7, '아기상어 극장판-사이렌 스톤의 비밀', 'ALL', '2024.02.07', 84,
-    'http://h.vod.cgv.co.kr/vodCGVa/87993/87993_222614_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87993/87993_1000.jpg',
-    '알란 포맨', '장예나, 전태열, 쓰복만, 씨엘', '대도시 미끈매끈 시티로 이사한 아기상어 ‘올리’! 최고의 단짝 ‘윌리엄’과 헤어져야 한다는 슬픔도 잠시, 뉴욕처럼 반짝이는 화려한 풍경과 멋진 음악에 설렌다. 벨루가 아이돌 ‘엔하이픈’, 상어 팝스타 ‘샤키L’, 그리고 최고의 스타 불가사리 ‘스타리아나’까지! 어느 날 ‘올리’는 ‘스타리아나’의 인기 비결, 
-    사이렌 스톤’의 숨겨진 비밀과 스타리아나’의 거대한 음모를 알게 되는데… 아기상어, 스톤의 저주에 맞서 바다를 지켜라!',
-    2.4);
+        'http://h.vod.cgv.co.kr/vodCGVa/87993/87993_222614_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87993/87993_1000.jpg',
+        '알란 포맨', '장예나, 전태열, 쓰복만, 씨엘', '대도시 미끈매끈 시티로 이사한 아기상어 ‘올리’! 최고의 단짝 ‘윌리엄’과 헤어져야 한다는 슬픔도 잠시, 뉴욕처럼 반짝이는 화려한 풍경과 멋진 음악에 설렌다. 벨루가 아이돌 ‘엔하이픈’, 상어 팝스타 ‘샤키L’, 그리고 최고의 스타 불가사리 ‘스타리아나’까지! 어느 날 ‘올리’는 ‘스타리아나’의 인기 비결,
+   사이렌 스톤’의 숨겨진 비밀과 스타리아나’의 거대한 음모를 알게 되는데… 아기상어, 스톤의 저주에 맞서 바다를 지켜라!',
+        2.4);
 insert into
-    movie 
+    movie
 values (8, '정글번치-월드투어', 'ALL', '2024.01.31', 89,
-     'http://h.vod.cgv.co.kr/vodCGVa/87972/87972_222612_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87972/87972_1000.jpg',
-     '로랑 브루', '석승훈, 정해은, 장병관, 박시윤', '정글에 부글부글 거품 폭탄이?! 두더지 악당의 습격으로 폭발 위기에 처한 정글! 정글을 구해야만 해! 정글을 구하려면 
-      전설의 ‘알버트’ 박사를 찾아서 해독제를 만들어야 해! 눈보라 산, 사막, 비밀 동굴, 
-      대나무 숲까지 전 세계로 떠난 정글번치! 과연 두더지 악당의 추격을 피해 박사를 찾고 정글을 구할 수 있을까? 올 겨울방학, 정글 구하는 김에 세계일주 가자고!!',
-    1.6);
-insert into 
-    movie 
+        'http://h.vod.cgv.co.kr/vodCGVa/87972/87972_222612_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87972/87972_1000.jpg',
+        '로랑 브루', '석승훈, 정해은, 장병관, 박시윤', '정글에 부글부글 거품 폭탄이?! 두더지 악당의 습격으로 폭발 위기에 처한 정글! 정글을 구해야만 해! 정글을 구하려면
+     전설의 ‘알버트’ 박사를 찾아서 해독제를 만들어야 해! 눈보라 산, 사막, 비밀 동굴,
+     대나무 숲까지 전 세계로 떠난 정글번치! 과연 두더지 악당의 추격을 피해 박사를 찾고 정글을 구할 수 있을까? 올 겨울방학, 정글 구하는 김에 세계일주 가자고!!',
+        1.6);
+insert into
+    movie
 values (9, '추락의 해부', 'FIFTEEN', '2024.01.31', 152,
-    'http://h.vod.cgv.co.kr/vodCGVa/87979/87979_222625_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87979/87979_1000.jpg',
-    '쥐스틴 트리에', '산드라 휠러, 스완 아를로, 밀로 마차도 그라너', '남편의 추락사로 한순간에 유력한 용의자로 지목된 유명 작가 ‘산드라’. 유일한 목격자는 시각장애가 있는 아들과 안내견뿐. 단순한 사고였을까? 아니면 우발적 자살 혹은 의도된 살인? 사건의 전말을 해부해 가는 제76회 칸영화제 황금종려상 수상작',
-    1.0);
-insert into 
-    movie 
+        'http://h.vod.cgv.co.kr/vodCGVa/87979/87979_222625_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87979/87979_1000.jpg',
+        '쥐스틴 트리에', '산드라 휠러, 스완 아를로, 밀로 마차도 그라너', '남편의 추락사로 한순간에 유력한 용의자로 지목된 유명 작가 ‘산드라’. 유일한 목격자는 시각장애가 있는 아들과 안내견뿐. 단순한 사고였을까? 아니면 우발적 자살 혹은 의도된 살인? 사건의 전말을 해부해 가는 제76회 칸영화제 황금종려상 수상작',
+        1.0);
+insert into
+    movie
 values (10, '서울의 봄', 'TWELVE', '2023.11.22', 141,
-      'http://h.vod.cgv.co.kr/vodCGVa/87554/87554_220955_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87554/87554_1000.jpg',
-      '김성수', '황정민, 정우성, 이성민, 박해준', '1979년 12월 12일, 수도 서울 군사반란 발생 그날, 대한민국의 운명이 바뀌었다. 대한민국을 뒤흔든 10월 26일 이후,
-      서울에 새로운 바람이 불어온 것도 잠시 12월 12일, 보안사령관 전두광이 반란을 일으키고 군 내 사조직을 총동원하여 최전선의 전방부대까지 서울로 불러들인다. 권력에 눈이 먼 전두광의 반란군과 이에 맞선 수도경비사령관 이태신을 비롯한 진압군 사이, 일촉즉발의 9시간이 흘러가는데… 목숨을 건 두 세력의 팽팽한 대립 오늘 밤, 대한민국 수도에서 가장 치열한 전쟁이 펼쳐진다!',
-    0.4);
-insert into 
-    movie 
+        'http://h.vod.cgv.co.kr/vodCGVa/87554/87554_220955_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87554/87554_1000.jpg',
+        '김성수', '황정민, 정우성, 이성민, 박해준', '1979년 12월 12일, 수도 서울 군사반란 발생 그날, 대한민국의 운명이 바뀌었다. 대한민국을 뒤흔든 10월 26일 이후,
+     서울에 새로운 바람이 불어온 것도 잠시 12월 12일, 보안사령관 전두광이 반란을 일으키고 군 내 사조직을 총동원하여 최전선의 전방부대까지 서울로 불러들인다. 권력에 눈이 먼 전두광의 반란군과 이에 맞선 수도경비사령관 이태신을 비롯한 진압군 사이, 일촉즉발의 9시간이 흘러가는데… 목숨을 건 두 세력의 팽팽한 대립 오늘 밤, 대한민국 수도에서 가장 치열한 전쟁이 펼쳐진다!',
+        0.4);
+insert into
+    movie
 values (11, '아네모네 ', 'FIFTEEN', '2024.02.27', 75,
-      'http://h.vod.cgv.co.kr/vodCGVa/87998/87998_222685_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87998/87998_1000.jpg',
-      '정하용', '정이랑, 박성진', '오늘 하루도 열심히 밥벌이한 집안의 가장 ‘용자’가 오늘 하루도 역시나 밥만 축낸 백수 남편 ‘성진’에게 오늘 하루만 오로지 부탁한 심부름이 있다. 그리하여 오늘 용자가 성진에게 묻고 싶은 단 한 마디 “로또 샀어, 안 샀어?” 1등 당첨 로또를 쟁취하기 위한 용자들의 필사의 레이스가 시작된다!',
-    0.4);
-insert into 
-    movie 
+        'http://h.vod.cgv.co.kr/vodCGVa/87998/87998_222685_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87998/87998_1000.jpg',
+        '정하용', '정이랑, 박성진', '오늘 하루도 열심히 밥벌이한 집안의 가장 ‘용자’가 오늘 하루도 역시나 밥만 축낸 백수 남편 ‘성진’에게 오늘 하루만 오로지 부탁한 심부름이 있다. 그리하여 오늘 용자가 성진에게 묻고 싶은 단 한 마디 “로또 샀어, 안 샀어?” 1등 당첨 로또를 쟁취하기 위한 용자들의 필사의 레이스가 시작된다!',
+        0.4);
+insert into
+    movie
 values (12, '신차원! 짱구는 못말려 더 무비 초능력 대결전 ~날아라 수제김밥~', 'ALL', '2023.12.22', 94,
-      'http://h.vod.cgv.co.kr/vodCGVa/87888/87888_221575_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87888/87888_1000.jpg',
-      '요네 히토시', '박영남, 강희선, 김환진', '최초의 3D CG! 제작 기간 7년 최고의 웃음과 감동! 최강의 스케일 옷까지 갈아입은 볼록 짱구 등장! 어느 날, 우주에서 날아온 검은 빛과 하얀 빛이 떡잎마을을 향해 떨어진다. 평소처럼 저녁밥을 손꼽아 기다리던 짱구는 하얀 빛에 정통으로 맞게 되고 그러자 온몸에 넘치는 신비한 힘! 힘에 몸을 맡긴 채 엉덩이에 의식을 집중하자 장난감들이 붕붕 떠오른다.
+        'http://h.vod.cgv.co.kr/vodCGVa/87888/87888_221575_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87888/87888_1000.jpg',
+        '요네 히토시', '박영남, 강희선, 김환진', '최초의 3D CG! 제작 기간 7년 최고의 웃음과 감동! 최강의 스케일 옷까지 갈아입은 볼록 짱구 등장! 어느 날, 우주에서 날아온 검은 빛과 하얀 빛이 떡잎마을을 향해 떨어진다. 평소처럼 저녁밥을 손꼽아 기다리던 짱구는 하얀 빛에 정통으로 맞게 되고 그러자 온몸에 넘치는 신비한 힘! 힘에 몸을 맡긴 채 엉덩이에 의식을 집중하자 장난감들이 붕붕 떠오른다.
 "엉덩이... 엉덩이가 뜨거워...!? 뭔지 몰라도 엄청난 힘을 손에 넣은 것 같아." 한편, 검은 빛을 통해 초능력을 손에 넣은 또 다른 남자는 이 세상의 파멸을 바라며 폭주하기 시작하는데, 위기에 처한 세상을 구하기 위한 유일한 희망이 바로 짱구...!? 올 겨울, 짱구의 엉덩이가 뜨겁게 타오른다!',
-    0.1);
-insert into 
-    movie 
+        0.1);
+insert into
+    movie
 values (13, '킹덤-엑소더스', 'EIGHTEEN', '2024.01.31', 317,
-      'http://h.vod.cgv.co.kr/vodCGVa/88016/88016_222917_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000088/88016/88016_1000.jpg',
-      '라스 폰 트리에', '보딜 요르겐센, 미카엘 페르스브란트, 라스 미켈센, 니콜라스 브로', '“선도 악도 있음을 명심하라” 코펜하겐 최고의 종합병원 ‘킹덤’. 음산하고 기묘한 기운이 감도는 어느 날 밤, 몽유병자 카렌이 알 수 없는 힘에 이끌려 ‘킹덤’ 앞에 도착한다. 사악한 악으로부터 ‘킹덤’을 구하기 위해 25년간 풀지 못한 비밀을 찾기 시작하는데… ‘킹덤’의 입구가 다시 열리고 숨어있던 절대 악이 부활한다!',
-    0.1);
-insert into 
-    movie 
+        'http://h.vod.cgv.co.kr/vodCGVa/88016/88016_222917_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000088/88016/88016_1000.jpg',
+        '라스 폰 트리에', '보딜 요르겐센, 미카엘 페르스브란트, 라스 미켈센, 니콜라스 브로', '“선도 악도 있음을 명심하라” 코펜하겐 최고의 종합병원 ‘킹덤’. 음산하고 기묘한 기운이 감도는 어느 날 밤, 몽유병자 카렌이 알 수 없는 힘에 이끌려 ‘킹덤’ 앞에 도착한다. 사악한 악으로부터 ‘킹덤’을 구하기 위해 25년간 풀지 못한 비밀을 찾기 시작하는데… ‘킹덤’의 입구가 다시 열리고 숨어있던 절대 악이 부활한다!',
+        0.1);
+insert into
+    movie
 values (14, '상견니 ', 'FIFTEEN', '2024.01.25', 107,
-      'http://h.vod.cgv.co.kr/vodCGVa/86750/86750_211203_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000086/86750/86750_1000.jpg',
-      '황천인', '가가연, 허광한, 시백우', '드라마 스토리를 영화 버전으로 확장시킨 멀티버스 판타지 로맨스 완전히 새로운 세계관, 완전히 새로운 스토리의 <상견니> 2009년, 리쯔웨이와 황위쉬안은 밀크티 가게에서 우연히 재회한다. 처음 만났지만 마치 오래전부터 알고 있었던 것 같은 기시감과 묘한 설렘을 느끼는 두 사람. 이들은 사계절을 함께 보내며 가까워지고, 2010년의 마지막 날, 함께 새해를 맞이하며 연인이 된다. 2017년, 황위쉬안의 인생에 예상치 못한 변화가 생긴다. 해외 발령을 받게 된 것. 황위쉬안은 이 제안을 받아들이고 새로운 여정을 시작하지만 이 선택은 그녀의 미래를 바꿀 뿐만 아니라, 리쯔웨이와 모쥔제, 그리고 그녀가 아직 모르는 천윈루의 운명까지 뒤바꿔 놓는데… 이제, 이들은 수없이 뒤엉킨 타임라인 속에서 서로를 구하기 위해 낡은 테이프 속 들려오는 노래 ‘라스트 댄스’를 따라 달려가기 시작한다.',
-    0.2);
+        'http://h.vod.cgv.co.kr/vodCGVa/86750/86750_211203_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000086/86750/86750_1000.jpg',
+        '황천인', '가가연, 허광한, 시백우', '드라마 스토리를 영화 버전으로 확장시킨 멀티버스 판타지 로맨스 완전히 새로운 세계관, 완전히 새로운 스토리의 <상견니> 2009년, 리쯔웨이와 황위쉬안은 밀크티 가게에서 우연히 재회한다. 처음 만났지만 마치 오래전부터 알고 있었던 것 같은 기시감과 묘한 설렘을 느끼는 두 사람. 이들은 사계절을 함께 보내며 가까워지고, 2010년의 마지막 날, 함께 새해를 맞이하며 연인이 된다. 2017년, 황위쉬안의 인생에 예상치 못한 변화가 생긴다. 해외 발령을 받게 된 것. 황위쉬안은 이 제안을 받아들이고 새로운 여정을 시작하지만 이 선택은 그녀의 미래를 바꿀 뿐만 아니라, 리쯔웨이와 모쥔제, 그리고 그녀가 아직 모르는 천윈루의 운명까지 뒤바꿔 놓는데… 이제, 이들은 수없이 뒤엉킨 타임라인 속에서 서로를 구하기 위해 낡은 테이프 속 들려오는 노래 ‘라스트 댄스’를 따라 달려가기 시작한다.',
+        0.2);
 --
 -- movie_genre
 insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 4, 1);
@@ -283,11 +292,11 @@ insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 4, 042
 insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 5, 03101, 03201, 05101);
 --
 -- ask
-insert into ASK values (seq_ask_id.nextval, 1, '예매 취소 및 환불', '예매 취소 및 환불 규정은 어떻게 되나요?', default);
-insert into ASK values (seq_ask_id.nextval, 2, '영화 시간보다 늦었어요.', ' 영화 시간보다 늦었어요. 입장 가능한가요?', default);
-insert into ASK values (seq_ask_id.nextval, 3, '음식물 반입', '상영관 내 다른 음식물의 반입이 되나요?', default);
-insert into ASK values (seq_ask_id.nextval, 4, '관람 등급', '관람 등급에 대해 알고 싶습니다.', default);
-insert into ASK values (seq_ask_id.nextval, 5, '영화 관람을 하다 소지품을 분실했어요', '영화 관람을 하다 소지품을 분실했어요. 분실물은 어떻게 찾나요?', default);
+insert into ASK values (seq_ask_id.nextval, 'rhgPwls', '예매 취소 및 환불', '예매 취소 및 환불 규정은 어떻게 되나요?', 'RESERVATION', default);
+insert into ASK values (seq_ask_id.nextval, 'testUser', '영화 시간보다 늦었어요.', ' 영화 시간보다 늦었어요. 입장 가능한가요?', 'MOVIE', default);
+insert into ASK values (seq_ask_id.nextval, 'sinsa', '음식물 반입', '상영관 내 다른 음식물의 반입이 되나요?', 'MOVIE', default);
+insert into ASK values (seq_ask_id.nextval, 'honggd', '관람 등급', '관람 등급에 대해 알고 싶습니다.', 'MOVIE', default);
+insert into ASK values (seq_ask_id.nextval, 'less', '영화 관람을 하다 소지품을 분실했어요', '영화 관람을 하다 소지품을 분실했어요. 분실물은 어떻게 찾나요?', 'CINEMA', default);
 --
 -- answer
 insert into ANSWER values (seq_answer_id.nextval, 1, 6, '상영시간 이전까지만 가능하며, 상영시간 이후 취소나 환불은 되지 않습니다.', default);
@@ -311,7 +320,20 @@ insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 4, '2024-02-04', '
 insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 5, '2024-02-06', '19:00');
 insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 6, '2024-01-24', '12:30');
 insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 6, '2024-01-29', '20:30');
---
+-- 강남점 영화 추가
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, '2024-02-16', '12:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, '2024-02-16', '16:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, '2024-02-16', '20:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 1, '2024-02-16', '14:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 1, '2024-02-16', '18:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 4, '2024-02-16', '20:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 4, '2024-02-16', '23:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020103, 5, '2024-02-16', '13:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020103, 5, '2024-02-16', '17:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020103, 5, '2024-02-16', '21:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020104, 6, '2024-02-16', '14:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020104, 6, '2024-02-16', '17:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020104, 6, '2024-02-16', '20:00');
 -- reservation
 insert into RESERVATION values ('box16443', 1, 1, 'CONFIRM');
 insert into RESERVATION values ('box25822', 2, 2, 'CONFIRM');
@@ -321,7 +343,13 @@ insert into RESERVATION values ('box34332', 4, 6, 'CONFIRM');
 insert into RESERVATION values ('box32582', 5, 5, 'CONFIRM');
 insert into RESERVATION values ('box21482', 5, 7, 'CONFIRM');
 insert into RESERVATION values ('box47211', 2, 2, 'CONFIRM');
---
+-- 강남점 sample 예약 데이터 추가
+insert into RESERVATION values ('box57869', 1, 41, 'CONFIRM');
+insert into RESERVATION values ('box49687', 1, 42, 'CONFIRM');
+insert into RESERVATION values ('box68574', 1, 43, 'CONFIRM');
+insert into RESERVATION values ('box78960', 2, 45, 'CONFIRM');
+insert into RESERVATION values ('box27586', 2, 47, 'CONFIRM');
+insert into RESERVATION values ('box83657', 2, 53, 'CONFIRM');
 -- reservation_seat
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box16443', 1);
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box25822', 2);
@@ -330,7 +358,24 @@ insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box42217'
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box34332', 4);
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box32582', 5);
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box21482', 5);
---
+-- 강남점 좌석 여러개 추가
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box57869', 1);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box57869', 2);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box57869', 3);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box49687', 1);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box49687', 2);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box68574', 1);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box68574', 2);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box68574', 3);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box68574', 4);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box78960', 1);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box27586', 1);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box27586', 2);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box83657', 1);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box83657', 2);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box83657', 3);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box83657', 4);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box83657', 5);
 -- order_pay
 insert into ORDER_PAY values ('order1644325835123', 'box16443', 1, 'imp32105587', 'html5_inicis', 'card', 12000 , '01012341234', 'CONFIRM');
 insert into ORDER_PAY values ('order1414325835223', 'box25822', 2, 'imp32105587', 'html5_inicis', 'card', 12000 , '01012345678', 'CONFIRM');
@@ -358,7 +403,10 @@ insert into MOVIE_LIST values (seq_movie_list_id.nextval, 3, 05101);
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 4, 03201);
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 4, 0201);
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 5, 05101);
---
+-- 강남점 영화 추가
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 5, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 6, 0201);
+
 -- review
 insert into REVIEW values (seq_review_id.nextval, 'box16443', 1, 1, 3, '너무 지루해요', default);
 insert into REVIEW values (seq_review_id.nextval, 'box25822', 2, 2, 4, '최고', default);

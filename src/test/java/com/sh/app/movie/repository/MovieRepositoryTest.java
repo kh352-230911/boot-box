@@ -220,6 +220,7 @@ public class MovieRepositoryTest {
     @Test
     void test7() {
          //given
+
         insertMovieData();
         String title = "시민";
 
