@@ -12,6 +12,20 @@
 
 <div layout:fragment="content">
     <p>현재 관리지점은 <span th:text="${region}"></span> 입니다.</p>
+    <br>
+    <p>상영관 목록</p>
+    <table>
+        <thead>
+            <tr>
+                <th>이름</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="theater : ${theaters}">
+                <td th:text="${theater.name}"></td>
+            </tr>
+        </tbody>
+    </table>
 
 </div>
 

@@ -9,6 +9,8 @@ import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
 import com.sh.app.notice.entity.Notice;
 import com.sh.app.notice.service.NoticeService;
+import com.sh.app.theater.dto.TheaterDto;
+import com.sh.app.theater.service.TheaterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -33,6 +35,8 @@ public class AdminController {
     private NoticeService noticeService;
     @Autowired
     private CinemaService cinemaService;
+    @Autowired
+    private TheaterService theaterService;
     @Autowired
     private AskService askService;
     @Autowired
@@ -83,15 +87,14 @@ public class AdminController {
 
     @GetMapping("/adminRegion.do")
     public void adminRegion(@RequestParam String name, Model model) {
-        log.debug("name = {}", name);
         Admin admin = adminService.findByUsername(name);
         log.debug("admin = {}", admin);
         Long cinemaId = admin.getCinemaId();
-        log.debug("cinemaId = {}", cinemaId);
         String region = cinemaService.findRegion(cinemaId);
         model.addAttribute("region", region);
         log.debug("region = {}", region);
-
+        List<TheaterDto> theaterDtos = theaterService.findAllTheatersWithCinemaId(cinemaId);
+        model.addAttribute("theaters", theaterDtos);
     }
 }
 

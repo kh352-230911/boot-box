@@ -11,7 +11,7 @@ import java.util.List;
 public class TheaterDto {
     private Long id;
 
-    private Cinema cinema;
+    private Long cinemaId;
 
     private String name;
 
