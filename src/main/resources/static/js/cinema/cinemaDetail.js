@@ -196,10 +196,12 @@ function renderSchedule(scheduleData) {
             schedule.times.forEach(time => {
                 const startTimeText = time.time;
 
-                // 상영 시간을 Date 객체로 변환합니다.
+                // 상영 시간을 Date 객체로 변환.
                 const [hours, minutes] = startTimeText.split(':').map(Number);
                 const movieStartDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0, 0);
                 const timeDifference = (movieStartDate - now) / 60000; // 분 단위로 차이를 계산합니다.
+                // console.log(movieStartDate);
+                // console.log(timeDifference);
 
                 let seatsAvailable;
                 // 현재시간과 비교하여 상영 시작이 10분 이내라면 '마감'으로 표시.
@@ -210,7 +212,17 @@ function renderSchedule(scheduleData) {
                     seatsAvailable = $('<div>').addClass('seats-available').text(`남은좌석: ${time.seatsAvailable}석`);
                 }
 
-                const timeSlot = $('<div>').addClass('time-slot').append($('<span>').text(startTimeText), seatsAvailable);
+                // 예매하기 텍스트 추가
+                const bookingText = $('<span>').addClass('booking-text').text('예매');
+
+                // 시간 슬롯 클릭시 예약 페이지로 이동
+                const timeSlot = $('<a>').addClass('time-slot').attr('href', time.bookingUrl)
+                                    .append($('<span>').text(startTimeText), seatsAvailable, bookingText);
+                if (timeDifference <= 10 && timeDifference >= 0) {
+                    timeSlot.click(function(e) {
+                        e.preventDefault(); // 마감된 시간은 슬롯 클릭 방지하여 예약 페이지 이동 불가
+                    });
+                }
                 timeSlots.append(timeSlot);
             });
 
