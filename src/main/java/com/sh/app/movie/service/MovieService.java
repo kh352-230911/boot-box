@@ -46,6 +46,10 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
+    public List<Movie> findAllByOrderByTitleAsc() {
+        return movieRepository.findAllByOrderByTitleAsc();
+    }
+
     public List<Movie> findByGenreList(String genre) {
         return movieRepository.findByGenreList(genre);
     }
