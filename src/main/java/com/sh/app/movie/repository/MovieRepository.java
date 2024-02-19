@@ -8,6 +8,13 @@ import java.util.List;
 
 
 public interface MovieRepository extends JpaRepository<Movie, Long> {
+
+
+    //무비가져올때 이름정렬
+    List<Movie> findAllByOrderByTitleAsc();
+
+
+
     // nativeQuery
 //    @Query(value = """
 //    select

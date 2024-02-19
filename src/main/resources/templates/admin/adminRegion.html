@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>지점관리</title>
+</head>
+<style layout:fragment="style">
+
+</style>
+
+<div layout:fragment="content">
+    <p>현재 관리지점은 <span th:text="${region}"></span> 입니다.</p>
+
+</div>
+
+<script layout:fragment="script"></script>
+</html>

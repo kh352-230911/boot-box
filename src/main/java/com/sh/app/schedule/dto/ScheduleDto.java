@@ -19,14 +19,10 @@ import java.time.LocalDateTime;
  */
 @Data
 public class ScheduleDto {
-
     private long id;
-
     private TheaterDto theater;
-
     private Movie movie;
-
     private LocalDate schDate;
-
     private LocalDateTime time;
+
 }
