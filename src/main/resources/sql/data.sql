@@ -292,11 +292,11 @@ insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 4, 042
 insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 5, 03101, 03201, 05101);
 --
 -- ask
-insert into ASK values (seq_ask_id.nextval, 'rhgPwls', '예매 취소 및 환불', '예매 취소 및 환불 규정은 어떻게 되나요?', 'RESERVATION', default);
-insert into ASK values (seq_ask_id.nextval, 'testUser', '영화 시간보다 늦었어요.', ' 영화 시간보다 늦었어요. 입장 가능한가요?', 'MOVIE', default);
-insert into ASK values (seq_ask_id.nextval, 'sinsa', '음식물 반입', '상영관 내 다른 음식물의 반입이 되나요?', 'MOVIE', default);
-insert into ASK values (seq_ask_id.nextval, 'honggd', '관람 등급', '관람 등급에 대해 알고 싶습니다.', 'MOVIE', default);
-insert into ASK values (seq_ask_id.nextval, 'less', '영화 관람을 하다 소지품을 분실했어요', '영화 관람을 하다 소지품을 분실했어요. 분실물은 어떻게 찾나요?', 'CINEMA', default);
+insert into ASK values (seq_ask_id.nextval, '1', '예매 취소 및 환불', '예매 취소 및 환불 규정은 어떻게 되나요?', 'RESERVATION', default);
+insert into ASK values (seq_ask_id.nextval, '2', '영화 시간보다 늦었어요.', ' 영화 시간보다 늦었어요. 입장 가능한가요?', 'MOVIE', default);
+insert into ASK values (seq_ask_id.nextval, '3', '음식물 반입', '상영관 내 다른 음식물의 반입이 되나요?', 'MOVIE', default);
+insert into ASK values (seq_ask_id.nextval, '4', '관람 등급', '관람 등급에 대해 알고 싶습니다.', 'MOVIE', default);
+insert into ASK values (seq_ask_id.nextval, '5', '영화 관람을 하다 소지품을 분실했어요', '영화 관람을 하다 소지품을 분실했어요. 분실물은 어떻게 찾나요?', 'CINEMA', default);
 --
 -- answer
 insert into ANSWER values (seq_answer_id.nextval, 1, 6, '상영시간 이전까지만 가능하며, 상영시간 이후 취소나 환불은 되지 않습니다.', default);
@@ -306,34 +306,35 @@ insert into ANSWER values (seq_answer_id.nextval, 4, 6, 'CGV는 영화진흥법�
 insert into ANSWER values (seq_answer_id.nextval, 5, 6, '분실물의 경우 발견 즉시 현장에서 보관을 진행하고 있으며, 확인 요청시 본인 확인 후 물품 확인을 도와드리고 있습니다.', default);
 --
 -- notice
-insert into NOTICE values (seq_notice_id.nextval, 1, 'SYSTEM', '2023년 12월 시스템점검 안내', '원활하고 안정된 서비스 제공을 위하여 2023년 12월 새벽 시스템 점검 작업이 예정되어 있습니다.');
-insert into NOTICE values (seq_notice_id.nextval, 2, 'CINEMA', '[센텀시티] 백화점 휴점에 따른 극장 이용 안내', '22.09.09(금)~22.09.10(토) 신세계 백화점 센텀시티점 휴점에 따라 극장이용 동선 안내를 공지하오니 이용에 착오 없으시길 바랍니다.');
-insert into NOTICE values (seq_notice_id.nextval, 3, 'EVENT', '신규 초콜릿향 진행극장 변경 안내 ', '4DX 신규 초콜릿향 진행 극장 (1/31~2/6) CGV 계양, 광교, 광주터미널, 김해, 대구, 대구스타디움');
-insert into NOTICE values (seq_notice_id.nextval, 4, 'ETC', '개인정보처리방침 개정 공지 (23.11.06 시행)', '2023년 11월 6일 자로 BOOTBOX의 개인정보처리방침이 개정됨에 따라 회원님께 주요 개정 내용과 적용 일정을 아래와 같이 안내 드립니다.');
-insert into NOTICE values (seq_notice_id.nextval, 5, 'ETC', 'BOOTBOX 서비스 이용약관 개정 안내 (2024년 1월 23일 시행)', '2024년 1월 23일자로 BOOTBOX 서비스 이용약관을 일부 개정하게 되어 아래와 같이 사전 안내드립니다. 서비스 이용에 참고 부탁드립니다.');
+insert into NOTICE values (seq_notice_id.nextval, 1, 'SYSTEM', '2023년 12월 시스템점검 안내', '원활하고 안정된 서비스 제공을 위하여 2023년 12월 새벽 시스템 점검 작업이 예정되어 있습니다.', default);
+insert into NOTICE values (seq_notice_id.nextval, 2, 'CINEMA', '[센텀시티] 백화점 휴점에 따른 극장 이용 안내', '22.09.09(금)~22.09.10(토) 신세계 백화점 센텀시티점 휴점에 따라 극장이용 동선 안내를 공지하오니 이용에 착오 없으시길 바랍니다.', default);
+insert into NOTICE values (seq_notice_id.nextval, 3, 'EVENT', '신규 초콜릿향 진행극장 변경 안내 ', '4DX 신규 초콜릿향 진행 극장 (1/31~2/6) CGV 계양, 광교, 광주터미널, 김해, 대구, 대구스타디움', default);
+insert into NOTICE values (seq_notice_id.nextval, 4, 'ETC', '개인정보처리방침 개정 공지 (23.11.06 시행)', '2023년 11월 6일 자로 BOOTBOX의 개인정보처리방침이 개정됨에 따라 회원님께 주요 개정 내용과 적용 일정을 아래와 같이 안내 드립니다.', default);
+insert into NOTICE values (seq_notice_id.nextval, 5, 'ETC', 'BOOTBOX 서비스 이용약관 개정 안내 (2024년 1월 23일 시행)', '2024년 1월 23일자로 BOOTBOX 서비스 이용약관을 일부 개정하게 되어 아래와 같이 사전 안내드립니다. 서비스 이용에 참고 부탁드립니다.', default);
 --
 -- schedule
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, '2024-02-01', '15:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 2, '2024-02-01', '20:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 3, '2024-02-03', '10:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 4, '2024-02-04', '22:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 5, '2024-02-06', '19:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 6, '2024-01-24', '12:30');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 6, '2024-01-29', '20:30');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-01', 'YYYY-MM-DD'), to_date('2024-02-01 15:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 2, to_date('2024-02-01', 'YYYY-MM-DD'), to_date('2024-02-01 20:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 3, to_date('2024-02-03', 'YYYY-MM-DD'), to_date('2024-02-03 10:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 4, to_date('2024-02-04', 'YYYY-MM-DD'), to_date('2024-02-04 22:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 5, to_date('2024-02-06', 'YYYY-MM-DD'), to_date('2024-02-06 19:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 6, to_date('2024-02-24', 'YYYY-MM-DD'), to_date('2024-02-24 12:30', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 6, to_date('2024-02-29', 'YYYY-MM-DD'), to_date('2024-02-29 20:30', 'YYYY-MM-DD HH24:MI'));
 -- 강남점 영화 추가
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, '2024-02-16', '12:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, '2024-02-16', '16:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, '2024-02-16', '20:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 1, '2024-02-16', '14:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 1, '2024-02-16', '18:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 4, '2024-02-16', '20:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 4, '2024-02-16', '23:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020103, 5, '2024-02-16', '13:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020103, 5, '2024-02-16', '17:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020103, 5, '2024-02-16', '21:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020104, 6, '2024-02-16', '14:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020104, 6, '2024-02-16', '17:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020104, 6, '2024-02-16', '20:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 12:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 16:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 20:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 1, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 14:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 1, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 18:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 4, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 20:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 4, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 23:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020103, 5, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 13:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020103, 5, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 17:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020103, 5, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 21:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020104, 6, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 14:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020104, 6, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 17:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020104, 6, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 20:00', 'YYYY-MM-DD HH24:MI'));
+
 -- reservation
 insert into RESERVATION values ('box16443', 1, 1, 'CONFIRM');
 insert into RESERVATION values ('box25822', 2, 2, 'CONFIRM');
@@ -344,12 +345,12 @@ insert into RESERVATION values ('box32582', 5, 5, 'CONFIRM');
 insert into RESERVATION values ('box21482', 5, 7, 'CONFIRM');
 insert into RESERVATION values ('box47211', 2, 2, 'CONFIRM');
 -- 강남점 sample 예약 데이터 추가
-insert into RESERVATION values ('box57869', 1, 41, 'CONFIRM');
-insert into RESERVATION values ('box49687', 1, 42, 'CONFIRM');
-insert into RESERVATION values ('box68574', 1, 43, 'CONFIRM');
-insert into RESERVATION values ('box78960', 2, 45, 'CONFIRM');
-insert into RESERVATION values ('box27586', 2, 47, 'CONFIRM');
-insert into RESERVATION values ('box83657', 2, 53, 'CONFIRM');
+insert into RESERVATION values ('box57869', 1, 10, 'CONFIRM');
+insert into RESERVATION values ('box49687', 1, 11, 'CONFIRM');
+insert into RESERVATION values ('box68574', 1, 12, 'CONFIRM');
+insert into RESERVATION values ('box78960', 2, 13, 'CONFIRM');
+insert into RESERVATION values ('box27586', 2, 14, 'CONFIRM');
+insert into RESERVATION values ('box83657', 2, 15, 'CONFIRM');
 -- reservation_seat
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box16443', 1);
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box25822', 2);

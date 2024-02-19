@@ -1,18 +1,19 @@
 package com.sh.app.schedule.entity;
 
 import com.sh.app.movie.entity.Movie;
+import com.sh.app.reservation.entity.Reservation;
 import com.sh.app.theater.entity.Theater;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 @Entity
 @Table(name = "schedule")
@@ -20,6 +21,7 @@ import java.util.Locale;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(exclude = "movie")
 public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,6 +36,9 @@ public class Schedule {
     private LocalDate schDate;
     @Column(nullable = false)
     private LocalDateTime time;
+    @OneToMany(mappedBy = "schedule", fetch = FetchType.EAGER)
+    @Builder.Default
+    private Set<Reservation> reservations = new HashSet<>();
     
     public void setTheater(Theater theater) {
         this.theater = theater;
