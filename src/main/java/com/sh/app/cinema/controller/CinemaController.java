@@ -90,16 +90,24 @@ public class CinemaController {
         Map<String, String> movieDurations = new HashMap<>();
 
         for (IScheduleInfoDto dto : scheduleDetails) {
+            Long movieId = dto.getMovieId();
+            Long cinemaId = dto.getCinemaId();
+            Long schId = dto.getSchId();
+
+            // 예약 페이지 URL 생성
+            String bookingUrl = String.format("/bootbox/reservation/reservationBooking.do?movieId=%d&cinemaId=%d&schId=%d", movieId, cinemaId, schId);
+
             String title = dto.getMovieTitle();
             String theater = dto.getTheaterName();
             String runningTime = dto.getRunningTime();
 
             movieDurations.putIfAbsent(title, runningTime); // 영화 제목에 해당하는 상영 시간을 맵에 저장
 
-            // 영화 시간, 남은 좌석 그룹화
+            // 영화 시간, 남은 좌석 그룹화 및 예약 페이지 링크 추가
             Map<String, Object> timeMap = new HashMap<>();
             timeMap.put("time", dto.getStartTime().format(DateTimeFormatter.ofPattern("HH:mm")));
             timeMap.put("seatsAvailable", dto.getRemainingSeats());
+            timeMap.put("bookingUrl", bookingUrl); // 예약 페이지로 이동할 URL 추가
 
             // 영화 제목별, 상영관별, 스케줄별에 따라 그룹화
             organized.computeIfAbsent(title, k -> new HashMap<>())
