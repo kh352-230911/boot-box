@@ -4,6 +4,7 @@ import com.sh.app.admin.entity.Admin;
 import com.sh.app.admin.service.AdminService;
 import com.sh.app.ask.entity.Ask;
 import com.sh.app.ask.service.AskService;
+import com.sh.app.cinema.service.CinemaService;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
 import com.sh.app.notice.entity.Notice;
@@ -30,6 +31,8 @@ public class AdminController {
     private MemberService memberService;
     @Autowired
     private NoticeService noticeService;
+    @Autowired
+    private CinemaService cinemaService;
     @Autowired
     private AskService askService;
     @Autowired
@@ -76,6 +79,19 @@ public class AdminController {
             throw new UsernameNotFoundException(username);
         }
         return "redirect:/auth/adminLogin.do";
+    }
+
+    @GetMapping("/adminRegion.do")
+    public void adminRegion(@RequestParam String name, Model model) {
+        log.debug("name = {}", name);
+        Admin admin = adminService.findByUsername(name);
+        log.debug("admin = {}", admin);
+        Long cinemaId = admin.getCinemaId();
+        log.debug("cinemaId = {}", cinemaId);
+        String region = cinemaService.findRegion(cinemaId);
+        model.addAttribute("region", region);
+        log.debug("region = {}", region);
+
     }
 }
 
