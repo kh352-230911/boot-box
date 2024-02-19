@@ -30,7 +30,7 @@ public class Admin implements Serializable {
             allocationSize = 1
     )
     private Long id;
-    private String cinemaId;
+    private Long cinemaId;
     @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false)
