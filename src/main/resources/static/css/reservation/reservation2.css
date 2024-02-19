@@ -262,6 +262,7 @@
 
 .all-seats
 {
+    opacity: 0.8;
     width :fit-content;
     background-color: #ffffff;
     /*visibility: hidden;*/
@@ -276,6 +277,7 @@
 /* 스크린 영역 */
 .screen-div
 {
+    opacity: 0.8;
     margin-bottom: 30px;
     width: 40vw;
     height: 30px;
@@ -449,7 +451,8 @@ th
 
 table{
     border-collapse: collapse; /* 테이블 셀 테두리를 합칩니다. */
-    border: 2px solid red;
+    border: 1px solid red;
+    border-color: red;
 }
 
 .highlighted {
@@ -461,10 +464,7 @@ table{
     width:200px;
     /*display: none;*/
 }
-.mytr
-{
 
-}
 
 /* info-movies 하위의 모든 테이블들의 높이 고정 , 스크롤 추가 */
 .info-movies table {

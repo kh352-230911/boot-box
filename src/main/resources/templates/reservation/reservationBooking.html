@@ -175,8 +175,7 @@
             <span>관람 인원을 선택해주세요.(최대 8명)</span>
             <!--            <button id="btn-clear" type="button" th:onclick="myFunction()">초기화 btn</button>-->
             <button id="btn-clear" type="button"
-                    th:onclick="myFunction()"
-                    class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+                    th:onclick="myFunction()">
                 초기화</button>
 
         </div>
@@ -184,12 +183,12 @@
         <div class = "select-people-content">
             <span>일반 </span>
             <input type='button'
-                   onclick='count("plus")'
-                   value='+'/>
-            <div id='result'>0</div>
-            <input type='button'
                    onclick='count("minus")'
                    value='-'/>
+            <div id='peopleResult'>0</div>
+            <input type='button'
+                   onclick='count("plus")'
+                   value='+'/>
 
         </div>
         <!-- 2.좌석 정보 및 선택 div -->
@@ -202,8 +201,6 @@
                 </tbody>
             </table>
         </div>
-
-
 
 
 
@@ -238,15 +235,21 @@
                 <div class="seat-container2-1people">인원</div>
                 </div>
                 <div class="seat-container2-2">
-                    <div class="seat-container2-2cinema"></div>
-                    <div class="seat-container2-2date"></div>
-                    <div class="seat-container2-2theater"></div>
-                    <div class="seat-container2-2people"></div>
+                    <div class="seat-container2-2cinema">-</div>
+                    <div class="seat-container2-2date">-</div>
+                    <div class="seat-container2-2theater">-</div>
+                    <div class="seat-container2-2people">-</div>
                 </div>
             </div>
-            <div class="seat-container3">선택한 좌석</div>
+            <div class="seat-container3">
+                <div class="seat-container3-1">선택한 좌석</div>
+                <div class="seat-container3-2">-</div>
+                <div class="seat-container3-3">총 금액</div>
+                <div class="seat-container3-4">-</div>
+            </div>
         </div>
         <button class="select-seats-next-button">다음</button>
+        <button class="btn_pay">결제</button>
     </div>
 
 </div>

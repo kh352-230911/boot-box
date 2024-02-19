@@ -45,7 +45,9 @@ var cinemaDiv = container.querySelector('.seat-container2-2cinema');
 var dateDiv = container.querySelector('.seat-container2-2date');
 var theaterDiv = container.querySelector('.seat-container2-2theater');
 var peopleDiv = container.querySelector('.seat-container2-2people');
-
+//
+var selectSeatDiv = container.querySelector(".seat-container3-2");
+var totalPayDiv = container.querySelector(".seat-container3-4");
 
 //영화 선택 시..0219
 $(document).ready(function()
@@ -139,6 +141,9 @@ $(document).ready(function(){
 });
 
 
+
+
+
 $(document).ready(function(){
     $(".select_location2").click(function()
     {
@@ -226,12 +231,30 @@ document.querySelector(".select-seats-prev-button").addEventListener('click',fun
     }
 });
 
+//결제
+document.querySelector(".btn_pay").addEventListener('click', function ()
+{
+    alert("결제");
+});
+
+//하나라도 false면 다음으로 넘어갈 수 없음.
+function  checkButtonAllSelect()
+{
+
+}
+
 
 //0219 다음 버튼을 눌렀을 때, 영화-극장-시간-상영시간 모두 선택되어야 한다. 한개라도 선택 안되어있다면 넘어가지 못함.
 document.querySelector(".select-seats-next-button").addEventListener('click',function ()
 {
-
-    console.log("...다음 버튼...");
+    console.log("...다음 버튼 클릭...");
+    //0219 영화,극장,날짜,상영시간표를 모두 선택하지 않으면 다음으로 넘어갈 수 없음.
+    if(!checkButtonAllSelect()) {
+        alert('모든 버튼을 누르셔야 다음으로 이동하실 수 있습니다.');
+        return;
+    }
+    
+    
     let testArray = ['Aa', 'Bb', 'Cc', 'Dd', 'Ee', 'Ff'];
     setCookieForList("myCookie", testArray, 1); //1일
     if (infoSeatsNone.style.display === 'none') {
@@ -242,6 +265,7 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
     } else {
         // div.style.display = 'none';
     }
+
 
     //비동기 test
     $.ajax({
@@ -268,12 +292,17 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
             }
             else if(request.status==401) //인증 관련 에러
             {
-                window.location.href = `${contextPath}`+request.responseText; // 리다이렉트할 URL을 지정합니다.
+                //alert(`예매는 로그인 후 이용하실 수 있습니다.`)
+                //window.location.href = `${contextPath}`+request.responseText; // 리다이렉트할 URL을 지정합니다.
             }
 
         }
     });
 });
+
+//0219 다음 버튼 외에 영화,극장,시간 버튼 눌렀을 때에도 비동기로 쿼리를 전송하는 작업을 실행해야함..ㅎ..=>상영스케줄을 알기 위해서..
+
+
 
 
 function makeSeat(response)
@@ -331,7 +360,8 @@ function createSeats(rows, cols,response) {
 
             checkbox.setAttribute('data-seat-id', seatId); // 좌석 아이디를 데이터 속성으로 추가
 
-            checkbox.addEventListener('click', function() {
+            checkbox.addEventListener('click', function()
+            {
                 console.log('Clicked seat ID:', this.getAttribute('data-seat-id'));
                 //클릭시 관람인원이 0명인 경우 인원을 먼저 선택하라고 알려준다.
                 if(numberOfPeople==0)
@@ -344,18 +374,37 @@ function createSeats(rows, cols,response) {
                     checkedCount = 0;
                     // 페이지 내의 모든 체크박스를 반복하여 상태 확인
                     var checkboxes = document.querySelectorAll('input[type="checkbox"][name="tickets"]');
+
                     checkboxes.forEach(function(checkbox)
                     {
                         if (checkbox.checked) {
                             checkedCount++;
 
                         }
+
                     });
                     console.log("현재 체크된 체크박스:",checkedCount);
                     if(numberOfPeople<checkedCount)
                     {
                         alert("관람인원 이상 좌석을 선택하실 수 없습니다.");
                         this.checked = false;
+                    }
+                    //모든 체크박스들을 순회하여
+                    var checkedIds = []; // 체크된 체크박스의 아이디를 저장할 배열
+                    checkboxes.forEach(function(checkbox) {
+                        if (checkbox.checked) {
+
+                            checkedIds.push(checkbox.id.replace('s','')); // 체크된 체크박스의 아이디를 배열에 추가
+                        }
+                    });
+                    // 체크된 체크박스의 아이디를 출력
+                    selectSeatDiv.innerText = checkedIds;
+                    console.log("체크된 체크박스의 아이디: ", checkedIds);
+
+                    totalPayDiv.innerText = "10000 * "+ checkedCount +" = "+10000* checkedCount +"원";
+                    if(checkedIds.length==0) {
+                        totalPayDiv.innerText = "-";
+                        selectSeatDiv.innerText = "-";
                     }
                 }
             });
@@ -392,7 +441,10 @@ function toClear()
         checkbox.checked = false; //모든 체크박스 false
     });
     numberOfPeople = 0; //지정한 인원수도 초기화
+    peopleDiv.innerText = numberOfPeople +"명";
     resultElement.innerText = numberOfPeople;
+    selectSeatDiv.innerText = "-";
+    totalPayDiv.innerText = "-";
 }
 
 document.getElementById('btn-clear').addEventListener('click', function() {
@@ -400,9 +452,9 @@ document.getElementById('btn-clear').addEventListener('click', function() {
     toClear();
 });
 // 결과를 표시할 element
-const resultElement = document.getElementById('result');
+const resultElement = document.getElementById('peopleResult');
 
-// 현재 화면에 표시된 값
+// 현재 화면에 표시된 인원수 값
 let numberOfPeople = resultElement.innerText;
 function count(type)  {
 
@@ -432,6 +484,7 @@ function count(type)  {
     }
     // 결과 출력
     resultElement.innerText = numberOfPeople;
+    peopleDiv.innerText = numberOfPeople +"명";
 }
 
 //================================================================

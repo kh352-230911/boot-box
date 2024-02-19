@@ -122,9 +122,7 @@ public class MemberController {
     public String deleteMember(Long id) {
         log.debug("id = {}", id);
         memberService.deleteById(id);
-
         memberService.logoutAndInvalidateSession();
-
         return "redirect:/";
     }
 }

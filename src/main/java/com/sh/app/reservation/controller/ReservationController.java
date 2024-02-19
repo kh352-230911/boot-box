@@ -138,10 +138,10 @@ public class ReservationController {
         else {
             //로그인하지 않았다면 예매기능을 사용할 수 없으므로 로그인 페이지로 이동시키자.
            // return "redirect:/auth/login.do";
-           return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("auth/login.do");
+           //return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("auth/login.do");
            // return ResponseEntity.status(500).build();
         }
-
+        return ResponseEntity.ok(testSeat);
 
     }
 
@@ -178,10 +178,11 @@ public class ReservationController {
         else {
             //로그인하지 않았다면 예매기능을 사용할 수 없으므로 로그인 페이지로 이동시키자.
             // return "redirect:/auth/login.do";
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("auth/login.do");
+            //return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("auth/login.do");
             // return ResponseEntity.status(500).build();
-        }
 
+        }
+        return ResponseEntity.ok(testSeat);
 
     }
 
