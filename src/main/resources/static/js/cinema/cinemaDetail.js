@@ -204,16 +204,17 @@ function renderSchedule(scheduleData) {
                 // console.log(timeDifference);
 
                 let seatsAvailable;
+                let bookingText;
                 // 현재시간과 비교하여 상영 시작이 10분 이내라면 '마감'으로 표시.
                 if (timeDifference <= 10 && timeDifference >= 0) {
                     seatsAvailable = $('<div>').addClass('seats-available').text('남은좌석: 마감');
+                    bookingText = $('<span>').addClass('booking-text').text('마감');
                 // 아니라면 남은 좌석 표시
                 } else {
                     seatsAvailable = $('<div>').addClass('seats-available').text(`남은좌석: ${time.seatsAvailable}석`);
+                    bookingText = $('<span>').addClass('booking-text').text('예매');
                 }
 
-                // 예매하기 텍스트 추가
-                const bookingText = $('<span>').addClass('booking-text').text('예매');
 
                 // 시간 슬롯 클릭시 예약 페이지로 이동
                 const timeSlot = $('<a>').addClass('time-slot').attr('href', time.bookingUrl)
