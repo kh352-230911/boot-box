@@ -42,14 +42,14 @@ public class Member implements Serializable{
     @Column(nullable = false)
     private String memberPwd;
 
-    @Column(nullable =false, unique = true)
-    private String memberEmail; //uq
+    @Column(unique = true)
+    private String memberEmail; //uq null ok
 
     @Column(nullable = false)
     private String memberName;
 
-    @Column(nullable =false, unique = true)
-    private String memberPhone;
+    @Column(unique = true)
+    private String memberPhone; // null ok
 
     private String birthyear; //null ok
 

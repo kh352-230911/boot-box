@@ -30,16 +30,13 @@
                     <li>
                         <a th:href="@{/cinema/cinemaList.do}" class="block text-xl font-semibold py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">극장</a>
                     </li>
+                    <!-- 0208 임시 링크 - 예매 진행중 / 기능 9할정도 구현시 정식 메뉴명으로 정정-->
                     <li>
-                        <a class="block text-xl font-semibold py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" th:href="@{/reservation/reservationMain.do}">예매</a>
+                        <a class="block text-xl font-semibold py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"  th:href="@{/reservation/reservationBooking.do}">예매</a>
                     </li>
-                    <!-- 0208 임시 링크-->
-                    <li>
-                        <a class="block text-xl font-semibold py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"  th:href="@{/reservation1/reservationBooking3.do}">임시1</a>
-                    </li>
-                    <li>
-                        <a class="block text-xl font-semibold py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"  th:href="@{/reservation1/reservationBooking4.do}">임시2</a>
-                    </li>
+<!--                    <li>-->
+<!--                        <a class="block text-xl font-semibold py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"  th:href="@{/reservation1/reservationBooking4.do}">임시2</a>-->
+<!--                    </li>-->
                     <th:block sec:authorize="isAnonymous()">
                         <li>
                             <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between text-xl font-semibold w-full py-2 px-3 text-white rounded  hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-600 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">Login/Register
@@ -57,7 +54,7 @@
                                         <a th:href="@{/member/createMember.do}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">회원가입</a>
                                     </li>
                                     <li>
-                                        <a href="#" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">고객센터</a>
+                                        <a th:href="@{/notice/noticeList.do}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">고객센터</a>
                                     </li>
                                 </ul>
 <!--                                <div class="py-1">-->
@@ -100,8 +97,19 @@
                                         </li>
                                     </th:block>
                                     <li>
-                                        <a href="#" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">고객센터</a>
+                                        <a th:href="@{/notice/noticeList.do}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">고객센터</a>
                                     </li>
+<!--                                    <th:block sec:authorize="hasAuthority('ROLE_ADMIN')">-->
+                                        <li>
+                                            <a th:href="@{/admin/memberList.do(id=${#authentication.name})}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">회원목록</a>
+                                        </li>
+                                        <li>
+                                            <a th:href="@{/admin/noticeList.do(name=${#authentication.name})}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">공지사항</a>
+                                        </li>
+                                        <li>
+                                            <a th:href="@{/admin/askList.do(name=${#authentication.name})}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">문의사항</a>
+                                        </li>
+<!--                                    </th:block>-->
                                     <li>
                                         <form th:action="@{/auth/logout.do}" method="post" class="d-inline">
                                             <button type="submit" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">

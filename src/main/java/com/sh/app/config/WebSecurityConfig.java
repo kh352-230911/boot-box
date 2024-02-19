@@ -33,9 +33,12 @@ public class WebSecurityConfig {
                     .requestMatchers("/auth/**").permitAll()
                     .requestMatchers("/cinema/**").permitAll()
                     .requestMatchers("/movie/**").permitAll()
+                    .requestMatchers("/reservation/**").permitAll()
                     .requestMatchers("/reservation1/**").permitAll()
                     .requestMatchers("/admin/adminAuth.do").permitAll()
-                    .requestMatchers("/member/memberDetail.do").permitAll() // 마이페이지 작업 끝나면 삭제
+                    .requestMatchers("/member/memberDetail.do").authenticated()
+                    .requestMatchers("/notice/**").permitAll()
+                    .requestMatchers("/ask/**").authenticated() // 인증된 사용자만 접근가능
                     .requestMatchers("/member/createMember.do", "/member/checkIdDuplicate.do").anonymous()
 //                    .requestMatchers("/board/**").authenticated()
 //                    .requestMatchers("/admin/**").hasRole("ADMIN")

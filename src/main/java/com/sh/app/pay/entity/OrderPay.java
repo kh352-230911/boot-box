@@ -1,7 +1,7 @@
 package com.sh.app.pay.entity;
 
 import com.sh.app.common.Status;
-import com.sh.app.reservation1.entity.Reservation;
+import com.sh.app.reservation.entity.Reservation;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
