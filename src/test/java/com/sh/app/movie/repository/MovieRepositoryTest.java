@@ -219,7 +219,8 @@ public class MovieRepositoryTest {
     @DisplayName("영화 검색 조회")
     @Test
     void test7() {
-//         given
+         //given
+
         insertMovieData();
         String title = "시민";
 

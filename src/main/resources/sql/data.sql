@@ -108,15 +108,15 @@ insert into AUTHORITY values (seq_authority_id.nextval, null, 5, 'ROLE_MANAGER')
 insert into AUTHORITY values (seq_authority_id.nextval, null, 6, 'ROLE_ADMIN');
 -- seat
 -- 프로시저 반복문, 좌석 총 60개 (A~F열, 한 열당 10개)
- set serveroutput on; 
- BEGIN
- FOR i IN ASCII('A')..ASCII('F') LOOP
+set serveroutput on;
+BEGIN
+FOR i IN ASCII('A')..ASCII('F') LOOP
      FOR j IN 1..10 LOOP
        INSERT INTO SEAT VALUES (seq_seat_id.nextval, CHR(i) || LPAD(TO_CHAR(j), 2, '0'));
- END LOOP;
- END LOOP;
- COMMIT;
- END;
+END LOOP;
+END LOOP;
+COMMIT;
+END;
 --
 -- theater
 insert into THEATER values (020101, 0201, '1관', 60);
@@ -147,35 +147,35 @@ insert into GENRE values (seq_genre_id.nextval, '호러');
 --
 -- movie
 insert into
-   movie
+    movie
 values (1, '웡카', 'ALL', '2024.01.31', 116,
-       'http://h.vod.cgv.co.kr/vodCGVa/87937/87937_222373_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87937/87937_1000.jpg',
-       '폴 킹', '티모시 샬라메, 칼라 레인, 올리비아 콜맨, 톰 데이비스', '세상에서 가장 달콤한 여정 좋은 일은 모두 꿈에서부터 시작된다! 마법사이자 초콜릿 메이커 ‘윌리 웡카’의 꿈은 디저트의 성지, ‘달콤 백화점’에 자신만의 초콜릿 가게를 여는 것.
+        'http://h.vod.cgv.co.kr/vodCGVa/87937/87937_222373_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87937/87937_1000.jpg',
+        '폴 킹', '티모시 샬라메, 칼라 레인, 올리비아 콜맨, 톰 데이비스', '세상에서 가장 달콤한 여정 좋은 일은 모두 꿈에서부터 시작된다! 마법사이자 초콜릿 메이커 ‘윌리 웡카’의 꿈은 디저트의 성지, ‘달콤 백화점’에 자신만의 초콜릿 가게를 여는 것.
    가진 것이라고는 낡은 모자 가득한 꿈과 단돈 12소버린 뿐이지만 특별한 마법의 초콜릿으로 사람들을 사로잡을 자신이 있다.
    하지만 먹을 것도, 잠잘 곳도, 의지할 사람도 없는 상황 속에서 낡은 여인숙에 머물게 된 ‘웡카’는
    ‘스크러빗 부인’과 ‘블리처’의 계략에 빠져 눈더미처럼 불어난 숙박비로 인해 순식간에 빚더미에 오른다.
    게다가 밤마다 초콜릿을 훔쳐가는 작은 도둑 ‘움파 룸파’의 등장과 ‘달콤 백화점’을 독점한 초콜릿 카르텔의 강력한 견제까지.
    세계 최고의 초콜릿 메이커가 되는 길은 험난하기만 한데…',
-       17.3);
+        17.3);
 insert into
-   movie
+    movie
 values (2, '시민덕희', 'FIFTEEN', '2024.01.24', 114,
-       'http://h.vod.cgv.co.kr/vodCGVa/87866/87866_222813_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87866/87866_1000.jpg',
-       '박영주', '라미란, 공명, 염혜란, 안은진', '내 돈을 사기 친 그 놈이 구조 요청을 해왔다! 세탁소 화재로 인해 대출상품을 알아보던 생활력 만렙 덕희에게 어느 날, 거래은행의 손대리가 합리적인 대출상품을 제안하겠다며 전화를 걸어온다.
+        'http://h.vod.cgv.co.kr/vodCGVa/87866/87866_222813_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87866/87866_1000.jpg',
+        '박영주', '라미란, 공명, 염혜란, 안은진', '내 돈을 사기 친 그 놈이 구조 요청을 해왔다! 세탁소 화재로 인해 대출상품을 알아보던 생활력 만렙 덕희에게 어느 날, 거래은행의 손대리가 합리적인 대출상품을 제안하겠다며 전화를 걸어온다.
    대출에 필요하다며 이런저런 수수료를 요구한 손대리에게 돈을 보낸 덕희는 이 모든 과정이 보이스피싱이었음을 뒤늦게 인지하고 충격에 빠진다.
    전 재산을 잃고 아이들과 거리로 나앉게 생긴 덕희에게 어느 날 손대리가 다시 전화를 걸어오는데… 이번엔 살려달라는 전화다!
    경찰도 포기한 사건, 덕희는 손대리도 구출하고 잃어버린 돈도 찾겠다는 일념으로
    필살기 하나씩 장착한 직장 동료들과 함께 중국 칭다오로 직접 날아간다.',
-       5.9);
+        5.9);
 insert into
-   movie
+    movie
 values (3, '도그데이즈', 'TWELVE', '2024.02.07', 120,
         'http://h.vod.cgv.co.kr/vodCGVa/87978/87978_222744_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87978/87978_1000.jpg',
         '김덕민', '윤여정, 유혜진, 김윤진, 김서형', '깔끔한 성격의 계획형 싱글남 ‘민상’(유해진).영끌까지 모아 산 건물을 개똥밭으로 만드는 세입자 수의사 ‘진영’(김서형) 때문에 매일 머리가 아프다.
     오늘도‘진영’과 티격태격하던 ‘민상’은 동물병원에서 한 성격하는 할머니를 만나는데...',
         8.3);
 insert into
-   movie
+    movie
 values (4, '데드맨', 'FIFTEEN', '2024.02.07', 108,
         'http://h.vod.cgv.co.kr/vodCGVa/87981/87981_222534_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87981/87981_1000.jpg',
         '하준원', '조진웅, 김희애, 이수경', '목숨값 단돈 500만원! 이름값 1000억? 이름에 살고, 이름에 죽는다! 살아있지만 죽은 사람, 즉 ‘데드맨’이 되어 영문도 모른 채 중국의 사설감옥에 끌려간 ‘이만재’.

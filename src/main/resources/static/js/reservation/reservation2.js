@@ -40,17 +40,59 @@
 //예매 페이지 첫 진입시 info-seats none 처리
 const infoMoviesNone = document.querySelector(".info-movies");
 const infoSeatsNone = document.querySelector(".info-seats");
- infoSeatsNone.style.display='none';
+infoSeatsNone.style.display='none';
+var cinemaDiv = container.querySelector('.seat-container2-2cinema');
+var dateDiv = container.querySelector('.seat-container2-2date');
+var theaterDiv = container.querySelector('.seat-container2-2theater');
+var peopleDiv = container.querySelector('.seat-container2-2people');
 
-//영화 선택 시..
-$(document).ready(function(){
-    $(".movie-area tbody tr").click(function() {
+
+//영화 선택 시..0219
+$(document).ready(function()
+{
+    $(".select-movie").click(function()
+    {
         console.log("영화 선택1");
         // 모든 행의 선택을 취소하고 선택된 행에만 'selected' 클래스를 추가
-        $(this).siblings().removeClass("highlighted");
-        $(this).addClass("highlighted");
+        $(this).css('background', 'linear-gradient(to right, black, black)');
+        // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
+        $(".select-movie").not(this).css('background', '');
+
+        //선택한 영화의 고유 id (pk)값 가져오기.
+        // 선택된 버튼의 ID(영화관 ID) 출력
+        var movieId = $(this).data("movie-id");
+        console.log("선택된 영화 고유 ID:", movieId);
+        
     });
 });
+function showPoster(posterUrl,movieTitle) {
+    console.log("출력할 포스터:"+posterUrl);
+    console.log("출력할 영화명:"+movieTitle);
+    // 외부의 <div> 요소를 찾습니다.
+    const posterContainer = document.querySelector(".seat-container1");//getElementById("posterContainer");
+
+    // 해당 포스터 이미지를 표시하는 <img> 요소를 생성합니다.
+    let imgElement = document.querySelector(".seat-container1-img");
+
+    let textElement = document.querySelector(".seat-container1-title");
+    // 이전에 표시된 이미지가 있다면 제거합니다.
+    posterContainer.innerHTML = "";
+    imgElement.src = posterUrl;
+    //movieTitle을 전체 출력하되, 제목이 길면 자른다.
+
+    if(movieTitle.length>=10)
+    {
+        textElement.innerHTML = addLineBreaks(movieTitle,10);
+    }
+    else
+    {
+        textElement.innerHTML = movieTitle;
+    }
+
+    posterContainer.appendChild(imgElement);
+    posterContainer.appendChild(textElement);
+}
+
 
 //지역 선택 시 ..1
 // $(document).ready(function(){
@@ -70,13 +112,19 @@ $(document).ready(function(){
         //수정한 거
         console.log("지역선택");
 
+        $(this).css('background', 'linear-gradient(to right, black, black)');
+        // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
+        $(".select_location").not(this).css('background', '');
+        console.log("지역선택2");
+        var localName = $(this).text();
+        console.log("선택된 지역:", localName);
 
-        
-        
-        
-        
-        
-        //기존 
+        // 선택된 버튼의 ID(영화관 ID) 출력
+        var localId = $(this).data("local-id");
+        console.log("선택된 지역 ID:", localId);
+
+
+        //기존
         // $(".select_location").eq(index).css("background-color", "yellow");
         // // 선택된 행의 인덱스 가져오기
         // var index = $(this).closest("tr").index();
@@ -91,38 +139,55 @@ $(document).ready(function(){
 });
 
 
+$(document).ready(function(){
+    $(".select_location2").click(function()
+    {
+        //수정한 거
+        $(this).css('background', 'linear-gradient(to right, black, black)');
+        // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
+        $(".select_location2").not(this).css('background', '');
+        console.log("지점선택2");
+        var cinemaName = $(this).text();
+        console.log("선택된 영화관:", cinemaName);
+
+        cinemaDiv.innerText = cinemaName;
+
+
+
+        // 선택된 버튼의 ID(영화관 ID) 출력
+        var cinemaId = $(this).data("cinema-id");
+        console.log("선택된 영화관 ID:", cinemaId);
+    });
+});
+
+
+//날자 선택 시..
+$(document).ready(function(){
+    $(".select_date").click(function()
+    {
+        //수정한 거
+        console.log("날짜 선택");
+        $(this).css('background', 'linear-gradient(to right, black 0%, black 100%)');
+        // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
+        $(".select_date").not(this).css('background', '');
+
+        dateDiv.innerText = $(this).text();
+
+
+        // 선택된 버튼의 ID(영화관 ID) 출력
+        var dateId = $(this).data("date-id");
+        console.log("선택된 date ID:",dateId);
+
+    });
+});
+
 
 const seatContainer1Div = document.querySelector(".seat-container1");
 // seatContainer1Div.style.backgroundColor = 'red';
 
-function showPoster(posterUrl,movieTitle) {
-    console.log("출력할 포스터:"+posterUrl);
-    console.log("출력할 영화명:"+movieTitle);
-    // 외부의 <div> 요소를 찾습니다.
-    const posterContainer = document.querySelector(".seat-container1");//getElementById("posterContainer");
-
-    // 해당 포스터 이미지를 표시하는 <img> 요소를 생성합니다.
-    let imgElement = document.querySelector(".seat-container1-img");
-    let textElement = document.querySelector(".seat-container1-title");
-    // 이전에 표시된 이미지가 있다면 제거합니다.
-    posterContainer.innerHTML = "";
-    imgElement.src = posterUrl;
-    //movieTitle을 전체 출력하되, 제목이 길면 자른다.
-
-    if(movieTitle.length>=10)
-    {
-        textElement.innerHTML = addLineBreaks(movieTitle,10);
-    }
-    else
-    {
-        textElement.innerHTML = movieTitle;
-    }
 
 
-    posterContainer.appendChild(imgElement);
-    posterContainer.appendChild(textElement);
-}
-
+//10글자씩 잘라서 br 처리
 function addLineBreaks(str, charsPerLine) {
     var result = '';
     for (var i = 0; i < str.length; i++) {
@@ -139,6 +204,7 @@ document.querySelector(".select-seats-prev-button").addEventListener('click',fun
     //alert('이전버튼');
     console.log("...이전 버튼...");
     var cookieValue = getCookie("myCookie");
+    $('#test-area').html("");
 
     if (cookieValue !== null) {
         // 쿠키에서 가져온 JSON 형식의 문자열을 배열로 변환
@@ -159,15 +225,12 @@ document.querySelector(".select-seats-prev-button").addEventListener('click',fun
         // div.style.display = 'none';
     }
 });
+
+
+//0219 다음 버튼을 눌렀을 때, 영화-극장-시간-상영시간 모두 선택되어야 한다. 한개라도 선택 안되어있다면 넘어가지 못함.
 document.querySelector(".select-seats-next-button").addEventListener('click',function ()
 {
-    /*
-    * 0216
-    * //1페이지에서 2페이지로 넘어가는 경우
-    *
-    *
-    *
-    * */
+
     console.log("...다음 버튼...");
     let testArray = ['Aa', 'Bb', 'Cc', 'Dd', 'Ee', 'Ff'];
     setCookieForList("myCookie", testArray, 1); //1일
@@ -185,36 +248,57 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
         url: `${contextPath}reservation/scheduleTest`,
         type: 'get',
         data:{
-            scheduleId:41
+            scheduleId:20
         },
         success(response){
             console.log("~~~~success~~~~",response);
-            hohohoho();
+            makeSeat(response);
         },
-        error(error) {
-            console.error('~~~~Ajax request failed~~~~:', error);
+        //requests:  요청 객체입니다. 보통 HTTP 요청 정보를 포함하며, 요청한 클라이언트의 정보와 요청된 리소스에 대한 정보 등을 포함합니다.
+        // status: HTTP 상태 코드입니다. 실패한 요청의 상태 코드를 나타냅니다.
+        // error: 서버에서 반환된 오류 메시지입니다.
+        error(request, status, error) {
+            //console.error('~~~~Ajax request failed~~~~:', error);
+            console.log('~~~~Error response responseText~~~~:', request.responseText);
+            console.log('~~~~Error response status~~~~:', request.status);
+            if(request.status==500)
+            {
+                alert(`에러로 인해 메인페이지로 이동합니다. 이용에 불편을 끼쳐드려 죄송합니다.`)
+                window.location.href = `${contextPath}bootbox/`; // 리다이렉트할 URL을 지정합니다.
+            }
+            else if(request.status==401) //인증 관련 에러
+            {
+                window.location.href = `${contextPath}`+request.responseText; // 리다이렉트할 URL을 지정합니다.
+            }
+
         }
     });
-
-
-
-
 });
 
 
-function hohohoho()
+function makeSeat(response)
 {
-    console.log("ajax에서 함수 불러오기~~~~~~~~~~~~~~~~~");
-    
+    console.log("ajax에서 함수 불러오기.");
+    //기존 : 제이쿼리로 화면단 일부 갱신
+    //$('#test-area').html(response);
+
+    // 6행 10열의 좌석 생성
+    createSeats(6, 10,response);
 
 }
 
 //============================================================================================================================
 // 알파벳 배열(좌석행)
 let alphabet = ['A', 'B', 'C', 'D', 'E', 'F'];
-function createSeats(rows, cols) {
-    const seatTableBody = document.getElementById('seatTableBody');
+let checkbox;
+function createSeats(rows, cols,response) {
+    console.log("createSeats :)");
 
+    const seatTableBody = document.getElementById('seatTableBody');
+// seatTableBody에 있는 모든 자식 요소를 제거
+    while (seatTableBody.firstChild) {
+        seatTableBody.removeChild(seatTableBody.firstChild);
+    }
     // 행 반복
     for (var i = 0; i < rows; i++) {
         var row = document.createElement('tr');
@@ -239,7 +323,7 @@ function createSeats(rows, cols) {
             //0216 한자리 수 인 경우 앞에 0 추가 1->01
             let seatId =alphabet[i] +  (j < 10 ? '0' + j : j);
             // 좌석 생성
-            var checkbox = document.createElement('input');
+            checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.id = 's' + seatId;
             checkbox.name = 'tickets';
@@ -257,7 +341,7 @@ function createSeats(rows, cols) {
                 }
                 else
                 {
-                     checkedCount = 0;
+                    checkedCount = 0;
                     // 페이지 내의 모든 체크박스를 반복하여 상태 확인
                     var checkboxes = document.querySelectorAll('input[type="checkbox"][name="tickets"]');
                     checkboxes.forEach(function(checkbox)
@@ -281,24 +365,10 @@ function createSeats(rows, cols) {
             label.className = 'seat';
             label.textContent = j; // 열 번호 추가
 
-            // 4번과 20번 체크박스는 disabled 처리
-            // if (seatId === 'A6' || seatId === 'F1') {
-            //     checkbox.disabled = true;
-            //     //this.parentNode.style.backgroundColor = 'red';
-            // }
-            //0215 isreservationSeat 배열에 예약된 좌석값을 넣은 후 반복문처리.
-            let isReservationSeat = [];
-            isReservationSeat.push('A06');
-            isReservationSeat.push('B03');
-            isReservationSeat.push('B04');
-            isReservationSeat.push('E10');
-            isReservationSeat.push('F01');
-
-            isReservationSeat.forEach(function(seat) {
+            response.forEach(function(seat) {
                 if(seat===seatId)
                     checkbox.disabled = true;
             });
-
 
             // 테이블에 추가
             var col = document.createElement('td');
@@ -309,6 +379,10 @@ function createSeats(rows, cols) {
         seatTableBody.appendChild(row);
     }
 }
+
+//예약된 좌석 현황을 체크해주는 함수
+
+
 
 function toClear()
 {
@@ -332,7 +406,7 @@ const resultElement = document.getElementById('result');
 let numberOfPeople = resultElement.innerText;
 function count(type)  {
 
-    // 더하기/빼기
+    // 더하기/빼기 numberOfPeople = 선택한 인원
     if(type === 'plus' && numberOfPeople<8 )
     {
         numberOfPeople = parseInt(numberOfPeople) + 1;
@@ -402,8 +476,7 @@ function highlightCell(cell)
 
 
 
-// 6행 10열의 좌석 생성
-createSeats(6, 10);
+
 
 
 //0216 내가 선택한 값 저장할 용도로 쓰일 쿠키 test

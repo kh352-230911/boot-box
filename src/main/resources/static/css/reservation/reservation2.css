@@ -398,6 +398,7 @@ label_row
 }
 
 .seat-container1-img {
+    border: 1px solid transparent;
     width: 150px;
     height: 170px;
 }
@@ -408,10 +409,16 @@ label_row
 
 /*극장,날짜(상영스케쥴),상영관 컨테이너*/
 .seat-container2 {
+    display: flex;
     padding: 10px;
     /*border: 1px solid lightgray;*/
     border-right: 2px solid red; /* 오른쪽 세로선 설정 */
     width: 20vw;
+}
+.seat-container2-1, .seat-container2-2
+{
+    margin-left: 5px;
+    display: block;
 }
 /*좌석 위치, 총 결제금액 */
 .seat-container3 {
@@ -467,10 +474,11 @@ table{
 
 .info-movies tbody{
     /* 각 테이블의 스타일 */
-    width: 250px;
+    width: 300px;
     display: block;
     overflow-y: auto;
     height: 400px;
+
 }
 
 /* 수직 스크롤바 */
@@ -484,3 +492,4 @@ table{
 ::-webkit-scrollbar-track {
     background: transparent;  /* 스크롤바 트랙의 배경색 변경 */
 }
+

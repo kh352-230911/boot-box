@@ -26,10 +26,10 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY) //0219 eager에서 수정
     @JoinColumn(name = "theater_id")
     private Theater theater;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY) //0219 eager에서 수정
     @JoinColumn(name = "movie_id")
     private Movie movie;
     @Column(nullable = false)
