@@ -26,6 +26,9 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
      */
     @Query(value = """
         SELECT
+            m.id AS movieId,
+            c.id AS cinemaId,
+            s.id AS schId,
             s.sch_date AS schDate,
             c.region_cinema AS regionCinema,
             m.title AS movieTitle,

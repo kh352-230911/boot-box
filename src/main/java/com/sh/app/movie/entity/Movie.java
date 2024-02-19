@@ -21,7 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = "schedules")
+@ToString(exclude =  "reviews")
 public class Movie {
     @Id
     private Long id;
@@ -41,7 +41,7 @@ public class Movie {
     private String summary;
     private double advanceReservation;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
            name = "movie_genre",
            joinColumns = @JoinColumn(name = "movie_id"),
@@ -53,7 +53,7 @@ public class Movie {
             this.genres.add(genre);
     }
 
-    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
     @Builder.Default
     private List<Schedule> schedules = new ArrayList<>();
 
