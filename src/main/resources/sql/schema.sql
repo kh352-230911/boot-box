@@ -48,19 +48,6 @@ CREATE TABLE LOCATION(
 --
 -- 3.극장(ex강남점,성수점...)
 CREATE TABLE CINEMA(
-<<<<<<< HEAD
-                       id number	NOT NULL, --지점 아이디
-                       location_id number NOT NULL, --지역 아이디
-                       region_cinema varchar2(50) NOT NULL,--지점명
-                       theater_number number	NOT NULL, --상영관 수(1관,2관..)
-                       address	varchar2(500) NOT NULL, --주소
-                       location_lo number NULL, --지도 경도
-                       location_la number NULL, --지도 위도
-                       phone varchar2(100) NOT NULL, --전화번호
-                       constraints pk_cinema_id primary key(id), --pk
-                       constraints fk_cinema_location_id foreign key(location_id) references location(id) on delete set null, --지역 아이디 수정,삭제 시 자식 null로됨
-                       constraints uq_cinema_region_cinema unique(region_cinema) -- uq
-=======
     id number	NOT NULL, --지점 아이디
     location_id number NOT NULL, --지역 아이디
     region_cinema varchar2(50) NOT NULL,--지점명
@@ -72,7 +59,6 @@ CREATE TABLE CINEMA(
     constraints pk_cinema_id primary key(id), --pk
     constraints fk_cinema_location_id foreign key(location_id) references location(id) on delete set null, --지역 아이디 수정,삭제 시 자식 null로됨
     constraints uq_cinema_region_cinema unique(region_cinema) -- uq
->>>>>>> 0eb399ebd683acf9ddebabc47be37436ad5f3324
 );
 --6.회원
 CREATE TABLE MEMBER(

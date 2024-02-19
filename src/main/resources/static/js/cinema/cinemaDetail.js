@@ -89,7 +89,9 @@ arrows.forEach((arrow, i) => {
 //         schedules: [
 //             {
 //                 theater: "5관",
-//                 times: [{ time: "19:20", seatsAvailable: 50 }],
+//                 times: [{
+//                     time: "19:20", seatsAvailable: 50
+//                 }],
 //             },
 //             {
 //                 theater: "6관",
@@ -244,7 +246,7 @@ const scheduleManager= () => {
     console.log(selectedDate);
 
     $.ajax({
-        url: `/bootbox/cinema/scheduleByDate`, // Uncaught SyntaxError: Identifier 'contextPath' has already been declared 오류는 'contextPath'라는 식별자가 같은 스코프 내에서 두 번 선언 오류
+        url: `${contextPath}cinema/scheduleByDate`, // Uncaught SyntaxError: Identifier 'contextPath' has already been declared 오류는 'contextPath'라는 식별자가 같은 스코프 내에서 두 번 선언 오류
         type: 'GET',
         data: {
             id: id,
@@ -259,6 +261,12 @@ const scheduleManager= () => {
         }
     });
 };
+
+// 페이지 로드 시 상영 시간표를 불러오는 함수 호출
+$(document).ready(() => {
+    scheduleManager();
+});
+
 
 // // 영화관사진 랜덤하게 로딩
 // function changeImage() {
