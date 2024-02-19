@@ -73,6 +73,7 @@ public class CinemaController {
         log.debug("id = {}", id); // 극장 ID
         log.debug("selectedDate = {}", selectedDate); // 선택된날짜
         List<IScheduleInfoDto> scheduleDetails = scheduleService.findScheduleDetailsByDateAndCinemaId(id, selectedDate);
+        log.debug("scheduleDetails = {}", scheduleDetails);
 
         // 로직을 추가하여 scheduleDetails에서 필요한 JSON 구조로 변환
         List<Map<String, Object>> organizedSchedules = organizeSchedules(scheduleDetails);
@@ -83,8 +84,10 @@ public class CinemaController {
     }
 
     private List<Map<String, Object>> organizeSchedules(List<IScheduleInfoDto> scheduleDetails) {
-        Map<String, Map<String, List<Map<String, Object>>>> organized = new HashMap<>(); // 영화별, 상영관별, 스케줄별 그룹화하기위한 맵
-        Map<String, String> movieDurations = new HashMap<>(); // 각 영화별 상영 시간을 저장하기 위한 맵
+        // 영화별, 상영관별, 스케줄별 그룹화하기위한 맵
+        Map<String, Map<String, List<Map<String, Object>>>> organized = new HashMap<>();
+        // 각 영화별 상영 시간을 저장하기 위한 맵
+        Map<String, String> movieDurations = new HashMap<>();
 
         for (IScheduleInfoDto dto : scheduleDetails) {
             String title = dto.getMovieTitle();
@@ -98,7 +101,7 @@ public class CinemaController {
             timeMap.put("time", dto.getStartTime().format(DateTimeFormatter.ofPattern("HH:mm")));
             timeMap.put("seatsAvailable", dto.getRemainingSeats());
 
-            // 영화 제목과 상영관에 따라 그룹화
+            // 영화 제목별, 상영관별, 스케줄별에 따라 그룹화
             organized.computeIfAbsent(title, k -> new HashMap<>())
                     .computeIfAbsent(theater, k -> new ArrayList<>())
                     .add(timeMap);
