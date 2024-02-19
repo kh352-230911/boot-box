@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = "movie")
+@ToString(exclude = "member")
 public class Review {
     @Id
     @GeneratedValue(generator = "seq_review_id_generator")
@@ -34,11 +34,11 @@ public class Review {
     private String reviewDetail; // 리뷰내용
     private LocalDateTime reviewCreatedAt; // 리뷰작성날짜
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "movie_id") // movie.movie_id 컬럼지정
     private Movie movie;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id") // movie.member_id 컬럼지정
     private Member member;
 

@@ -1,6 +1,7 @@
 package com.sh.app.member.service;
 
 
+import com.sh.app.auth.vo.MemberDetails;
 import com.sh.app.authority.entity.Authority;
 import com.sh.app.authority.entity.RoleAuth;
 import com.sh.app.authority.service.AuthorityService;
@@ -65,5 +66,9 @@ public class MemberService {
     public List<Member> findAll() {
         System.out.println("회원조회 service");
         return memberRepository.findAll();
+    }
+
+    public Member findByReservation(Long id) {
+        return memberRepository.findByReservation(id);
     }
 }

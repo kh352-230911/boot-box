@@ -1,6 +1,7 @@
 package com.sh.app.member.entity;
 
 import com.sh.app.authority.entity.Authority;
+import com.sh.app.reservation.entity.Reservation;
 import com.sh.app.review.entity.Review;
 import jakarta.persistence.*;
 import lombok.*;
@@ -9,7 +10,9 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 0206 member entity - db member table
@@ -23,7 +26,7 @@ import java.util.List;
 @Builder
 @DynamicInsert //null이 아닌 필드값만 insert한다.
 @DynamicUpdate //영속성 컨텍스트의 엔티티와 달라진 필드만 update한다.
-@ToString(exclude = "reviews")
+//@ToString(exclude = "reviews")
 public class Member implements Serializable{
 
     @Id
@@ -36,7 +39,7 @@ public class Member implements Serializable{
     )
     private Long id;
 
-    @Column(nullable =false, unique = true)
+    @Column(nullable = false, unique = true)
     private String memberLoginId	; //uq
 
     @Column(nullable = false)
@@ -57,8 +60,10 @@ public class Member implements Serializable{
     @Builder.Default
     private List<Review> reviews = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id") // authority.member_id 컬럼 작성
     private List<Authority> authorities;
 
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+    private List<Reservation> reservations = new ArrayList<>();
 }
