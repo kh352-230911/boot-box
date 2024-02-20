@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(
@@ -33,6 +34,7 @@ public class Notice implements Serializable {
     @Column(nullable = false, name = "notice_title")
     private String noticeTitle;
     private String noticeContent;
+    private LocalDateTime createdAt;
 
     @Column(nullable = false, name = "notice_type")
     @Enumerated(EnumType.STRING)

@@ -1,5 +1,6 @@
 package com.sh.app.member.entity;
 
+import com.sh.app.ask.entity.Ask;
 import com.sh.app.authority.entity.Authority;
 import com.sh.app.review.entity.Review;
 import jakarta.persistence.*;
@@ -60,5 +61,9 @@ public class Member implements Serializable{
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id") // authority.member_id 컬럼 작성
     private List<Authority> authorities;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+    private List<Ask> asks = new ArrayList<>();
+
 
 }

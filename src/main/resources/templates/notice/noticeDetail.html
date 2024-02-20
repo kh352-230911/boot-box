@@ -11,7 +11,7 @@
 <div layout:fragment="content" class="wrap-container">
     <div class="home-container">
         <div class="title-box flex justify-center">
-         <span class="border-b-2 border-red-600 font-semibold pb-2 text-xl">
+         <span class="border-b-2 border-red-600 font-semibold pb-2 pt-16 text-xl">
              공지/뉴스
          </span>
         </div>
@@ -20,7 +20,7 @@
         <!-- table박스 -->
         <div class="container flex justify-center mt-4">
             <table>
-                <thead>
+                <thead class="text-base">
                 <tr>
                     <th th:text="${notice.id}">번호</th>
                     <th th:text="${notice.noticeTitle}">제목</th>
@@ -28,7 +28,7 @@
                                               notice.noticeType.name() == 'CINEMA' ? '상영관' :
                                               notice.noticeType.name() == 'EVENT' ? '이벤트' :
                                               notice.noticeType.name() == 'ETC' ? '기타' : '기타'} ]|">구분</th>
-                    <th th:text="|등록일 : ${#temporals.format(notice.noticeCreatedAt, 'yyyy/MM/dd HH:mm')}|">등록일</th>
+                    <th th:text="|등록일 : ${#temporals.format(notice.createdAt, 'yyyy/MM/dd HH:mm')}|">등록일</th>
                 </tr>
                 </thead>
                 <tbody class="py-50">
@@ -41,7 +41,7 @@
         </div>
         <!-- '목록으로' 버튼 -->
         <div class="button-container">
-            <a th:onclick="|location.href = '@{/notice/noticeList.do}';|" class="back-to-list-btn">목록으로</a>
+            <a th:onclick="|location.href = '@{/notice/noticeList.do}';|" class="back-to-list-btn text-base">목록으로</a>
         </div>
     </div>
 </div>
