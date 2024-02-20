@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -112,10 +113,15 @@ public class ScheduleService {
             Long movieId = dto.getMovieId();
             Long cinemaId = dto.getCinemaId();
             Long schId = dto.getSchId();
+            LocalDateTime _schDate = dto.getSchDate();
+
+            // LocalDateTime을 yyyy/MM/dd 형식의 문자열로 변환
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+            String schDate = _schDate.format(dateFormatter);
 
             // 예약 페이지 URL 생성 - 파라미터로 전달
-            String bookingUrl = String.format("/bootbox/reservation/reservationBooking.do?movieId=%d&cinemaId=%d&schId=%d",
-                    movieId, cinemaId, schId);
+            String bookingUrl = String.format("/bootbox/reservation/reservationBooking.do?movieId=%d&cinemaId=%d&schId=%d&schDate=%s",
+                    movieId, cinemaId, schId, schDate);
 
             String title = dto.getMovieTitle();
             String theater = dto.getTheaterName();
