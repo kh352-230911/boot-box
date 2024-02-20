@@ -18,14 +18,34 @@
         <thead>
             <tr>
                 <th>이름</th>
+                <th>좌석 수</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="theater : ${theaters}">
                 <td th:text="${theater.name}"></td>
+                <td th:text="${theater.seat}"></td>
             </tr>
         </tbody>
     </table>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>아이디</th>
+                    <th>영화날짜</th>
+                    <th>영화시작시간</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="schedule : ${allSchedules}">
+                    <td th:text="${schedule.id}"></td>
+                    <td th:text="${schedule.schDate}"></td>
+                    <td th:text="${#temporals.format(schedule.time, 'HH:mm')}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
 </div>
 

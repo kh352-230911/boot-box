@@ -97,4 +97,11 @@ public class ScheduleService {
     public List<IScheduleInfoDto> findScheduleDetailsByDateAndCinemaId(Long id, LocalDate schDate) {
         return scheduleRepository.findScheduleDetailsByDateAndCinemaId(id, schDate);
     }
+
+    public List<ScheduleDto> findScheduleWithTheaterId(Long theaterId) {
+        List<Schedule> schedules = scheduleRepository.findByTheaterId(theaterId);
+        return schedules.stream()
+                .map(schedule -> modelMapper.map(schedule, ScheduleDto.class))
+                .collect(Collectors.toList());
+    }
 }
