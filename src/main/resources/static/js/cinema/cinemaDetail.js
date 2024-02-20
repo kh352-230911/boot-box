@@ -240,7 +240,6 @@ $(document).ready(() => {
 });
 
 
-
 // // 영화관사진 랜덤하게 로딩
 // function changeImage() {
 //     const images = [
