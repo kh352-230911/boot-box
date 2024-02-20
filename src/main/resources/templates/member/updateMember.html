@@ -2,24 +2,21 @@
 <html
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
         layout:decorate="~{layout/default}">
 <head>
-    <title>회원가입</title>
-    <link rel="stylesheet" th:href="@{/css/member/createMember.css}" />
+    <title>회원 정보 수정</title>
+    <link rel="stylesheet" th:href="@{/css/member/updateMember.css}" />
 </head>
 <style layout:fragment="style"></style>
 
 <div layout:fragment="content" class="wrap-container">
     <div class="home-container">
         <div class="login-box">
-            <h2>Register</h2>
-            <form name="memberCreateFrm" th:action="@{/member/createMember.do}" method="POST">
+            <h2>회원 정보</h2>
+            <form name="memberCreateFrm" th:action="@{/member/updateMember.do}" method="POST">
                 <div id="user-box1" class="user-box">
-                    <input type="text" class="form-control block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" name="memberLoginId" id="memberLoginId" pattern="^\w{4,}$" required>
-                    <!-- 아이디중복검사 코멘트추가 -->
-                    <span class="flex mb-3 guide ok text-sm">이 아이디는 사용 가능 합니다.</span>
-                    <span class="flex mb-3 guide error text-sm">이 아이디는 사용할 수 없습니다.</span>
-                    <input type="hidden" name="idDuplicateCheck" id="idDuplicateCheck" value="0"/>
+                    <input type="text" class="form-control block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" name="memberLoginId" id="memberLoginId" pattern="^\w{4,}$" th:value="${#authentication.principal.username}" required>
                     <label for="memberLoginId" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username</label>
                 </div>
                 <div class="user-box">
@@ -31,19 +28,19 @@
                     <label for="passwordConfirmation" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">PasswordConfirm</label>
                 </div>
                 <div class="user-box">
-                    <input type="text" id="memberName" name="memberName" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" required>
+                    <input type="text" id="memberName" name="memberName" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" th:value="${#authentication.principal.member.memberName}" required>
                     <label for="memberName" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">name</label>
                 </div>
                 <div class="user-box">
-                    <input type="text" id="birthyear" name="birthyear" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" required>
+                    <input type="text" id="birthyear" name="birthyear" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" th:value="${#authentication.principal.member.birthyear}" required>
                     <label for="birthyear" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">birthyear</label>
                 </div>
                 <div class="user-box">
-                    <input type="email" id="memberEmail" name="memberEmail" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" required>
+                    <input type="email" id="memberEmail" name="memberEmail" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" th:value="${#authentication.principal.member.memberEmail}" required>
                     <label for="memberEmail" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">email</label>
                 </div>
                 <div class="user-box">
-                    <input type="text" id="memberPhone" name="memberPhone" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" required>
+                    <input type="text" id="memberPhone" name="memberPhone" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" th:value="${#authentication.principal.member.memberPhone}" required>
                     <label for="memberPhone" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">phone</label>
                 </div>
 
@@ -59,6 +56,5 @@
     </div>
 </div>
 
-
-<script layout:fragment="script" th:src="@{/js/member/createMember.js}"></script>
+<script layout:fragment="script" th:src="@{/js/member/updateMember.js}"></script>
 </html>

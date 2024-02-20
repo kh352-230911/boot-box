@@ -48,7 +48,6 @@ CREATE TABLE LOCATION(
 --
 -- 3.극장(ex강남점,성수점...)
 CREATE TABLE CINEMA(
-
     id number	NOT NULL, --지점 아이디
     location_id number NOT NULL, --지역 아이디
     region_cinema varchar2(50) NOT NULL,--지점명
@@ -194,7 +193,7 @@ CREATE TABLE ASK(
     ask_type varchar2(200) default 'ETC' NOT NULL, -- 문의유형 ck
     created_at date DEFAULT current_date NOT NULL,
     constraints pk_ask_id primary key(id), --pk
-    constraints fk_ask_member_id foreign key(member_id) references member(member_id) on delete set null, --fk
+    constraints fk_ask_member_id foreign key(member_id) references member(id) on delete set null, --fk
     constraint ck_ask_type check(ask_type in ('CINEMA', 'MOVIE', 'RESERVATION', 'ETC'))
 );
 create sequence seq_ask_id; --문의 시퀀스
@@ -219,6 +218,7 @@ CREATE TABLE NOTICE(
     notice_type varchar2(200) default 'ETC' NOT NULL, -- 공지유형 ck
     notice_title varchar2(100)	NOT NULL,
     notice_content varchar2(2000)	NOT NULL,
+    created_at date default sysdate NOT NULL,
     constraints pk_notice_id primary key(id), --pk
     constraints fk_notice_admin_id foreign key(admin_id) references admin(id) on delete set null,
     constraint ck_notice_type check(notice_type in ('SYSTEM','CINEMA','EVENT','ETC'))
@@ -252,55 +252,55 @@ CREATE TABLE RESERVATION(
 --
 --21.예약좌석
 CREATE TABLE RESERVATION_SEAT(
-    id number NOT NULL,
-    res_id	varchar2(50) NOT NULL,
-    seat_id number	NOT NULL,
-    constraints pk_reservation_seat_id primary key(id),
-    constraints fk_reservation_seat_res_id foreign key(res_id) references reservation(id) on delete set null,
-    constraints fk_reservation_seat_seat_id  foreign key(seat_id) references seat(id) on delete set null
+     id number NOT NULL,
+     res_id	varchar2(50) NOT NULL,
+     seat_id number	NOT NULL,
+     constraints pk_reservation_seat_id primary key(id),
+     constraints fk_reservation_seat_res_id foreign key(res_id) references reservation(id) on delete set null,
+     constraints fk_reservation_seat_seat_id  foreign key(seat_id) references seat(id) on delete set null
 );
 create sequence seq_reservation_seat_id;
 --
 --14.주문 결제 테이블(결제 누적 테이블) 시퀀스x
 CREATE TABLE ORDER_PAY(
-  id varchar2(1000)	NOT NULL, --주문결제 아이디 pk
-  reservation_id varchar2(50) NOT NULL, --예약 아이디 fk
-  member_id number	NOT NULL, --회원아이디 fk
-  imp varchar2(100)	NOT NULL, --가맹점 식별코드
-  inicis varchar2(100) NOT NULL, --지원 pg사
-  reservation_amount varchar2(100) NOT NULL,	--결제 방식
-  price number NOT NULL, --총 결제 금액
-  phone varchar2(100)	NOT NULL, --핸드폰 번호
-  status varchar2(30)	 NOT NULL, --결제 상태
-  constraints pk_order_pay_id primary key(id), --pk
-  constraints fk_order_pay_reservation_id foreign key(reservation_id) references reservation(id) on delete set null,
-  constraints ck_order_pay_status check(status in ('PENDING','CONFIRM')),
-  constraints fk_order_pay_member_id foreign key(member_id) references member(id) on delete set null
+    id varchar2(1000)	NOT NULL, --주문결제 아이디 pk
+    reservation_id varchar2(50) NOT NULL, --예약 아이디 fk
+    member_id number	NOT NULL, --회원아이디 fk
+    imp varchar2(100)	NOT NULL, --가맹점 식별코드
+    inicis varchar2(100) NOT NULL, --지원 pg사
+    reservation_amount varchar2(100) NOT NULL,	--결제 방식
+    price number NOT NULL, --총 결제 금액
+    phone varchar2(100)	NOT NULL, --핸드폰 번호
+    status varchar2(30)	 NOT NULL, --결제 상태
+    constraints pk_order_pay_id primary key(id), --pk
+    constraints fk_order_pay_reservation_id foreign key(reservation_id) references reservation(id) on delete set null,
+    constraints ck_order_pay_status check(status in ('PENDING','CONFIRM')),
+    constraints fk_order_pay_member_id foreign key(member_id) references member(id) on delete set null
 );
 --
 --10.결제 취소 내역(완료된 결제를 취소했다는 가정하에 insert됨)
 CREATE TABLE CANCEL_PAY(
-   id number NOT NULL, --pk
-   member_id number	NOT NULL, --fk
-   c_reservation_pay number NOT NULL,
-   c_reservation_amount VARCHAR(255) NOT NULL,
-   constraints pk_cancel_pay_id primary key(id), --pk
-   constraints fk_cancel_pay_member_id foreign key(member_id) references member(id) on delete set null
+    id number NOT NULL, --pk
+    member_id number	NOT NULL, --fk
+    c_reservation_pay number NOT NULL,
+    c_reservation_amount VARCHAR(255) NOT NULL,
+    constraints pk_cancel_pay_id primary key(id), --pk
+    constraints fk_cancel_pay_member_id foreign key(member_id) references member(id) on delete set null
 );
 create sequence seq_cancel_pay_id;
 --
 --22.극장별 영화목록(브릿지)
 CREATE TABLE MOVIE_LIST(
-   id number NOT NULL, --PK
-   movie_id number NOT NULL,--FK
-   cinema_id number NOT NULL,--FK
-   constraint pk_movie_list_id primary key(id),
-   constraint fk_movie_list_movie_id foreign key(movie_id) references movie(id) on delete set null,
-   constraint fk_movie_list_cinema_id foreign key(cinema_id) references cinema(id) on delete set null
+    id number NOT NULL, --PK
+    movie_id number NOT NULL,--FK
+    cinema_id number NOT NULL,--FK
+    constraint pk_movie_list_id primary key(id),
+    constraint fk_movie_list_movie_id foreign key(movie_id) references movie(id) on delete set null,
+    constraint fk_movie_list_cinema_id foreign key(cinema_id) references cinema(id) on delete set null
 );
 create sequence seq_movie_list_id;
 --
- --12.리뷰
+--12.리뷰
 CREATE TABLE REVIEW(
     id number NOT NULL,--pk
     reservation_id varchar2(100)	NOT NULL, -- 예약내역 fk

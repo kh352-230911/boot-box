@@ -38,6 +38,4 @@ public class MovieDetailDto {
 
     private Set<Genre> genres = new LinkedHashSet<>();
 
-
-
 }

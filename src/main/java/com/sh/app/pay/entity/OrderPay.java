@@ -3,10 +3,7 @@ package com.sh.app.pay.entity;
 import com.sh.app.common.Status;
 import com.sh.app.reservation.entity.Reservation;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * 0207 hyejin
@@ -20,6 +17,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode(exclude = {"reservation"})
+@ToString(exclude = "reservation")
 //서브
 public class OrderPay {
     @Id

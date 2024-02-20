@@ -1,0 +1,17 @@
+.wrap-container {
+    height: auto;
+    min-height: 100%;
+    padding-bottom: 60px;
+}
+.home-container {
+    min-height: 600px;
+    margin: 90px 10px 10px;
+}
+footer {
+    height: 60px;
+    position: relative;
+    transform: translateY(50%);
+}
+.title-box > li {
+    width: 150px;
+}
