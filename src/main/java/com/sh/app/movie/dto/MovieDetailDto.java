@@ -33,7 +33,7 @@ public class MovieDetailDto {
     private boolean searchResult;
     private String searchVaule;
 
-    @JsonIgnore
+    @JsonIgnore // 스텍오버플로우 방지
     private List<Review> reviews = new ArrayList<>();
 
     private Set<Genre> genres = new LinkedHashSet<>();
