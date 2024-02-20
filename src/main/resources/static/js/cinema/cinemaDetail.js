@@ -187,7 +187,7 @@ function renderSchedule(scheduleData) {
         const movieElement = $('<div>').addClass('schedule-container');
 
         // 관람 등급에 따른 스팬 태그 생성
-        const ratingSpan = $('<span>').css('font-size', '1em').addClass('grade me-2 px-2.5 py-0.5 rounded font-bold');
+        const ratingSpan = $('<span>').css('font-size', '0.8em').addClass('grade me-2 px-2.5 py-0.5 rounded font-bold');
         // console.log(movie.filmRatings);
         switch(movie.filmRatings) {
             case 'ALL':

@@ -9,8 +9,12 @@ import com.sh.app.reservation.service.ReservationService;
 import com.sh.app.schedule.dto.ScheduleDto;
 import com.sh.app.schedule.entity.Schedule;
 import com.sh.app.schedule.service.ScheduleService;
+import com.siot.IamportRestClient.IamportClient;
+import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -55,6 +59,18 @@ public class ReservationController {
     @Autowired
     ScheduleService scheduleService;
 
+    private IamportClient iamportClient;
+
+    @Value("${imp.api.key}")
+    private String apiKey;
+
+    @Value("${imp.api.secretkey}")
+    private String secretKey;
+
+    @PostConstruct
+    public void init() {
+        this.iamportClient = new IamportClient(apiKey, secretKey);
+    }
 
 
     //첫 예매 페이지 진입 시 날짜(로컬)

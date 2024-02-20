@@ -111,6 +111,7 @@ public class ScheduleService {
         // 각 영화별 관람 등급을 저장하기 위한 맵
         Map<String, String> movieFilmRatings = new HashMap<>();
 
+        // 데이터 각 행마다 반복
         for (IScheduleInfoDto dto : scheduleDetails) {
             Long movieId = dto.getMovieId();
             Long cinemaId = dto.getCinemaId();
