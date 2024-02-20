@@ -68,7 +68,8 @@ public class CinemaController {
 
     @GetMapping("/scheduleByDate")
     public ResponseEntity<?> getScheduleByDate(@RequestParam("id") Long id,
-                                               @RequestParam("selectedDate") @DateTimeFormat(pattern = "yyyy/MM/dd") LocalDate selectedDate) {
+                                               @RequestParam("selectedDate")
+                                               @DateTimeFormat(pattern = "yyyy/MM/dd") LocalDate selectedDate) {
 
         log.debug("id = {}", id); // 극장 ID
         log.debug("selectedDate = {}", selectedDate); // 선택된날짜

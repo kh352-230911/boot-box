@@ -469,7 +469,7 @@ table{
 /* info-movies 하위의 모든 테이블들의 높이 고정 , 스크롤 추가 */
 .info-movies table {
     height: 400px;
-    /*overflow: auto;*/
+    overflow: auto;
 }
 
 .info-movies tbody{
@@ -481,6 +481,17 @@ table{
 
 }
 
+#scheduleTable {
+    width: 500px; /* 원하는 너비로 설정하세요 */
+    max-height: 400px; /* 원하는 높이로 설정하세요 */
+    overflow-y: auto; /* 세로 스크롤이 필요한 경우에만 스크롤을 표시합니다. */
+}
+.tbody_schedule
+{
+    width: 500px;
+    display: block;
+    max-height: 400px; /* 원하는 높이로 설정하세요 */
+}
 /* 수직 스크롤바 */
 ::-webkit-scrollbar {
     width: 10px;  /* 스크롤바의 폭 변경 */

@@ -89,11 +89,13 @@ public class ScheduleService {
 
 
     //0218 - 특정 영화, 극장 지점 ,시간 조건에 맞는 스케쥴들 출력[test]
+    public List<IScheduleInfoDto> findScheduleDetailsByDateAndCinemaId_2(Long movieId, Long cinemaId, LocalDate schDate) {
+        return scheduleRepository.findScheduleDetailsByDateAndCinemaId_2(movieId, cinemaId,schDate);
+    }
 
 
 
-
-
+    //origin
     public List<IScheduleInfoDto> findScheduleDetailsByDateAndCinemaId(Long id, LocalDate schDate) {
         return scheduleRepository.findScheduleDetailsByDateAndCinemaId(id, schDate);
     }

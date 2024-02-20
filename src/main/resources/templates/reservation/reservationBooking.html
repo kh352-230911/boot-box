@@ -50,7 +50,6 @@
 
                     <button
                             th:text="${#strings.abbreviate(movie.title, 10)}">
-
                     </button>
                 </td>
 
@@ -153,20 +152,19 @@
             </tbody>
         </table>
 
-        <table>
+        <table id="scheduleTable"  th:if="${dataMap != null and dataMap.scheduleDtos != null}">
             <thead>
             <tr>
-                <th colspan="2">상영 시간표</th>
+                <th colspan="3">상영 시간표</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="tbody_schedule">
             <tr th:each="schedule, index : ${dataMap.scheduleDtos}">
-                <td th:text="${schedule.time}" onclick="showAlert(this)"></td>
+                <td th:text="${schedule}" onclick="showAlert(this)"></td>
             </tr>
             </tbody>
         </table>
     </div>
-
 
     <!-- 좌석 관련 정보를 모두 감싸는 부모 div -->
     <div class = "info-seats">
