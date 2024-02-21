@@ -19,6 +19,10 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
+    // iamport 문서들을 보면 maven 기반 프로젝트이다.
+    // reposioties에 jitpack.io를 추가하면 gradle에서도 iamport 라이브러리를 추가할 수 있었다.
+    // 빌드 WARNING '경고'는 무시
 }
 
 dependencies {
@@ -35,6 +39,9 @@ dependencies {
     implementation 'com.oracle.database.security:oraclepki:21.11.0.0'
     implementation 'com.oracle.database.security:osdt_cert:21.11.0.0'
     implementation 'com.oracle.database.security:osdt_core:21.11.0.0'
+
+    // 결제 API 추가 의존성
+    implementation 'com.github.iamport:iamport-rest-client-java:0.1.6'
 
 //    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.2.RELEASE'
 

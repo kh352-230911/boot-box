@@ -70,7 +70,7 @@
         <tbody>
         <tr th:each="ask : ${asks}" th:data-ask-id="${ask.id}">
             <td th:text="${ask.id}" style="padding-left: 40px"></td>
-            <td th:text="${ask.memberLoginId}" style="padding-left: 60px"></td>
+<!--            <td th:text="${ask.member.memberId}" style="padding-left: 60px"></td>-->
             <td th:text="${ask.askTitle}"></td>
             <td th:text="${ask.askDetail}"></td>
             <td th:text="${ask.askType}"></td>

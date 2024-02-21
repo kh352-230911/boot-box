@@ -1,5 +1,6 @@
 package com.sh.app.member.entity;
 
+import com.sh.app.ask.entity.Ask;
 import com.sh.app.authority.entity.Authority;
 import com.sh.app.reservation.entity.Reservation;
 import com.sh.app.review.entity.Review;
@@ -65,5 +66,9 @@ public class Member implements Serializable{
     private List<Authority> authorities;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+    private List<Ask> asks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
     private List<Reservation> reservations = new ArrayList<>();
+
 }

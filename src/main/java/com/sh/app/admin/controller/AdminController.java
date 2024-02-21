@@ -9,6 +9,8 @@ import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
 import com.sh.app.notice.entity.Notice;
 import com.sh.app.notice.service.NoticeService;
+import com.sh.app.schedule.dto.ScheduleDto;
+import com.sh.app.schedule.service.ScheduleService;
 import com.sh.app.theater.dto.TheaterDto;
 import com.sh.app.theater.service.TheaterService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -41,6 +45,8 @@ public class AdminController {
     private AskService askService;
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private ScheduleService scheduleService;
 
     @GetMapping("/memberList.do")
     public void memberList(Model model) {
@@ -95,6 +101,18 @@ public class AdminController {
         log.debug("region = {}", region);
         List<TheaterDto> theaterDtos = theaterService.findAllTheatersWithCinemaId(cinemaId);
         model.addAttribute("theaters", theaterDtos);
+
+        List<ScheduleDto> allSchedules = new ArrayList<>();
+
+        // 불러온 TheaterDtos들을 순회하며 그 안에 있는 상영일정 조회
+        for (TheaterDto theaterDto : theaterDtos) {
+            Long theaterId = theaterDto.getId();
+            log.debug("theaterId = {}",theaterId);
+            List<ScheduleDto> scheduleDtos = scheduleService.findScheduleWithTheaterId(theaterId);
+            allSchedules.addAll(scheduleDtos);
+
+        }
+        model.addAttribute("allSchedules", allSchedules);
     }
 }
 

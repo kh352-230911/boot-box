@@ -102,7 +102,7 @@ CREATE TABLE AUTHORITY(
     constraints ck_authority_name check(name in('ROLE_ADMIN','ROLE_MANAGER', 'ROLE_USER'))
 );
 create sequence seq_authority_id;
---
+
 --4.좌석
 CREATE TABLE SEAT(
     id number NOT NULL, --pk
