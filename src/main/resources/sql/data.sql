@@ -285,11 +285,11 @@ insert into MEMBER_LIKE_GENRE values (seq_member_like_genre_id.nextval, 4, 3);
 insert into MEMBER_LIKE_GENRE values (seq_member_like_genre_id.nextval, 5, 2);
 --
 -- member_like_cinema
-insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 1, 0201, 03101, 03201);
-insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 2, 0201, null, null);
-insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 3, 03101, 05101, null);
-insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 4, 04201, null, null);
-insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 5, 03101, 03201, 05101);
+insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 1, 0201);
+insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 2, 0201);
+insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 3, 03101);
+insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 4, 04201);
+insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 5, 03101);
 --
 -- ask
 insert into ASK values (seq_ask_id.nextval, '1', '예매 취소 및 환불', '예매 취소 및 환불 규정은 어떻게 되나요?', 'RESERVATION', default);
