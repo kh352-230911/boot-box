@@ -2,23 +2,24 @@ textarea#title
 {
     width: 50%;
     height: 40px;
-    color: black;
-    background-color: #f1f1f1;
+    background-color: rgba(255,255,255,0.3);
 }
 textarea#content
 {
     width: 50%;
     height: 500px;
-    color: black;
-    background-color: #f1f1f1;
+    background-color: rgba(255,255,255,0.3);
 }
 div#createNotice
 {
     margin-left: 33%;
 }
 .dropdown {
-    position: relative;
     display: inline-block;
+    cursor: pointer;
+    position: fixed;
+    top: 240px;
+    margin-left: 750px;
 }
 .dropdown-content select {
     color: black; /* 글씨 색상을 검정색으로 설정 */
@@ -50,8 +51,8 @@ div#createNotice
     display: inline-block;
     cursor: pointer;
     position: fixed;
-    bottom: 170px;
-    margin-left: 650px;
+    bottom: 310px;
+    margin-left: 20px;
 }
 #save:hover {
     background-color: white;
@@ -66,6 +67,5 @@ div#createNotice
     display: inline-block;
     cursor: pointer;
     position: fixed;
-    bottom: 220px;
-    margin-left: 630px;
+    bottom: 270px;
 }

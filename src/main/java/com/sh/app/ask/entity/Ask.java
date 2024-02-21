@@ -25,8 +25,8 @@ public class Ask implements Serializable {
             allocationSize = 1
     )
     private Long id;
-    @Column(nullable = false, name = "member_login_id")
-    private String memberLoginId; // 문의작성한 회원아이디
+    @Column(nullable = false, name = "member_id")
+    private String memberId; // 문의작성한 회원아이디
     private String askTitle; // 문의제목
     private String askDetail; // 문의내용
     @Column(nullable = false, name = "ask_type")
