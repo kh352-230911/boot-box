@@ -59,7 +59,7 @@ $(document).ready(function()
 {
     $(".select-movie").click(function()
     {
-        console.log("영화 선택1");
+        console.log("영화 선택");
         // 모든 행의 선택을 취소하고 선택된 행에만 'selected' 클래스를 추가
         $(this).css('background', 'linear-gradient(to right, black, black)');
         // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
@@ -203,8 +203,15 @@ $(document).ready(function(){
                     alert(`예매는 로그인 후 이용하실 수 있습니다.`)
                     window.location.href = `${contextPath}`+request.responseText; // 리다이렉트할 URL을 지정합니다.
                 }
+                else if(request.status==404)
+                {
+                    alert(`해당 상영스케쥴이 존재하지 않습니다..`);
+                    //204는 delete 했을 때 경우라, select 조회 결과가 없는 경우 404로 처리
+                    makeNewSchedule("");
+                }
 
-            }
+            },
+
         });
 
     });
@@ -226,7 +233,6 @@ function makeNewSchedule(organizedSchedules)
 
     const tbody = scheduleTable.querySelector('.tbody_schedule');
     tbody.innerHTML = ''; // tbody 내용을 비움
-
 
     // 선택된 행 추적을 위한 변수
     let selectedRow = null;
@@ -355,7 +361,6 @@ document.querySelector(".select-seats-prev-button").addEventListener('click',fun
     }
 });
 
-//결제
 document.querySelector(".btn_pay").addEventListener('click', function ()
 {
     alert("결제");
@@ -699,7 +704,7 @@ function requestPay() {
         pay_method: "card", // 결제방식 - 고정값
         merchant_uid: "order" + new Date().getTime(), // UTC , 결제 API 주문번호 고유값
         name: "영화 결제", // 고정값
-        amount: 100, // 결제 금액
+        amount: 180, // 결제 금액
         buyer_tel: "01086759708", // 회원연락처
     },function (rsp) {
         if (rsp.success) {
@@ -733,7 +738,7 @@ function requestPay() {
             //     // 가맹점 서버 결제 API 실패 로직
             //     console.log(imp_uid);
             //     console.log(merchant_uid);
-            alert("결제에 실패하였습니다. 다시 시도해주세요.");
+            alert("결제에 실패하였습니다. 다시 시도해주세요."+ rsp);
             // })
         }
     });
