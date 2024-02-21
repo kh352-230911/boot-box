@@ -1,6 +1,7 @@
 package com.sh.app.notice.service;
 
 
+import com.sh.app.notice.dto.NoticeCreateDto;
 import com.sh.app.notice.dto.NoticeListDto;
 import com.sh.app.notice.entity.Notice;
 import com.sh.app.notice.repository.NoticeRepository;
@@ -41,5 +42,21 @@ public class NoticeService {
         return noticeRepository.findById(id)
                 .map((notice) -> convertToNoticeListDto(notice))
                 .orElseThrow();
+    }
+
+    public void createNotice(NoticeCreateDto noticeCreateDto) {
+        // noticeCreateDto를 Notice 엔티티로 변환
+        Notice notice = convertToNotice(noticeCreateDto);
+
+        // Notice 엔티티를 데이터베이스에 저장
+        noticeRepository.save(notice);
+    }
+
+    private Notice convertToNotice(NoticeCreateDto noticeCreateDto) {
+        return modelMapper.map(noticeCreateDto, Notice.class);
+    }
+
+    public void deleteById(Long id) {
+        noticeRepository.deleteById(id);
     }
 }

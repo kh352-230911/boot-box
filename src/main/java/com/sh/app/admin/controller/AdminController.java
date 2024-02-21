@@ -55,10 +55,6 @@ public class AdminController {
 //        model.addAttribute("notices", notices);
 //        System.out.println("공지조회 controller" + notices);
 //    }
-    @PostMapping("/createNotice.do")
-    public void createNotice() {
-
-    }
 
     @GetMapping("/askList.do")
     public void ask(Model model) {

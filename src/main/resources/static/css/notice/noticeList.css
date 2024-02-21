@@ -88,3 +88,25 @@ tbody {
         }
     }
 }
+#createNotice
+{
+    padding: 7px 15px;
+    background-color: rgba(255,255,255,0.3);
+    color: white;
+    border: 2px solid black;
+    box-shadow: 0 0 0 3px #fff, 0 0 0 4px black;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    position: fixed;
+    bottom: 280px;
+    right: 300px;
+}
+#createNotice:hover {
+    background-color: white;
+    color: black;
+    border-color: red;
+}

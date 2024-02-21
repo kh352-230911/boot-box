@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>공지사항추가</title>
+    <link rel="stylesheet" th:href="@{/css/notice/createNotice.css}" />
+</head>
+<style layout:fragment="style"></style>
+
+<div layout:fragment="content">
+    <div class="title-box flex justify-center">
+         <span class="border-b-2 border-red-600 font-semibold pb-2 mt-10 mb-8 text-xl">
+             공지사항 작성
+         </span>
+    </div>
+    <div id="createNotice">
+        <form name="noticeFrm"
+        th:action="@{/notice/createNotice.do}"
+        method="post"
+        enctype="application/x-www-form-urlencoded">
+            <!-- 시퀀스id, adminId, noticeType, title, content, createAt -->
+            <!-- 있는데 값을 못가져온다면 찍어보자..배열속의 배열속의 배열가져오기 -->
+            <input type="hidden" name="adminId" th:value="${#authentication.principal.admin.authorities.get(0).adminId}" />
+            <div>
+                <textarea placeholder="제목을 작성하세요." name="title" id="title" required></textarea>
+            </div>
+            <div>
+                <textarea placeholder="내용을 작성하세요." name="content" id="content" required></textarea>
+            </div>
+            <div class="dropdown">
+                <div>공지유형</div>
+
+                <div class="dropdown-content">
+                    <select name="noticeType" id="noticeType" onchange="updateSelectedType()">
+                        <option value="SYSTEM">SYSTEM</option>
+                        <option value="CINEMA">CINEMA</option>
+                        <option value="EVENT">EVENT</option>
+                        <option value="ETC">ETC</option>
+                    </select>
+                </div>
+                <span id="selectedTypeDisplay"></span>
+                <span><input type="submit" value="저장" id="save"></span>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<script layout:fragment="script" th:src="@{/js/notice/createNotice.js}"></script>
+</html>

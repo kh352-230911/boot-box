@@ -1,0 +1,71 @@
+textarea#title
+{
+    width: 50%;
+    height: 40px;
+    color: black;
+    background-color: #f1f1f1;
+}
+textarea#content
+{
+    width: 50%;
+    height: 500px;
+    color: black;
+    background-color: #f1f1f1;
+}
+div#createNotice
+{
+    margin-left: 33%;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content select {
+    color: black; /* 글씨 색상을 검정색으로 설정 */
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 120px;
+    z-index: 1;
+}
+.dropdown-content option {
+    color: black; /* 드롭다운 메뉴의 옵션 글씨 색상을 검정색으로 설정 */
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+#save
+{
+    padding: 7px 15px;
+    background-color: rgba(255,255,255,0.3);
+    color: white;
+    border: 2px solid black;
+    box-shadow: 0 0 0 3px #fff, 0 0 0 4px black;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    position: fixed;
+    bottom: 170px;
+    margin-left: 650px;
+}
+#save:hover {
+    background-color: white;
+    color: black;
+    border-color: forestgreen;
+}
+#selectedTypeDisplay
+{
+    padding: 7px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    position: fixed;
+    bottom: 220px;
+    margin-left: 630px;
+}

@@ -1,6 +1,7 @@
 <html
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
         layout:decorate="~{layout/default}">
 <head>
     <title>공지&뉴스 상세페이지</title>
@@ -39,6 +40,15 @@
                 </tbody>
             </table>
         </div>
+        <div class="deleteBtn">
+            <!-- 관리자만 삭제버튼 보여줌 -->
+            <th:block sec:authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_ADMIN')">
+                <form id="deleteForm" th:action="@{/notice/deleteNotice.do}" method="post">
+                    <input type="hidden" id="noticeId" name="id" value=""/>
+                    <button type="button" id="deleteNoticeBtn" onclick="confirmAndDelete()">삭제하기</button>
+                </form>
+            </th:block>
+        </div>
         <!-- '목록으로' 버튼 -->
         <div class="button-container">
             <a th:onclick="|location.href = '@{/notice/noticeList.do}';|" class="back-to-list-btn">목록으로</a>
@@ -46,5 +56,5 @@
     </div>
 </div>
 
-<script layout:fragment="script"></script>
+<script layout:fragment="script" th:src="@{/js/notice/deleteNotice.js}"></script>
 </html>
