@@ -4,6 +4,7 @@ package com.sh.app.schedule.service;
 import com.sh.app.movie.dto.MovieDetailDto;
 import com.sh.app.movie.dto.MovieListDto;
 import com.sh.app.movie.entity.Movie;
+
 import com.sh.app.schedule.dto.IScheduleInfoDto;
 import com.sh.app.schedule.dto.ScheduleDto;
 import com.sh.app.schedule.entity.Schedule;
@@ -108,7 +109,9 @@ public class ScheduleService {
         return schedules.stream()
                 .map(schedule -> modelMapper.map(schedule, ScheduleDto.class))
                 .collect(Collectors.toList());
-      
+
+    }
+
     public List<Map<String, Object>> organizeSchedules(List<IScheduleInfoDto> scheduleDetails) {
         // 영화별, 상영관별, 스케줄별 그룹화하기위한 맵
         Map<String, Map<String, List<Map<String, Object>>>> organized = new HashMap<>();
