@@ -26,14 +26,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -56,6 +60,8 @@ import java.util.*;
  * 이 어노테이션은 그 위치에 따라 의미가 다르다. 클래스 레벨 : 공통 주소 / 메서드 레벨에서 get/post 분류
  */
 public class ReservationController {
+
+
     // 의존 주입 영역
     @Autowired
     private MovieService movieService;
@@ -89,6 +95,20 @@ public class ReservationController {
     @GetMapping("/reservationBooking.do")
     public void reservationMain(Model model)
     {
+
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if (authentication != null && authentication.getPrincipal() instanceof MemberDetails) {
+//            MemberDetails memberDetails = (MemberDetails) authentication.getPrincipal();
+//            // 여기에서 memberDetails를 사용하여 사용자의 모든 정보에 접근할 수 있습니다.
+//            System.out.println(memberDetails.getMember().getMemberPhone());
+//        }
+//        else {
+//            System.out.println("로그인한 상태가 아닙니다......");
+//        }
+
+
+
+
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
@@ -130,7 +150,7 @@ public class ReservationController {
         dataMap.put("dayOfWeekList", dayOfWeekList); //요일 [로컬에서 계산함]
         dataMap.put("locations",locationsWithCinemas); //지역정보
 
-        //초기 세팅때는 dto가 아닌 문구만 띄워준다.
+        //초기 세팅때는 dto가 아닌 init 문구만 띄워준다.
         dataMap.put("scheduleDtos","영화,극장,시간을 선택해주세요 :)");
 
         // Model에 데이터 저장
@@ -171,8 +191,17 @@ public class ReservationController {
         log.debug("organizedSchedules = {}", organizedSchedules);
 
 
-// JSON 구조로 클라이언트에 반환
-        return ResponseEntity.ok(organizedSchedules);
+        // JSON 구조로 클라이언트에 반환
+        //0221 해당하는 스케쥴이 없는 경우 까지 고려.
+        if(organizedSchedules.isEmpty()) {
+            System.out.println("organizedSchedules is empty.....");
+            return ResponseEntity.status(404).build();
+        }
+        else {
+            return ResponseEntity.ok(organizedSchedules);
+
+        }
+
     }
 
     private List<Map<String, Object>> organizeSchedules(List<IScheduleInfoDto> scheduleDetails) {
@@ -238,47 +267,24 @@ public class ReservationController {
                                            //  ,@AuthenticationPrincipal MemberDetails memberDetails
     )
     {
-        // 요청 처리
-        System.out.println("============ 넘겨받은 상영 스케쥴 id============="+scheduleId);
 
-        //좌석조회용 dto
-        List<SeatDto> seatDtos;
-        seatDtos = seatService.findSeatsByScheduleId(scheduleId);
-        System.out.println("===해당 스케쥴에 예약된 좌석===");
-        System.out.println(seatDtos);
-        //model.addAttribute("testmovie", movies);
-
-
-//        if (isAuthenticated()) {
-//            return ResponseEntity.ok(testSeat);
-//        }
-//        else {
-//            // 로그인 인증 실패 시 로그인 화면 진입
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("auth/login.do");
-//        }
-
-
-        //다음 예매 작업으로 넘어갈 때 현재 로그인이 되어있는지 안되어있는지 memberDetails로 확인함.
-//        if (memberDetails != null) {
-//            System.out.println("지금 로그인한 유저의 이름은???:"+memberDetails.getUsername());
-//            model.addAttribute("membername", memberDetails.getUsername());
-//
-//            //model.addAttribute("testSeat", testSeat);
-//            //reservationBooking 페이지 내의 갱신하려는 특
-//            return ResponseEntity.ok(testSeat);//"reservationBooking";// :: #test-area";
-//        }
-//        else {
-//            //로그인하지 않았다면 예매기능을 사용할 수 없으므로 로그인 페이지로 이동시키자.
-//            // return "redirect:/auth/login.do";
-//            //return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("auth/login.do");
-//            // return ResponseEntity.status(500).build();
-//
-//        }
-
-        //[SeatDto(id=23, name=C03), SeatDto(id=30, name=C10)]
-        //결과값이 없는 경우 고려 [dto size 0인 혹은 1이상인 경우]
-
-        return ResponseEntity.ok(seatDtos);
+        if (isAuthenticated()) {
+            getUserInfo();
+            // 요청 처리
+            System.out.println("============ 넘겨받은 상영 스케쥴 id============="+scheduleId);
+            //좌석조회용 dto
+            List<SeatDto> seatDtos;
+            seatDtos = seatService.findSeatsByScheduleId(scheduleId);
+            System.out.println("===해당 스케쥴에 예약된 좌석===");
+            System.out.println(seatDtos);
+            //model.addAttribute("testmovie", movies);
+            //[SeatDto(id=23, name=C03), SeatDto(id=30, name=C10)]
+            return ResponseEntity.ok(seatDtos);
+        }
+        else {
+            // 로그인 인증 실패 시 로그인 화면 진입
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("auth/login.do");
+        }
 
     }
 
@@ -294,10 +300,26 @@ public class ReservationController {
         return false;
     }
 
+    private void getUserInfo()
+    {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof MemberDetails) {
+            MemberDetails memberDetails = (MemberDetails) authentication.getPrincipal();
+            // 여기에서 memberDetails를 사용하여 사용자의 모든 정보에 접근할 수 있습니다.
+        }
+
+// 로그인한 사용자정보를 가진 객체를 얻습니다.
+
+    }
+
+
+
+
 
     private boolean isAuthenticated() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken)
+        {
             return false;
         }
         return authentication.isAuthenticated();
