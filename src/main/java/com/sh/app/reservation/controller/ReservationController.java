@@ -4,6 +4,7 @@ import com.sh.app.location.dto.LocationDto;
 import com.sh.app.location.service.LocationService;
 import com.sh.app.member.entity.Member;
 import com.sh.app.movie.dto.MovieListDto;
+import com.sh.app.movie.dto.MovieShortDto;
 import com.sh.app.movie.entity.Movie;
 import com.sh.app.movie.service.MovieService;
 import com.sh.app.reservation.service.ReservationService;
@@ -96,15 +97,15 @@ public class ReservationController {
     public void reservationMain(Model model)
     {
 
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        if (authentication != null && authentication.getPrincipal() instanceof MemberDetails) {
-//            MemberDetails memberDetails = (MemberDetails) authentication.getPrincipal();
-//            // 여기에서 memberDetails를 사용하여 사용자의 모든 정보에 접근할 수 있습니다.
-//            System.out.println(memberDetails.getMember().getMemberPhone());
-//        }
-//        else {
-//            System.out.println("로그인한 상태가 아닙니다......");
-//        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof MemberDetails) {
+            MemberDetails memberDetails = (MemberDetails) authentication.getPrincipal();
+            // 여기에서 memberDetails를 사용하여 사용자의 모든 정보에 접근할 수 있습니다.
+            System.out.println(memberDetails.getMember().getMemberPhone());
+        }
+        else {
+            System.out.println("로그인한 상태가 아닙니다......");
+        }
 
 
 
@@ -124,10 +125,12 @@ public class ReservationController {
         }
 
         //0214 db 조회하여 현재 table에 있는 모든 영화 가져오기.
-        List<Movie> movies;
-        movies = movieService.findAllByOrderByTitleAsc(); //가나다순으로 정렬
-        log.debug("movies = {}", movies);
-
+        System.out.println("movies start======================================================================================");
+        List<MovieShortDto> movieList;
+        movieList = movieService.shotMovie(); //가나다순으로 정렬
+        log.debug("movies = {}", movieList);
+        System.out.println("movies end======================================================================================");
+        System.out.println("locationsWithCinemas start======================================================================================");
         //0214 db 조회하여 지역정보 가져오기
         List<LocationDto> locationsWithCinemas = locationService.findAllLocationsWithCinemas();
 //        model.addAttribute("locations", locationsWithCinemas);
@@ -137,7 +140,7 @@ public class ReservationController {
 //        System.out.println("==========상영스케쥴 출력하기==========");
 //        for(int i=0;i<schedules.size();i++)
 //        System.out.println(schedules.get(i).getId());
-
+        System.out.println("locationsWithCinemas end======================================================================================");
         //0219 dto로 변환한 스케쥴 잘 나오나
         List<ScheduleDto> scheduleDtos = scheduleService.findAllSchedulesDto();
         System.out.println("==========상영스케쥴 출력하기==========");
@@ -145,7 +148,7 @@ public class ReservationController {
 
         //0214 db조회 영화 결과값+ 날짜값 + 지역 결과값 묶어서 model값을 보내주고싶을때 map을 이용해서 여러개를 전달 할 수 있다.
         Map<String, Object> dataMap = new HashMap<>();
-        dataMap.put("movies", movies); //영화정보
+        dataMap.put("movies", movieList); //영화정보
         dataMap.put("dateList", dateList); // 날짜 [로컬에서 계산함]
         dataMap.put("dayOfWeekList", dayOfWeekList); //요일 [로컬에서 계산함]
         dataMap.put("locations",locationsWithCinemas); //지역정보
@@ -195,7 +198,7 @@ public class ReservationController {
         //0221 해당하는 스케쥴이 없는 경우 까지 고려.
         if(organizedSchedules.isEmpty()) {
             System.out.println("organizedSchedules is empty.....");
-            return ResponseEntity.status(404).build();
+            return ResponseEntity.status(404).build(); //204:del하여 없는 경우, 404:쿼리 실행했으나 select 결과를 찾을 수 없는 경우
         }
         else {
             return ResponseEntity.ok(organizedSchedules);
