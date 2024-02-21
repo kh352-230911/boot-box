@@ -32,7 +32,6 @@ public class NoticeService {
 
     private NoticeListDto convertToNoticeListDto(Notice notice) {
         NoticeListDto noticeListDto = modelMapper.map(notice, NoticeListDto.class);
-        noticeListDto.setNoticeCreatedAt(LocalDateTime.now());
         return noticeListDto;
     }
 
