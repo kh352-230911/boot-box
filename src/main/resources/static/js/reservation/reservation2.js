@@ -183,54 +183,8 @@ $(document).ready(function(){
             },
             success(organizedSchedules){
 
-                const scheduleTable = document.getElementById('scheduleTable');
-                // 기존의 행 삭제
-                while (scheduleTable.rows.length > 1) {
-                    scheduleTable.deleteRow(1); // 헤더를 제외한 행을 삭제합니다.
-                }
+                makeNewSchedule(organizedSchedules);
 
-                // 새로운 데이터 추가
-                const [{ totalDuration, schedules, title }] = organizedSchedules;
-                console.log("총 상영 시간:", totalDuration);
-                console.log("제목:", title);
-
-                const tbody = scheduleTable.querySelector('.tbody_schedule');
-                tbody.innerHTML = ''; // tbody 내용을 비움
-
-                schedules.forEach(({ times, theater }) => {
-                    times.forEach(({ schId, time, seatsAvailable }) => {
-                        const row = scheduleTable.insertRow();
-                        const schIdCell = row.insertCell();
-                        const timeCell = row.insertCell();
-                        const theaterCell = row.insertCell();
-                        const seatsAvailableCell = row.insertCell();
-                        //상영일정id도 추가
-                        schIdCell.textContent = schId;
-                        timeCell.textContent = time;
-                        theaterCell.textContent = theater;
-                        seatsAvailableCell.textContent = seatsAvailable + '석';
-
-                        // 행에 클릭 이벤트 리스너 추가
-                        row.addEventListener('click', () => {
-                            // 클릭된 행에 대한 동작을 여기에 추가
-                            console.log('클릭된 행:', schId,time, theater, seatsAvailable);
-
-                            
-                        });
-                    });
-                });
-
-                // 새로운 tbody를 추가
-                scheduleTable.appendChild(tbody);
-
-                schedules.forEach(({ times, theater }) => {
-                    console.log("극장:", theater);
-                    times.forEach(({ bookingUrl, time, seatsAvailable }) => {
-                        console.log("시간:", time);
-                        console.log("예약 링크:", bookingUrl);
-                        console.log("남은 좌석:", seatsAvailable);
-                    });
-                });
             },
             //requests:  요청 객체입니다. 보통 HTTP 요청 정보를 포함하며, 요청한 클라이언트의 정보와 요청된 리소스에 대한 정보 등을 포함합니다.
             // status: HTTP 상태 코드입니다. 실패한 요청의 상태 코드를 나타냅니다.
@@ -256,17 +210,71 @@ $(document).ready(function(){
     });
 });
 
-// 예약하기 링크를 클릭했을 때의 이벤트 처리
-const bookingLinks = document.querySelectorAll('.booking-link');
+//0221 영화-극장-원하는날짜로 새 상영스케쥴을 받아온 후 가공하는 함수
+function makeNewSchedule(organizedSchedules)
+{
+    const scheduleTable = document.getElementById('scheduleTable');
+    // 기존의 행 삭제
+    while (scheduleTable.rows.length > 1) {
+        scheduleTable.deleteRow(1); // 헤더를 제외한 행을 삭제합니다.
+    }
+
+    // 새로운 데이터 추가
+    const [{ totalDuration, schedules, title }] = organizedSchedules;
+    console.log("총 상영 시간:", totalDuration);
+    console.log("제목:", title);
+
+    const tbody = scheduleTable.querySelector('.tbody_schedule');
+    tbody.innerHTML = ''; // tbody 내용을 비움
 
 
+    // 선택된 행 추적을 위한 변수
+    let selectedRow = null;
 
-const seatContainer1Div = document.querySelector(".seat-container1");
-// seatContainer1Div.style.backgroundColor = 'red';
+    schedules.forEach(({ times, theater }) => {
+        times.forEach(({ schId, time, seatsAvailable }) => {
+            const row = scheduleTable.insertRow();
+            const schIdCell = row.insertCell();
+            const timeCell = row.insertCell();
+            const theaterCell = row.insertCell();
+            const seatsAvailableCell = row.insertCell();
+            //상영일정id도 추가
+            schIdCell.textContent = schId;
+            timeCell.textContent = time;
+            theaterCell.textContent = theater;
+            seatsAvailableCell.textContent = seatsAvailable + '석';
 
+            // 행에 클릭 이벤트 리스너 추가
+            row.addEventListener('click', () => {
+                // 이전에 선택된 행이 존재한다면 배경색을 원래대로 되돌리기
+                if (selectedRow) {
+                    selectedRow.style.backgroundColor = ''; // 이전에 선택된 행의 배경색을 지움
+                }
+                // 선택된 행을 현재 클릭한 행으로 설정하고 배경색을 검은색으로 변경
+                selectedRow = row;
+                selectedRow.style.backgroundColor = 'black';
+                // 클릭된 행에 대한 동작을 여기에 추가
+                console.log('클릭된 행:', schId,time, theater, seatsAvailable);
+                selectedSheduleId = schId;
+                theaterDiv.innerHTML=theater;
+            });
+        });
+    });
 
+    // 새로운 tbody를 추가
+    scheduleTable.appendChild(tbody);
 
-//10글자씩 잘라서 br 처리
+    schedules.forEach(({ times, theater }) => {
+        console.log("극장:", theater);
+        times.forEach(({ bookingUrl, time, seatsAvailable }) => {
+            console.log("시간:", time);
+            console.log("예약 링크:", bookingUrl);
+            console.log("남은 좌석:", seatsAvailable);
+        });
+    });
+}
+
+//10글자씩 잘라서 br 처리 (장문의 영화 타이틀 처리)
 function addLineBreaks(str, charsPerLine) {
     let result = '';
     for (let i = 0; i < str.length; i++) {
@@ -309,7 +317,7 @@ document.querySelector(".btn_pay").addEventListener('click', function ()
 {
     alert("결제");
 });
-
+let selectedSheduleId;
 
 //0219 다음 버튼을 눌렀을 때, 영화-극장-시간-상영시간 모두 선택되어야 한다. 한개라도 선택 안되어있다면 넘어가지 못함.
 document.querySelector(".select-seats-next-button").addEventListener('click',function ()
@@ -324,13 +332,13 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
 
     //비동기 test
     $.ajax({
-        url: `${contextPath}reservation/scheduleTest`,
+        url: `${contextPath}reservation/detailSchedule`,
         type: 'get',
         data:{
-            scheduleId:20
+            scheduleId:selectedSheduleId
         },
         success(response){
-            console.log("~~~~success~~~~",response);
+            console.log("success : 선택한 상영일정의 예약된 좌석 값 가져오기",response);
             makeSeat(response);
 
         },
@@ -366,11 +374,23 @@ function  checkButtonAllSelect()
 
 function makeSeat(response)
 {
-
     console.log("ajax에서 함수 불러오기.");
-    //기존 : 제이쿼리로 화면단 일부 갱신
-    //$('#test-area').html(response);
+    ////[SeatDto(id=23, name=C03), SeatDto(id=30, name=C10)]
+    // const [SeatDto] = response;
+    // console.log("testttttttttttttttttttttttttt", SeatDto);
 
+
+    //이미 예약된 자리 배열
+    const disabledSeat = [];
+    response.forEach((SeatDto)=>
+    {
+        console.log("testttttttttttttttttttttttttt", SeatDto);
+        const {id,name}=SeatDto;
+
+        console.log("id:", id);
+        console.log("name:", name);
+        disabledSeat.push(name);
+    });
 
     reservatoinPage=2;
     let testArray = ['Aa', 'Bb', 'Cc', 'Dd', 'Ee', 'Ff'];
@@ -385,7 +405,7 @@ function makeSeat(response)
     }
 
     // 6행 10열의 좌석 생성
-    createSeats(6, 10,response);
+    createSeats(6, 10,disabledSeat);
 
 }
 
@@ -393,7 +413,7 @@ function makeSeat(response)
 // 알파벳 배열(좌석행)
 let alphabet = ['A', 'B', 'C', 'D', 'E', 'F'];
 let checkbox;
-function createSeats(rows, cols,response) {
+function createSeats(rows, cols,disabledSeat) {
     console.log("createSeats :)");
 
     const seatTableBody = document.getElementById('seatTableBody');
@@ -487,7 +507,7 @@ function createSeats(rows, cols,response) {
             label.className = 'seat';
             label.textContent = j; // 열 번호 추가
 
-            response.forEach(function(seat) {
+            disabledSeat.forEach(function(seat) {
                 if(seat===seatId)
                     checkbox.disabled = true;
             });
@@ -581,17 +601,6 @@ function highlightCell(cell)
         cell.classList.add("highlighted");
     }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

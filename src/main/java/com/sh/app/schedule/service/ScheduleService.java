@@ -8,6 +8,7 @@ import com.sh.app.schedule.dto.IScheduleInfoDto;
 import com.sh.app.schedule.dto.ScheduleDto;
 import com.sh.app.schedule.entity.Schedule;
 import com.sh.app.schedule.repository.ScheduleRepository;
+import com.sh.app.seat.entity.SeatDto;
 import com.sh.app.theater.dto.TheaterDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,7 @@ public class ScheduleService {
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
+
 
     private ScheduleDto convertToDto(Schedule schedule) {
         ScheduleDto scheduleDto = new ScheduleDto();
@@ -99,4 +101,6 @@ public class ScheduleService {
     public List<IScheduleInfoDto> findScheduleDetailsByDateAndCinemaId(Long id, LocalDate schDate) {
         return scheduleRepository.findScheduleDetailsByDateAndCinemaId(id, schDate);
     }
+
+
 }

@@ -3,6 +3,7 @@ import com.sh.app.auth.vo.MemberDetails;
 import com.sh.app.location.dto.LocationDto;
 import com.sh.app.location.service.LocationService;
 import com.sh.app.member.entity.Member;
+import com.sh.app.movie.dto.MovieListDto;
 import com.sh.app.movie.entity.Movie;
 import com.sh.app.movie.service.MovieService;
 import com.sh.app.reservation.service.ReservationService;
@@ -10,6 +11,8 @@ import com.sh.app.schedule.dto.IScheduleInfoDto;
 import com.sh.app.schedule.dto.ScheduleDto;
 import com.sh.app.schedule.entity.Schedule;
 import com.sh.app.schedule.service.ScheduleService;
+import com.sh.app.seat.entity.SeatDto;
+import com.sh.app.seat.service.SeatService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -60,7 +63,8 @@ public class ReservationController {
     @Autowired
     ScheduleService scheduleService;
 
-
+    @Autowired
+    SeatService seatService;
 
     //첫 예매 페이지 진입 시 날짜(로컬)
     @GetMapping("/reservationBooking.do")
@@ -113,6 +117,16 @@ public class ReservationController {
         // Model에 데이터 저장
         model.addAttribute("dataMap", dataMap);
     }
+
+
+
+
+
+
+
+
+
+
 
     //0220 영화-극장-날짜를 순차적으로 눌렀다고 가정했을 경우 조건에 맞는 상영정보를 갖고온다.
     @GetMapping("/findSchedules")
@@ -200,38 +214,29 @@ public class ReservationController {
     }
 
 
-
-
-
-    //0217 test 용으로 좌석값을 가진 배열을 모델에 담아 전송[예약된 좌석 체크용으로 쓰기 위함]
-    String[] testSeat = {"A01","A10","B05","B06","C03","F06","F09"};
-    //0219 영화 + 극장 + 시간 조합으로 상영 정보 찾기
-
-    @GetMapping("/finddSchedule")
-    public ResponseEntity<?> findSchedule(@RequestParam("scheduleId") int scheduleId,Model model,
-                                             @AuthenticationPrincipal MemberDetails memberDetails)
+    @GetMapping("/detailSchedule")
+    public ResponseEntity<?> findSchedule(@RequestParam("scheduleId") Long scheduleId,Model model
+                                           //  ,@AuthenticationPrincipal MemberDetails memberDetails
+    )
     {
-        log.debug("======================memberDetails = {}", memberDetails);
         // 요청 처리
-        System.out.println("================================"+scheduleId);
-        String result = "Result for scheduleId " + scheduleId;
+        System.out.println("============ 넘겨받은 상영 스케쥴 id============="+scheduleId);
 
-        //test용으로 schedule 조회
-        List<Schedule> schedules;
-        schedules = scheduleService.findAll();
-        System.out.println(schedules.get(0));
+        //좌석조회용 dto
+        List<SeatDto> seatDtos;
+        seatDtos = seatService.findSeatsByScheduleId(scheduleId);
+        System.out.println("===해당 스케쥴에 예약된 좌석===");
+        System.out.println(seatDtos);
         //model.addAttribute("testmovie", movies);
 
-        //0217 test 용으로 좌석값을 가진 배열을 모델에 담아 전송[예약된 좌석 체크용으로 쓰기 위함]
-        String[] testSeat = {"A01","A10","B05","B06","C03","F06","F09"};
 
-        if (isAuthenticated()) {
-            return ResponseEntity.ok(testSeat);
-        }
-        else {
-            // 로그인 인증 실패 시 로그인 화면 진입
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("auth/login.do");
-        }
+//        if (isAuthenticated()) {
+//            return ResponseEntity.ok(testSeat);
+//        }
+//        else {
+//            // 로그인 인증 실패 시 로그인 화면 진입
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("auth/login.do");
+//        }
 
 
         //다음 예매 작업으로 넘어갈 때 현재 로그인이 되어있는지 안되어있는지 memberDetails로 확인함.
@@ -250,21 +255,11 @@ public class ReservationController {
 //            // return ResponseEntity.status(500).build();
 //
 //        }
-//        return ResponseEntity.ok(testSeat);
 
+        //[SeatDto(id=23, name=C03), SeatDto(id=30, name=C10)]
+        //결과값이 없는 경우 고려 [dto size 0인 혹은 1이상인 경우]
 
-
-        // 로그인 인증 성공시 첫 화면으로 보냄
-//        if (isAuthenticated()) {
-//
-//            System.out.println("==================로그인 인증=========================");
-//            return ResponseEntity.ok(testSeat);
-//        }
-//        else {
-//            // 로그인 인증 실패 시 로그인 화면 진입
-//            System.out.println("====ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ=로그인 비인증======ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ===");
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("auth/login.do");
-//        }
+        return ResponseEntity.ok(seatDtos);
 
     }
 
