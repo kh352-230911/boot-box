@@ -198,6 +198,49 @@ function addLineBreaks(str, charsPerLine) {
     }
     return result;
 }
+
+// URL에서 쿼리 파라미터를 가져오는 함수입니다.
+function getQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+        movieId: params.get('movieId'),
+        cinemaId: params.get('cinemaId'),
+        schId: params.get('schId'),
+        schDate: params.get('schDate')
+    };
+}
+
+// 페이지 로드 시 선택된 영화, 극장, 스케줄을 설정하는 함수입니다.
+function setSelectedOptions() {
+    const { movieId, cinemaId, schId , schDate} = getQueryParams();
+
+    if (movieId && cinemaId && schId) {
+        // 영화 선택
+        const movieOption = document.querySelector(`.select-movie[data-movie-id="${movieId}"]`);
+        if (movieOption) {
+            movieOption.click();
+        }
+
+        // 극장 선택
+        const cinemaOption = document.querySelector(`.select_location2[data-cinema-id="${cinemaId}"]`);
+        if (cinemaOption) {
+            cinemaOption.click();
+        }
+
+        // 스케줄 선택
+        const scheduleOption = document.querySelector(`.select_date[data-date-id="${schDate}"]`);
+        if (scheduleOption) {
+            scheduleOption.click();
+        }
+    } else {
+        console.error('파라미터를 읽을 수 없습니다.');
+    }
+}
+
+// 페이지가 로드될 때 자동으로 선택하는 로직을 실행합니다.
+document.addEventListener('DOMContentLoaded', setSelectedOptions);
+
+
 //======================================================================================
 document.querySelector(".select-seats-prev-button").addEventListener('click',function ()
 {
@@ -516,3 +559,8 @@ function select_member_like_cinema()
     //선호극장이 등록되어있든 안되어있든 이 부분을 누르면 지점쪽은 초기화가 되어있어야 함.
 
 }
+
+
+
+
+
