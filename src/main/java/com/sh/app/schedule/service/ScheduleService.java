@@ -9,6 +9,7 @@ import com.sh.app.schedule.dto.IScheduleInfoDto;
 import com.sh.app.schedule.dto.ScheduleDto;
 import com.sh.app.schedule.entity.Schedule;
 import com.sh.app.schedule.repository.ScheduleRepository;
+import com.sh.app.seat.entity.SeatDto;
 import com.sh.app.theater.dto.TheaterDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,7 @@ public class ScheduleService {
                 .collect(Collectors.toList());
     }
 
+
     private ScheduleDto convertToDto(Schedule schedule) {
         ScheduleDto scheduleDto = new ScheduleDto();
         scheduleDto.setId(schedule.getId());
@@ -95,15 +97,20 @@ public class ScheduleService {
 
 
     //0218 - 특정 영화, 극장 지점 ,시간 조건에 맞는 스케쥴들 출력[test]
+    public List<IScheduleInfoDto> findScheduleDetailsByDateAndCinemaId_2(Long movieId, Long cinemaId, LocalDate schDate) {
+        return scheduleRepository.findScheduleDetailsByDateAndCinemaId_2(movieId, cinemaId,schDate);
+    }
 
 
 
-
-
+    //origin
     public List<IScheduleInfoDto> findScheduleDetailsByDateAndCinemaId(Long id, LocalDate schDate) {
         return scheduleRepository.findScheduleDetailsByDateAndCinemaId(id, schDate);
     }
 
+<<<<<<< HEAD
+
+=======
     public List<ScheduleDto> findScheduleWithTheaterId(Long theaterId) {
         List<Schedule> schedules = scheduleRepository.findByTheaterId(theaterId);
         return schedules.stream()
@@ -180,4 +187,5 @@ public class ScheduleService {
         return finalStructure;
 
     }
+>>>>>>> f254a8bd4c9806a29ec2f18ae3fd5dc37773738f
 }

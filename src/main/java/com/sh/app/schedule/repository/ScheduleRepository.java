@@ -50,4 +50,29 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
         WHERE (c.id = :id AND s.sch_date = :schDate) AND s.time > CURRENT_TIMESTAMP """, nativeQuery = true)
     List<IScheduleInfoDto> findScheduleDetailsByDateAndCinemaId(@Param("id") Long id,
                                                                 @Param("schDate") LocalDate schDate);
+
+
+    @Query(value = """
+        SELECT
+            m.id AS movieId,
+            c.id AS cinemaId,
+            s.id AS schId,
+            s.sch_date AS schDate,
+            c.region_cinema AS regionCinema,
+            m.title AS movieTitle,
+            m.running_time AS runningTime,
+            t.name AS theaterName,
+            s.time AS startTime,
+            (t.seat - (SELECT COUNT(*)
+                       FROM reservation_seat rs
+                       WHERE rs.res_id IN (SELECT r.id
+                                           FROM reservation r
+                                           WHERE r.schedule_id = s.id))) AS remainingSeats
+        FROM cinema c
+        JOIN theater t ON t.cinema_id = c.id
+        JOIN schedule s ON s.theater_id = t.id
+        JOIN movie_list ml ON ml.cinema_id = c.id
+        JOIN movie m ON m.id = ml.movie_id AND m.id = s.movie_id
+        WHERE (m.id= :movieId AND c.id = :cinemaId AND s.sch_date = :schDate) AND s.time > CURRENT_TIMESTAMP """, nativeQuery = true)
+    List<IScheduleInfoDto> findScheduleDetailsByDateAndCinemaId_2(Long movieId, Long cinemaId, LocalDate schDate);
 }
