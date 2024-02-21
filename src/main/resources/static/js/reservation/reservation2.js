@@ -562,5 +562,55 @@ function select_member_like_cinema()
 
 
 
-
+// 결제 연결
+// document.querySelector(".btn_pay").addEventListener('click', function ()
+// {
+//     // alert("결제");
+// });
+IMP.init("imp32105587"); // 가맹점코드 - 고정값
+function requestPay() {
+    IMP.request_pay({
+        pg: "html5_inicis", // PG사코드 - 고정값
+        pay_method: "card", // 결제방식 - 고정값
+        merchant_uid: "order" + new Date().getTime(), // UTC , 결제 API 주문번호 고유값
+        name: "영화 결제", // 고정값
+        amount: 100, // 결제 금액
+        buyer_tel: "01086759708", // 회원연락처
+    },function (rsp) {
+        if (rsp.success) {
+            // 결제 성공 시: 결제 승인 성공한 경우
+            // jQuery로 HTTP 요청
+            // $.ajax({
+            //     url: contextPath,
+            //     method: "POST",
+            //     headers: { "Content-Type": "application/json" },
+            //     data: {
+            //         imp_uid: rsp.imp_uid,            // 결제 고유번호
+            //         merchant_uid: rsp.merchant_uid   // 주문번호
+            //     }
+            // }).done(function (data) {
+            // 가맹점 서버 결제 API 성공시 로직
+            // console.log(imp_uid);
+            // console.log(merchant_uid);
+            alert("결제에 성공하였습니다.");
+            // })
+        } else {
+            // 결제 실패시
+            // $.ajax({
+            //     url: contextPath,
+            //     method: "POST",
+            //     headers: { "Content-Type": "application/json" },
+            //     data: {
+            //         imp_uid: rsp.imp_uid,            // 결제 고유번호
+            //         merchant_uid: rsp.merchant_uid   // 주문번호
+            //     }
+            // }).done(function (data) {
+            //     // 가맹점 서버 결제 API 실패 로직
+            //     console.log(imp_uid);
+            //     console.log(merchant_uid);
+            alert("결제에 실패하였습니다. 다시 시도해주세요.");
+            // })
+        }
+    });
+}
 

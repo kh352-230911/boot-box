@@ -4,6 +4,7 @@ package com.sh.app.schedule.service;
 import com.sh.app.movie.dto.MovieDetailDto;
 import com.sh.app.movie.dto.MovieListDto;
 import com.sh.app.movie.entity.Movie;
+
 import com.sh.app.schedule.dto.IScheduleInfoDto;
 import com.sh.app.schedule.dto.ScheduleDto;
 import com.sh.app.schedule.entity.Schedule;
@@ -108,13 +109,18 @@ public class ScheduleService {
         return schedules.stream()
                 .map(schedule -> modelMapper.map(schedule, ScheduleDto.class))
                 .collect(Collectors.toList());
-      
+
+    }
+
     public List<Map<String, Object>> organizeSchedules(List<IScheduleInfoDto> scheduleDetails) {
         // 영화별, 상영관별, 스케줄별 그룹화하기위한 맵
         Map<String, Map<String, List<Map<String, Object>>>> organized = new HashMap<>();
         // 각 영화별 상영 시간을 저장하기 위한 맵
         Map<String, String> movieDurations = new HashMap<>();
+        // 각 영화별 관람 등급을 저장하기 위한 맵
+        Map<String, String> movieFilmRatings = new HashMap<>();
 
+        // 데이터 각 행마다 반복
         for (IScheduleInfoDto dto : scheduleDetails) {
             Long movieId = dto.getMovieId();
             Long cinemaId = dto.getCinemaId();
@@ -129,11 +135,13 @@ public class ScheduleService {
             String bookingUrl = String.format("/bootbox/reservation/reservationBooking.do?movieId=%d&cinemaId=%d&schId=%d&schDate=%s",
                     movieId, cinemaId, schId, schDate);
 
+            String filmRatings = dto.getFilmRatings();
             String title = dto.getMovieTitle();
             String theater = dto.getTheaterName();
             String runningTime = dto.getRunningTime();
 
             movieDurations.putIfAbsent(title, runningTime); // 영화 제목에 해당하는 상영 시간을 맵에 저장
+            movieFilmRatings.putIfAbsent(title, filmRatings); // 영화 제목에 해당하는 관람등급을 맵에 저장
 
             // 영화 시간, 남은 좌석 그룹화 및 예약 페이지 링크 추가
             Map<String, Object> timeMap = new HashMap<>();
@@ -153,6 +161,7 @@ public class ScheduleService {
             // 영화 제목별 그룹화
             Map<String, Object> movieMap = new HashMap<>();
             movieMap.put("title", movieTitle);
+            movieMap.put("filmRatings", movieFilmRatings.get(movieTitle)); // 영화 제목에 해당하는 관람등급을 사용
             movieMap.put("totalDuration", movieDurations.get(movieTitle)); // 영화 제목에 해당하는 상영 시간을 사용
 
             // 상영관별 스케줄 그룹화

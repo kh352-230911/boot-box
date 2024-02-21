@@ -185,7 +185,31 @@ function renderSchedule(scheduleData) {
 
     scheduleData.forEach(movie => {
         const movieElement = $('<div>').addClass('schedule-container');
-        const movieTitle = $('<div>').addClass('movie-title').text(`${movie.title} 상영시간: ${movie.totalDuration}분`);
+
+        // 관람 등급에 따른 스팬 태그 생성
+        const ratingSpan = $('<span>').css('font-size', '0.8em').addClass('grade me-2 px-2.5 py-0.5 rounded font-bold');
+        // console.log(movie.filmRatings);
+        switch(movie.filmRatings) {
+            case 'ALL':
+                ratingSpan.addClass('bg-green-100 text-green-800 dark:bg-gray-700 dark:text-green-400 border border-green-400').text('ALL');
+                break;
+            case 'TWELVE':
+                ratingSpan.addClass('bg-yellow-100 text-yellow-800 dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300').text('12');
+                break;
+            case 'FIFTEEN':
+                ratingSpan.addClass('bg-purple-100 text-purple-800 dark:bg-gray-700 dark:text-purple-400 border border-purple-400').text('15');
+                break;
+            case 'EIGHTEEN':
+                ratingSpan.addClass('bg-red-100 text-red-800 dark:bg-gray-700 dark:text-red-400 border border-red-400').text('18');
+                break;
+            case 'NONE':
+                ratingSpan.addClass('bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-400 border border-gray-500').text('미정');
+                break;
+            // default:
+            //     ratingSpan.hide(); // 만약 정의되지 않은 등급이라면 숨김 처리
+        }
+
+        const movieTitle = $('<div>').addClass('movie-title').append(ratingSpan).append(`[${movie.title}] 상영시간: ${movie.totalDuration}분`);
         movieElement.append(movieTitle);
 
         movie.schedules.forEach(schedule => {
