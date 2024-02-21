@@ -103,6 +103,12 @@ public class ScheduleService {
         return scheduleRepository.findScheduleDetailsByDateAndCinemaId(id, schDate);
     }
 
+    public List<ScheduleDto> findScheduleWithTheaterId(Long theaterId) {
+        List<Schedule> schedules = scheduleRepository.findByTheaterId(theaterId);
+        return schedules.stream()
+                .map(schedule -> modelMapper.map(schedule, ScheduleDto.class))
+                .collect(Collectors.toList());
+      
     public List<Map<String, Object>> organizeSchedules(List<IScheduleInfoDto> scheduleDetails) {
         // 영화별, 상영관별, 스케줄별 그룹화하기위한 맵
         Map<String, Map<String, List<Map<String, Object>>>> organized = new HashMap<>();
@@ -163,5 +169,6 @@ public class ScheduleService {
         });
 
         return finalStructure;
+
     }
 }
