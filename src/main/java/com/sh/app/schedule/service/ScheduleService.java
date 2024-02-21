@@ -108,9 +108,6 @@ public class ScheduleService {
         return scheduleRepository.findScheduleDetailsByDateAndCinemaId(id, schDate);
     }
 
-<<<<<<< HEAD
-
-=======
     public List<ScheduleDto> findScheduleWithTheaterId(Long theaterId) {
         List<Schedule> schedules = scheduleRepository.findByTheaterId(theaterId);
         return schedules.stream()
@@ -185,7 +182,5 @@ public class ScheduleService {
         });
 
         return finalStructure;
-
     }
->>>>>>> f254a8bd4c9806a29ec2f18ae3fd5dc37773738f
 }
