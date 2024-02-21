@@ -94,17 +94,21 @@ public class AdminController {
     @GetMapping("/adminRegion.do")
     public void adminRegion(@RequestParam String name, Model model) {
         Admin admin = adminService.findByUsername(name);
+        // 현재 관리자 확인
         log.debug("admin = {}", admin);
         Long cinemaId = admin.getCinemaId();
         String region = cinemaService.findRegion(cinemaId);
         model.addAttribute("region", region);
+        // 현재 관리지점 확인
         log.debug("region = {}", region);
         List<TheaterDto> theaterDtos = theaterService.findAllTheatersWithCinemaId(cinemaId);
         model.addAttribute("theaters", theaterDtos);
 
+        // scheduleDtos 리스트를 저장할 new ArrayList 생성
         List<ScheduleDto> allSchedules = new ArrayList<>();
 
         // 불러온 TheaterDtos들을 순회하며 그 안에 있는 상영일정 조회
+        // for문 안에서 model.addAttribute 사용하면 마지막 요소만 가져오기 때문에 저장할 새로운 List 필요합니다.
         for (TheaterDto theaterDto : theaterDtos) {
             Long theaterId = theaterDto.getId();
             log.debug("theaterId = {}",theaterId);
