@@ -173,14 +173,10 @@ create sequence seq_member_like_genre_id;
 CREATE TABLE MEMBER_LIKE_CINEMA(
     id number NOT NULL,--pk
     member_id  number NOT NULL, --fk
-    cinema1_id number NULL, --fk
-    cinema2_id number NULL, --fk
-    cinema3_id number NULL, --fk
+    cinema_id number NULL, --fk
     constraints pk_member_like_cinema_id primary key(id), --pk
     constraints fk_member_like_cinema_member_id foreign key(member_id) references member(id) on delete set null,
-    constraints fk_member_like_cinema_cinema1_id foreign key(cinema1_id) references cinema(id) on delete set null,
-    constraints fk_member_like_cinema_cinema2_id foreign key(cinema2_id) references cinema(id) on delete set null,
-    constraints fk_member_like_cinema_cinema3_id foreign key(cinema3_id) references cinema(id) on delete set null
+    constraints fk_member_like_cinema_cinema_id foreign key(cinema_id) references cinema(id) on delete set null
 );
 create sequence seq_member_like_cinema_id; --선호극장 등록시 시퀀스
 --
