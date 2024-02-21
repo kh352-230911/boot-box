@@ -13,6 +13,7 @@ import java.util.List;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
+    @Query("from Schedule s join fetch s.theater t where t.id = :theaterId")
     List<Schedule> findByTheaterId(Long theaterId);
 
 
@@ -31,6 +32,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
             s.id AS schId,
             s.sch_date AS schDate,
             c.region_cinema AS regionCinema,
+            m.film_ratings AS filmRatings,
             m.title AS movieTitle,
             m.running_time AS runningTime,
             t.name AS theaterName,

@@ -11,11 +11,20 @@ import com.sh.app.schedule.dto.IScheduleInfoDto;
 import com.sh.app.schedule.dto.ScheduleDto;
 import com.sh.app.schedule.entity.Schedule;
 import com.sh.app.schedule.service.ScheduleService;
+<<<<<<< HEAD
 import com.sh.app.seat.entity.SeatDto;
 import com.sh.app.seat.service.SeatService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+=======
+import com.siot.IamportRestClient.IamportClient;
+import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+>>>>>>> f254a8bd4c9806a29ec2f18ae3fd5dc37773738f
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -63,8 +72,24 @@ public class ReservationController {
     @Autowired
     ScheduleService scheduleService;
 
+<<<<<<< HEAD
     @Autowired
     SeatService seatService;
+=======
+    private IamportClient iamportClient;
+
+    @Value("${imp.api.key}")
+    private String apiKey;
+
+    @Value("${imp.api.secretkey}")
+    private String secretKey;
+
+    @PostConstruct
+    public void init() {
+        this.iamportClient = new IamportClient(apiKey, secretKey);
+    }
+
+>>>>>>> f254a8bd4c9806a29ec2f18ae3fd5dc37773738f
 
     //첫 예매 페이지 진입 시 날짜(로컬)
     @GetMapping("/reservationBooking.do")

@@ -285,6 +285,49 @@ function addLineBreaks(str, charsPerLine) {
     }
     return result;
 }
+
+// URL에서 쿼리 파라미터를 가져오는 함수입니다.
+function getQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+        movieId: params.get('movieId'),
+        cinemaId: params.get('cinemaId'),
+        schId: params.get('schId'),
+        schDate: params.get('schDate')
+    };
+}
+
+// 페이지 로드 시 선택된 영화, 극장, 스케줄을 설정하는 함수입니다.
+function setSelectedOptions() {
+    const { movieId, cinemaId, schId , schDate} = getQueryParams();
+
+    if (movieId && cinemaId && schId) {
+        // 영화 선택
+        const movieOption = document.querySelector(`.select-movie[data-movie-id="${movieId}"]`);
+        if (movieOption) {
+            movieOption.click();
+        }
+
+        // 극장 선택
+        const cinemaOption = document.querySelector(`.select_location2[data-cinema-id="${cinemaId}"]`);
+        if (cinemaOption) {
+            cinemaOption.click();
+        }
+
+        // 스케줄 선택
+        const scheduleOption = document.querySelector(`.select_date[data-date-id="${schDate}"]`);
+        if (scheduleOption) {
+            scheduleOption.click();
+        }
+    } else {
+        console.error('파라미터를 읽을 수 없습니다.');
+    }
+}
+
+// 페이지가 로드될 때 자동으로 선택하는 로직을 실행합니다.
+document.addEventListener('DOMContentLoaded', setSelectedOptions);
+
+
 //======================================================================================
 document.querySelector(".select-seats-prev-button").addEventListener('click',function ()
 {
@@ -641,3 +684,58 @@ function select_member_like_cinema()
     //선호극장이 등록되어있든 안되어있든 이 부분을 누르면 지점쪽은 초기화가 되어있어야 함.
 
 }
+
+
+
+// 결제 연결
+// document.querySelector(".btn_pay").addEventListener('click', function ()
+// {
+//     // alert("결제");
+// });
+IMP.init("imp32105587"); // 가맹점코드 - 고정값
+function requestPay() {
+    IMP.request_pay({
+        pg: "html5_inicis", // PG사코드 - 고정값
+        pay_method: "card", // 결제방식 - 고정값
+        merchant_uid: "order" + new Date().getTime(), // UTC , 결제 API 주문번호 고유값
+        name: "영화 결제", // 고정값
+        amount: 100, // 결제 금액
+        buyer_tel: "01086759708", // 회원연락처
+    },function (rsp) {
+        if (rsp.success) {
+            // 결제 성공 시: 결제 승인 성공한 경우
+            // jQuery로 HTTP 요청
+            // $.ajax({
+            //     url: contextPath,
+            //     method: "POST",
+            //     headers: { "Content-Type": "application/json" },
+            //     data: {
+            //         imp_uid: rsp.imp_uid,            // 결제 고유번호
+            //         merchant_uid: rsp.merchant_uid   // 주문번호
+            //     }
+            // }).done(function (data) {
+            // 가맹점 서버 결제 API 성공시 로직
+            // console.log(imp_uid);
+            // console.log(merchant_uid);
+            alert("결제에 성공하였습니다.");
+            // })
+        } else {
+            // 결제 실패시
+            // $.ajax({
+            //     url: contextPath,
+            //     method: "POST",
+            //     headers: { "Content-Type": "application/json" },
+            //     data: {
+            //         imp_uid: rsp.imp_uid,            // 결제 고유번호
+            //         merchant_uid: rsp.merchant_uid   // 주문번호
+            //     }
+            // }).done(function (data) {
+            //     // 가맹점 서버 결제 API 실패 로직
+            //     console.log(imp_uid);
+            //     console.log(merchant_uid);
+            alert("결제에 실패하였습니다. 다시 시도해주세요.");
+            // })
+        }
+    });
+}
+

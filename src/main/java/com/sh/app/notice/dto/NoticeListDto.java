@@ -13,5 +13,5 @@ public class NoticeListDto {
     private String noticeTitle;
     private String noticeContent;
     private NoticeType noticeType;
-    private LocalDateTime noticeCreatedAt;
+    private LocalDateTime createdAt;
 }
