@@ -27,29 +27,25 @@
     <div class="createModal">
         <div class="modal-content">
             <h3>상영관 추가</h3>
-            <form id="theaterCreateFrm" method="post">
-                <label for="cinemaId"></label>
-                <input type="text" id="cinemaId" placeholder="극장ID" required>
-                <label for="theaterName"></label>
-                <input type="text" id="theaterName" placeholder="이름" required>
-                <label for="theaterSeat"></label>
-                <input type="number" id="theaterSeat" placeholder="좌석 수" required>
-                <button type="button" id="add">추가하기</button>
-                <button type="button" class="back">취소</button>
-            </form>
+            <label for="cinemaId"></label>
+            <input type="text" id="cinemaId" placeholder="극장ID" required>
+            <label for="theaterName"></label>
+            <input type="text" id="theaterName" placeholder="이름" required>
+            <label for="theaterSeat"></label>
+            <input type="number" id="theaterSeat" placeholder="좌석 수" required>
+            <button type="button" id="insert">추가하기</button>
+            <button type="button" class="back">취소</button>
         </div>
     </div>
     <div class="deleteModal">
         <div class="modal-content">
             <h3>상영관 삭제</h3>
-            <form id="theaterDeleteFrm" method="post">
-                <label for="deleteId"></label>
-                <input type="number" id="deleteId" placeholder="극장ID" required>
-                <label for="deleteName"></label>
-                <input type="text" id="deleteName" placeholder="이름" required>
-                <button type="button" id="delete">삭제하기</button>
-                <button type="button" class="back">취소</button>
-            </form>
+            <label for="deleteId"></label>
+            <input type="text" id="deleteId" placeholder="삭제할 상영관 고유ID" required>
+            <label for="deleteName"></label>
+            <input type="text" id="deleteName" placeholder="삭제할 상영관 이름" required>
+            <button type="button" id="deleteSearch">삭제하기</button>
+            <button type="button" class="back">취소</button>
         </div>
     </div>
 
