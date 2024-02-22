@@ -54,6 +54,7 @@ td {
 
 th {
     text-align: left;
+    font-size: large;
 }
 
 thead >tr>th{
@@ -105,11 +106,12 @@ tbody {
     display: inline-block;
     cursor: pointer;
     position: fixed;
-    bottom: 280px;
-    right: 300px;
+    bottom: 320px;
+    right: 230px;
+    font-size: medium;
 }
 #createNotice:hover {
-    background-color: white;
+    background-color: forestgreen;
     color: black;
-    border-color: red;
+    border-color: navajowhite;
 }

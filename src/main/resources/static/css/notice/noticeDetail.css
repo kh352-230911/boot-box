@@ -80,26 +80,27 @@ tbody {
 }
 
 .back-to-list-btn {
-    /*background-color: rgba(255,255,255,0.3);*/
-    padding: 5px 9px;
-    background-color: red;
+    padding: 7px 15px;
+    background-color: rgba(255,255,255,0.3);
     color: white;
     border: 2px solid black;
     box-shadow: 0 0 0 3px #fff, 0 0 0 4px black;
     border-radius: 10px;
+    font-weight: bold;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
     position: fixed;
-    bottom: 150px;
-    right: 260px;
+    bottom: 200px;
+    right: 120px;
+    width: 112px;
 }
 /* 버튼 호버 효과 */
 .back-to-list-btn:hover {
-    background-color: white;
+    background-color: cornflowerblue;
     color: black;
-    border-color: cornflowerblue;
+    border-color: white;
 }
 /* 오른쪽 아래에 위치 */
 .button-container {
@@ -126,11 +127,12 @@ tbody {
     bottom: 200px;
     right: 250px;
     width: 112px;
+    font-size: medium;
 }
 #deleteForm :hover {
-    background-color: white;
+    background-color: red;
     color: black;
-    border-color: red;
+    border-color: white;
 }
 .deleteBtn
 {

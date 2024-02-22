@@ -37,8 +37,7 @@ tbody {
 }
 table
 {
-    margin-top: 40px;
-    margin-left: 500px;
+    margin: auto;
 }
 th#askNumber
 {
