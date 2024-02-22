@@ -1,84 +1,100 @@
-html,
-body {
-    height: 100%;
-}
-
-body {
+body
+{
     margin: 0;
     font-family: "Agency FB";
     font-weight: 500;
     font-size: 1.2em;
 }
-.wrap-container {
-    height: auto;
-    min-height: 100%;
-    padding-bottom: 60px;
-}
-.home-container {
-    min-height: 600px;
-}
-footer {
-    height: 60px;
-    position: relative;
-    transform: translateY(0%);
-}
-.centered-container {
-    width: 80%; /* 또는 원하는 너비 */
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    padding: 20px; /* 내부 여백은 선택적 */
-}
-.container {
+.container
+{
+    margin-top: 30px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    flex-direction: column;
 }
-
-table {
-    width: 1300px;
+table
+{
+    width: 1000px;
+    height: 300px;
     border-collapse: collapse;
     overflow: hidden;
     box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    margin: auto;
 }
 
-th,
-td {
+th, td
+{
     padding: 10px;
     background-color: rgba(255,255,255,0.2);
     color: #fff;
 }
 
-th,td {
+th,td
+{
     text-align: left;
 }
-td{
+td
+{
     padding-left: 20px;
 }
-thead >tr>th{
+thead >tr>th
+{
     background-color: #232323;
     border-top: 2px solid #ff003b;
     border-bottom: 2px solid #ff003b;
     text-align: center;
 }
-tbody > tr{
+tbody > tr
+{
     text-align: center;
     font-size: 0.8em;
-    height: 400px;
+    height: 300px;
 }
-
-tbody {
-    tr {
-        &:hover {
-            background-color: rgba(255,255,255,0.3);
-        }
-    }
-    td {
-        position: relative;
-    }
+#memberId
+{
+    display: none;
 }
-
+#answerSave
+{
+    color: black;
+    background-color: rgba(255,255,255,0.2);
+    width: 800px;
+}
+footer
+{
+    margin-top: 770px;
+}
+#save
+{
+    padding: 7px 15px;
+    background-color: rgba(255,255,255,0.3);
+    color: white;
+    border: 2px solid black;
+    box-shadow: 0 0 0 3px #fff, 0 0 0 4px black;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    position: fixed;
+    bottom: 7px;
+    right: 130px;
+}
+#save:hover {
+    background-color: white;
+    color: black;
+    border-color: forestgreen;
+}
+#answer, #answerContainer
+{
+    width: 950px;
+    height: 100px;
+    background-color: rgba(0,0,0,0%);
+    border: none;
+}
 .back-to-list-btn {
     padding: 7px 15px;
     background-color: rgba(255,255,255,0.3);
@@ -92,15 +108,14 @@ tbody {
     display: inline-block;
     cursor: pointer;
     position: fixed;
-    bottom: 200px;
-    right: 120px;
-    width: 112px;
+    bottom: 7px;
+    right: 0px;
 }
 /* 버튼 호버 효과 */
 .back-to-list-btn:hover {
-    background-color: cornflowerblue;
+    background-color: white;
     color: black;
-    border-color: white;
+    border-color: cornflowerblue;
 }
 /* 오른쪽 아래에 위치 */
 .button-container {
@@ -108,38 +123,6 @@ tbody {
     justify-content: flex-end;
     margin: 20px;
     position: fixed;
-    bottom: 200px;
-    right: 130px;
-}
-#deleteNoticeBtn {
-    padding: 7px 15px;
-    background-color: rgba(255,255,255,0.3);
-    color: white;
-    border: 2px solid black;
-    box-shadow: 0 0 0 3px #fff, 0 0 0 4px black;
-    border-radius: 10px;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    cursor: pointer;
-    position: fixed;
-    bottom: 200px;
-    right: 250px;
-    width: 112px;
-    font-size: medium;
-}
-#deleteForm :hover {
-    background-color: red;
-    color: black;
-    border-color: white;
-}
-.deleteBtn
-{
-    display: flex;
-    justify-content: flex-end;
-    margin: 20px;
-    position: fixed;
-    bottom: 200px;
-    right: 250px;
+    bottom: 7px;
+    right: 0px;
 }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>문의사항관리</title>
+    <link rel="stylesheet" th:href="@{/css/ask/askList.css}" />
+</head>
+<style layout:fragment="style"></style>
+
+<div layout:fragment="content">
+    <div class="title-box flex justify-center">
+         <span class="border-b-2 border-red-600 font-semibold pb-2 mt-10 mb-30 text-xl">
+             문의사항
+         </span>
+    </div>
+    <table id="ask">
+        <thead>
+        <tr>
+            <th id="askNumber">번호</th>
+<!--            <th id="memberId">회원아이디</th>-->
+            <th id="askTitle">제목</th>
+<!--            <th id="askDetail">내용</th>-->
+            <th id="askType">문의 유형</th>
+            <th id="askDate">문의 등록 날짜</th>
+            <th style="width: 130px;"><!-- 답변버튼 --></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ask : ${asks}" th:data-ask-id="${ask.id}"
+            th:onclick="|location.href = '@{/ask/askDetail.do(id=${ask.id})}'|">
+
+            <td th:text="${ask.id}" style="padding-left: 40px"></td>
+            <td id="memberId" th:text="${ask.memberId}"></td>
+            <td id="Title" th:text="${ask.askTitle}"></td>
+            <td th:text="${ask.askDetail}"></td>
+            <td th:text="|[ ${ask.askType.name() == 'RESERVATION' ? '예매' :
+                                                      ask.askType.name() == 'CINEMA' ? '상영관' :
+                                                      ask.askType.name() == 'MOVIE' ? '영화' :
+                                                      ask.askType.name() == 'ETC' ? '기타' : '기타'} ]|" style="padding-left: 44px;"></td>
+            c
+            <td><button id="askDetail" th:onclick="|location.href = '@{/ask/askDetail.do}';|" style="font-size: small">답변하기</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script layout:fragment="script"></script>
+</html>

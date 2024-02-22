@@ -133,7 +133,7 @@ public class ReservationController {
         System.out.println("locationsWithCinemas start======================================================================================");
         //0214 db 조회하여 지역정보 가져오기
         List<LocationDto> locationsWithCinemas = locationService.findAllLocationsWithCinemas();
-//        model.addAttribute("locations", locationsWithCinemas);
+//        model.addAttribute("locations", locationsWithCinemas);z
 
         //0215 db 조회하여 상영정보 가져오기
 //        List<Schedule> schedules = scheduleService.findAll();
