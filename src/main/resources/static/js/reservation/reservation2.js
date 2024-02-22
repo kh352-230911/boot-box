@@ -35,6 +35,7 @@
 //     });
 // });
 //=====================================================
+//https://api.iamport.kr/
 
 //th 영화 제목 클릭시 하단 div에 해당 영화 포스터 이름, 포스터 동적으로 출력
 //예매 페이지 첫 진입시 info-seats none 처리
@@ -417,10 +418,6 @@ document.querySelector(".select-seats-prev-button").addEventListener('click',fun
     }
 });
 
-document.querySelector(".btn_pay").addEventListener('click', function ()
-{
-    alert("결제");
-});
 let selectedSheduleId;
 
 //0219 다음 버튼을 눌렀을 때, 영화-극장-시간-상영시간 모두 선택되어야 한다. 한개라도 선택 안되어있다면 넘어가지 못함.
@@ -764,19 +761,40 @@ function requestPay()
         amount: totalPay, // 결제 금액
         buyer_name: "rhgPwls",//회원명
         buyer_tel: "01089405318", // 회원연락처
-
-    },function(rsp)
-    {
-        console.log(rsp);
-        const {imp_uid} = rsp;
-        // 결제검증
-        $.ajax({
-            type: "get",
-            url: `${contextPath}reservation/reservationComplete`///${imp_uid}`
-        }).done(function(data) {
-            console.log(data);
+    },
+        function(res) {
+        console.log("res::::",res);
+            if (res.success) {
+                axios({
+                    method: "post",
+                    url: `reservation/payment/validation/${rsp.imp_uid}`
+                })
+                // 응답 데이터의 정보들
+                console.log("Payment success!");
+                console.log("Payment ID : " + res.imp_uid);
+                console.log("Order ID : " + res.merchant_uid);
+                console.log("Payment Amount : " + res.paid_amount);
+            } else {
+                console.error(response.error_msg);
+            }
         });
-    });
+
+    //     function(rsp)
+    // {
+    //     //위의 요청을 전송하고, 아래에서 결과를 받는다..
+    //     console.log("----결제 결과----");
+    //     console.log(rsp); //결과
+    //     const {imp_uid} = rsp;
+    //     console.log("비동기->controller 메소드 호출 테스트중","reservationStart gogo");
+    //     // 결제검증
+    //     $.ajax({
+    //         method: "post",
+    //         url: `${contextPath}reservation/reservationStart`,///${imp_uid}`
+    //     }).done(function(data) {
+    //         console.log(data);
+    //     });
+    //
+    // });
 
     //     function(res) {
     //     if (res.success) {

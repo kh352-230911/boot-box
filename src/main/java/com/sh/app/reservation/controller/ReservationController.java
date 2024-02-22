@@ -103,7 +103,8 @@ public class ReservationController {
         if (authentication != null && authentication.getPrincipal() instanceof MemberDetails) {
             MemberDetails memberDetails = (MemberDetails) authentication.getPrincipal();
             // 여기에서 memberDetails를 사용하여 사용자의 모든 정보에 접근할 수 있습니다.
-            System.out.println(memberDetails.getMember().getMemberPhone());
+            System.out.println("현재 회원의 핸드폰번호:"+memberDetails.getMember().getMemberPhone());
+            System.out.println("현재 회원의 아이디(숫자):"+memberDetails.getMember().getId());
         }
         else {
             System.out.println("로그인한 상태가 아닙니다......");
@@ -366,6 +367,15 @@ public class ReservationController {
 //
 //    }
 
+
+    @PostMapping("/payment/validation/{imp_uid}")
+    @ResponseBody
+    public IamportResponse<Payment> validateIamport(@PathVariable String imp_uid) {
+        IamportResponse<Payment> payment = iamportClient.paymentByImpUid(imp_uid);
+        log.info("결제 요청 응답. 결제 내역 - 주문 번호: {}", payment.getResponse().getMerchantUid());
+        return payment;
+    }
+
     @PostMapping("/reservationInsert")
 
 
@@ -375,5 +385,12 @@ public class ReservationController {
     @GetMapping("/reservationComplete")
     public void reservationComplete(Model model) {
         System.out.println("결제완료 페이지zz");
+    }
+
+
+    //예약 완료 페이지로 넘어가기.
+    @PostMapping("/reservationStart")
+    public void reservationStart(Model model) {
+        System.out.println("예약을 진행하는 페이지zz");
     }
 }
