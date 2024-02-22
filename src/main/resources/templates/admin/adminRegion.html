@@ -5,30 +5,66 @@
         layout:decorate="~{layout/default}">
 <head>
     <title>지점관리</title>
+    <link rel="stylesheet" th:href="@{/css/admin/adminTheaters.css}" />
 </head>
-<style layout:fragment="style">
-
-</style>
+<style layout:fragment="style"></style>
 
 <div layout:fragment="content">
-    <p>현재 관리지점은 <span th:text="${region}"></span> 입니다.</p>
+    <div id="regionText">
+        <div id="regionTextHeader">
+            <p>현재 관리지점은 <span th:text="${region}"></span> 입니다.</p>
+        </div>
+        <div id="theaterCrud-wrap">
+            <div>
+                <button type="button" id="createTheater">상영관 추가</button>
+            </div>
+            <div>
+                <button type="button" id="deleteTheater">상영관 삭제</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="createModal">
+        <div class="modal-content">
+            <h3>상영관 추가</h3>
+            <form id="theaterCreateFrm" method="post">
+                <label for="cinemaId"></label>
+                <input type="text" id="cinemaId" placeholder="극장ID" required>
+                <label for="theaterName"></label>
+                <input type="text" id="theaterName" placeholder="이름" required>
+                <label for="theaterSeat"></label>
+                <input type="number" id="theaterSeat" placeholder="좌석 수" required>
+                <button type="button" id="add">추가하기</button>
+                <button type="button" class="back">취소</button>
+            </form>
+        </div>
+    </div>
+    <div class="deleteModal">
+        <div class="modal-content">
+            <h3>상영관 삭제</h3>
+            <form id="theaterDeleteFrm" method="post">
+                <label for="deleteId"></label>
+                <input type="number" id="deleteId" placeholder="극장ID" required>
+                <label for="deleteName"></label>
+                <input type="text" id="deleteName" placeholder="이름" required>
+                <button type="button" id="delete">삭제하기</button>
+                <button type="button" class="back">취소</button>
+            </form>
+        </div>
+    </div>
+
     <br>
-    <p>상영관 목록</p>
-    <table>
-        <thead>
-            <tr>
-                <th>이름</th>
-                <th>좌석 수</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="theater : ${theaters}">
-                <td th:text="${theater.name}"></td>
-                <td th:text="${theater.seat}"></td>
-            </tr>
-        </tbody>
-    </table>
-    <div>
+    <div id="listText">
+        <p>해당 지점의 상영관 목록</p>
+    </div>
+
+    <div id="theaters-wrap">
+        <div th:each="theater : ${theaters}">
+            <div th:text="${theater.name}"></div>
+        </div>
+    </div>
+
+    <div id="schedules">
         <table>
             <thead>
                 <tr>
@@ -49,5 +85,5 @@
 
 </div>
 
-<script layout:fragment="script"></script>
+<script layout:fragment="script" th:src="@{/js/admin/adminTheaters.js}"></script>
 </html>
