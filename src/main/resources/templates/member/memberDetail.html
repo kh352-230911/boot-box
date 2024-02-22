@@ -35,7 +35,7 @@
                             <li class="flex justify-center items-center">
                                 <form th:action="@{/member/deleteMember.do}" method="post">
                                     <a class="likes" href="#">
-                                        <button type="submit"><p class="align-middle">회원 탈퇴</p></button>
+                                        <button type="submit" th:onclick="|return confirm('정말로 탈퇴하시겠습니까?');|"><p class="align-middle">회원 탈퇴</p></button>
                                     </a>
                                     <input type="hidden" name="id" id="id" th:value="${#authentication.principal.member.id}">
                                 </form>
@@ -69,10 +69,10 @@
                 </div>
             </div>
             <div class="my-box w-96 flex flex-wrap justify-center">
-                <a href="#">
+                <a th:href="@{/member/memberReservation.do(id=${#authentication.principal.member.id})}" >
                     <div class="w-40 ml-10 mt-5 rounded-md p-3"><span>나의 예매 내역</span></div>
                 </a>
-                <a href="#">
+                <a th:href="@{/member/memberWatchedMovie.do(id=${#authentication.principal.member.id})}">
                     <div class="w-40 ml-10 mt-5 rounded-md p-3"><span>내가 본 영화</span></div>
                 </a>
                 <a href="#">

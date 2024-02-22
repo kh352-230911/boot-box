@@ -17,21 +17,20 @@ import com.sh.app.theater.service.TheaterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
@@ -51,6 +50,12 @@ public class CinemaController {
     @Autowired
     private ScheduleService scheduleService;
 
+    @GetMapping("/cinemaList.do")
+    public String cinemaList(Model model) {
+        List<LocationDto> locationsWithCinemas = locationService.findAllLocationsWithCinemas();
+        model.addAttribute("locations", locationsWithCinemas);
+        return "cinema/cinemaList"; // 해당하는 Thymeleaf 템플릿 이름
+    }
 
     @GetMapping("/cinemaDetail.do")
     public String cinemaDetail(@RequestParam("id") Long id, Model model) {
@@ -62,24 +67,21 @@ public class CinemaController {
     }
 
     @GetMapping("/scheduleByDate")
-    public String getScheduleByDate(@RequestParam("id") Long id,
-                                    @RequestParam("selectedDate") @DateTimeFormat(pattern = "yyyy/MM/dd") LocalDate selectedDate,
-                                    Model model) {
+    public ResponseEntity<?> getScheduleByDate(@RequestParam("id") Long id,
+                                               @RequestParam("selectedDate")
+                                               @DateTimeFormat(pattern = "yyyy/MM/dd") LocalDate selectedDate) {
+
         log.debug("id = {}", id); // 극장 ID
         log.debug("selectedDate = {}", selectedDate); // 선택된날짜
         List<IScheduleInfoDto> scheduleDetails = scheduleService.findScheduleDetailsByDateAndCinemaId(id, selectedDate);
-
-        model.addAttribute("scheduleDetails", scheduleDetails);
         log.debug("scheduleDetails = {}", scheduleDetails);
 
-        return "cinema/cinemaDetail :: scheduleList"; // Thymeleaf내 fragment.scheduleList로 반환
-    }
+        // 로직을 추가하여 scheduleDetails에서 필요한 JSON 구조로 변환
+        List<Map<String, Object>> organizedSchedules = scheduleService.organizeSchedules(scheduleDetails);
+        log.debug("organizedSchedules = {}", organizedSchedules);
 
-    @GetMapping("/cinemaList.do")
-    public String cinemaList(Model model) {
-        List<LocationDto> locationsWithCinemas = locationService.findAllLocationsWithCinemas();
-        model.addAttribute("locations", locationsWithCinemas);
-        return "cinema/cinemaList"; // 해당하는 Thymeleaf 템플릿 이름
+        // JSON 구조로 클라이언트에 반환
+        return ResponseEntity.ok(organizedSchedules);
     }
 
 }

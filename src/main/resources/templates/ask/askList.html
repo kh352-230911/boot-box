@@ -39,7 +39,7 @@
                                                       ask.askType.name() == 'CINEMA' ? '상영관' :
                                                       ask.askType.name() == 'MOVIE' ? '영화' :
                                                       ask.askType.name() == 'ETC' ? '기타' : '기타'} ]|" style="padding-left: 44px;"></td>
-            <td th:text="${ask.createdAt}" style="padding-left: 60px;"></td>
+            c
             <td><button id="askDetail" th:onclick="|location.href = '@{/ask/askDetail.do}';|" style="font-size: small">답변하기</button></td>
         </tr>
         </tbody>

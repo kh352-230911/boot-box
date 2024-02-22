@@ -10,7 +10,7 @@
 </head>
 <style layout:fragment="style"></style>
 <div layout:fragment="content" class="px-10">
-<!-- 동적으로 변할 conetent page -->
+    <!-- 동적으로 변할 conetent page -->
     <span>예매</span>
     <br>
     <hr style="height: 1px">
@@ -27,7 +27,11 @@
             <tbody>
             <tr th:each="movie, status : ${dataMap.movies}">
                 <img th:src="${movie.poster}" th:style="'display:none;'">
-                <td>
+                <td class="select-movie"
+                    th:data-poster="${movie.poster}"
+                    th:data-title="${movie.title}"
+                    th:attr="data-movie-id=${movie.id}"
+                    onclick="showPoster(this.getAttribute('data-poster'), this.getAttribute('data-title'))">
                     <th:block th:if="|${movie.filmRatings.name() == 'ALL'}|">
                         <span style="font-size: 0.2em" class="grade bg-gradient-to-r shadow-lg shadow-green-100/50 bg-green-100 text-green-800 text-m font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">ALL</span>
                     </th:block>
@@ -43,55 +47,82 @@
                     <th:block th:if="|${movie.filmRatings.name() == 'NONE'}|">
                         <span style="font-size: 0.2em" class="grade bg-gradient-to-r shadow-lg shadow-gray-100/50 bg-gray-100 text-gray-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-500">미정</span>
                     </th:block>
+
+                    <button
+                            th:text="${#strings.abbreviate(movie.title, 10)}">
+                    </button>
                 </td>
-                <td th:text="${#strings.abbreviate(movie.title, 10)}"
-                    th:data-poster="${movie.poster}"
-                    th:data-title="${movie.title}"
-                    onclick="showPoster(this.getAttribute('data-poster'), this.getAttribute('data-title'))">
-                    Movie Title
-                </td>
+
+
             </tr>
             </tbody>
         </table>
 
 
-        <table class="location-area">
+        <!--        <table class="location-area">-->
+        <!--            <thead>-->
+        <!--            <tr>-->
+        <!--                <th>지역</th>-->
+        <!--            </tr>-->
+        <!--            </thead>-->
+        <!--            <tbody>-->
+        <!--            &lt;!&ndash; 지역 외 선호극장 추가&ndash;&gt;-->
+        <!--            <th:block sec:authorize="isAuthenticated()">-->
+        <!--            <tr>-->
+        <!--                <td onClick="select_member_like_cinema()">선호극장</td>-->
+        <!--            </tr>-->
+        <!--            </th:block>-->
+        <!--            <tr class="mytr" th:each="location : ${dataMap.locations}">-->
+        <!--                <td>-->
+        <!--                    <button type="button" class="select_location" th:text="${location.location_name}">-->
+        <!--&lt;!&ndash;                            th:attr="data-local-id=${local.id}">&ndash;&gt;-->
+        <!--                    </button>-->
+        <!--                </td>-->
+        <!--            </tr>-->
+        <!--            </tbody>-->
+        <!--        </table>-->
+
+
+
+        <!--        <table class="cinema-area">-->
+        <!--            <thead>-->
+        <!--            <tr>-->
+        <!--                <th>지점</th>-->
+        <!--            </tr>-->
+        <!--            </thead>-->
+        <!--            <tbody>-->
+        <!--            <tr class="mytr" th:each="location, status : ${dataMap.locations}">-->
+        <!--            &lt;!&ndash;  첫번째 지역에 대한 지점만 출력하는 경우 &ndash;&gt;-->
+        <!--                <td th:if="${status.index == 1}">-->
+        <!--                    <div class="cinema-list">-->
+        <!--                        <ul>-->
+        <!--                            <li th:each="cinema : ${location.cinemas}">-->
+        <!--                                <a th:text="${cinema.region_cinema}"></a>-->
+        <!--                            </li>-->
+        <!--                        </ul>-->
+        <!--                    </div>-->
+        <!--                </td>-->
+        <!--            </tr>-->
+        <!--            </tbody>-->
+        <!--        </table>-->
+
+        <table class="cinema-area">
             <thead>
             <tr>
                 <th>지역</th>
             </tr>
             </thead>
             <tbody>
-            <!-- 지역 외 선호극장 추가-->
-            <th:block sec:authorize="isAuthenticated()">
-            <tr>
-                <td onClick="select_member_like_cinema()">선호극장</td>
-            </tr>
-            </th:block>
-            <tr class="mytr" th:each="location : ${dataMap.locations}">
+            <tr th:each="location, status : ${dataMap.locations}">
+                <td th:text="${location.location_name}"></td>
                 <td>
-                    <button type="button" class="select_location" th:text="${location.location_name}"></button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-
-
-
-        <table class="cinema-area">
-            <thead>
-            <tr>
-                <th>지점</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="mytr" th:each="location, status : ${dataMap.locations}">
-            <!--  첫번째 지역에 대한 지점만 출력하는 경우 -->
-                <td th:if="${status.index == 0}">
                     <div class="cinema-list">
                         <ul>
+                            <hr th:if="${status.index != 0}" style="height: 1px">
                             <li th:each="cinema : ${location.cinemas}">
-                                <a th:text="${cinema.region_cinema}"></a>
+
+                                <button type="button" class="select_location2" th:text="${cinema.region_cinema}"
+                                        th:attr="data-cinema-id=${cinema.id}"></button>
                             </li>
                         </ul>
                     </div>
@@ -109,53 +140,53 @@
             </tr>
             </thead>
             <tbody>
+
             <tr th:each="date, index : ${dataMap.dateList}">
-                <td th:text="${date}" onclick="highlightCell(this)"/>
+                <td>
+                    <button type="button" class="select_date"
+                            th:text="${date + ' ' + dataMap.dayOfWeekList[index.index]}" th:attr="data-date-id=${date}"></button>
+                </td>
                 <!--                    onclick="showAlert(this)"/>-->
-                <td th:text="${dataMap.dayOfWeekList[__${index.index}__]}" onclick="showAlert(this)"></td>
+                <!--                <td th:text="${dataMap.dayOfWeekList[__${index.index}__]}" onclick="showAlert(this)"></td>-->
             </tr>
             </tbody>
         </table>
 
-        <table>
+        <table id="scheduleTable"  th:if="${dataMap != null and dataMap.scheduleDtos != null}">
             <thead>
             <tr>
-                <th colspan="2">상영 시간표</th>
+                <th colspan="3">상영 시간표</th>
             </tr>
             </thead>
-            <tbody>
-            <tr th:each="date, index : ${dataMap.dateList}">
-                <td th:text="${date}" onclick="highlightCell(this)"/>
-                <!--                    onclick="showAlert(this)"/>-->
-                <td th:text="${dataMap.dayOfWeekList[__${index.index}__]}" onclick="showAlert(this)"></td>
+            <tbody class="tbody_schedule">
+            <tr th:each="schedule, index : ${dataMap.scheduleDtos}">
+                <td th:text="${schedule}" onclick="showAlert(this)">ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ</td>
             </tr>
             </tbody>
         </table>
     </div>
-
 
     <!-- 좌석 관련 정보를 모두 감싸는 부모 div -->
     <div class = "info-seats">
         <!-- 1.관람인원 선택 div -->
         <div class = "select-people-title">
             <span>관람 인원을 선택해주세요.(최대 8명)</span>
-<!--            <button id="btn-clear" type="button" th:onclick="myFunction()">초기화 btn</button>-->
+            <!--            <button id="btn-clear" type="button" th:onclick="myFunction()">초기화 btn</button>-->
             <button id="btn-clear" type="button"
-                    th:onclick="myFunction()"
-                    class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
-                    초기화</button>
+                    th:onclick="myFunction()">
+                초기화</button>
 
         </div>
 
         <div class = "select-people-content">
             <span>일반 </span>
             <input type='button'
-                   onclick='count("plus")'
-                   value='+'/>
-            <div id='result'>0</div>
-            <input type='button'
                    onclick='count("minus")'
                    value='-'/>
+            <div id='peopleResult'>0</div>
+            <input type='button'
+                   onclick='count("plus")'
+                   value='+'/>
 
         </div>
         <!-- 2.좌석 정보 및 선택 div -->
@@ -169,7 +200,10 @@
             </table>
         </div>
 
-        <!-- 3. 좌석 상태 정보(예매가능,불가능 등을 알려주는 표) -->
+
+
+
+        <!-- 3. 좌석 상태 정보(예매가능,불가능 등을 알려주는 고정 표) -->
         <div class="state-seat">
             <div class="item">선택가능</div>
             <div class="item">선택불가</div>
@@ -177,6 +211,9 @@
         </div>
     </div>
 
+    <ul id="test-area">
+        <li th:each="val : ${testSeat}" th:text="${val}"></li>
+    </ul>
 
 
 
@@ -188,15 +225,34 @@
                 <img class="seat-container1-img"/>
                 <div class="seat-container1-title"></div>
             </div>
-            <div class="seat-container2">극장 일시 상영관 인원</div>
-            <div class="seat-container3">선택한 좌석</div>
+            <div class="seat-container2">
+                <div class="seat-container2-1">
+                <div class="seat-container2-1cinema">극장</div>
+                <div class="seat-container2-1date">일시</div>
+                <div class="seat-container2-1theater">상영관</div>
+                <div class="seat-container2-1people">인원</div>
+                </div>
+                <div class="seat-container2-2">
+                    <div class="seat-container2-2cinema">-</div>
+                    <div class="seat-container2-2date">-</div>
+                    <div class="seat-container2-2theater">-</div>
+                    <div class="seat-container2-2people">-</div>
+                </div>
+            </div>
+            <div class="seat-container3">
+                <div class="seat-container3-1">선택한 좌석</div>
+                <div class="seat-container3-2">-</div>
+                <div class="seat-container3-3">총 금액</div>
+                <div class="seat-container3-4">-</div>
+            </div>
         </div>
         <button class="select-seats-next-button">다음</button>
+        <button class="btn_pay">결제</button>
+        <button onclick="requestPay()">찐결제</button>
     </div>
 
 </div>
 <script th:inline="javascript" layout:fragment="script" th:src="@{/js/reservation/reservation2.js}">
-
 
 </script>
 

@@ -63,6 +63,7 @@
                             </div>
                         </li>
                     </th:block>
+
                     <th:block sec:authorize="isAuthenticated()">
                         <li>
                             <button id="dropdownNavbarLink1" data-dropdown-toggle="dropdownNavbar1" class="flex items-center justify-between text-xl font-semibold w-full py-2 px-3 text-white rounded  hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-600 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
@@ -104,10 +105,17 @@
                                         <li>
                                             <a th:href="@{/admin/memberList.do(id=${#authentication.name})}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">회원목록</a>
                                         </li>
-                                        <li>
-                                            <a th:href="@{/ask/askList.do(id=${#authentication.name})}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">문의사항</a>
-                                        </li>
+<!--                                        <li>-->
+<!--                                            <a th:href="@{/ask/askList.do(id=${#authentication.name})}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">문의사항</a>-->
+<!--                                        </li>-->
                                     </th:block>
+                                        <li>
+                                            <a th:href="@{/admin/askList.do(name=${#authentication.name})}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">문의사항</a>
+                                        </li>
+                                        <li>
+                                            <a th:href="@{/admin/adminRegion.do(name=${#authentication.name})}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">지점관리</a>
+                                        </li>
+<!--                                    </th:block>-->
                                     <li>
                                         <form th:action="@{/auth/logout.do}" method="post" class="d-inline">
                                             <button type="submit" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">

@@ -1,6 +1,7 @@
 package com.sh.app.ask.service;
 
 import com.sh.app.ask.dto.AskDetailDto;
+import com.sh.app.ask.dto.CreateAskDto;
 import com.sh.app.ask.entity.Ask;
 import com.sh.app.ask.repository.AskRepository;
 import org.modelmapper.ModelMapper;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -36,5 +36,14 @@ public class AskService {
         AskDetailDto askDetailDto = modelMapper.map(ask, AskDetailDto.class);
         askDetailDto.setCreatedAt(LocalDate.now());
         return askDetailDto;
+    }
+
+    public void createAsk(CreateAskDto createAskDto) {
+        Ask ask = askRepository.save(convertToAsk(createAskDto));
+
+    }
+
+    private Ask convertToAsk(CreateAskDto createAskDto) {
+        return modelMapper.map(createAskDto, Ask.class);
     }
 }

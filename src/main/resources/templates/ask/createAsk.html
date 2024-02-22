@@ -9,6 +9,7 @@
 <style layout:fragment="style"></style>
 
 <div layout:fragment="content" class="wrap-container">
+
     <div class="title-box flex justify-center">
          <span class="border-b-2 border-red-600 font-semibold pb-2 mt-10 text-xl">
              관리자에게 문의하기
@@ -16,7 +17,7 @@
     </div>
     <p class="text-sm mb-5 pt-2 flex justify-center">BootBox의 불편사항이나 문의사항을 남겨주시면 최대한 신속하게 답변 드리겠습니다.</p>
 
-    <div id="askFrm" class="flex items-center justify-start pl-60">
+    <div class="flex items-center justify-start pl-60">
         <div class="home-container">
             <div class="centered-container">
                 <!--  menu박스  -->
@@ -48,51 +49,52 @@
 
 
         <div class="bg-zinc-950 bg-opacity-40 p-10 rounded-lg shadow-lg text-white w-full max-w-4xl">
-            <form action="#" method="POST">
-                <div class="relative z-0 w-full mb-6 group">
-                    <input type="text" name="id" id="id" class="block  py-3 px-4 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" placeholder=" " required />
-                    <label for="id" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">아이디</label>
+            <form  th:action="@{/ask/createAsk.do}"  method="POST">
+                <div class="relative z-0 w-full mb-7 mt-5 group">
+                    <input  th:value="${#authentication.principal.username}" type="text"  class="input-box block w-full text-lg text-white bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" required />
+                    <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-2 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">아이디</label>
                 </div>
 
-                <div class="relative z-0 w-full mb-6 group">
-                    <input type="number" name="phone" id="phone" class="block  py-3 px-4 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" placeholder=" " required />
-                    <label for="phone" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">전화번호</label>
+                <div class="relative z-0 w-full mb-4 group">
+                    <input th:value="${#authentication.principal.member.memberPhone}" type="text" name="phone" id="phone" class="input-box block w-full text-base text-white bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" required />
+                    <label for="phone" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-2 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">전화번호</label>
                 </div>
 
-                <div class="mb-4">
-                    <span class="text-sm font-medium text-gray-500">유형 <span class="text-red-600">*</span></span>
-                    <div class="flex gap-4 mt-2">
+                <div class="mb-2">
+                    <span class="text-xs font-medium text-gray-500">유형 <span class="text-red-600">*</span></span>
+                    <div class="flex gap-4 mb-2">
                         <label class="inline-flex items-center">
-                            <input type="radio" name="type" value="general" class="text-red-600" required>
-                            <span class="ml-2 text-sm font-medium text-gray-400">일반</span>
+                            <input type="radio" name="askType" value="CINEMA" class="text-red-600" required>
+                            <span class="ml-2 text-xs font-medium text-gray-400">극장</span>
                         </label>
                         <label class="inline-flex items-center">
-                            <input type="radio" name="type" value="consult" class="text-red-600">
-                            <span class="ml-2 text-sm font-medium text-gray-400">상담</span>
+                            <input type="radio" name="askType" value="MOVIE" class="text-red-600">
+                            <span class="ml-2 text-xs font-medium text-gray-400">영화</span>
                         </label>
                         <label class="inline-flex items-center">
-                            <input type="radio" name="type" value="error" class="text-red-600">
-                            <span class="ml-2 text-sm font-medium text-gray-400">에러/결제</span>
+                            <input type="radio" name="askType" value="RESERVATION" class="text-red-600">
+                            <span class="ml-2 text-xs font-medium text-gray-400">예약/결제</span>
                         </label>
                         <label class="inline-flex items-center">
-                            <input type="radio" name="type" value="other" class="text-red-600">
-                            <span class="ml-2 text-sm font-medium text-gray-400">기타</span>
+                            <input type="radio" name="askType" value="ETC" class="text-red-600">
+                            <span class="ml-2 text-xs font-medium text-gray-400">기타</span>
                         </label>
                     </div>
                 </div>
 
-                <div class="relative z-0 w-full mb-6 group">
-                    <input type="text" name="title" id="title" class="block py-3 px-4 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" placeholder=" " required />
-                    <label for="title" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">제목<span class="text-red-600">*</span></label>
+                <div class="relative z-0 w-full mt-7 group">
+                    <label for="askTitle" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-2 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">제목</label>
+                    <input type="text" name="askTitle" id="askTitle" class="input-box block w-full text-sm text-white bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" placeholder=" " required />
                 </div>
 
                 <div class="mb-4">
-                    <label for="message" class="block text-sm font-medium text-gray-500 mb-2">내용 <span class="text-red-600">*</span></label>
-                    <textarea id="message" rows="4" class="focus:border-red-500 focus:ring-0 bg-zinc-950 border border-red-600 rounded-lg block w-full p-2.5" placeholder="" required></textarea>
+                    <label for="askDetail" class="block text-xs font-medium text-gray-500 mb-1 mt-4">내용 <span class="text-red-600">*</span></label>
+                    <textarea id="askDetail" name="askDetail" rows="4" class="text-sm focus:border-red-500 focus:ring-0 bg-zinc-950 border border-red-600 rounded-lg block w-full p-2.5" placeholder="" required></textarea>
                 </div>
 
                 <p class="text-xs text-gray-400 mb-4"><span class="text-red-600">*</span> 체크된 항목은 필수 입력 사항입니다.</p>
-                <button type="submit" class="bg-red-600 hover:bg-red-700 rounded-lg px-4 py-3 text-sm font-medium w-64 mx-auto block">제출하기</button>            </form>
+                <button type="submit" class="bg-red-600 hover:bg-red-700 rounded-lg px-4 py-3 text-sm font-medium w-64 mx-auto block">제출하기</button>
+            </form>
         </div>
     </div>
 </div>

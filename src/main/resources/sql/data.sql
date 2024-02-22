@@ -108,15 +108,15 @@ insert into AUTHORITY values (seq_authority_id.nextval, null, 5, 'ROLE_MANAGER')
 insert into AUTHORITY values (seq_authority_id.nextval, null, 6, 'ROLE_ADMIN');
 -- seat
 -- 프로시저 반복문, 좌석 총 60개 (A~F열, 한 열당 10개)
- set serveroutput on; 
- BEGIN
- FOR i IN ASCII('A')..ASCII('F') LOOP
+set serveroutput on;
+BEGIN
+FOR i IN ASCII('A')..ASCII('F') LOOP
      FOR j IN 1..10 LOOP
        INSERT INTO SEAT VALUES (seq_seat_id.nextval, CHR(i) || LPAD(TO_CHAR(j), 2, '0'));
- END LOOP;
- END LOOP;
- COMMIT;
- END;
+END LOOP;
+END LOOP;
+COMMIT;
+END;
 --
 -- theater
 insert into THEATER values (020101, 0201, '1관', 60);
@@ -147,35 +147,35 @@ insert into GENRE values (seq_genre_id.nextval, '호러');
 --
 -- movie
 insert into
-   movie
+    movie
 values (1, '웡카', 'ALL', '2024.01.31', 116,
-       'http://h.vod.cgv.co.kr/vodCGVa/87937/87937_222373_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87937/87937_1000.jpg',
-       '폴 킹', '티모시 샬라메, 칼라 레인, 올리비아 콜맨, 톰 데이비스', '세상에서 가장 달콤한 여정 좋은 일은 모두 꿈에서부터 시작된다! 마법사이자 초콜릿 메이커 ‘윌리 웡카’의 꿈은 디저트의 성지, ‘달콤 백화점’에 자신만의 초콜릿 가게를 여는 것.
+        'http://h.vod.cgv.co.kr/vodCGVa/87937/87937_222373_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87937/87937_1000.jpg',
+        '폴 킹', '티모시 샬라메, 칼라 레인, 올리비아 콜맨, 톰 데이비스', '세상에서 가장 달콤한 여정 좋은 일은 모두 꿈에서부터 시작된다! 마법사이자 초콜릿 메이커 ‘윌리 웡카’의 꿈은 디저트의 성지, ‘달콤 백화점’에 자신만의 초콜릿 가게를 여는 것.
    가진 것이라고는 낡은 모자 가득한 꿈과 단돈 12소버린 뿐이지만 특별한 마법의 초콜릿으로 사람들을 사로잡을 자신이 있다.
    하지만 먹을 것도, 잠잘 곳도, 의지할 사람도 없는 상황 속에서 낡은 여인숙에 머물게 된 ‘웡카’는
    ‘스크러빗 부인’과 ‘블리처’의 계략에 빠져 눈더미처럼 불어난 숙박비로 인해 순식간에 빚더미에 오른다.
    게다가 밤마다 초콜릿을 훔쳐가는 작은 도둑 ‘움파 룸파’의 등장과 ‘달콤 백화점’을 독점한 초콜릿 카르텔의 강력한 견제까지.
    세계 최고의 초콜릿 메이커가 되는 길은 험난하기만 한데…',
-       17.3);
+        17.3);
 insert into
-   movie
+    movie
 values (2, '시민덕희', 'FIFTEEN', '2024.01.24', 114,
-       'http://h.vod.cgv.co.kr/vodCGVa/87866/87866_222813_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87866/87866_1000.jpg',
-       '박영주', '라미란, 공명, 염혜란, 안은진', '내 돈을 사기 친 그 놈이 구조 요청을 해왔다! 세탁소 화재로 인해 대출상품을 알아보던 생활력 만렙 덕희에게 어느 날, 거래은행의 손대리가 합리적인 대출상품을 제안하겠다며 전화를 걸어온다.
+        'http://h.vod.cgv.co.kr/vodCGVa/87866/87866_222813_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87866/87866_1000.jpg',
+        '박영주', '라미란, 공명, 염혜란, 안은진', '내 돈을 사기 친 그 놈이 구조 요청을 해왔다! 세탁소 화재로 인해 대출상품을 알아보던 생활력 만렙 덕희에게 어느 날, 거래은행의 손대리가 합리적인 대출상품을 제안하겠다며 전화를 걸어온다.
    대출에 필요하다며 이런저런 수수료를 요구한 손대리에게 돈을 보낸 덕희는 이 모든 과정이 보이스피싱이었음을 뒤늦게 인지하고 충격에 빠진다.
    전 재산을 잃고 아이들과 거리로 나앉게 생긴 덕희에게 어느 날 손대리가 다시 전화를 걸어오는데… 이번엔 살려달라는 전화다!
    경찰도 포기한 사건, 덕희는 손대리도 구출하고 잃어버린 돈도 찾겠다는 일념으로
    필살기 하나씩 장착한 직장 동료들과 함께 중국 칭다오로 직접 날아간다.',
-       5.9);
+        5.9);
 insert into
-   movie
+    movie
 values (3, '도그데이즈', 'TWELVE', '2024.02.07', 120,
         'http://h.vod.cgv.co.kr/vodCGVa/87978/87978_222744_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87978/87978_1000.jpg',
         '김덕민', '윤여정, 유혜진, 김윤진, 김서형', '깔끔한 성격의 계획형 싱글남 ‘민상’(유해진).영끌까지 모아 산 건물을 개똥밭으로 만드는 세입자 수의사 ‘진영’(김서형) 때문에 매일 머리가 아프다.
     오늘도‘진영’과 티격태격하던 ‘민상’은 동물병원에서 한 성격하는 할머니를 만나는데...',
         8.3);
 insert into
-   movie
+    movie
 values (4, '데드맨', 'FIFTEEN', '2024.02.07', 108,
         'http://h.vod.cgv.co.kr/vodCGVa/87981/87981_222534_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87981/87981_1000.jpg',
         '하준원', '조진웅, 김희애, 이수경', '목숨값 단돈 500만원! 이름값 1000억? 이름에 살고, 이름에 죽는다! 살아있지만 죽은 사람, 즉 ‘데드맨’이 되어 영문도 모른 채 중국의 사설감옥에 끌려간 ‘이만재’.
@@ -285,18 +285,18 @@ insert into MEMBER_LIKE_GENRE values (seq_member_like_genre_id.nextval, 4, 3);
 insert into MEMBER_LIKE_GENRE values (seq_member_like_genre_id.nextval, 5, 2);
 --
 -- member_like_cinema
-insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 1, 0201, 03101, 03201);
-insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 2, 0201, null, null);
-insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 3, 03101, 05101, null);
-insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 4, 04201, null, null);
-insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 5, 03101, 03201, 05101);
+insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 1, 0201);
+insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 2, 0201);
+insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 3, 03101);
+insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 4, 04201);
+insert into MEMBER_LIKE_CINEMA values (seq_member_like_cinema_id.nextval, 5, 03101);
 --
 -- ask
-insert into ASK values (seq_ask_id.nextval, 'rhgPwls', '예매 취소 및 환불', '예매 취소 및 환불 규정은 어떻게 되나요?', 'RESERVATION', default);
-insert into ASK values (seq_ask_id.nextval, 'testUser', '영화 시간보다 늦었어요.', ' 영화 시간보다 늦었어요. 입장 가능한가요?', 'MOVIE', default);
-insert into ASK values (seq_ask_id.nextval, 'sinsa', '음식물 반입', '상영관 내 다른 음식물의 반입이 되나요?', 'MOVIE', default);
-insert into ASK values (seq_ask_id.nextval, 'honggd', '관람 등급', '관람 등급에 대해 알고 싶습니다.', 'MOVIE', default);
-insert into ASK values (seq_ask_id.nextval, 'less', '영화 관람을 하다 소지품을 분실했어요', '영화 관람을 하다 소지품을 분실했어요. 분실물은 어떻게 찾나요?', 'CINEMA', default);
+insert into ASK values (seq_ask_id.nextval, '1', '예매 취소 및 환불', '예매 취소 및 환불 규정은 어떻게 되나요?', 'RESERVATION', default);
+insert into ASK values (seq_ask_id.nextval, '2', '영화 시간보다 늦었어요.', ' 영화 시간보다 늦었어요. 입장 가능한가요?', 'MOVIE', default);
+insert into ASK values (seq_ask_id.nextval, '3', '음식물 반입', '상영관 내 다른 음식물의 반입이 되나요?', 'MOVIE', default);
+insert into ASK values (seq_ask_id.nextval, '4', '관람 등급', '관람 등급에 대해 알고 싶습니다.', 'MOVIE', default);
+insert into ASK values (seq_ask_id.nextval, '5', '영화 관람을 하다 소지품을 분실했어요', '영화 관람을 하다 소지품을 분실했어요. 분실물은 어떻게 찾나요?', 'CINEMA', default);
 --
 -- answer
 insert into ANSWER values (seq_answer_id.nextval, 1, 6, '상영시간 이전까지만 가능하며, 상영시간 이후 취소나 환불은 되지 않습니다.', default);
@@ -306,34 +306,35 @@ insert into ANSWER values (seq_answer_id.nextval, 4, 6, 'CGV는 영화진흥법�
 insert into ANSWER values (seq_answer_id.nextval, 5, 6, '분실물의 경우 발견 즉시 현장에서 보관을 진행하고 있으며, 확인 요청시 본인 확인 후 물품 확인을 도와드리고 있습니다.', default);
 --
 -- notice
-insert into NOTICE values (seq_notice_id.nextval, 1, 'SYSTEM', '2023년 12월 시스템점검 안내', '원활하고 안정된 서비스 제공을 위하여 2023년 12월 새벽 시스템 점검 작업이 예정되어 있습니다.');
-insert into NOTICE values (seq_notice_id.nextval, 2, 'CINEMA', '[센텀시티] 백화점 휴점에 따른 극장 이용 안내', '22.09.09(금)~22.09.10(토) 신세계 백화점 센텀시티점 휴점에 따라 극장이용 동선 안내를 공지하오니 이용에 착오 없으시길 바랍니다.');
-insert into NOTICE values (seq_notice_id.nextval, 3, 'EVENT', '신규 초콜릿향 진행극장 변경 안내 ', '4DX 신규 초콜릿향 진행 극장 (1/31~2/6) CGV 계양, 광교, 광주터미널, 김해, 대구, 대구스타디움');
-insert into NOTICE values (seq_notice_id.nextval, 4, 'ETC', '개인정보처리방침 개정 공지 (23.11.06 시행)', '2023년 11월 6일 자로 BOOTBOX의 개인정보처리방침이 개정됨에 따라 회원님께 주요 개정 내용과 적용 일정을 아래와 같이 안내 드립니다.');
-insert into NOTICE values (seq_notice_id.nextval, 5, 'ETC', 'BOOTBOX 서비스 이용약관 개정 안내 (2024년 1월 23일 시행)', '2024년 1월 23일자로 BOOTBOX 서비스 이용약관을 일부 개정하게 되어 아래와 같이 사전 안내드립니다. 서비스 이용에 참고 부탁드립니다.');
+insert into NOTICE values (seq_notice_id.nextval, 1, 'SYSTEM', '2023년 12월 시스템점검 안내', '원활하고 안정된 서비스 제공을 위하여 2023년 12월 새벽 시스템 점검 작업이 예정되어 있습니다.', default);
+insert into NOTICE values (seq_notice_id.nextval, 2, 'CINEMA', '[센텀시티] 백화점 휴점에 따른 극장 이용 안내', '22.09.09(금)~22.09.10(토) 신세계 백화점 센텀시티점 휴점에 따라 극장이용 동선 안내를 공지하오니 이용에 착오 없으시길 바랍니다.', default);
+insert into NOTICE values (seq_notice_id.nextval, 3, 'EVENT', '신규 초콜릿향 진행극장 변경 안내 ', '4DX 신규 초콜릿향 진행 극장 (1/31~2/6) CGV 계양, 광교, 광주터미널, 김해, 대구, 대구스타디움', default);
+insert into NOTICE values (seq_notice_id.nextval, 4, 'ETC', '개인정보처리방침 개정 공지 (23.11.06 시행)', '2023년 11월 6일 자로 BOOTBOX의 개인정보처리방침이 개정됨에 따라 회원님께 주요 개정 내용과 적용 일정을 아래와 같이 안내 드립니다.', default);
+insert into NOTICE values (seq_notice_id.nextval, 5, 'ETC', 'BOOTBOX 서비스 이용약관 개정 안내 (2024년 1월 23일 시행)', '2024년 1월 23일자로 BOOTBOX 서비스 이용약관을 일부 개정하게 되어 아래와 같이 사전 안내드립니다. 서비스 이용에 참고 부탁드립니다.', default);
 --
 -- schedule
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, '2024-02-01', '15:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 2, '2024-02-01', '20:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 3, '2024-02-03', '10:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 4, '2024-02-04', '22:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 5, '2024-02-06', '19:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 6, '2024-01-24', '12:30');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 6, '2024-01-29', '20:30');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-01', 'YYYY-MM-DD'), to_date('2024-02-01 15:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 2, to_date('2024-02-01', 'YYYY-MM-DD'), to_date('2024-02-01 20:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 3, to_date('2024-02-03', 'YYYY-MM-DD'), to_date('2024-02-03 10:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 4, to_date('2024-02-04', 'YYYY-MM-DD'), to_date('2024-02-04 22:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 5, to_date('2024-02-06', 'YYYY-MM-DD'), to_date('2024-02-06 19:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 6, to_date('2024-02-24', 'YYYY-MM-DD'), to_date('2024-02-24 12:30', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 6, to_date('2024-02-29', 'YYYY-MM-DD'), to_date('2024-02-29 20:30', 'YYYY-MM-DD HH24:MI'));
 -- 강남점 영화 추가
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, '2024-02-16', '12:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, '2024-02-16', '16:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, '2024-02-16', '20:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 1, '2024-02-16', '14:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 1, '2024-02-16', '18:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 4, '2024-02-16', '20:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 4, '2024-02-16', '23:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020103, 5, '2024-02-16', '13:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020103, 5, '2024-02-16', '17:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020103, 5, '2024-02-16', '21:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020104, 6, '2024-02-16', '14:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020104, 6, '2024-02-16', '17:00');
-insert into SCHEDULE values (seq_schedule_id.nextval, 020104, 6, '2024-02-16', '20:00');
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 12:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 16:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 20:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 1, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 14:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 1, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 18:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 4, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 20:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 4, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 23:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020103, 5, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 13:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020103, 5, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 17:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020103, 5, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 21:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020104, 6, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 14:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020104, 6, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 17:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020104, 6, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 20:00', 'YYYY-MM-DD HH24:MI'));
+
 -- reservation
 insert into RESERVATION values ('box16443', 1, 1, 'CONFIRM');
 insert into RESERVATION values ('box25822', 2, 2, 'CONFIRM');
@@ -344,12 +345,12 @@ insert into RESERVATION values ('box32582', 5, 5, 'CONFIRM');
 insert into RESERVATION values ('box21482', 5, 7, 'CONFIRM');
 insert into RESERVATION values ('box47211', 2, 2, 'CONFIRM');
 -- 강남점 sample 예약 데이터 추가
-insert into RESERVATION values ('box57869', 1, 41, 'CONFIRM');
-insert into RESERVATION values ('box49687', 1, 42, 'CONFIRM');
-insert into RESERVATION values ('box68574', 1, 43, 'CONFIRM');
-insert into RESERVATION values ('box78960', 2, 45, 'CONFIRM');
-insert into RESERVATION values ('box27586', 2, 47, 'CONFIRM');
-insert into RESERVATION values ('box83657', 2, 53, 'CONFIRM');
+insert into RESERVATION values ('box57869', 1, 10, 'CONFIRM');
+insert into RESERVATION values ('box49687', 1, 11, 'CONFIRM');
+insert into RESERVATION values ('box68574', 1, 12, 'CONFIRM');
+insert into RESERVATION values ('box78960', 2, 13, 'CONFIRM');
+insert into RESERVATION values ('box27586', 2, 14, 'CONFIRM');
+insert into RESERVATION values ('box83657', 2, 15, 'CONFIRM');
 -- reservation_seat
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box16443', 1);
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box25822', 2);

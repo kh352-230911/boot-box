@@ -4,6 +4,7 @@ import com.sh.app.movie.entity.Movie;
 import com.sh.app.theater.dto.TheaterDto;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 //0215
@@ -18,14 +19,10 @@ import java.time.LocalDateTime;
  */
 @Data
 public class ScheduleDto {
-
     private long id;
-
     private TheaterDto theater;
-
     private Movie movie;
-
-    private String schDate;
-
+    private LocalDate schDate;
     private LocalDateTime time;
+
 }

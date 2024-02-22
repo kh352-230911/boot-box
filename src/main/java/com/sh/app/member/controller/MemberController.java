@@ -4,6 +4,7 @@ package com.sh.app.member.controller;
 import com.sh.app.auth.service.AuthService;
 import com.sh.app.auth.vo.MemberDetails;
 import com.sh.app.member.dto.MemberCreateDto;
+import com.sh.app.member.dto.MemberReservationDto;
 import com.sh.app.member.dto.MemberUpdateDto;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
@@ -15,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -122,9 +124,25 @@ public class MemberController {
     public String deleteMember(Long id) {
         log.debug("id = {}", id);
         memberService.deleteById(id);
-
         memberService.logoutAndInvalidateSession();
-
         return "redirect:/";
+    }
+
+    @GetMapping("/memberReservation.do")
+    public void memberReservation(Long id, Model model) {
+        log.debug("id = {}", id);
+        Member member = memberService.findByReservation(id);
+        log.debug("member = {}", member);
+
+        model.addAttribute("member", member);
+    }
+
+    @GetMapping("/memberWatchedMovie.do")
+    public void memberWatchedMovie(Long id, Model model) {
+        log.debug("id = {}", id);
+        Member member = memberService.findByReservation(id);
+        log.debug("member = {}", member);
+
+        model.addAttribute("member", member);
     }
 }

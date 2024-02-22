@@ -1,15 +1,11 @@
 package com.sh.app.notice.entity;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -35,11 +31,12 @@ public class Notice {
     //  <!-- 시퀀스id, noticeType, title, content, createAt -->
     private Long id;
     private Long adminId; // notice table의 시퀀스
-    @Column(nullable = false, name = "notice_type")
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    private NoticeType noticeType;
     @Column(nullable = false, name = "notice_title")
     private String noticeTitle;
     private String noticeContent;
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false, name = "notice_type")
+    @Enumerated(EnumType.STRING)
+    private NoticeType noticeType;
 }

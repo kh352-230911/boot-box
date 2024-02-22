@@ -19,7 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = "theaters")
+@ToString(exclude = {"theaters", "movies"})
 public class Cinema implements Comparable<Cinema>{
 
     @Id

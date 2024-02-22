@@ -39,6 +39,7 @@ public class WebSecurityConfig {
                     .requestMatchers("/member/memberDetail.do").authenticated()
                     .requestMatchers("/notice/**").permitAll()
                     .requestMatchers("/ask/**").authenticated() // 인증된 사용자만 접근가능
+                    .requestMatchers("/member/**").permitAll()
                     .requestMatchers("/member/createMember.do", "/member/checkIdDuplicate.do").anonymous()
 //                    .requestMatchers("/board/**").authenticated()
 //                    .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -54,7 +55,7 @@ public class WebSecurityConfig {
 //                    .loginPage("/auth/adminLogin.do")
                     .loginProcessingUrl("/auth/login.do") // 로그인 처리 (POST)
 //                    .loginProcessingUrl("/auth/adminLogin.do")
-                    .successHandler(new CustomSuccessHandler())
+                    .successHandler(new CustomSuccessHandler()) //성공시 수행할 핸들러
                     .permitAll();
         }));
         http.logout(logoutConfigurer -> {

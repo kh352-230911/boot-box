@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>지점관리</title>
+</head>
+<style layout:fragment="style">
+
+</style>
+
+<div layout:fragment="content">
+    <p>현재 관리지점은 <span th:text="${region}"></span> 입니다.</p>
+    <br>
+    <p>상영관 목록</p>
+    <table>
+        <thead>
+            <tr>
+                <th>이름</th>
+                <th>좌석 수</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="theater : ${theaters}">
+                <td th:text="${theater.name}"></td>
+                <td th:text="${theater.seat}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>아이디</th>
+                    <th>영화날짜</th>
+                    <th>영화시작시간</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="schedule : ${allSchedules}">
+                    <td th:text="${schedule.id}"></td>
+                    <td th:text="${schedule.schDate}"></td>
+                    <td th:text="${#temporals.format(schedule.time, 'HH:mm')}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script layout:fragment="script"></script>
+</html>
