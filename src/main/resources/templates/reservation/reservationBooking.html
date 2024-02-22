@@ -152,15 +152,18 @@
             </tbody>
         </table>
 
-        <table id="scheduleTable"  th:if="${dataMap != null and dataMap.scheduleDtos != null}">
+        <table id="scheduleTable">
             <thead>
             <tr>
-                <th colspan="3">상영 시간표</th>
+                <th colspan="4">상영 시간표</th>
             </tr>
             </thead>
             <tbody class="tbody_schedule">
-            <tr th:each="schedule, index : ${dataMap.scheduleDtos}">
-                <td th:text="${schedule}" onclick="showAlert(this)">ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ</td>
+            <tr>
+                <td th:text="상영시간pk"></td>
+                <td th:text="시간"></td>
+                <td th:text="관"></td>
+                <td th:text="좌석"></td>
             </tr>
             </tbody>
         </table>
@@ -250,6 +253,28 @@
         <button class="btn_pay">결제</button>
         <button onclick="requestPay()">찐결제</button>
     </div>
+
+    <!--  결제 하기 전 최종 정보를 모달에 띄워줌 cgv처럼 -->
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    글 등록이 완료되었습니다.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
 
 </div>
 <script th:inline="javascript" layout:fragment="script" th:src="@{/js/reservation/reservation2.js}">
