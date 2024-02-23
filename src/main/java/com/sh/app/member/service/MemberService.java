@@ -1,7 +1,6 @@
 package com.sh.app.member.service;
 
 
-import com.sh.app.auth.vo.MemberDetails;
 import com.sh.app.authority.entity.Authority;
 import com.sh.app.authority.entity.RoleAuth;
 import com.sh.app.authority.service.AuthorityService;
@@ -11,7 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -70,5 +68,9 @@ public class MemberService {
 
     public Member findByReservation(Long id) {
         return memberRepository.findByReservation(id);
+    }
+
+    public Optional<Member> findById(Long memberId) {
+        return memberRepository.findById(memberId);
     }
 }

@@ -57,4 +57,8 @@ public class CinemaService {
                 .orElseThrow(() -> new EntityNotFoundException("Cinema not found with id: " + cinemaId));
         return cinema.getRegion_cinema();
     }
+
+    public Optional<Cinema> findById(Long cinemaId) {
+        return cinemaRepository.findById(cinemaId);
+    }
 }
