@@ -27,7 +27,7 @@ public class Theater {
     @Column(nullable = false)
     private int seat;
 
-    @OneToMany(mappedBy = "theater", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "theater", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @Builder.Default
     private List<Schedule> schedules = new ArrayList<>();
 
