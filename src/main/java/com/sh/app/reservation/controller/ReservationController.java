@@ -7,6 +7,8 @@ import com.sh.app.movie.dto.MovieListDto;
 import com.sh.app.movie.dto.MovieShortDto;
 import com.sh.app.movie.entity.Movie;
 import com.sh.app.movie.service.MovieService;
+import com.sh.app.reservation.dto.ReservationDto;
+import com.sh.app.reservation.entity.Reservation;
 import com.sh.app.reservation.service.ReservationService;
 import com.sh.app.schedule.dto.IScheduleInfoDto;
 import com.sh.app.schedule.dto.ScheduleDto;
@@ -376,10 +378,6 @@ public class ReservationController {
         return payment;
     }
 
-    @PostMapping("/reservationInsert")
-
-
-
 
     //예약 완료 페이지로 넘어가기.
     @GetMapping("/reservationComplete")
@@ -388,9 +386,18 @@ public class ReservationController {
     }
 
 
-    //예약 완료 페이지로 넘어가기.
+    //결제 결과를 db에 저장하는 메소드
     @PostMapping("/reservationStart")
-    public void reservationStart(Model model) {
-        System.out.println("예약을 진행하는 페이지zz");
+    public ResponseEntity<String> reservationStart(@AuthenticationPrincipal MemberDetails memberDetails,
+                                                   @RequestBody ReservationDto reservationDto ) throws IOException {
+        System.out.println("결제return 정보로 테이블에 isnert하는 작업...");
+        System.out.println("id: " + memberDetails.getMember().getId()); //reservationDto.getId()<- x
+        System.out.println("memberId: " + reservationDto.getMemberId());
+        System.out.println("scheduleId: " + reservationDto.getScheduleId());
+        System.out.println("status: " + reservationDto.getStatus());
+
+        Reservation reservation = reservationService.insertReservation(reservationDto);
+
+        return ResponseEntity.ok().build();
     }
 }

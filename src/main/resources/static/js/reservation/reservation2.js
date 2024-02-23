@@ -53,7 +53,12 @@ var totalPay;
 //
 //0219
 let reservatoinPage=1; //기본 1부터 시작.
-
+//0223
+var checkedIds = []; // 체크된 체크박스의 아이디를 저장할 배열
+const Status = {
+    CONFIRM: 'CONFIRM',
+    PENDING: 'PENDING'
+};
 
 //영화 선택 시..0219
 var movieId;
@@ -395,6 +400,18 @@ document.querySelector(".select-seats-prev-button").addEventListener('click',fun
 {
     //alert('이전버튼');
     console.log("...이전 버튼...");
+
+
+
+    const nextButton = document.querySelector('.select-seats-next-button');
+    const requestPayButton = document.querySelector('.select-requestPay-button');
+
+    if (requestPayButton.style.display === 'block') {
+        requestPayButton.style.display = 'none'; // 보이게 설정
+        nextButton.style.display='block';
+    }
+
+
     var cookieValue = getCookie("myCookie");
     $('#test-area').html("");
 
@@ -429,7 +446,15 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
     //     alert('모든 버튼을 누르셔야 다음으로 이동하실 수 있습니다.');
     //     return;
     // }
-
+    const nextButton = document.querySelector('.select-seats-next-button');
+    const requestPayButton = document.querySelector('.select-requestPay-button');
+// nextButton의 display 속성을 조작하여 보이거나 숨깁니다.
+    if (requestPayButton.style.display === 'none') {
+        requestPayButton.style.display = 'block'; // 보이게 설정
+        nextButton.style.display='none';
+    } else {
+        requestPayButton.style.display = 'none'; // 숨김 설정
+    }
 
 
     //비동기 test
@@ -591,7 +616,7 @@ function createSeats(rows, cols,disabledSeat) {
                         checkedCount--; //증가된 것을 하나 차감한다.
                     }
                     //모든 체크박스들을 순회하여
-                    var checkedIds = []; // 체크된 체크박스의 아이디를 저장할 배열
+                    checkedIds = []; // 체크된 체크박스의 아이디를 저장할 배열
                     checkboxes.forEach(function(checkbox) {
                         if (checkbox.checked) {
 
@@ -752,6 +777,7 @@ function select_member_like_cinema()
 IMP.init("imp32105587"); // 가맹점코드 - 고정값
 function requestPay()
 {
+    console.log("결제 버튼을 클릭");
     let pay_uid = new Date().getTime().toString();
     IMP.request_pay({
         pg: "html5_inicis", // PG사코드 - 고정값
@@ -762,150 +788,47 @@ function requestPay()
         buyer_name: "rhgPwls",//회원명
         buyer_tel: "01089405318", // 회원연락처
     },
-        function(res) {
-        console.log("res::::",res);
-            if (res.success) {
-                axios({
-                    method: "post",
-                    url: `reservation/payment/validation/${rsp.imp_uid}`
-                })
-                // 응답 데이터의 정보들
-                console.log("Payment success!");
-                console.log("Payment ID : " + res.imp_uid);
-                console.log("Order ID : " + res.merchant_uid);
-                console.log("Payment Amount : " + res.paid_amount);
+
+        function(res)
+        {
+            console.log("res::::",res);
+            console.log("Payment success!");
+            console.log("Payment ID : " + res.imp_uid);
+            console.log("Order ID : " + res.merchant_uid);
+            console.log("Payment Amount : " + res.paid_amount);
+
+            let sendData = {
+                id: "box78900",
+                memberId: "rhgPwls",
+                scheduleId: selectedSheduleId,
+                status : Status.CONFIRM //enum 화
+            };
+            //결제응답정보를 db에 저장하기 위해 비동기를 사용하는 구간
+            if (res.success)
+            {
+                $.ajax({
+                    type: "POST",
+                    url: `${contextPath}reservation/reservationStart`, // 전송할 URL
+                    contentType: "application/json", // 전송하는 데이터의 타입
+                    data: JSON.stringify(sendData), // JSON 데이터로 변환하여 전송
+
+                    success: function(response) {
+                        // 요청이 성공했을 때 처리할 로직
+                        console.log("응답:", response);
+                        // 응답 데이터의 정보들
+
+                    },
+                    error: function(xhr, status, error) {
+                        // 요청이 실패했을 때 처리할 로직
+                        console.error("에러:", error);
+                    }
+                });
+
             } else {
-                console.error(response.error_msg);
+                alert(res.error_msg);
+                console.error(res.error_msg);
             }
         });
 
-    //     function(rsp)
-    // {
-    //     //위의 요청을 전송하고, 아래에서 결과를 받는다..
-    //     console.log("----결제 결과----");
-    //     console.log(rsp); //결과
-    //     const {imp_uid} = rsp;
-    //     console.log("비동기->controller 메소드 호출 테스트중","reservationStart gogo");
-    //     // 결제검증
-    //     $.ajax({
-    //         method: "post",
-    //         url: `${contextPath}reservation/reservationStart`,///${imp_uid}`
-    //     }).done(function(data) {
-    //         console.log(data);
-    //     });
-    //
-    // });
-
-    //     function(res) {
-    //     if (res.success) {
-    //         const {imp_uid} = res;
-    //         $.ajax({
-    //             method: "post",
-    //             url: `${contextPath}reservation/validation/${imp_uid}`
-    //         })
-    //         // 응답 데이터의 정보들
-    //         console.log("Payment success!");
-    //         console.log("Payment ID : " + res.imp_uid);
-    //         console.log("Order ID : " + res.merchant_uid);
-    //         console.log("Payment Amount : " + res.paid_amount);
-    //     } else {
-    //         console.error(response.error_msg);
-    //     }
-    // });
-
-        // //기존 코드
-        // function (res) {
-        //     //결제검증 끼워보기
-        //     // 결제검증
-        //     if (res.success)
-        //     {
-        //         console.log(res); //응답값
-        //         const {imp_uid} = res;
-        //         console.log("imp_uid:", imp_uid);
-        //         console.log("url 선 확인 : ",`${contextPath}validation/`+imp_uid);
-        //         console.log("url 선 확인 2 : ",'/bootbox/reservation/validation/' + imp_uid);
-        //
-        //
-        //         $.ajax({
-        //             type: "post",
-        //             url: `${contextPath}reservation/validation/${imp_uid}`
-        //
-        //         }).done(function (data) {
-        //         console.log("data출력");
-        //         console.log(data);
-        //         if (res.paid_amount == data.response.amount) {
-        //             alert("결제 및 결제검증완료!!:)");
-        //
-        //             //결제 성공 시 비즈니스 로직
-        //
-        //         } else {
-        //             alert("결제 실패");
-        //         }
-        //     });
-        // }
-        // });
-
-    //     if (res.success)
-    //     {
-    //         alert("결제에 성공하였습니다.^^");
-    //         console.log(res.success); //true
-    //
-    //         //0222 - 결제 성공했다는 alert 이후 insert 작업 진행한다.
-    //         //merchant_uid = 예매주문번호
-    //         $.ajax({
-    //             url: `${contextPath}reservation/reservationInsert`,
-    //             type: 'post',
-    //             data:{
-    //                 //merchant_uid:
-    //             },
-    //             success(response){
-    //
-    //
-    //             },
-    //             //requests:  요청 객체입니다. 보통 HTTP 요청 정보를 포함하며, 요청한 클라이언트의 정보와 요청된 리소스에 대한 정보 등을 포함합니다.
-    //             // status: HTTP 상태 코드입니다. 실패한 요청의 상태 코드를 나타냅니다.
-    //             // error: 서버에서 반환된 오류 메시지입니다.
-    //             error(request, status, error) {
-    //                 //console.error('~~~~Ajax request failed~~~~:', error);
-    //                 console.log('~~~~Error response responseText~~~~:', request.responseText);
-    //                 console.log('~~~~Error response status~~~~:', request.status);
-    //                 if(request.status==500)
-    //                 {
-    //                     alert(`에러로 인해 메인페이지로 이동합니다. 이용에 불편을 끼쳐드려 죄송합니다.`)
-    //                     window.location.href = `${contextPath}bootbox/`; // 리다이렉트할 URL을 지정합니다.
-    //                 }
-    //                 else if(request.status==401) //인증 관련 에러 잠시 주석처리..
-    //                 {
-    //                     alert(`예매는 로그인 후 이용하실 수 있습니다.`)
-    //                     window.location.href = `${contextPath}`+request.responseText; // 리다이렉트할 URL을 지정합니다.
-    //                 }
-    //                 else if(request.status==400)//잘못된 클라이언트 요청
-    //                 {
-    //                     alert(`에러가 발생했습니다.`)
-    //                 }
-    //
-    //             }
-    //         });
-    //     }
-    //     //결제 실패했을 경우 - 에러 혹은 사용자가 창을 닫아서 결제를 거부한 경우.
-    //     else
-    //     {
-    //         // 결제 실패시
-    //         // $.ajax({
-    //         //     url: contextPath,
-    //         //     method: "POST",
-    //         //     headers: { "Content-Type": "application/json" },
-    //         //     data: {
-    //         //         imp_uid: rsp.imp_uid,            // 결제 고유번호
-    //         //         merchant_uid: rsp.merchant_uid   // 주문번호
-    //         //     }
-    //         // }).done(function (data) {
-    //         //     // 가맹점 서버 결제 API 실패 로직
-    //         //     console.log(imp_uid);
-    //         //     console.log(merchant_uid);
-    //         alert("결제에 실패하였습니다. 다시 시도해주세요.");
-    //         // })
-    //     }
-    // });
 }
 
