@@ -34,10 +34,8 @@ public class MovieController {
     @GetMapping("/movieDetail.do")
     public void movieDetail(Long id, Model model){
         MovieDetailDto movieDetailDto = movieService.findById(id);
-        log.debug("movieDetailDto = {}", movieDetailDto);
+//        log.debug("movieDetailDto = {}", movieDetailDto);
         model.addAttribute("movie",movieDetailDto);
-
-
     }
 
 
@@ -47,7 +45,7 @@ public class MovieController {
     // 정호
     @GetMapping("/movieList.do")
     public void movieList(String genre, Model model) {
-        log.debug("genre = {}", genre);
+//        log.debug("genre = {}", genre);
 
         List<Movie> movies;
         if (genre == null) {
@@ -56,7 +54,7 @@ public class MovieController {
         else {
             movies = movieService.findByGenreList(genre);
         }
-        log.debug("movies = {}", movies);
+//        log.debug("movies = {}", movies);
         model.addAttribute("movies", movies);
     }
     // ------------------------------------------ //

@@ -1,5 +1,6 @@
 package com.sh.app.review.service;
 
+import com.sh.app.review.dto.CreateReviewDto;
 import com.sh.app.review.repository.ReviewRepository;
 import org.modelmapper.ModelMapper;
 import com.sh.app.review.entity.Review;
@@ -17,4 +18,12 @@ public class ReviewService {
     private ReviewRepository reviewRepository;
     @Autowired
     private ModelMapper modelMapper;
+
+    public void createReview(CreateReviewDto createReviewDto) {
+        Review review = reviewRepository.save(convertToReview(createReviewDto));
+    }
+
+    private Review convertToReview(CreateReviewDto createReviewDto) {
+        return modelMapper.map(createReviewDto, Review.class);
+    }
 }

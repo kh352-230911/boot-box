@@ -6,6 +6,7 @@ import com.sh.app.schedule.entity.Schedule;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.ArrayList;
 import java.util.List;

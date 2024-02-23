@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>나의 문의 내역</title>
+    <link rel="stylesheet" th:href="@{/css/member/memberAskList.css}" />
+</head>
+<style layout:fragment="style"></style>
+
+<div layout:fragment="content" class="wrap-container">
+    <div class="flex items-center justify-start pl-60">
+        <div class="home-container">
+
+        </div>
+
+        <div class="centered-container">
+            <!--  menu박스  -->
+            <div class="title-box flex justify-center">
+                 <span class="border-b-2 border-red-600 font-semibold pb-2 mt-10 text-xl">
+                     나의 문의 내역
+                 </span>
+            </div>
+        </div>
+        <!-- table박스 -->
+        <div class="container flex justify-center" style="width: 1550px">
+            <table>
+                <thead class="text-base">
+                <tr>
+                    <th>번호</th>
+                    <th>구분</th>
+                    <th>제목</th>
+                    <th>등록일</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="ask, status : ${member.asks}"
+                    th:onclick="|location.href = '@{/ask/askDetail.do(id=${ask.id})}'|">
+                    <td th:text="${status.count}">1</td>
+                    <td th:text="|[ ${ask.askType.name() == 'MOVIE' ? '영화' :
+                                                      ask.askType.name() == 'CINEMA' ? '상영관' :
+                                                      ask.askType.name() == 'RESERVATION' ? '예매' :
+                                                      ask.askType.name() == 'ETC' ? '기타' : '기타'} ]|">시스템점검</td>
+                    <td th:text="${ask.askTitle}">제목</td>
+                    <td th:text="${#temporals.format(ask.createdAt, 'yyyy/MM/dd HH:mm')}">Cell 4</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="script"></script>
+</html>

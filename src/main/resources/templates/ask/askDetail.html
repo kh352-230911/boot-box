@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>문의사항 자세히</title>
+    <link rel="stylesheet" th:href="@{/css/ask/askDetail.css}" />
+</head>
+<style layout:fragment="style"></style>
+<div layout:fragment="content" >
+    <div class="container flex justify-center mt-4">
+        <table class="mt-30">
+            <thead>
+            <tr>
+                <th th:text="${ask.id}">번호</th>
+                <th id="memberId" th:text="${ask.memberId}">회원아이디</th>
+                <th th:text="${ask.askTitle}">제목</th>
+                <th th:text="|[ ${ask.askType.name() == 'RESERVATION' ? '예매' :
+                                              ask.noticeType.name() == 'CINEMA' ? '상영관' :
+                                              ask.noticeType.name() == 'MOVIE' ? '영화' :
+                                              ask.noticeType.name() == 'ETC' ? '기타' : '기타'} ]|">문의유형</th>
+                <th th:text="|등록일 : ${ask.createdAt}|">등록일</th>
+            </tr>
+            </thead>
+            <tbody class="py-50">
+            <tr>
+                <td colspan="4" th:text="${ask.askDetail}">내용</td>
+            </tr>
+
+            </tbody>
+        </table>
+        <br>
+        <form id="askForm" action="@{/answer/createAnswer.do}" method="post">
+        <table>
+            <thead>
+                <tr>
+                    <th>답변</th>
+                </tr>
+            </thead>
+                <tbody>
+                    <tr>
+                        <td>
+<!--                            <textarea id="answer" placeholder="답변을 남겨주세요."></textarea>-->
+                            <div id="answerContainer">
+                                <!-- JavaScript로 동적으로 채워질 텍스트 영역 -->
+                            </div>
+                        </td>
+<!--                        <td>-->
+<!--                            <div id="answerContainer">-->
+<!--                                &lt;!&ndash; JavaScript로 동적으로 채워질 텍스트 영역 &ndash;&gt;-->
+<!--                            </div>-->
+<!--                        </td>-->
+                    </tr>
+                </tbody>
+        </table>
+        <span><input type="submit" value="답변저장" id="save"
+                     th:onclick="|location.href = '@{/answer/createAnswer.do}';|"></span>
+            <div class="button-container">
+                <a th:onclick="|location.href = '@{/ask/askList.do}';|" class="back-to-list-btn">목록으로</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script layout:fragment="script" th:src="@{/js/answer/createAnswer.js}"></script>
+</html>

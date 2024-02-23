@@ -248,10 +248,46 @@ values (13, '킹덤-엑소더스', 'EIGHTEEN', '2024.01.31', 317,
         0.1);
 insert into
     movie
-values (14, '상견니 ', 'FIFTEEN', '2024.01.25', 107,
+values (14, '상견니', 'FIFTEEN', '2024.01.25', 107,
         'http://h.vod.cgv.co.kr/vodCGVa/86750/86750_211203_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000086/86750/86750_1000.jpg',
         '황천인', '가가연, 허광한, 시백우', '드라마 스토리를 영화 버전으로 확장시킨 멀티버스 판타지 로맨스 완전히 새로운 세계관, 완전히 새로운 스토리의 <상견니> 2009년, 리쯔웨이와 황위쉬안은 밀크티 가게에서 우연히 재회한다. 처음 만났지만 마치 오래전부터 알고 있었던 것 같은 기시감과 묘한 설렘을 느끼는 두 사람. 이들은 사계절을 함께 보내며 가까워지고, 2010년의 마지막 날, 함께 새해를 맞이하며 연인이 된다. 2017년, 황위쉬안의 인생에 예상치 못한 변화가 생긴다. 해외 발령을 받게 된 것. 황위쉬안은 이 제안을 받아들이고 새로운 여정을 시작하지만 이 선택은 그녀의 미래를 바꿀 뿐만 아니라, 리쯔웨이와 모쥔제, 그리고 그녀가 아직 모르는 천윈루의 운명까지 뒤바꿔 놓는데… 이제, 이들은 수없이 뒤엉킨 타임라인 속에서 서로를 구하기 위해 낡은 테이프 속 들려오는 노래 ‘라스트 댄스’를 따라 달려가기 시작한다.',
         0.2);
+insert into
+    movie
+values (15, '파묘', 'FIFTEEN', '2024.02.22', 134,
+        'http://h.vod.cgv.co.kr/vodCGVa/88012/88012_222840_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000088/88012/88012_1000.jpg',
+        '장재현', '최민식, 김고은, 유해진 , 이도현', '미국 LA, 거액의 의뢰를 받은 무당 ‘화림’(김고은)과 ‘봉길’(이도현)은 기이한 병이 대물림되는 집안의 장손을 만난다. 조상의 묫자리가 화근임을 알아챈 ‘화림’은 이장을 권하고, 돈 냄새를 맡은 최고의 풍수사 ‘상덕’(최민식)과 장의사 ‘영근’(유해진)이 합류한다. “전부 잘 알 거야… 묘 하나 잘못 건들면 어떻게 되는지” 절대 사람이 묻힐 수 없는 악지에 자리한 기이한 묘. ‘상덕’은 불길한 기운을 느끼고 제안을 거절하지만, ‘화림’의 설득으로 결국 파묘가 시작되고… 나와서는 안될 것이 나왔다.',
+        42.0);
+insert into
+    movie
+values (16, '귀멸의 칼날-인연의 기적, 그리고 합동 강화 훈련으로', 'FIFTEEN', '2024.02.14', 103,
+        'http://h.vod.cgv.co.kr/vodCGVa/88000/88000_222754_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000088/88000/88000_1000.jpg',
+        '소토자키 하루오', '하나에 나츠키, 키토 아카리, 하나자와 카나, 카와니시 켄고', null,
+        2.8);
+insert into
+    movie
+values (17, '사운드 오브 프리덤', 'FIFTEEN', '2024.02.21', 131,
+        'http://h.vod.cgv.co.kr/vodCGVa/86750/86750_211203_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000086/86750/86750_1000.jpg',
+        '알레한드로 고메즈 몬테베르드', '제임스 카비젤', '인신매매시장 규모 연 1,500억불 전 세계 800만 명의 아이들이 사라졌다! 한 순간에 납치되어, 전 세계에 밀매되는 아이들. 믿을 수 없는 실화를 기반으로 한 구출 작전이 시작된다!',
+        1.7);
+insert into
+    movie
+values (18, '오펜하이머', 'FIFTEEN', '2023.08.15', 180,
+        'http://h.vod.cgv.co.kr/vodCGVa/87175/87175_216496_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87175/87175_1000.jpg',
+        '크리스토퍼 놀란', '킬리언 머피, 에밀리 블런트, 맷 데이먼, 로버트 다우니 주니어', '“나는 이제 죽음이요, 세상의 파괴자가 되었다.” 세상을 구하기 위해 세상을 파괴할 지도 모르는 선택을 해야 하는 천재 과학자의 핵개발 프로젝트.',
+        0.6);
+insert into
+    movie
+values (19, '바튼 아카데미', 'FIFTEEN', '2024.02.21', 133,
+        'http://h.vod.cgv.co.kr/vodCGVa/88001/88001_222912_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000088/88001/88001_1000.jpg',
+        '알렉산더 페인', '폴 지아마티, 더바인 조이 랜돌프, 도미닉 세사', '함께 있지만 그들은 언제나 혼자였다 1970년 바튼 아카데미, 크리스마스를 맞아 모두가 떠난 텅빈 학교에는 세 사람이 남게 된다. 고집불통 역사 선생님 ‘폴’, 문제아 ‘털리’ 그리고 주방장 ‘메리’ 이들은 원치 않았던 동고동락을 시작하게 되고, 예상치 못한 순간, 서로의 비밀을 공유하면서 특별한 우정을 나누게 되는데…',
+        0.6);
+insert into
+    movie
+values (20, '스노우 퍼핀즈', 'ALL', '2024.02.15', 70,
+        'http://h.vod.cgv.co.kr/vodCGVa/87980/87980_222838_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87980/87980_1000.jpg',
+        '네스토르 F. 데니스', '조니 뎁, 김대중', '슈퍼 버드 히어로 퍼핀즈와 함께라면 매일매일이 신나는 모험이 된다! 똘똘이 퍼핀 ‘택’ X 장꾸 삐삐 퍼핀 ‘디디’ X 튼튼이 메가 퍼핀 ‘파이’ X 순둥이 막내 퍼핀 ‘틱’ 그리고 퍼핀즈의 든든한 리더 ‘조니 퍼프’ 그들은 우연히 외계 운석을 찾고 각기 다른 슈퍼파워를 갖게 된다. 그때 북극을 파괴하는 욕심쟁이 슈퍼 악당 ‘오토’가 나타나는데... 스노우 타운과 북극을 지키기 위한 퍼핀즈의 시크릿 미션이 시작된다!',
+        0.4);
 --
 -- movie_genre
 insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 4, 1);
@@ -276,6 +312,14 @@ insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 14);
 insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 4, 14);
 insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 12, 14);
 insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 6, 14);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 8, 15);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 11, 16);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 5, 17);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 18);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 8, 18);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 1, 19);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 3, 19);
+insert into MOVIE_GENRE values (seq_movie_genre_id.nextval, 11, 20);
 --
 -- member_like_genre
 insert into MEMBER_LIKE_GENRE values (seq_member_like_genre_id.nextval, 1, 1);
@@ -344,6 +388,7 @@ insert into RESERVATION values ('box34332', 4, 6, 'CONFIRM');
 insert into RESERVATION values ('box32582', 5, 5, 'CONFIRM');
 insert into RESERVATION values ('box21482', 5, 7, 'CONFIRM');
 insert into RESERVATION values ('box47211', 2, 2, 'CONFIRM');
+
 -- 강남점 sample 예약 데이터 추가
 insert into RESERVATION values ('box57869', 1, 10, 'CONFIRM');
 insert into RESERVATION values ('box49687', 1, 11, 'CONFIRM');
@@ -417,3 +462,43 @@ insert into REVIEW values (seq_review_id.nextval, 'box42217', 4, 4, 5, '짱짱',
 insert into REVIEW values (seq_review_id.nextval, 'box34332', 4, 6, 5, '짱짱', default);
 insert into REVIEW values (seq_review_id.nextval, 'box34332', 5, 6, 3, '무난무난', default);
 insert into REVIEW values (seq_review_id.nextval, 'box32582', 5, 5, 2, '재미없어요', default);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box355887', 1, 1, 4, '재미있어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box342099', 1, 2, 3, '괜찮네요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box668654', 1, 3, 5, '최고입니다!', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box832705', 1, 4, 2, '별로에요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box466187', 1, 5, 4, '추천합니다', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box270062', 1, 6, 1, '재미없어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box832326', 1, 7, 5, '강추!', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box863796', 1, 8, 3, '무난해요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box189237', 2, 9, 3, '볼만해요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box310065', 2, 10, 2, '기대하진 마세요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box803382', 2, 11, 5, '명작입니다!', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box385852', 2, 12, 4, '감동적이었어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box778932', 2, 13, 1, '시간 낭비예요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box019763', 2, 14, 4, '재미있게 봤습니다', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box598265', 2, 15, 3, '평범한 편이에요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box725303', 2, 16, 2, '조금 지루했어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box937255', 3, 17, 5, '아주 훌륭해요!', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box935920', 3, 18, 3, '보통이에요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box271694', 3, 19, 4, '추천드립니다!', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box530415', 3, 20, 1, '별로였어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box669004', 3, 1, 2, '재미없습니다', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box259003', 3, 2, 4, '좋았어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box394037', 3, 3, 3, '괜찮았습니다', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box112583', 3, 4, 5, '대단히 잘 만들었어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box201716', 4, 5, 2, '별로예요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box273556', 4, 6, 5, '완전 재밌어요!', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box744759', 4, 7, 3, '시간 가는 줄 몰랐어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box123432', 4, 8, 1, '재미없어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box222023', 4, 9, 4, '추천합니다!', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box056438', 4, 10, 2, '기대 이하였습니다', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box987369', 4, 11, 3, '보통이네요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box520273', 4, 12, 4, '좋았어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box690854', 5, 13, 1, '실망스러웠어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box388132', 5, 14, 4, '매우 재미있어요!', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box964008', 5, 15, 2, '그저 그래요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box607176', 5, 16, 5, '최고입니다!', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box619529', 5, 17, 3, '괜찮았어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box935009', 5, 18, 4, '재미있게 봤어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box076625', 5, 19, 1, '재미없어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box179358', 5, 20, 5, '강추합니다!', DEFAULT);

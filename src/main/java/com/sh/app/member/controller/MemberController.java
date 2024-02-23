@@ -8,6 +8,8 @@ import com.sh.app.member.dto.MemberReservationDto;
 import com.sh.app.member.dto.MemberUpdateDto;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
+import com.sh.app.review.dto.CreateReviewDto;
+import com.sh.app.review.service.ReviewService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.awt.*;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,11 +39,13 @@ import java.util.Map;
 @Validated //유효성 검증 spring annotation
 public class MemberController {
     @Autowired
-    MemberService memberService;
+    private MemberService memberService;
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
     @Autowired
-    AuthService authService;
+    private AuthService authService;
+    @Autowired
+    private ReviewService reviewService;
 
     @GetMapping("/createMember.do")
     public void createMember() {}
@@ -143,6 +149,34 @@ public class MemberController {
         Member member = memberService.findByReservation(id);
         log.debug("member = {}", member);
 
+        model.addAttribute("member", member);
+    }
+
+    @PostMapping("/memberWatchedMovie.do")
+    public String createReview(@Valid CreateReviewDto createReviewDto,
+            @AuthenticationPrincipal MemberDetails memberDetails,
+                               RedirectAttributes redirectAttributes) {
+        log.debug("createReviewDto = {}", createReviewDto);
+
+        createReviewDto.setMemberId(memberDetails.getMember().getId());
+        reviewService.createReview(createReviewDto);
+
+        return "redirect:/member/memberWatchedMovie.do?id=" + memberDetails.getMember().getId();
+    }
+
+    @GetMapping("/memberAskList.do")
+    public void memberAskList(Long id, Model model) {
+        Member member = memberService.findById(id);
+
+        log.debug("member = {}", member);
+        model.addAttribute("member", member);
+    }
+
+    @GetMapping("/memberReviewList.do")
+    public void memberReviewList(Long id, Model model) {
+        Member member = memberService.findById(id);
+
+        log.debug("member = {}", member);
         model.addAttribute("member", member);
     }
 }
