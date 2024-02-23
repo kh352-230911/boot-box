@@ -239,8 +239,6 @@ $(document).ready(() => {
     scheduleManager();
 });
 
-
-
 // // 영화관사진 랜덤하게 로딩
 // function changeImage() {
 //     const images = [
@@ -261,4 +259,80 @@ $(document).ready(() => {
 //
 // // Call the function on page load
 // window.onload = changeImage;
+
+
+
+///////////// 초임 영역 //////////////////
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    // 'bookmark' 아이디를 가진 요소를 찾아 변수에 저장.
+    const bookmarkIcon = document.querySelector('.bookmark');
+    const cinemaId = $('.bookmark').data('cinema-id');
+    const memberId = $('.memberId').data('member-id');
+    // console.log(bookmarkIcon);
+
+    //로그인 상태를 확인하고 적절한 동작을 수행하는 함수.
+    function checkAuthentication() {
+        if (!isAuthenticated) {
+            alert('회원만 즐겨찾기가 가능합니다. 먼저 로그인을 해주세요.😊');
+            location.href = `${contextPath}auth/login.do`;
+        } else {
+            // 북마크가 체크가 안되었을때
+            if(bookmarkIcon.classList.contains("fa-regular")){
+                $.ajax({
+                    url: `${contextPath}cinema/cinemaLike`,
+                    type: "post",
+                    data: {
+                        cinemaId : cinemaId,
+                        memberId : memberId
+                    },
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader(csrfHeaderName, csrfToken);
+                    },
+                    success:function (data) {
+                        console.log(data);
+                        // 북마크 최대 3개 이상으로 등록시
+                        if(data >= 3) {
+                            alert('최대 3개의 극장만 추가 가능합니다.😓');
+                            return;
+                        }
+                         alert('자주가는 극장이 추가되었습니다.😊');
+
+                        // fa-regular 삭제
+                        bookmarkIcon.classList.remove('fa-regular');
+                        bookmarkIcon.classList.remove('fa-beat-fade');
+                        // fa-solid 추가
+                        bookmarkIcon.classList.add('fa-solid');
+                        // console.log(bookmarkIcon);
+                    }
+                })
+            } else {
+                // 북마크 체크되었을때
+                $.ajax({
+                    url: `${contextPath}cinema/cinemaNoLike`,
+                    type: "post",
+                    data: {
+                        cinemaId : cinemaId,
+                        memberId : memberId
+                    },
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader(csrfHeaderName, csrfToken);
+                    },
+                    success:function (data) {
+                        alert('자주가는 극장이 삭제되었습니다.😂');
+                            // fa-solid 삭제
+                            bookmarkIcon.classList.remove('fa-solid');
+                            // fa-regular 추가
+                            bookmarkIcon.classList.add('fa-regular');
+                            bookmarkIcon.classList.add('fa-beat-fade');
+                    }
+                })
+            }
+
+        }
+    }
+    // 북마크 아이콘에 클릭 이벤트 리스너를 추가.
+    bookmarkIcon.addEventListener('click', checkAuthentication);
+});
+
 

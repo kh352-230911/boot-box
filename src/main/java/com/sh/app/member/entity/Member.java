@@ -2,6 +2,7 @@ package com.sh.app.member.entity;
 
 import com.sh.app.ask.entity.Ask;
 import com.sh.app.authority.entity.Authority;
+import com.sh.app.memberLikeCinema.entity.MemberLikeCinema;
 import com.sh.app.reservation.entity.Reservation;
 import com.sh.app.review.entity.Review;
 import jakarta.persistence.*;
@@ -28,6 +29,7 @@ import java.util.Set;
 @DynamicInsert //null이 아닌 필드값만 insert한다.
 @DynamicUpdate //영속성 컨텍스트의 엔티티와 달라진 필드만 update한다.
 //@ToString(exclude = "reviews")
+@ToString(exclude = "memberLikeCinemas")
 public class Member implements Serializable{
 
     @Id
@@ -70,5 +72,8 @@ public class Member implements Serializable{
 
     @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
     private List<Reservation> reservations = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+    private List<MemberLikeCinema> memberLikeCinemas = new ArrayList<>();
 
 }

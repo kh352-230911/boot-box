@@ -15,6 +15,7 @@
     position: relative;
     width: 100%;
     height: 50px;
+    margin-bottom: 20px;
 }
 
 .theater-box .favorite-area .favorite-title {
@@ -27,6 +28,9 @@
     font-size: 24px;
     font-weight: bold;
     text-shadow: 2px 2px #727171;
+}
+.mini{
+    width: 230px;
 }
 
 .theater-box .favorite-area .favorite-list {
@@ -47,28 +51,37 @@
     border: 2px solid #6e6c6d;
     text-align: center;
 }
+.favorite-list>ul p {
+    float: left;
+    margin-left: 2px;
+    padding: 2px;
+    border: 2px solid #6e6c6d;
+    text-align: center;
+}
 
-.favorite-list>ul>li>a {
+.favorite-list>ul>li>a{
     display: block;
     width: 100px;
     height: 39px;
     line-height: 39px;
     border: 1px solid #6e6c6d;
 }
-
-.theater-box .favorite-area button {
-    width: 200px;
+.favorite-list>ul>li>p{
+    display: block;
+    width: 190px;
     height: 39px;
-    color: white;
-    font-size: 20px;
+    line-height: 36px;
     border: 1px solid #6e6c6d;
 }
+
 
 .theater-box .location-area {
     width: 100%;
     margin-top: 20px;
     padding: 0 3px;
-
+}
+.like{
+    width: 200px;
 }
 
 .theater-box .location-area>ul>li {
@@ -86,7 +99,7 @@
 }
 
 .location-area>ul>li.on {
-    outline: 3px solid #727171;
+    outline: 3px solid #bb0808;
 }
 
 .theater-box .location-area>ul>li>button {

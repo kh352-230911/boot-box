@@ -1,27 +1,24 @@
 package com.sh.app.cinema.controller;
 
+import com.sh.app.auth.vo.MemberDetails;
 import com.sh.app.cinema.dto.CinemaDto;
 
 import com.sh.app.cinema.service.CinemaService;
 import com.sh.app.location.dto.LocationDto;
 import com.sh.app.location.service.LocationService;
+import com.sh.app.memberLikeCinema.dto.MemberLikeCinemaListDto;
+import com.sh.app.memberLikeCinema.serviece.MemberLikeCinemaService;
 import com.sh.app.movie.dto.MovieListDto;
 import com.sh.app.movie.service.MovieService;
 import com.sh.app.schedule.dto.IScheduleInfoDto;
-import com.sh.app.schedule.dto.ScheduleInfoDto;
-import com.sh.app.schedule.dto.TheaterScheduleDto;
-import com.sh.app.schedule.dto.TimeSlotDto;
 import com.sh.app.schedule.service.ScheduleService;
-import com.sh.app.seat.service.SeatService;
-import com.sh.app.theater.service.TheaterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
-import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -30,8 +27,6 @@ import java.util.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.stream.Collectors;
 
 @Controller
 @Slf4j
@@ -50,10 +45,22 @@ public class CinemaController {
     @Autowired
     private ScheduleService scheduleService;
 
+    @Autowired
+    private MemberLikeCinemaService memberLikeCinemaService;
+
     @GetMapping("/cinemaList.do")
-    public String cinemaList(Model model) {
+    public String cinemaList(Model model, @AuthenticationPrincipal MemberDetails memberDetails) {
+
         List<LocationDto> locationsWithCinemas = locationService.findAllLocationsWithCinemas();
+        List<MemberLikeCinemaListDto> memberLikeCinemaListDtos = memberLikeCinemaService.findByMemberId(memberDetails.getMember().getId());
+
+        log.debug("memberLIkeCinemaListDtos = {}", memberLikeCinemaListDtos);
+
         model.addAttribute("locations", locationsWithCinemas);
+        model.addAttribute("memberLikeCinemas", memberLikeCinemaListDtos);
+
+
+
         return "cinema/cinemaList"; // 해당하는 Thymeleaf 템플릿 이름
     }
 
@@ -63,6 +70,8 @@ public class CinemaController {
         List<MovieListDto> currentMovies = movieService.getCurrentMovies(); // 현재 상영 중인 영화 목록 가져오기
         model.addAttribute("cinema", cinemaDto);
         model.addAttribute("currentMovies", currentMovies); // 모델에 추가
+        log.debug("cinemaDto = {}", cinemaDto);
+        log.debug("currentMovies = {}", currentMovies);
         return "cinema/cinemaDetail";
     }
 

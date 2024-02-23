@@ -2,6 +2,7 @@ package com.sh.app.cinema.entity;
 
 import com.sh.app.genre.entity.Genre;
 import com.sh.app.location.entity.Location;
+import com.sh.app.memberLikeCinema.entity.MemberLikeCinema;
 import com.sh.app.movie.entity.Movie;
 import com.sh.app.theater.entity.Theater;
 import jakarta.persistence.*;
@@ -19,7 +20,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = {"theaters", "movies"})
+@ToString(exclude = {"theaters", "movies", "memberLikeCinemas"})
 public class Cinema implements Comparable<Cinema>{
 
     @Id
@@ -37,13 +38,17 @@ public class Cinema implements Comparable<Cinema>{
     @Column(nullable = false)
     private String phone;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
     private Location location;
 
     @OneToMany(mappedBy = "cinema", fetch = FetchType.EAGER)
     @Builder.Default
     private List<Theater> theaters = new ArrayList<>();
+
+    @OneToMany(mappedBy = "cinema", fetch = FetchType.EAGER)
+    private List<MemberLikeCinema> memberLikeCinemas = new ArrayList<>();
+
 
     public void setLocation(Location location) {
         this.location = location;

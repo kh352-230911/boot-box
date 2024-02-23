@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
           integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://kit.fontawesome.com/c3a117ab33.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -25,9 +26,12 @@
         const contextPath = '[[@{/}]]';
         const csrfHeaderName = `[[${_csrf.headerName}]]`;
         const csrfToken = `[[${_csrf.token}]]`;
+        // 서버로부터 인증 상태를 받아오기
+        var isAuthenticated = [[${#authorization.expression('isAuthenticated()')}]];
     </script>
     <script sec:authorize="isAuthenticated()">
         const username = `[[${#authentication.principal.username}]]`;
+
     </script>
 
     <script th:if="${msg != null}">
