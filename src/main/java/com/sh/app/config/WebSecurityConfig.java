@@ -22,7 +22,7 @@ public class WebSecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/css/**", "/images/**", "/js/**");
+        return (web) -> web.ignoring().requestMatchers("/favicon.ico","/css/**", "/images/**", "/js/**");
     }
 
     @Bean

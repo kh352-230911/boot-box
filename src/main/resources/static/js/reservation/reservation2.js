@@ -35,6 +35,7 @@
 //     });
 // });
 //=====================================================
+//https://api.iamport.kr/
 
 //th 영화 제목 클릭시 하단 div에 해당 영화 포스터 이름, 포스터 동적으로 출력
 //예매 페이지 첫 진입시 info-seats none 처리
@@ -52,7 +53,12 @@ var totalPay;
 //
 //0219
 let reservatoinPage=1; //기본 1부터 시작.
-
+//0223
+var checkedIds = []; // 체크된 체크박스의 아이디를 저장할 배열
+const Status = {
+    CONFIRM: 'CONFIRM',
+    PENDING: 'PENDING'
+};
 
 //영화 선택 시..0219
 var movieId;
@@ -184,7 +190,7 @@ $(document).ready(function(){
             },
             success(organizedSchedules){
 
-                makeNewSchedule(organizedSchedules);
+                makeNewSchedule(true,organizedSchedules);
 
             },
             //requests:  요청 객체입니다. 보통 HTTP 요청 정보를 포함하며, 요청한 클라이언트의 정보와 요청된 리소스에 대한 정보 등을 포함합니다.
@@ -206,9 +212,8 @@ $(document).ready(function(){
                 }
                 else if(request.status==404)
                 {
-                    alert(`해당 상영스케쥴이 존재하지 않습니다..`);
                     //204는 delete 했을 때 경우라, select 조회 결과가 없는 경우 404로 처리
-                    makeNewSchedule("");
+                    makeNewSchedule(false,"해당 상영스케쥴이 존재하지 않습니다");
                 }
 
             },
@@ -219,15 +224,70 @@ $(document).ready(function(){
 });
 
 //0221 영화-극장-원하는날짜로 새 상영스케쥴을 받아온 후 가공하는 함수
-function makeNewSchedule(organizedSchedules)
+function makeNewSchedule(able,organizedSchedules)
 {
+    // const scheduleTable = document.getElementById('scheduleTable');
+    //
+    // // 기존의 행 삭제
+    // while (scheduleTable.rows.length > 1) {
+    //     scheduleTable.deleteRow(1); // 헤더를 제외한 행을 삭제합니다.
+    // }
+    //
+    // // 새로운 데이터 추가
+    // const [{ totalDuration, schedules, title }] = organizedSchedules;
+    // console.log("총 상영 시간:", totalDuration);
+    // console.log("제목:", title);
+    //
+    // const tbody = scheduleTable.querySelector('.tbody_schedule');
+    // tbody.innerHTML = ''; // tbody 내용을 비움
+    //
+    // // 선택된 행 추적을 위한 변수
+    // let selectedRow = null;
+    //
+    // schedules.forEach(({ times, theater }) => {
+    //     times.forEach(({ schId, time, seatsAvailable }) => {
+    //         const row = scheduleTable.insertRow();
+    //         const schIdCell = row.insertCell();
+    //         const timeCell = row.insertCell();
+    //         const theaterCell = row.insertCell();
+    //         const seatsAvailableCell = row.insertCell();
+    //         //상영일정id도 추가
+    //         schIdCell.textContent = schId;
+    //         timeCell.textContent = time;
+    //         theaterCell.textContent = theater;
+    //         seatsAvailableCell.textContent = seatsAvailable + '석';
+    //
+    //         // 행에 클릭 이벤트 리스너 추가
+    //         row.addEventListener('click', () => {
+    //             // 이전에 선택된 행이 존재한다면 배경색을 원래대로 되돌리기
+    //             if (selectedRow) {
+    //                 selectedRow.style.backgroundColor = ''; // 이전에 선택된 행의 배경색을 지움
+    //             }
+    //             // 선택된 행을 현재 클릭한 행으로 설정하고 배경색을 검은색으로 변경
+    //             selectedRow = row;
+    //             selectedRow.style.backgroundColor = 'black';
+    //             // 클릭된 행에 대한 동작을 여기에 추가
+    //             console.log('클릭된 행:', schId,time, theater, seatsAvailable);
+    //             selectedSheduleId = schId;
+    //             theaterDiv.innerHTML=theater;
+    //         });
+    //     });
+    // });
+
+
     const scheduleTable = document.getElementById('scheduleTable');
-    // 기존의 행 삭제
+    const initialTableHeight = scheduleTable.offsetHeight; // 테이블의 초기 높이 저장
+
+// 기존의 행 삭제
     while (scheduleTable.rows.length > 1) {
         scheduleTable.deleteRow(1); // 헤더를 제외한 행을 삭제합니다.
     }
 
-    // 새로운 데이터 추가
+// 추가할 행의 높이를 계산하여 테이블의 높이를 조정
+    const addedRowsHeight = scheduleTable.offsetHeight - initialTableHeight;
+    scheduleTable.style.height = initialTableHeight + addedRowsHeight + 'px';
+
+// 새로운 데이터 추가
     const [{ totalDuration, schedules, title }] = organizedSchedules;
     console.log("총 상영 시간:", totalDuration);
     console.log("제목:", title);
@@ -235,7 +295,7 @@ function makeNewSchedule(organizedSchedules)
     const tbody = scheduleTable.querySelector('.tbody_schedule');
     tbody.innerHTML = ''; // tbody 내용을 비움
 
-    // 선택된 행 추적을 위한 변수
+// 선택된 행 추적을 위한 변수
     let selectedRow = null;
 
     schedules.forEach(({ times, theater }) => {
@@ -340,6 +400,18 @@ document.querySelector(".select-seats-prev-button").addEventListener('click',fun
 {
     //alert('이전버튼');
     console.log("...이전 버튼...");
+
+
+
+    const nextButton = document.querySelector('.select-seats-next-button');
+    const requestPayButton = document.querySelector('.select-requestPay-button');
+
+    if (requestPayButton.style.display === 'block') {
+        requestPayButton.style.display = 'none'; // 보이게 설정
+        nextButton.style.display='block';
+    }
+
+
     var cookieValue = getCookie("myCookie");
     $('#test-area').html("");
 
@@ -363,10 +435,6 @@ document.querySelector(".select-seats-prev-button").addEventListener('click',fun
     }
 });
 
-document.querySelector(".btn_pay").addEventListener('click', function ()
-{
-    alert("결제");
-});
 let selectedSheduleId;
 
 //0219 다음 버튼을 눌렀을 때, 영화-극장-시간-상영시간 모두 선택되어야 한다. 한개라도 선택 안되어있다면 넘어가지 못함.
@@ -378,7 +446,15 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
     //     alert('모든 버튼을 누르셔야 다음으로 이동하실 수 있습니다.');
     //     return;
     // }
-
+    const nextButton = document.querySelector('.select-seats-next-button');
+    const requestPayButton = document.querySelector('.select-requestPay-button');
+// nextButton의 display 속성을 조작하여 보이거나 숨깁니다.
+    if (requestPayButton.style.display === 'none') {
+        requestPayButton.style.display = 'block'; // 보이게 설정
+        nextButton.style.display='none';
+    } else {
+        requestPayButton.style.display = 'none'; // 숨김 설정
+    }
 
 
     //비동기 test
@@ -407,8 +483,9 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
             }
             else if(request.status==401) //인증 관련 에러 잠시 주석처리..
             {
-                alert(`예매는 로그인 후 이용하실 수 있습니다.`)
-                window.location.href = `${contextPath}`+request.responseText; // 리다이렉트할 URL을 지정합니다.
+                //주석처리
+                // alert(`예매는 로그인 후 이용하실 수 있습니다.`)
+                // window.location.href = `${contextPath}`+request.responseText; // 리다이렉트할 URL을 지정합니다.
             }
             else if(request.status==400)//잘못된 클라이언트 요청
             {
@@ -539,7 +616,7 @@ function createSeats(rows, cols,disabledSeat) {
                         checkedCount--; //증가된 것을 하나 차감한다.
                     }
                     //모든 체크박스들을 순회하여
-                    var checkedIds = []; // 체크된 체크박스의 아이디를 저장할 배열
+                    checkedIds = []; // 체크된 체크박스의 아이디를 저장할 배열
                     checkboxes.forEach(function(checkbox) {
                         if (checkbox.checked) {
 
@@ -579,14 +656,7 @@ function createSeats(rows, cols,disabledSeat) {
     }
 }
 
-
-
-
-
-//예약된 좌석 현황을 체크해주는 함수
-
-
-
+//선택한 좌석값 및 정보들을 초기화 하는 함수
 function toClear()
 {
     var checkboxes = document.querySelectorAll('input[type="checkbox"][name="tickets"]');
@@ -602,7 +672,6 @@ function toClear()
 }
 
 document.getElementById('btn-clear').addEventListener('click', function() {
-    // 페이지 내의 모든 체크박스를 선택
     toClear();
 });
 // 결과를 표시할 element
@@ -642,12 +711,8 @@ function count(type)  {
 }
 
 //================================================================
-
 //체크된 체크박수 갯수 확인하는 메소드
 var checkedCount = 0;
-// 페이지 내의 모든 체크박스를 반복하여 상태 확인
-
-
 
 function highlightCell(cell)
 {
@@ -704,124 +769,66 @@ function select_member_like_cinema()
 }
 
 
-
 // 결제 연결
 // document.querySelector(".btn_pay").addEventListener('click', function ()
 // {
 //     // alert("결제");
 // });
 IMP.init("imp32105587"); // 가맹점코드 - 고정값
-function requestPay() {
+function requestPay()
+{
+    console.log("결제 버튼을 클릭");
+    let pay_uid = new Date().getTime().toString();
     IMP.request_pay({
         pg: "html5_inicis", // PG사코드 - 고정값
         pay_method: "card", // 결제방식 - 고정값
-        merchant_uid: "order" + new Date().getTime(), // UTC , 결제 API 주문번호 고유값
-        name: "영화 결제", // 고정값
+        merchant_uid: "order" + pay_uid, // UTC , 결제 API 주문번호 고유값
+        name: "Boot-Box", // 고정값[상품명]
         amount: totalPay, // 결제 금액
-        buyer_tel: "01086759708", // 회원연락처
-    },function (res) {
-        if (res.success)
+        buyer_name: "rhgPwls",//회원명
+        buyer_tel: "01089405318", // 회원연락처
+    },
+
+        function(res)
         {
-            // 결제 성공 시: 결제 승인 성공한 경우
-            // jQuery로 HTTP 요청
-            // $.ajax({
-            //     url: contextPath,
-            //     method: "POST",
-            //     headers: { "Content-Type": "application/json" },
-            //     data: {
-            //         imp_uid: rsp.imp_uid,            // 결제 고유번호
-            //         merchant_uid: rsp.merchant_uid   // 주문번호
-            //     }
-            // }).done(function (data) {
-            // 가맹점 서버 결제 API 성공시 로직
-            // console.log(imp_uid);
-            // console.log(merchant_uid);
+            console.log("res::::",res);
+            console.log("Payment success!");
+            console.log("Payment ID : " + res.imp_uid);
+            console.log("Order ID : " + res.merchant_uid);
+            console.log("Payment Amount : " + res.paid_amount);
 
-            alert("결제에 성공하였습니다.");
-            console.log(res);
-            console.log(res.success);
+            let sendData = {
+                id: "box78900",
+                memberId: "rhgPwls",
+                scheduleId: selectedSheduleId,
+                status : Status.CONFIRM //enum 화
+            };
+            //결제응답정보를 db에 저장하기 위해 비동기를 사용하는 구간
+            if (res.success)
+            {
+                $.ajax({
+                    type: "POST",
+                    url: `${contextPath}reservation/reservationStart`, // 전송할 URL
+                    contentType: "application/json", // 전송하는 데이터의 타입
+                    data: JSON.stringify(sendData), // JSON 데이터로 변환하여 전송
 
-            //merchant_uid = 예매주문번호
-            $.ajax({
-                url: `${contextPath}reservation/insertReservation`,
-                type: 'post',
-                data:{
-                    //merchant_uid:
-                },
-                success(response){
-                    console.log("success : 선택한 상영일정의 예약된 좌석 값 가져오기",response);
-                    makeSeat(response);
+                    success: function(response) {
+                        // 요청이 성공했을 때 처리할 로직
+                        console.log("응답:", response);
+                        // 응답 데이터의 정보들
 
-                },
-                //requests:  요청 객체입니다. 보통 HTTP 요청 정보를 포함하며, 요청한 클라이언트의 정보와 요청된 리소스에 대한 정보 등을 포함합니다.
-                // status: HTTP 상태 코드입니다. 실패한 요청의 상태 코드를 나타냅니다.
-                // error: 서버에서 반환된 오류 메시지입니다.
-                error(request, status, error) {
-                    //console.error('~~~~Ajax request failed~~~~:', error);
-                    console.log('~~~~Error response responseText~~~~:', request.responseText);
-                    console.log('~~~~Error response status~~~~:', request.status);
-                    if(request.status==500)
-                    {
-                        alert(`에러로 인해 메인페이지로 이동합니다. 이용에 불편을 끼쳐드려 죄송합니다.`)
-                        window.location.href = `${contextPath}bootbox/`; // 리다이렉트할 URL을 지정합니다.
+                    },
+                    error: function(xhr, status, error) {
+                        // 요청이 실패했을 때 처리할 로직
+                        console.error("에러:", error);
                     }
-                    else if(request.status==401) //인증 관련 에러 잠시 주석처리..
-                    {
-                        alert(`예매는 로그인 후 이용하실 수 있습니다.`)
-                        window.location.href = `${contextPath}`+request.responseText; // 리다이렉트할 URL을 지정합니다.
-                    }
-                    else if(request.status==400)//잘못된 클라이언트 요청
-                    {
-                        alert(`에러가 발생했습니다.`)
-                    }
+                });
 
-                }
-            });
+            } else {
+                alert(res.error_msg);
+                console.error(res.error_msg);
+            }
+        });
 
-
-
-            //
-            // $.ajax({
-            //     type : "POST",
-            //     url : "/verifyIamport/" + res.imp_uid
-            // }).done(function(data) {
-            //
-            //     if(res.paid_amount == data.response.amount){
-            //         alert("결제 및 결제검증완료");
-            //
-            //         //결제 성공 시 비즈니스 로직
-            //
-            //     } else {
-            //         alert("결제 실패");
-            //     }
-            // });
-
-
-
-
-
-
-            
-            // })
-        }
-        else
-        {
-            // 결제 실패시
-            // $.ajax({
-            //     url: contextPath,
-            //     method: "POST",
-            //     headers: { "Content-Type": "application/json" },
-            //     data: {
-            //         imp_uid: rsp.imp_uid,            // 결제 고유번호
-            //         merchant_uid: rsp.merchant_uid   // 주문번호
-            //     }
-            // }).done(function (data) {
-            //     // 가맹점 서버 결제 API 실패 로직
-            //     console.log(imp_uid);
-            //     console.log(merchant_uid);
-            alert("결제에 실패하였습니다. 다시 시도해주세요."+ rsp);
-            // })
-        }
-    });
 }
 

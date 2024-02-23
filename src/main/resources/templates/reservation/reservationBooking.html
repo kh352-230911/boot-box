@@ -152,15 +152,18 @@
             </tbody>
         </table>
 
-        <table id="scheduleTable"  th:if="${dataMap != null and dataMap.scheduleDtos != null}">
+        <table id="scheduleTable">
             <thead>
             <tr>
-                <th colspan="3">상영 시간표</th>
+                <th colspan="4">상영 시간표</th>
             </tr>
             </thead>
             <tbody class="tbody_schedule">
-            <tr th:each="schedule, index : ${dataMap.scheduleDtos}">
-                <td th:text="${schedule}" onclick="showAlert(this)">ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ</td>
+            <tr>
+                <td th:text="상영시간pk"></td>
+                <td th:text="시간"></td>
+                <td th:text="관"></td>
+                <td th:text="좌석"></td>
             </tr>
             </tbody>
         </table>
@@ -247,10 +250,15 @@
             </div>
         </div>
         <button class="select-seats-next-button">다음</button>
-        <button class="btn_pay">결제</button>
-        <button onclick="requestPay()">찐결제</button>
+        <button class="select-requestPay-button" onclick="requestPay()">결제</button>
+
     </div>
 
+    <div style="display: none;">
+    <th:block sec:authorize="isAuthenticated()">
+        <span sec:authentication="principal.username" th:title="${#authentication.authorities}"></span>
+    </th:block>
+    </div>
 </div>
 <script th:inline="javascript" layout:fragment="script" th:src="@{/js/reservation/reservation2.js}">
 

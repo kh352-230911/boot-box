@@ -7,6 +7,8 @@ import com.sh.app.movie.dto.MovieListDto;
 import com.sh.app.movie.dto.MovieShortDto;
 import com.sh.app.movie.entity.Movie;
 import com.sh.app.movie.service.MovieService;
+import com.sh.app.reservation.dto.ReservationDto;
+import com.sh.app.reservation.entity.Reservation;
 import com.sh.app.reservation.service.ReservationService;
 import com.sh.app.schedule.dto.IScheduleInfoDto;
 import com.sh.app.schedule.dto.ScheduleDto;
@@ -14,6 +16,9 @@ import com.sh.app.schedule.entity.Schedule;
 import com.sh.app.schedule.service.ScheduleService;
 import com.sh.app.seat.entity.SeatDto;
 import com.sh.app.seat.service.SeatService;
+import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.Payment;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,10 +39,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -90,7 +94,7 @@ public class ReservationController {
     public void init() {
         this.iamportClient = new IamportClient(apiKey, secretKey);
     }
-
+    // REST API 키와 REST API secret 를 아래처럼 순서대로 입력한다.
 
     //첫 예매 페이지 진입 시 날짜(로컬)
     @GetMapping("/reservationBooking.do")
@@ -101,7 +105,8 @@ public class ReservationController {
         if (authentication != null && authentication.getPrincipal() instanceof MemberDetails) {
             MemberDetails memberDetails = (MemberDetails) authentication.getPrincipal();
             // 여기에서 memberDetails를 사용하여 사용자의 모든 정보에 접근할 수 있습니다.
-            System.out.println(memberDetails.getMember().getMemberPhone());
+            System.out.println("현재 회원의 핸드폰번호:"+memberDetails.getMember().getMemberPhone());
+            System.out.println("현재 회원의 아이디(숫자):"+memberDetails.getMember().getId());
         }
         else {
             System.out.println("로그인한 상태가 아닙니다......");
@@ -271,23 +276,29 @@ public class ReservationController {
     )
     {
 
-        if (isAuthenticated()) {
-            getUserInfo();
-            // 요청 처리
-            System.out.println("============ 넘겨받은 상영 스케쥴 id============="+scheduleId);
-            //좌석조회용 dto
-            List<SeatDto> seatDtos;
-            seatDtos = seatService.findSeatsByScheduleId(scheduleId);
-            System.out.println("===해당 스케쥴에 예약된 좌석===");
-            System.out.println(seatDtos);
-            //model.addAttribute("testmovie", movies);
-            //[SeatDto(id=23, name=C03), SeatDto(id=30, name=C10)]
-            return ResponseEntity.ok(seatDtos);
-        }
-        else {
-            // 로그인 인증 실패 시 로그인 화면 진입
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("auth/login.do");
-        }
+        List<SeatDto> seatDtos;
+        seatDtos = seatService.findSeatsByScheduleId(scheduleId);
+        System.out.println("===해당 스케쥴에 예약된 좌석===");
+        System.out.println(seatDtos);
+        return ResponseEntity.ok(seatDtos);
+        //임시주석한 풀 코드
+//        if (isAuthenticated()) {
+//            getUserInfo();
+//            // 요청 처리
+//            System.out.println("============ 넘겨받은 상영 스케쥴 id============="+scheduleId);
+//            //좌석조회용 dto
+//            List<SeatDto> seatDtos;
+//            seatDtos = seatService.findSeatsByScheduleId(scheduleId);
+//            System.out.println("===해당 스케쥴에 예약된 좌석===");
+//            System.out.println(seatDtos);
+//            //model.addAttribute("testmovie", movies);
+//            //[SeatDto(id=23, name=C03), SeatDto(id=30, name=C10)]
+//            return ResponseEntity.ok(seatDtos);
+//        }
+//        else {
+//            // 로그인 인증 실패 시 로그인 화면 진입
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("auth/login.do");
+//        }
 
     }
 
@@ -315,10 +326,6 @@ public class ReservationController {
 
     }
 
-
-
-
-
     private boolean isAuthenticated() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken)
@@ -326,5 +333,71 @@ public class ReservationController {
             return false;
         }
         return authentication.isAuthenticated();
+    }
+
+    private IamportClient api;
+
+
+
+    @ResponseBody
+    @PostMapping("/validation/{imp_uid}")
+    public IamportResponse<Payment> paymentByImpUid(
+            Model model
+            , Locale locale
+            , HttpSession session
+            , @PathVariable(value= "imp_uid") String imp_uid) throws IOException
+    {
+        System.out.println("결제 검증결제 검증결제 검증결제 검증결제 검증결제 검증결제 검증결제 검증결제 검증");
+        return api.paymentByImpUid(imp_uid);
+    }
+
+    //결제 검증
+//    @PostMapping("/validation/{imp_uid}")
+//    @ResponseBody
+//    public IamportResponse<Payment> validateIamport(@PathVariable String imp_uid) {
+//        System.out.println("결제 검증결제 검증결제 검증결제 검증결제 검증결제 검증결제 검증결제 검증결제 검증");
+//        IamportResponse<Payment> payment = iamportClient.paymentByImpUid(imp_uid);
+//        log.info("결제 요청 응답. 결제 내역 - 주문 번호: {}", payment.getResponse().getMerchantUid());
+//        return payment;
+//    }
+
+//    public void certification(@RequestBody String imp_uid) throws IOException {
+//
+//        System.out.println("결제 검증결제 검증결제 검증결제 검증결제 검증결제 검증결제 검증결제 검증결제 검증");
+//        IamportResponse<Payment> payment = iamportClient.paymentByImpUid(imp_uid);
+//        log.info("0222결제 요청 응답. 결제 내역 - 주문 번호: {}", payment.getResponse().getMerchantUid());
+//
+//    }
+
+
+    @PostMapping("/payment/validation/{imp_uid}")
+    @ResponseBody
+    public IamportResponse<Payment> validateIamport(@PathVariable String imp_uid) {
+        IamportResponse<Payment> payment = iamportClient.paymentByImpUid(imp_uid);
+        log.info("결제 요청 응답. 결제 내역 - 주문 번호: {}", payment.getResponse().getMerchantUid());
+        return payment;
+    }
+
+
+    //예약 완료 페이지로 넘어가기.
+    @GetMapping("/reservationComplete")
+    public void reservationComplete(Model model) {
+        System.out.println("결제완료 페이지zz");
+    }
+
+
+    //결제 결과를 db에 저장하는 메소드
+    @PostMapping("/reservationStart")
+    public ResponseEntity<String> reservationStart(@AuthenticationPrincipal MemberDetails memberDetails,
+                                                   @RequestBody ReservationDto reservationDto ) throws IOException {
+        System.out.println("결제return 정보로 테이블에 isnert하는 작업...");
+        System.out.println("id: " + memberDetails.getMember().getId()); //reservationDto.getId()<- x
+        System.out.println("memberId: " + reservationDto.getMemberId());
+        System.out.println("scheduleId: " + reservationDto.getScheduleId());
+        System.out.println("status: " + reservationDto.getStatus());
+
+        Reservation reservation = reservationService.insertReservation(reservationDto);
+
+        return ResponseEntity.ok().build();
     }
 }
