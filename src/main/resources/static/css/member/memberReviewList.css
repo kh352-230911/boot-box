@@ -1,0 +1,38 @@
+.wrap-container {
+    height: auto;
+    min-height: 100%;
+    padding-bottom: 60px;
+}
+.home-container {
+    min-height: 600px;
+    margin: 90px 10px 10px;
+}
+footer {
+    height: 60px;
+    position: relative;
+    transform: translateY(50%);
+}
+.title-box > li {
+    width: 150px;
+}
+.text-box {
+    background-color: rgba(255,255,255,0.2);
+}
+.movie_rate {
+    display: flex;
+    margin-top: 30px;
+    font-size: 10px;
+}
+.movie_stars {
+    display: flex;
+}
+.movie_star {
+    margin-right: 10px;
+    margin-bottom: 0px;
+}
+.movie_star i {
+    color: var(--color-gray-1);
+}
+.movie_star.rated i {
+    color: yellow;
+}

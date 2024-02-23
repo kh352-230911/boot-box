@@ -287,6 +287,7 @@ $(document).ready(() => {
 
 
 
+
 ///////////// 초임 영역 //////////////////
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -359,5 +360,3 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // 북마크 아이콘에 클릭 이벤트 리스너를 추가.
     bookmarkIcon.addEventListener('click', checkAuthentication);
 });
-
-

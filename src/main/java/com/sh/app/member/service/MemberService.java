@@ -70,7 +70,11 @@ public class MemberService {
         return memberRepository.findByReservation(id);
     }
 
-    public Optional<Member> findById(Long memberId) {
-        return memberRepository.findById(memberId);
+
+    public Member findById(Long id) {
+        return memberRepository.findById(id).orElse(null);
     }
+//    public Optional<Member> findById(Long memberId) {
+//        return memberRepository.findById(memberId);
+//    }
 }
