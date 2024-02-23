@@ -27,9 +27,13 @@
 }
 #theaters-wrap>div {
     width: 25%;
-    height: 48px;
+    height: 96px;
     line-height: 48px;
     text-align: center;
+    border: 1px solid #ff003b;
+    border-right: none;
+}
+#theaters-wrap>div:last-child {
     border: 1px solid #ff003b;
 }
 #theaterCrud-wrap {
