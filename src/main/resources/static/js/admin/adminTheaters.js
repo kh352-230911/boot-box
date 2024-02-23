@@ -18,14 +18,16 @@ $("#insert").click(function () {
 
 $("#deleteSearch").click(function () {
     const deleteId = $("#deleteId").val();
-    const deleteName = $("#deleteName").val();
     const confirmText = confirm("정말 삭제하시겠습니까?");
     if (confirmText) {
         $.ajax({
             url:"deleteTheater",
-            method:"DELETE",
+            method:"POST",
+            headers:{
+                [csrfHeaderName] : csrfToken
+            },
             data:{
-                deleteId, deleteName
+                deleteId
             },
             success(){
                 alert("삭제가 완료되었습니다.");

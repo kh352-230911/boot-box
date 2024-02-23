@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,5 +26,9 @@ public class TheaterService {
         return theaters.stream()
                 .map(theater -> modelMapper.map(theater, TheaterDto.class))
                 .collect(Collectors.toList());
+    }
+
+    public void deleteTheaterWithId(Long deleteId) {
+        theaterRepository.deleteById(deleteId);
     }
 }
