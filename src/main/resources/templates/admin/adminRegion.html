@@ -16,7 +16,7 @@
 
     <div id="regionText">
         <div id="regionTextHeader">
-            <p>현재 관리지점은 <span th:text="${region} + '  ' + '( 지점 고유ID :' + ${cinemaId} + ' )'"></span> 입니다.</p>
+            <p>현재 관리지점은 <span th:text="${region} + '  ' + '( 지점 고유ID : ' + ${cinemaId} + ' )'"></span> 입니다.</p>
         </div>
         <div id="theaterCrud-wrap">
             <div>
@@ -59,7 +59,8 @@
     </div>
 
     <div id="theaters-wrap">
-        <div th:each="theater : ${theaters}">
+        <div class="theaters" th:each="theater : ${theaters}">
+            <input type="hidden" class="theaterId" th:value="${theater.id}"/>
             <div th:text="'상영관 고유ID : ' + ${theater.id}"></div>
             <div th:text="'상영관 이름 : ' + ${theater.name}"></div>
         </div>
@@ -75,11 +76,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="schedule : ${allSchedules}">
-                    <td th:text="${schedule.id}"></td>
-                    <td th:text="${schedule.schDate}"></td>
-                    <td th:text="${#temporals.format(schedule.time, 'HH:mm')}"></td>
-                </tr>
+
             </tbody>
         </table>
     </div>

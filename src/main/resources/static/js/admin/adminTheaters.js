@@ -65,3 +65,19 @@ $("#deleteSearch").click(function () {
         alert("삭제를 취소했습니다.")
     }
 });
+
+$(".theaters").click(function () {
+    const theaterId = $(this).find(".theaterId").val();
+    $.ajax({
+        url:"insertScheduleList",
+        data:{
+            theaterId
+        },
+        success(){
+            alert("일정 불러오기 성공");
+        },
+        error() {
+            alert("일정을 불러오는데 실패했습니다.");
+        }
+    });
+});
