@@ -12,12 +12,35 @@ $(".back").click(function (){
 });
 
 $("#insert").click(function () {
-    alert("상영관 등록이 완료되었습니다.");
+    const theaterId = $("#theaterId").val();
+    const cinemaId = $("#cinemaId").val();
+    const theaterName = $("#theaterName").val();
+    const theaterSeat = $("#theaterSeat").val();
+    const redirectUrl = $("#adminRegionUrl").attr("href");
+
+    $.ajax({
+        url: "createTheater",
+        method: "POST",
+        headers: {
+            [csrfHeaderName] : csrfToken
+        },
+        data: {
+            theaterId, cinemaId, theaterName, theaterSeat
+        },
+        success() {
+            alert("상영관 등록이 완료되었습니다.");
+            location.href = redirectUrl;
+        },
+        error() {
+            alert("상영관 등록에 실패했습니다.");
+        }
+    });
 });
 
 
 $("#deleteSearch").click(function () {
     const deleteId = $("#deleteId").val();
+    const redirectUrl = $("#adminRegionUrl").attr("href");
     const confirmText = confirm("정말 삭제하시겠습니까?");
     if (confirmText) {
         $.ajax({
@@ -31,6 +54,7 @@ $("#deleteSearch").click(function () {
             },
             success(){
                 alert("삭제가 완료되었습니다.");
+                location.href = redirectUrl;
             },
             error() {
                 alert("삭제에 실패했습니다.");

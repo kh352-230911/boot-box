@@ -93,6 +93,7 @@ public class AdminController {
         log.debug("admin = {}", admin);
         Long cinemaId = admin.getCinemaId();
         String region = cinemaService.findRegion(cinemaId);
+        model.addAttribute("cinemaId", cinemaId);
         model.addAttribute("region", region);
         // 현재 관리지점 확인
         log.debug("region = {}", region);
@@ -112,6 +113,17 @@ public class AdminController {
 
         }
         model.addAttribute("allSchedules", allSchedules);
+    }
+
+    @PostMapping("/createTheater")
+    public ResponseEntity<?> createTheater(
+            @RequestParam(value = "theaterId") Long theaterId,
+            @RequestParam(value = "cinemaId") Long cinemaId,
+            @RequestParam(value = "theaterName") String theaterName,
+            @RequestParam(value = "theaterSeat") int theaterSeat
+           ) {
+        theaterService.createTheater(theaterId, cinemaId, theaterName, theaterSeat);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/deleteTheater")
