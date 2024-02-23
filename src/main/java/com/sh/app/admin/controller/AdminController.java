@@ -8,6 +8,7 @@ import com.sh.app.cinema.service.CinemaService;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
 import com.sh.app.schedule.dto.ScheduleDto;
+import com.sh.app.schedule.dto.ScheduleListDto;
 import com.sh.app.schedule.service.ScheduleService;
 import com.sh.app.theater.dto.TheaterDto;
 import com.sh.app.theater.service.TheaterService;
@@ -85,20 +86,6 @@ public class AdminController {
 //        log.debug("region = {}", region);
         List<TheaterDto> theaterDtos = theaterService.findAllTheatersWithCinemaId(cinemaId);
         model.addAttribute("theaters", theaterDtos);
-
-        // scheduleDtos 리스트를 저장할 new ArrayList 생성
-        List<ScheduleDto> allSchedules = new ArrayList<>();
-
-        // 불러온 TheaterDtos들을 순회하며 그 안에 있는 상영일정 조회
-        // for문 안에서 model.addAttribute 사용하면 마지막 요소만 가져오기 때문에 저장할 새로운 List 필요합니다.
-        for (TheaterDto theaterDto : theaterDtos) {
-            Long theaterId = theaterDto.getId();
-            log.debug("theaterId = {}",theaterId);
-            List<ScheduleDto> scheduleDtos = scheduleService.findScheduleWithTheaterId(theaterId);
-            allSchedules.addAll(scheduleDtos);
-
-        }
-        model.addAttribute("allSchedules", allSchedules);
     }
 
     @PostMapping("/createTheater")
@@ -115,6 +102,17 @@ public class AdminController {
     @PostMapping("/deleteTheater")
     public ResponseEntity<?> deleteTheaterWithId(@RequestParam(value = "deleteId") Long deleteId) {
         theaterService.deleteTheaterWithId(deleteId);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/insertScheduleList")
+    public ResponseEntity<?> findSchedule(@RequestParam(value = "theaterId") Long theaterId) {
+        List<ScheduleListDto> scheduleListDtos = scheduleService.findScheduleWithTheaterId(theaterId);
+        log.debug("theaterId = {}", theaterId);
+        for (ScheduleListDto scheduleListDto : scheduleListDtos) {
+            log.debug("scheduleDto = {}", scheduleListDto);
+        }
+
         return ResponseEntity.ok().build();
     }
 }

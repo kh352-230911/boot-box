@@ -21,7 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = "movie")
+@ToString(exclude = {"movie", "theater"})
 public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

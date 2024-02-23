@@ -36,6 +36,11 @@
 #theaters-wrap>div:last-child {
     border: 1px solid #ff003b;
 }
+#theaters-wrap>div:hover {
+    background: black;
+    cursor: pointer;
+}
+
 #theaterCrud-wrap {
     width: 100%;
     margin: 20px auto;

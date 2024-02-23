@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = "schedules")
+@ToString(exclude = "cinema")
 public class Theater {
     @Id
     private Long id;
