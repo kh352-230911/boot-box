@@ -284,4 +284,3 @@ $(document).ready(() => {
 //
 // // Call the function on page load
 // window.onload = changeImage;
-

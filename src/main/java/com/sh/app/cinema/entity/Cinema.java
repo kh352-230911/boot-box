@@ -37,7 +37,7 @@ public class Cinema implements Comparable<Cinema>{
     @Column(nullable = false)
     private String phone;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
     private Location location;
 

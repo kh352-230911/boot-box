@@ -71,4 +71,8 @@ public class MemberService {
     public Member findByReservation(Long id) {
         return memberRepository.findByReservation(id);
     }
+
+    public Member findById(Long id) {
+        return memberRepository.findById(id).orElse(null);
+    }
 }

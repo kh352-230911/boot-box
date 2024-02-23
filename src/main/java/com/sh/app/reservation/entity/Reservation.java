@@ -47,7 +47,7 @@ public class Reservation {
     //예약 내역 - 결제 내역 1:1 oneTo one 
     //한개의 예약내역엔 한개의 결제내역이 존재함
     //mappedBy = 외래키가 존재하는 테이블
-    @OneToOne(mappedBy = "reservation", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "reservation", fetch = FetchType.LAZY)
     private OrderPay orderPay;
 
     @ManyToMany //다대다 - 브릿지 사용시
@@ -60,7 +60,7 @@ public class Reservation {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
 

@@ -1,6 +1,7 @@
 package com.sh.app.ask.controller;
 
 import com.sh.app.ask.dto.CreateAskDto;
+import com.sh.app.ask.entity.Ask;
 import com.sh.app.ask.entity.AskType;
 import com.sh.app.ask.service.AskService;
 import com.sh.app.auth.vo.MemberDetails;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,5 +47,12 @@ public class AskController {
         return "redirect:/ask/createAsk.do";
 
 
+    }
+
+    @GetMapping("/askDetail.do")
+    public void askDetail(Long id, Model model) {
+        Ask ask = askService.findById(id);
+
+        model.addAttribute("ask", ask);
     }
 }

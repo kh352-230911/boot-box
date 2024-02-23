@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>문의 상세페이지</title>
+    <link rel="stylesheet" th:href="@{/css/ask/askDetail.css}" />
+</head>
+<style layout:fragment="style"></style>
+
+<div layout:fragment="content" class="wrap-container">
+    <div class="home-container">
+        <div class="title-box flex justify-center">
+         <span class="border-b-2 border-red-600 font-semibold pb-2 pt-16 text-xl">
+             문의 내역
+         </span>
+        </div>
+
+        <!-- table박스 -->
+        <div class="container flex justify-center mt-4">
+            <table>
+                <thead class="text-base">
+                <tr>
+                    <th th:text="${ask.id}">번호</th>
+                    <th th:text="${ask.askTitle}">제목</th>
+                    <th th:text="|[ ${ask.askType.name() == 'MOVIE' ? '영화' :
+                                                      ask.askType.name() == 'CINEMA' ? '상영관' :
+                                                      ask.askType.name() == 'RESERVATION' ? '예매' :
+                                                      ask.askType.name() == 'ETC' ? '기타' : '기타'} ]|">구분</th>
+                    <th th:text="|등록일 : ${#temporals.format(ask.createdAt, 'yyyy/MM/dd HH:mm')}|">등록일</th>
+                </tr>
+                </thead>
+                <tbody class="py-50">
+                <tr>
+                    <td colspan="4" th:text="${ask.askDetail}"></td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <!-- '목록으로' 버튼 -->
+        <div class="button-container">
+            <a th:onclick="|location.href = '@{/member/memberAskList.do(id=${#authentication.principal.member.id})}';|" class="back-to-list-btn text-base">목록으로</a>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="script"></script>
+</html>

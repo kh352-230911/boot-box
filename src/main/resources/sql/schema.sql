@@ -176,7 +176,8 @@ CREATE TABLE MEMBER_LIKE_CINEMA(
     cinema_id number NULL, --fk
     constraints pk_member_like_cinema_id primary key(id), --pk
     constraints fk_member_like_cinema_member_id foreign key(member_id) references member(id) on delete set null,
-    constraints fk_member_like_cinema_cinema_id foreign key(cinema_id) references cinema(id) on delete set null
+    constraints fk_member_like_cinema_cinema_id foreign key(cinema_id) references cinema(id) on delete set null,
+    constraints uq_member_like_cinema_member_id_cinema_id UNIQUE (member_id, cinema_id)
 );
 create sequence seq_member_like_cinema_id; --선호극장 등록시 시퀀스
 --
@@ -299,9 +300,9 @@ create sequence seq_movie_list_id;
 --12.리뷰
 CREATE TABLE REVIEW(
     id number NOT NULL,--pk
-    reservation_id varchar2(100)	NOT NULL, -- 예약내역 fk
-    member_id number NOT NULL, --회원id fk
-    movie_id number NOT NULL, -- 영화 id fk
+    reservation_id varchar2(100) NULL, -- 예약내역 fk
+    member_id number NULL, --회원id fk
+    movie_id number NULL,
     review_score number(2, 1) default 0 NOT NULL,--리뷰 평점
     review_detail varchar2(2000) NOT NULL,--리뷰 내용
     review_created_at date DEFAULT sysdate NOT NULL,--리뷰 작성날짜

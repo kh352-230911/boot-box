@@ -46,7 +46,7 @@ public class OrderPay {
     @Enumerated(EnumType.STRING)
     private Status status; //결제 상태
 
-    @OneToOne//(fetch =  FetchType.EAGER)
+    @OneToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name="reservation_id")
     private Reservation reservation;
 

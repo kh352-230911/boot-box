@@ -5,9 +5,9 @@ import com.sh.app.authority.entity.Authority;
 import com.sh.app.reservation.entity.Reservation;
 import com.sh.app.review.entity.Review;
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import lombok.*;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -57,7 +57,8 @@ public class Member implements Serializable{
 
     private String birthyear; //null ok
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "member")
     @Builder.Default
     private List<Review> reviews = new ArrayList<>();
 

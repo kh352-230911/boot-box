@@ -33,4 +33,8 @@ public class AskService {
     private Ask convertToAsk(CreateAskDto createAskDto) {
         return modelMapper.map(createAskDto, Ask.class);
     }
+
+    public Ask findById(Long id) {
+        return askRepository.findById(id).orElseThrow();
+    }
 }

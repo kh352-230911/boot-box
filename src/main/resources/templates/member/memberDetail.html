@@ -28,7 +28,7 @@
                                 </a>
                             </li>
                             <li class="flex justify-center items-center">
-                                <a class="views" href="#">
+                                <a class="views" th:href="@{/member/memberAskList.do(id=${#authentication.principal.member.id})}">
                                     <p class="align-middle">나의 문의 내역</p>
                                 </a>
                             </li>
@@ -53,16 +53,16 @@
                         <h2 class="titular">자주가는 극장</h2>
                         <ul class="menu-box-menu">
                             <li>
-                                <a class="menu-box-tab" href="#6"><span class="icon fontawesome-envelope scnd-font-color"></span>Messages</a>
+                                <a class="menu-box-tab" href="#6"><span class="icon fontawesome-envelope scnd-font-color"></span></a>
                             </li>
                             <li>
-                                <a class="menu-box-tab" href="#8"><span class="icon entypo-paper-plane scnd-font-color"></span>Invites</a>
+                                <a class="menu-box-tab" href="#8"><span class="icon entypo-paper-plane scnd-font-color"></span></a>
                             </li>
                             <li>
-                                <a class="menu-box-tab" href="#10"><span class="icon entypo-calendar scnd-font-color"></span>Events</a>
+                                <a class="menu-box-tab" href="#10"><span class="icon entypo-calendar scnd-font-color"></span></a>
                             </li>
                             <li>
-                                <a class="menu-box-tab" href="#12"><span class="icon entypo-cog scnd-font-color"></span>Account Settings</a>
+                                <a class="menu-box-tab" href="#12"><span class="icon entypo-cog scnd-font-color"></span></a>
                             </li>
                         </ul>
                     </div>
@@ -75,7 +75,7 @@
                 <a th:href="@{/member/memberWatchedMovie.do(id=${#authentication.principal.member.id})}">
                     <div class="w-40 ml-10 mt-5 rounded-md p-3"><span>내가 본 영화</span></div>
                 </a>
-                <a href="#">
+                <a th:href="@{/member/memberReviewList.do(id=${#authentication.principal.member.id})}">
                     <div class="w-40 ml-10 mt-5 rounded-md p-3"><span>나의 리뷰 내역</span></div>
                 </a>
             </div>
