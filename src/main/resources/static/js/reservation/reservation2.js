@@ -48,6 +48,7 @@ var peopleDiv = container.querySelector('.seat-container2-2people');
 //
 var selectSeatDiv = container.querySelector(".seat-container3-2");
 var totalPayDiv = container.querySelector(".seat-container3-4");
+var totalPay;
 //
 //0219
 let reservatoinPage=1; //기본 1부터 시작.
@@ -59,7 +60,7 @@ $(document).ready(function()
 {
     $(".select-movie").click(function()
     {
-        console.log("영화 선택1");
+        console.log("영화 선택");
         // 모든 행의 선택을 취소하고 선택된 행에만 'selected' 클래스를 추가
         $(this).css('background', 'linear-gradient(to right, black, black)');
         // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
@@ -203,8 +204,15 @@ $(document).ready(function(){
                     alert(`예매는 로그인 후 이용하실 수 있습니다.`)
                     window.location.href = `${contextPath}`+request.responseText; // 리다이렉트할 URL을 지정합니다.
                 }
+                else if(request.status==404)
+                {
+                    alert(`해당 상영스케쥴이 존재하지 않습니다..`);
+                    //204는 delete 했을 때 경우라, select 조회 결과가 없는 경우 404로 처리
+                    makeNewSchedule("");
+                }
 
-            }
+            },
+
         });
 
     });
@@ -226,7 +234,6 @@ function makeNewSchedule(organizedSchedules)
 
     const tbody = scheduleTable.querySelector('.tbody_schedule');
     tbody.innerHTML = ''; // tbody 내용을 비움
-
 
     // 선택된 행 추적을 위한 변수
     let selectedRow = null;
@@ -350,12 +357,12 @@ document.querySelector(".select-seats-prev-button").addEventListener('click',fun
         infoMoviesNone.style.display = 'block'; //보이고
         infoMoviesNone.style.display = 'flex'; //flex속성
         infoSeatsNone.style.display='none';
+        toClear();//인원,좌석 초기화
     } else {
         // div.style.display = 'none';
     }
 });
 
-//결제
 document.querySelector(".btn_pay").addEventListener('click', function ()
 {
     alert("결제");
@@ -371,6 +378,7 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
     //     alert('모든 버튼을 누르셔야 다음으로 이동하실 수 있습니다.');
     //     return;
     // }
+
 
 
     //비동기 test
@@ -401,6 +409,10 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
             {
                 alert(`예매는 로그인 후 이용하실 수 있습니다.`)
                 window.location.href = `${contextPath}`+request.responseText; // 리다이렉트할 URL을 지정합니다.
+            }
+            else if(request.status==400)//잘못된 클라이언트 요청
+            {
+                alert(`에러가 발생했습니다.`)
             }
 
         }
@@ -524,6 +536,7 @@ function createSeats(rows, cols,disabledSeat) {
                     {
                         alert("관람인원 이상 좌석을 선택하실 수 없습니다.");
                         this.checked = false;
+                        checkedCount--; //증가된 것을 하나 차감한다.
                     }
                     //모든 체크박스들을 순회하여
                     var checkedIds = []; // 체크된 체크박스의 아이디를 저장할 배열
@@ -536,8 +549,9 @@ function createSeats(rows, cols,disabledSeat) {
                     // 체크된 체크박스의 아이디를 출력
                     selectSeatDiv.innerText = checkedIds;
                     console.log("체크된 체크박스의 아이디: ", checkedIds);
-
-                    totalPayDiv.innerText = "10000 * "+ checkedCount +" = "+10000* checkedCount +"원";
+                    console.log("체크카운트:", checkedCount);
+                    totalPay = 100* checkedCount;
+                    totalPayDiv.innerText = "100 * "+ checkedCount +" = "+totalPay +"원";
                     if(checkedIds.length==0) {
                         totalPayDiv.innerText = "-";
                         selectSeatDiv.innerText = "-";
@@ -564,6 +578,10 @@ function createSeats(rows, cols,disabledSeat) {
         seatTableBody.appendChild(row);
     }
 }
+
+
+
+
 
 //예약된 좌석 현황을 체크해주는 함수
 
@@ -699,10 +717,11 @@ function requestPay() {
         pay_method: "card", // 결제방식 - 고정값
         merchant_uid: "order" + new Date().getTime(), // UTC , 결제 API 주문번호 고유값
         name: "영화 결제", // 고정값
-        amount: 100, // 결제 금액
+        amount: totalPay, // 결제 금액
         buyer_tel: "01086759708", // 회원연락처
-    },function (rsp) {
-        if (rsp.success) {
+    },function (res) {
+        if (res.success)
+        {
             // 결제 성공 시: 결제 승인 성공한 경우
             // jQuery로 HTTP 요청
             // $.ajax({
@@ -717,9 +736,76 @@ function requestPay() {
             // 가맹점 서버 결제 API 성공시 로직
             // console.log(imp_uid);
             // console.log(merchant_uid);
+
             alert("결제에 성공하였습니다.");
+            console.log(res);
+            console.log(res.success);
+
+            //merchant_uid = 예매주문번호
+            $.ajax({
+                url: `${contextPath}reservation/insertReservation`,
+                type: 'post',
+                data:{
+                    //merchant_uid:
+                },
+                success(response){
+                    console.log("success : 선택한 상영일정의 예약된 좌석 값 가져오기",response);
+                    makeSeat(response);
+
+                },
+                //requests:  요청 객체입니다. 보통 HTTP 요청 정보를 포함하며, 요청한 클라이언트의 정보와 요청된 리소스에 대한 정보 등을 포함합니다.
+                // status: HTTP 상태 코드입니다. 실패한 요청의 상태 코드를 나타냅니다.
+                // error: 서버에서 반환된 오류 메시지입니다.
+                error(request, status, error) {
+                    //console.error('~~~~Ajax request failed~~~~:', error);
+                    console.log('~~~~Error response responseText~~~~:', request.responseText);
+                    console.log('~~~~Error response status~~~~:', request.status);
+                    if(request.status==500)
+                    {
+                        alert(`에러로 인해 메인페이지로 이동합니다. 이용에 불편을 끼쳐드려 죄송합니다.`)
+                        window.location.href = `${contextPath}bootbox/`; // 리다이렉트할 URL을 지정합니다.
+                    }
+                    else if(request.status==401) //인증 관련 에러 잠시 주석처리..
+                    {
+                        alert(`예매는 로그인 후 이용하실 수 있습니다.`)
+                        window.location.href = `${contextPath}`+request.responseText; // 리다이렉트할 URL을 지정합니다.
+                    }
+                    else if(request.status==400)//잘못된 클라이언트 요청
+                    {
+                        alert(`에러가 발생했습니다.`)
+                    }
+
+                }
+            });
+
+
+
+            //
+            // $.ajax({
+            //     type : "POST",
+            //     url : "/verifyIamport/" + res.imp_uid
+            // }).done(function(data) {
+            //
+            //     if(res.paid_amount == data.response.amount){
+            //         alert("결제 및 결제검증완료");
+            //
+            //         //결제 성공 시 비즈니스 로직
+            //
+            //     } else {
+            //         alert("결제 실패");
+            //     }
+            // });
+
+
+
+
+
+
+            
             // })
-        } else {
+        }
+        else
+        {
             // 결제 실패시
             // $.ajax({
             //     url: contextPath,
@@ -733,7 +819,7 @@ function requestPay() {
             //     // 가맹점 서버 결제 API 실패 로직
             //     console.log(imp_uid);
             //     console.log(merchant_uid);
-            alert("결제에 실패하였습니다. 다시 시도해주세요.");
+            alert("결제에 실패하였습니다. 다시 시도해주세요."+ rsp);
             // })
         }
     });

@@ -1,0 +1,75 @@
+th,
+td {
+    padding: 15px;
+    background-color: rgba(255,255,255,0.2);
+    color: #fff;
+}
+thead >tr>th{
+    background-color: #232323;
+    border-top: 2px solid #ff003b;
+    border-bottom: 2px solid #ff003b;
+    text-align: center;
+}
+tbody {
+    tr {
+        &:hover {background-color: rgba(255,255,255,0.3);
+        }
+    }
+    td {
+        position: relative;
+        &:hover {
+            &:before {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                background-color: rgba(255,255,255,0.2);
+                z-index: -1;
+                text-align: center;
+            }
+        }
+    }
+}
+
+#memberId, #Title
+{
+    display: none;
+}
+table
+{
+    margin: auto;
+}
+th#askNumber
+{
+    width: 90px;
+}
+th#askTitle
+{
+    width: 700px;
+}
+th#askType
+{
+    padding-left: 24px;
+}
+th#askDate
+{
+    padding-left: 24px;
+}
+td
+{
+    text-align: left;
+    vertical-align : middle;
+    padding-left: 30px;
+    padding-top: 8px;
+}
+button#askDetail
+{
+    border-radius: 10px 10px 10px 10px;
+    width: 68px;
+    height: 30px;
+    background-color: darkslateblue;
+}
+button#askDetail:active {
+    /* 버튼클릭하면 색 바뀜 */
+    background-color: steelblue;
+}

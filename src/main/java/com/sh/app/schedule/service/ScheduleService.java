@@ -7,6 +7,7 @@ import com.sh.app.movie.entity.Movie;
 
 import com.sh.app.schedule.dto.IScheduleInfoDto;
 import com.sh.app.schedule.dto.ScheduleDto;
+import com.sh.app.schedule.dto.ScheduleListDto;
 import com.sh.app.schedule.entity.Schedule;
 import com.sh.app.schedule.repository.ScheduleRepository;
 import com.sh.app.seat.entity.SeatDto;
@@ -59,6 +60,10 @@ public class ScheduleService {
                 .collect(Collectors.toList());
     }
 
+    //0218 - 특정 영화, 극장 지점 ,시간 조건에 맞는 스케쥴들 출력[test]
+    public List<IScheduleInfoDto> findScheduleDetailsByDateAndCinemaId_2(Long movieId, Long cinemaId, LocalDate schDate) {
+        return scheduleRepository.findScheduleDetailsByDateAndCinemaId_2(movieId, cinemaId,schDate);
+    }
 
     private ScheduleDto convertToDto(Schedule schedule) {
         ScheduleDto scheduleDto = new ScheduleDto();
@@ -96,10 +101,7 @@ public class ScheduleService {
     //    private LocalDateTime time;
 
 
-    //0218 - 특정 영화, 극장 지점 ,시간 조건에 맞는 스케쥴들 출력[test]
-    public List<IScheduleInfoDto> findScheduleDetailsByDateAndCinemaId_2(Long movieId, Long cinemaId, LocalDate schDate) {
-        return scheduleRepository.findScheduleDetailsByDateAndCinemaId_2(movieId, cinemaId,schDate);
-    }
+
 
 
 
@@ -108,10 +110,10 @@ public class ScheduleService {
         return scheduleRepository.findScheduleDetailsByDateAndCinemaId(id, schDate);
     }
 
-    public List<ScheduleDto> findScheduleWithTheaterId(Long theaterId) {
+    public List<ScheduleListDto> findScheduleWithTheaterId(Long theaterId) {
         List<Schedule> schedules = scheduleRepository.findByTheaterId(theaterId);
         return schedules.stream()
-                .map(schedule -> modelMapper.map(schedule, ScheduleDto.class))
+                .map(schedule -> modelMapper.map(schedule, ScheduleListDto.class))
                 .collect(Collectors.toList());
 
     }

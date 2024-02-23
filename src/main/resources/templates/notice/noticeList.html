@@ -1,6 +1,7 @@
 <html
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
         layout:decorate="~{layout/default}">
 <head>
     <title>공지사항&뉴스</title>
@@ -77,6 +78,14 @@
                 </tbody>
             </table>
         </div>
+    <!-- 관리자, 매니저만 사용가능 -->
+    <th:block sec:authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_ADMIN')">
+        <div>
+            <input type="button" value="공지사항추가" id="createNotice"
+                   th:onclick="|location.href = '@{/notice/createNotice.do}';|" />
+        </div>
+    </th:block>
+<!--    </div>-->
     </div>
 </div>
 

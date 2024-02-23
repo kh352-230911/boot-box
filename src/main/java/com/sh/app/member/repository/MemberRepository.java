@@ -14,6 +14,7 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
     Member findByMemberLoginId(String username);
 
     @EntityGraph(attributePaths = {"reservation"})
+    @Query("from Member order by id")
     List<Member> findAll();
 
     @Query(value = """
