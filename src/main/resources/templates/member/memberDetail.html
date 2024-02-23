@@ -72,7 +72,7 @@
                 <a th:href="@{/member/memberReservation.do(id=${#authentication.principal.member.id})}" >
                     <div class="w-40 ml-10 mt-5 rounded-md p-3"><span>나의 예매 내역</span></div>
                 </a>
-                <a href="#">
+                <a th:href="@{/member/memberWatchedMovie.do(id=${#authentication.principal.member.id})}">
                     <div class="w-40 ml-10 mt-5 rounded-md p-3"><span>내가 본 영화</span></div>
                 </a>
                 <a href="#">

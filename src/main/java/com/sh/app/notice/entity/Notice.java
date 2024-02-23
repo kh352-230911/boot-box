@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,7 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Notice implements Serializable {
+public class Notice {
     @Id
     @GeneratedValue(generator = "seq_notice_id_generator")
     @SequenceGenerator(
@@ -29,8 +28,9 @@ public class Notice implements Serializable {
             initialValue = 1,
             allocationSize = 1
     )
+    //  <!-- 시퀀스id, noticeType, title, content, createAt -->
     private Long id;
-    private Long adminId;
+    private Long adminId; // notice table의 시퀀스
     @Column(nullable = false, name = "notice_title")
     private String noticeTitle;
     private String noticeContent;

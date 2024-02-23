@@ -22,7 +22,7 @@ public class WebSecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/css/**", "/images/**", "/js/**","/error");
+        return (web) -> web.ignoring().requestMatchers("/css/**", "/images/**", "/js/**");
     }
 
     @Bean
@@ -43,6 +43,9 @@ public class WebSecurityConfig {
                     .requestMatchers("/member/createMember.do", "/member/checkIdDuplicate.do").anonymous()
 //                    .requestMatchers("/board/**").authenticated()
 //                    .requestMatchers("/admin/**").hasRole("ADMIN")
+                    .requestMatchers("/admin/**").hasAnyRole("ADMIN", "MANAGER")
+                    .requestMatchers("/notice/createNotice.do").hasAnyRole("ADMIN", "MANAGER")
+                    .requestMatchers("/notice/deleteNotice.do").hasAnyRole("ADMIN", "MANAGER")
                     .anyRequest().authenticated();
         }));
 

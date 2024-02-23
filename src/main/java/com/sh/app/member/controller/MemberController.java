@@ -124,9 +124,7 @@ public class MemberController {
     public String deleteMember(Long id) {
         log.debug("id = {}", id);
         memberService.deleteById(id);
-
         memberService.logoutAndInvalidateSession();
-
         return "redirect:/";
     }
 
@@ -140,5 +138,11 @@ public class MemberController {
     }
 
     @GetMapping("/memberWatchedMovie.do")
-    public void memberWatchedMovie() {}
+    public void memberWatchedMovie(Long id, Model model) {
+        log.debug("id = {}", id);
+        Member member = memberService.findByReservation(id);
+        log.debug("member = {}", member);
+
+        model.addAttribute("member", member);
+    }
 }

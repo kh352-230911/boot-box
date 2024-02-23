@@ -16,5 +16,4 @@ public class MovieListDto {
     private double advanceReservation;
     private Double avgReviewScore;
     private boolean searchResult;
-
 }
