@@ -1,13 +1,12 @@
 package com.sh.app.notice.dto;
 
-import com.sh.app.authority.entity.RoleAuth;
 import com.sh.app.notice.entity.NoticeType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 public class NoticeCreateDto {
@@ -16,7 +15,6 @@ public class NoticeCreateDto {
     @SequenceGenerator(
             name = "seq_notice_id_generator",
             sequenceName = "seq_notice_id",
-            initialValue = 1,
             allocationSize = 1
     )
     //  <!-- 시퀀스id, noticeType, title, content, createAt -->
@@ -28,4 +26,10 @@ public class NoticeCreateDto {
     private String content;
     @NotNull
     private NoticeType noticeType;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    public NoticeCreateDto() {
+        this.createdAt = LocalDateTime.now();
+    }
 }

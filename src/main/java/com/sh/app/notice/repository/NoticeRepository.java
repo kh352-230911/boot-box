@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface NoticeRepository extends JpaRepository<Notice, Long> {
+    @Query("from Notice order by id asc")
     List<Notice> findAll();
 }
