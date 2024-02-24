@@ -437,7 +437,7 @@ label_row
 }
 .select-requestPay-button
 {
-    display: none;
+    //display: none;
     width: 100px;
     height: 100px;
     margin-right: 10px;

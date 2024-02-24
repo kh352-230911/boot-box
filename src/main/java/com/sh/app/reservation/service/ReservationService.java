@@ -6,6 +6,10 @@ import com.sh.app.member.entity.Member;
 import com.sh.app.reservation.dto.ReservationDto;
 import com.sh.app.reservation.entity.Reservation;
 import com.sh.app.reservation.repository.ReservationRepository;
+import com.sh.app.reservationSeat.dto.ReservationSeatDto;
+import com.sh.app.reservationSeat.dto.ReservationSeatDto2;
+import com.sh.app.reservationSeat.entity.ReservationSeat;
+import com.sh.app.reservationSeat.repository.ReservationSeatRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +35,10 @@ public class ReservationService {
     ReservationRepository reservationRepository;
 
     @Autowired
+    ReservationSeatRepository reservationSeatRepository;
+
+
+    @Autowired
     private ModelMapper modelMapper;
 
 
@@ -42,21 +50,30 @@ public class ReservationService {
     }
 
     //modelmapper이용해서 변환하기
-    
-    
 
+    //1)reservation
     //dto -> entity
     public Reservation convertDtoToEntity(ReservationDto reservationDto) {
         return modelMapper.map(reservationDto, Reservation.class);
     }
-
     //entity ->dto
     public ReservationDto convertEntityToDto(Reservation reservation) {
         return modelMapper.map(reservation, ReservationDto.class);
     }
 
+    //2)reservationSeat
+    //dto -> entity
+    public ReservationSeat convertDtoToEntity(ReservationSeatDto2 reservationSeatDto2) {
+        return modelMapper.map(reservationSeatDto2, ReservationSeat.class);
+    }
+    //entity ->dto
+    public ReservationSeatDto2 convertEntityToDto(ReservationSeat reservationSeat) {
+        return modelMapper.map(reservationSeat, ReservationSeatDto2.class);
+    }
 
 
+    public ReservationSeatDto2 insertReservationSeat(ReservationSeatDto2 reservationSeatDto2) {
 
-
+        return convertEntityToDto(reservationSeatRepository.save(convertDtoToEntity(reservationSeatDto2)));
+    }
 }

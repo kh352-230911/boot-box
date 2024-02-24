@@ -55,6 +55,7 @@ var totalPay;
 let reservatoinPage=1; //기본 1부터 시작.
 //0223
 var checkedIds = []; // 체크된 체크박스의 아이디를 저장할 배열
+var checkedNumbers = []; // 체크된 체크박스의 넘버를 저장할 배열
 const Status = {
     CONFIRM: 'CONFIRM',
     PENDING: 'PENDING'
@@ -446,15 +447,16 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
     //     alert('모든 버튼을 누르셔야 다음으로 이동하실 수 있습니다.');
     //     return;
     // }
-    const nextButton = document.querySelector('.select-seats-next-button');
-    const requestPayButton = document.querySelector('.select-requestPay-button');
-// nextButton의 display 속성을 조작하여 보이거나 숨깁니다.
-    if (requestPayButton.style.display === 'none') {
-        requestPayButton.style.display = 'block'; // 보이게 설정
-        nextButton.style.display='none';
-    } else {
-        requestPayButton.style.display = 'none'; // 숨김 설정
-    }
+
+//     const nextButton = document.querySelector('.select-seats-next-button');
+//     const requestPayButton = document.querySelector('.select-requestPay-button');
+// // nextButton의 display 속성을 조작하여 보이거나 숨깁니다.
+//     if (requestPayButton.style.display === 'none') {
+//         requestPayButton.style.display = 'block'; // 보이게 설정
+//         nextButton.style.display='none';
+//     } else {
+//         requestPayButton.style.display = 'none'; // 숨김 설정
+//     }
 
 
     //비동기 test
@@ -553,7 +555,10 @@ function createSeats(rows, cols,disabledSeat) {
     while (seatTableBody.firstChild) {
         seatTableBody.removeChild(seatTableBody.firstChild);
     }
-    // 행 반복
+
+    var seatNumber = 1; // 좌석 번호 초기값
+
+
     for (var i = 0; i < rows; i++) {
         var row = document.createElement('tr');
 
@@ -570,24 +575,29 @@ function createSeats(rows, cols,disabledSeat) {
         // 좌석 생성하는 나머지 셀 생성
         for (var j = 1; j <= cols; j++)
         {
-            // 좌석 번호 계산
-            //var seatId = i * cols + j;
-
             //좌석 번호에서 알파벳+번호로 처리 a1 b5 이런식으로.
             //0216 한자리 수 인 경우 앞에 0 추가 1->01
             let seatId =alphabet[i] +  (j < 10 ? '0' + j : j);
             // 좌석 생성
             checkbox = document.createElement('input');
+            // 좌석 번호 계산 0224 순수 숫자값으로. 1~60
+            //var seatId = i * cols + j;
             checkbox.type = 'checkbox';
             checkbox.id = 's' + seatId;
             checkbox.name = 'tickets';
             checkbox.className = 'custom-checkbox'; // 사용자 정의 체크박스 클래스 추가
 
+
+
             checkbox.setAttribute('data-seat-id', seatId); // 좌석 아이디를 데이터 속성으로 추가
+            checkbox.setAttribute('data-seat-number', seatNumber);
+            checkbox.value=seatNumber;
 
             checkbox.addEventListener('click', function()
             {
                 console.log('Clicked seat ID:', this.getAttribute('data-seat-id'));
+                console.log('Clicked seat NUMBER:', this.getAttribute('data-seat-number'));
+
                 //클릭시 관람인원이 0명인 경우 인원을 먼저 선택하라고 알려준다.
                 if(numberOfPeople==0)
                 {
@@ -604,9 +614,7 @@ function createSeats(rows, cols,disabledSeat) {
                     {
                         if (checkbox.checked) {
                             checkedCount++;
-
                         }
-
                     });
                     console.log("현재 체크된 체크박스:",checkedCount);
                     if(numberOfPeople<checkedCount)
@@ -617,15 +625,19 @@ function createSeats(rows, cols,disabledSeat) {
                     }
                     //모든 체크박스들을 순회하여
                     checkedIds = []; // 체크된 체크박스의 아이디를 저장할 배열
+                    checkedNumbers = []; // 체크된 체크박스의 숫자를 저장할 배열
                     checkboxes.forEach(function(checkbox) {
                         if (checkbox.checked) {
+                            //0224 좌석네임이 아닌 id값을 넣어줘야 할 것 같음.
 
                             checkedIds.push(checkbox.id.replace('s','')); // 체크된 체크박스의 아이디를 배열에 추가
+                            checkedNumbers.push(checkbox.value);
                         }
                     });
                     // 체크된 체크박스의 아이디를 출력
                     selectSeatDiv.innerText = checkedIds;
                     console.log("체크된 체크박스의 아이디: ", checkedIds);
+                    console.log("체크된 체크박스의 넘버즈: ", checkedNumbers);
                     console.log("체크카운트:", checkedCount);
                     totalPay = 100* checkedCount;
                     totalPayDiv.innerText = "100 * "+ checkedCount +" = "+totalPay +"원";
@@ -651,6 +663,9 @@ function createSeats(rows, cols,disabledSeat) {
             col.appendChild(checkbox);
             col.appendChild(label);
             row.appendChild(col);
+
+
+            seatNumber++;
         }
         seatTableBody.appendChild(row);
     }
@@ -774,10 +789,27 @@ function select_member_like_cinema()
 // {
 //     // alert("결제");
 // });
+function check_before_requestPay()
+{
+    if(numberOfPeople!=checkedCount)
+    {
+        alert('관람인원과 선택된 좌석갯수가 맞지 않습니다.');
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
 IMP.init("imp32105587"); // 가맹점코드 - 고정값
 function requestPay()
 {
+
     console.log("결제 버튼을 클릭");
+    //0224 테스트 하다가 중요한 것을 잊었다. 인원수=체크박스갯수 확인해야함! ex)인원은 2명인데 1개만 선택한 경우를 발견함.
+    if(!check_before_requestPay())
+        return;
+
     let pay_uid = new Date().getTime().toString();
     IMP.request_pay({
         pg: "html5_inicis", // PG사코드 - 고정값
@@ -789,38 +821,78 @@ function requestPay()
         buyer_tel: "01089405318", // 회원연락처
     },
 
-        function(res)
+        function(res) //결제창 띄우고 닫았을 때 여기까지 뜨고
         {
             console.log("res::::",res);
-            console.log("Payment success!");
+            // console.log("Payment success!");
             console.log("Payment ID : " + res.imp_uid);
             console.log("Order ID : " + res.merchant_uid);
             console.log("Payment Amount : " + res.paid_amount);
+            let boxId = "box"+new Date().getTime().toString().substring(8);
+            let orderId = "order"+new Date().getTime().toString();
+            console.log("생성된 box id:",boxId);
 
-            let sendData = {
-                id: "box78900",
-                memberId: "rhgPwls",
-                scheduleId: selectedSheduleId,
-                status : Status.CONFIRM //enum 화
-            };
             //결제응답정보를 db에 저장하기 위해 비동기를 사용하는 구간
-            if (res.success)
+            if (res.success) //실제로 결제가 성공되면 이 구간으로 넘어오게 된다.
             {
+
+                console.log("결제가 성공적으로 요청되었습니다!",res.success);
+
+                let sendData01 = {
+                    id: boxId,//예매id (랜덤조합)
+                    memberId: 1,//회원 아이디 long
+                    scheduleId: selectedSheduleId, //상영스케쥴 번호
+                    status : Status.CONFIRM //enum 화
+                };
+                //0224 seat_id는 A01 이 아니라 1 이런식으로 넘겨줘야함! checkedNumbers는 내가 선택 좌석의 순수 숫자값을 저장한 배열이다.
+                let sendData02 = {
+                    resId: boxId,
+                    seatId : checkedNumbers
+                };
+
+                //0224 결제관련 정보 객체 order_pay에 저장할..
+                let sendData03={
+                    id :res.merchant_uid,//orderId,
+                    reservationId : boxId,
+                    memberId : 0,
+                    imp : res.imp_uid,
+                    inicis  : "html5_inicis",
+                    reservationAmount : res.paid_amount,
+                    price : totalPay,
+                    phone : "01012345678",
+                    status : Status.CONFIRM
+
+                };
+
+
+                //0224 객체 합치기
+                let combinedData = {
+                    reservationDto: sendData01,
+                    reservationSeatDto: sendData02,
+                    orderPayDto : sendData03
+                };
+
+
+
                 $.ajax({
+                    headers : {
+                        [csrfHeaderName] : csrfToken
+                    },
                     type: "POST",
                     url: `${contextPath}reservation/reservationStart`, // 전송할 URL
                     contentType: "application/json", // 전송하는 데이터의 타입
-                    data: JSON.stringify(sendData), // JSON 데이터로 변환하여 전송
+                    data: JSON.stringify(combinedData), // JSON 데이터로 변환하여 전송
 
                     success: function(response) {
                         // 요청이 성공했을 때 처리할 로직
                         console.log("응답:", response);
-                        // 응답 데이터의 정보들
 
+                        // window.location.href = `${contextPath}bootbox/reservation/reservationComplete`; // 리다이렉트할 URL을 지정합니다.
                     },
                     error: function(xhr, status, error) {
                         // 요청이 실패했을 때 처리할 로직
-                        console.error("에러:", error);
+                        alert("에러가 발생했습니다.:", status+"/"+error);
+                        console.error("에러가 발생했습니다.:", status+"/"+error);
                     }
                 });
 
@@ -832,3 +904,51 @@ function requestPay()
 
 }
 
+function dtoTest()
+{
+    console.log("dtoTest");
+    let boxId = "box"+new Date().getTime().toString().substring(8);
+    console.log("생성된 box id:",boxId);
+    let sendData01 = {
+        id: boxId,//예매id (랜덤조합)
+        memberId: 1,//회원 아이디 long
+        scheduleId: selectedSheduleId, //상영스케쥴 번호
+        status : Status.CONFIRM //enum 화
+    };
+    //0224 seat_id는 A01 이 아니라 1 이런식으로 넘겨줘야함!
+    //쓰이는 dto와 필드명이 일치해야한다...
+
+    let sendData02 = {
+        resId: boxId,
+        seatId : checkedNumbers
+    };
+
+    //0224 객체 합치기
+    let combinedData = {
+        reservationDto: sendData01,
+        reservationSeatDto: sendData02
+    };
+    console.log("combinedData:",combinedData);
+        $.ajax({
+            headers : {
+                [csrfHeaderName] : csrfToken
+            },
+            type: "POST",
+            url: `${contextPath}reservation/reservationStart`, // 전송할 URL
+            contentType: "application/json", // 전송하는 데이터의 타입
+            data: JSON.stringify(combinedData), // JSON 데이터로 변환하여 전송
+
+            success: function(response) {
+                // 요청이 성공했을 때 처리할 로직
+                console.log("응답:", response);
+                // 응답 데이터의 정보들
+
+            },
+            error: function(xhr, status, error) {
+                // 요청이 실패했을 때 처리할 로직
+                alert("에러가 발생했습니다.:", status+"/"+error);
+                console.error("에러가 발생했습니다.:", status+"/"+error);
+            }
+        });
+
+}
