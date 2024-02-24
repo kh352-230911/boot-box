@@ -1,4 +1,3 @@
-
 html,
 body {
     height: 100%;
@@ -6,48 +5,28 @@ body {
 
 body {
     margin: 0;
-    font-family: "Agency FB";
+    font-family: "Calibri Light";
     font-weight: 500;
     font-size: 1.2em;
 }
-
-.wrap-container {
-    height: auto;
-    min-height: 100%;
-    padding-bottom: 60px;
-}
-.home-container {
-    min-height: 600px;
-}
 footer {
     height: 60px;
-    position: relative;
+    /*position: relative;*/
     transform: translateY(0%);
+    /* 페이지의 아래쪽에 고정 */
+    width: 99%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
-.centered-container {
-    width: 80%; /* 또는 원하는 너비 */
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    padding: 20px; /* 내부 여백은 선택적 */
-}
-.container {
+.container
+{
     margin-top: 30px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
-
-table {
-    width: 1300px;
-    border-collapse: collapse;
-    overflow: hidden;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-}
-
-th,
-td {
     flex-direction: column;
 }
 table
@@ -75,27 +54,13 @@ td
 {
     padding-left: 20px;
 }
-thead >tr>th
+thead > tr > th
 {
-
     background-color: #232323;
     border-top: 2px solid #ff003b;
     border-bottom: 2px solid #ff003b;
     text-align: center;
 }
-
-
-tbody {
-    tr {
-        &:hover {
-            background-color: rgba(255,255,255,0.3);
-        }
-    }
-    td {
-        position: relative;
-    }
-}
-
 tbody > tr
 {
     text-align: center;
@@ -130,15 +95,13 @@ footer
     display: inline-block;
     cursor: pointer;
     position: fixed;
-    bottom: 150px;
-    right: 260px;
     bottom: 7px;
     right: 130px;
 }
 #save:hover {
-    background-color: white;
+    background-color: forestgreen;
     color: black;
-    border-color: forestgreen;
+    border-color: white;
 }
 #answer, #answerContainer
 {
@@ -165,10 +128,9 @@ footer
 }
 /* 버튼 호버 효과 */
 .back-to-list-btn:hover {
-    background-color: white;
+    background-color: cornflowerblue;
     color: black;
-    border-color: red;
-    border-color: cornflowerblue;
+    border-color: white;
 }
 /* 오른쪽 아래에 위치 */
 .button-container {
@@ -176,9 +138,13 @@ footer
     justify-content: flex-end;
     margin: 20px;
     position: fixed;
-    bottom: 100px;
-    right: 130px;
-    margin: 0;
     bottom: 7px;
     right: 0px;
+}
+#answerContent
+{
+    width: 950px;
+    height: 280px;
+    background-color: rgba(255,255,255,-0.1);
+    border: none;
 }
