@@ -8,6 +8,8 @@ import com.sh.app.member.dto.MemberReservationDto;
 import com.sh.app.member.dto.MemberUpdateDto;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
+import com.sh.app.memberLikeCinema.dto.MemberLikeCinemaListDto;
+import com.sh.app.memberLikeCinema.serviece.MemberLikeCinemaService;
 import com.sh.app.review.dto.CreateReviewDto;
 import com.sh.app.review.service.ReviewService;
 import jakarta.validation.Valid;
@@ -46,6 +48,8 @@ public class MemberController {
     private AuthService authService;
     @Autowired
     private ReviewService reviewService;
+    @Autowired
+    private MemberLikeCinemaService memberLikeCinemaService;
 
     @GetMapping("/createMember.do")
     public void createMember() {}
@@ -82,9 +86,11 @@ public class MemberController {
     }
 
     @GetMapping("/memberDetail.do")
-    public void memberDetail(Authentication authentication, @AuthenticationPrincipal MemberDetails memberDetails) {
-        log.debug("authentication = {}", authentication);
-        log.debug("memberDetails = {}", memberDetails);
+    public void memberDetail(Authentication authentication,
+                             @AuthenticationPrincipal MemberDetails memberDetails,
+                             Model model) {
+        List<MemberLikeCinemaListDto> memberLikeCinemaListDtos = memberLikeCinemaService.findByMemberId(memberDetails.getMember().getId());
+        model.addAttribute("memberLikeCinemas", memberLikeCinemaListDtos);
     }
 
     @GetMapping("/updateMember.do")
