@@ -19,7 +19,7 @@ import java.util.List;
 public class Theater {
     @Id
     private Long id;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cinema_id")
     private Cinema cinema;
     @Column(nullable = false)

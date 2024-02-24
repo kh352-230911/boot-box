@@ -368,18 +368,15 @@ label_row
     align-items: center;
     /*   align-items: center;: 수직 중앙 정렬 */
 }
-/*이전버튼 다음버튼*/
+/* 이전 버튼 */
 .select-seats-prev-button
 {
-    padding: 10px;
+    width: 100px;
+    height: 100px;
+    margin-left: 10px;
     background-color: lightgray;
     border: none;
-    cursor: pointer;
-}
-.select-seats-next-button {
-    padding: 10px;
-    background-color: darkred;
-    border: none;
+    border-radius: 10px;
     cursor: pointer;
 }
 
@@ -400,8 +397,8 @@ label_row
 }
 
 .seat-container1-img {
-    border: 1px solid transparent;
-    width: 150px;
+
+    border-radius: 5px;
     height: 170px;
 }
 .seat-container1-title {
@@ -428,10 +425,32 @@ label_row
     /*border: 1px solid lightgray;*/
     width: 20vw;
 }
+/* 다음 버튼 */
+.select-seats-next-button {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+    background-color: darkred;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.select-requestPay-button
+{
+    display: none;
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+    background-color: darkred;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
 th
 {
     background-color: black;
 }
+
 /*td*/
 /*{*/
 /*    border-right: 1px solid red;*/
