@@ -51,15 +51,17 @@ public class CinemaController {
     @GetMapping("/cinemaList.do")
     public String cinemaList(Model model, @AuthenticationPrincipal MemberDetails memberDetails) {
 
+    // 사용자가 로그인하지 않은 경우에도 locationsWithCinemas 정보는 페이지에 전달, memberLikeCinemaListDtos는 비어 있는 리스트로 전달
         List<LocationDto> locationsWithCinemas = locationService.findAllLocationsWithCinemas();
-        List<MemberLikeCinemaListDto> memberLikeCinemaListDtos = memberLikeCinemaService.findByMemberId(memberDetails.getMember().getId());
+        List<MemberLikeCinemaListDto> memberLikeCinemaListDtos = new ArrayList<>();
 
-        log.debug("memberLIkeCinemaListDtos = {}", memberLikeCinemaListDtos);
+        // 사용자가 로그인한 경우
+        if (memberDetails != null) {
+            memberLikeCinemaListDtos = memberLikeCinemaService.findByMemberId(memberDetails.getMember().getId());
+        }
 
         model.addAttribute("locations", locationsWithCinemas);
         model.addAttribute("memberLikeCinemas", memberLikeCinemaListDtos);
-
-
 
         return "cinema/cinemaList"; // 해당하는 Thymeleaf 템플릿 이름
     }
