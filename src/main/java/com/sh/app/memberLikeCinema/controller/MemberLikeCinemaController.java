@@ -21,7 +21,7 @@ public class MemberLikeCinemaController {
     public ResponseEntity<?> bookMarkCreate(CreateMemberLikeCinemaDto createMemberLikeCinemaDto) {
 
         int currentCount = memberLikeCinemaService.countByMemberId(createMemberLikeCinemaDto.getMemberId());
-        log.debug("currentCount = {}", currentCount);
+//        log.debug("currentCount = {}", currentCount);
         if (currentCount >= 3) {
             // 이미 3개의 극장을 북마크하면 성공응답
             return ResponseEntity.ok(currentCount);
@@ -34,8 +34,9 @@ public class MemberLikeCinemaController {
 
     @PostMapping("/cinemaNoLike")
     public ResponseEntity<?> bookMarkDelete(@RequestParam Long cinemaId) {
+
         int result = memberLikeCinemaService.deleteByCinemaId(cinemaId);
-        log.debug("result = {}", result);
+//        log.debug("result = {}", result);
         return ResponseEntity.ok(result);
     }
     
