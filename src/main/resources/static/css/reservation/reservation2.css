@@ -255,11 +255,9 @@
 .select-people-content
 {
     display: flex;
-    /*background-color: green;*/
-    width: 40vw;
+    width: 50vw;
     margin-bottom: 5px;
 }
-
 .all-seats
 {
     opacity: 0.8;
@@ -437,7 +435,7 @@ label_row
 }
 .select-requestPay-button
 {
-    display: none;
+    //display: none;
     width: 100px;
     height: 100px;
     margin-right: 10px;

@@ -3,9 +3,16 @@ package com.sh.app.reservation.service;
 import com.sh.app.authority.entity.Authority;
 import com.sh.app.authority.entity.RoleAuth;
 import com.sh.app.member.entity.Member;
+import com.sh.app.pay.dto.OrderPayDto;
+import com.sh.app.pay.entity.OrderPay;
+import com.sh.app.pay.repository.OrderPayRepository;
 import com.sh.app.reservation.dto.ReservationDto;
 import com.sh.app.reservation.entity.Reservation;
 import com.sh.app.reservation.repository.ReservationRepository;
+import com.sh.app.reservationSeat.dto.ReservationSeatDto;
+import com.sh.app.reservationSeat.dto.ReservationSeatDto2;
+import com.sh.app.reservationSeat.entity.ReservationSeat;
+import com.sh.app.reservationSeat.repository.ReservationSeatRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +38,12 @@ public class ReservationService {
     ReservationRepository reservationRepository;
 
     @Autowired
+    ReservationSeatRepository reservationSeatRepository;
+
+    @Autowired
+    OrderPayRepository orderPayRepository;
+
+    @Autowired
     private ModelMapper modelMapper;
 
 
@@ -38,25 +51,47 @@ public class ReservationService {
     public Reservation insertReservation(ReservationDto reservationDto)
     {
        return reservationRepository.save(convertDtoToEntity(reservationDto));
-
     }
 
     //modelmapper이용해서 변환하기
-    
-    
 
+    //1)reservation
     //dto -> entity
     public Reservation convertDtoToEntity(ReservationDto reservationDto) {
         return modelMapper.map(reservationDto, Reservation.class);
     }
-
     //entity ->dto
     public ReservationDto convertEntityToDto(Reservation reservation) {
         return modelMapper.map(reservation, ReservationDto.class);
     }
 
+    //2)reservationSeat
+    //dto -> entity
+    public ReservationSeat convertDtoToEntity(ReservationSeatDto2 reservationSeatDto2) {
+        return modelMapper.map(reservationSeatDto2, ReservationSeat.class);
+    }
+    //entity ->dto
+    public ReservationSeatDto2 convertEntityToDto(ReservationSeat reservationSeat) {
+        return modelMapper.map(reservationSeat, ReservationSeatDto2.class);
+    }
+
+    //3)orderPay
+    //dto -> entity
+    public OrderPay convertDtoToEntity(OrderPayDto orderPayDto) {
+        return modelMapper.map(orderPayDto, OrderPay.class);
+    }
+    //entity ->dto
+    public OrderPayDto convertEntityToDto(OrderPay orderPay) {
+        return modelMapper.map(orderPay, OrderPayDto.class);
+    }
 
 
+    public ReservationSeatDto2 insertReservationSeat(ReservationSeatDto2 reservationSeatDto2) {
 
+        return convertEntityToDto(reservationSeatRepository.save(convertDtoToEntity(reservationSeatDto2)));
+    }
 
+    public OrderPayDto insertOrderPay(OrderPayDto orderPayDto) {
+        return convertEntityToDto(orderPayRepository.save(convertDtoToEntity(orderPayDto)));
+    }
 }

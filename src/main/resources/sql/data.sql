@@ -104,6 +104,7 @@ insert into Admin values (seq_admin_id.nextval, 03201, 'adm392258', '$2a$10$zqEP
 insert into ADMIN values (seq_admin_id.nextval, 04201, 'adm852542', '$2a$10$uOpP/wdt8/bkTqXlKqu3JeqyIDqvnD3sF5S8xHEYHBxKYvy80HCvW');
 insert into ADMIN values (seq_admin_id.nextval, 05101, 'adm724198', '$2a$10$taKBaHUBRTNKEAUq.zu1lOTX2uvuoUqLnJvJRAaTKcUJbzNJOZtxm');
 insert into ADMIN values (seq_admin_id.nextval, null, 'adm322100', '$2a$10$Ix/RI6AiRdQEhOHd3nrQX.PxOua2R5kFYZxt67hmBiamIPqFfLhi2');
+select * from admin;
 --
 -- authority
 insert into AUTHORITY values (seq_authority_id.nextval, 1, null, 'ROLE_USER');
@@ -586,6 +587,13 @@ insert into ASK values (seq_ask_id.nextval, '2', '영화 시간보다 늦었어�
 insert into ASK values (seq_ask_id.nextval, '3', '음식물 반입', '상영관 내 다른 음식물의 반입이 되나요?', 'MOVIE', default);
 insert into ASK values (seq_ask_id.nextval, '4', '관람 등급', '관람 등급에 대해 알고 싶습니다.', 'MOVIE', default);
 insert into ASK values (seq_ask_id.nextval, '5', '영화 관람을 하다 소지품을 분실했어요', '영화 관람을 하다 소지품을 분실했어요. 분실물은 어떻게 찾나요?', 'CINEMA', default);
+insert into ASK values (seq_ask_id.nextval, '1', '주차장문의 입니다', '영화를 보면 주차장은 무료이용인가요?', 'CINEMA', default);
+insert into ASK values (seq_ask_id.nextval, '2', '시설 이용 규정', '유모차를 가지고 극장에 입장할 수 있나요?', 'ETC', default);
+insert into ASK values (seq_ask_id.nextval, '3', '웹사이트 오류', '웹사이트에서 영화 예매 시 오류가 발생하는데 어떻게 해야 하나요?', 'RESERVATION', default);
+insert into ASK values (seq_ask_id.nextval, '4', '장애인 시설', '극장 내 장애인 시설에는 어떤 것들이 있나요?', 'CINEMA', default);
+insert into ASK values (seq_ask_id.nextval, '5', '단체 예약', '단체로 영화를 보고 싶은데, 특별한 절차가 필요한가요?', 'RESERVATION', default);
+
+
 --
 -- answer
 insert into ANSWER values (seq_answer_id.nextval, 1, 6, '상영시간 이전까지만 가능하며, 상영시간 이후 취소나 환불은 되지 않습니다.', default);
@@ -593,6 +601,12 @@ insert into ANSWER values (seq_answer_id.nextval, 2, 6, '영화 시간 내 언�
 insert into ANSWER values (seq_answer_id.nextval, 3, 6, '상영관 내 외부 음식물 반입은 가능합니다.', default);
 insert into ANSWER values (seq_answer_id.nextval, 4, 6, 'CGV는 영화진흥법에 의한 영화별 관람등급을 철저히 준수하고 있습니다.', default);
 insert into ANSWER values (seq_answer_id.nextval, 5, 6, '분실물의 경우 발견 즉시 현장에서 보관을 진행하고 있으며, 확인 요청시 본인 확인 후 물품 확인을 도와드리고 있습니다.', default);
+insert into ANSWER values (seq_answer_id.nextval, 6, 6, '영화예매 티켓 하단에 주차장 관련 내용이 적혀있습니다. 영화예매하신분은 주차장요금은 3시간 무료입니다. 참고 부탁드려요..', default);
+insert into ANSWER values (seq_answer_id.nextval, 7, 6, '유모차를 가지고 극장에 입장하실 수 있습니다. 그러나 상영관 내에서는 유모차를 접어 보관해야 할 수도 있으니, 입장 전에 직원에게 문의해 주시기 바랍니다. 극장 내에는 유모차를 위한 특별 보관 공간을 마련해 두었습니다.', default);
+insert into ANSWER values (seq_answer_id.nextval, 8, 6, '웹사이트에서 발생한 오류에 대해 불편을 드려 죄송합니다. 현재 기술 팀이 문제를 해결하기 위해 노력하고 있습니다. 잠시 후 다시 시도해 보시기 바랍니다. 만약 문제가 지속된다면, 고객님의 화면 캡처와 함께 자세한 오류 메시지를 support@example.com 으로 보내주시면 더 빠르게 도움을 드릴 수 있습니다.', default);
+insert into ANSWER values (seq_answer_id.nextval, 9, 6, '저희 극장은 모든 고객이 편안하게 이용할 수 있도록 다양한 장애인 시설을 갖추고 있습니다. 이에는 휠체어 사용 가능한 좌석, 장애인 화장실, 그리고 우선 예약 서비스가 포함됩니다. 극장 방문 전 또는 방문 시에 직원에게 문의하시면 더 자세한 안내를 받으실 수 있습니다.', default);
+insert into ANSWER values (seq_answer_id.nextval, 10, 6, '단체 예약을 원하시는 경우, 저희 고객 서비스 센터로 연락 주시면 단체 예약 절차에 대해 안내해 드리겠습니다. 보통 10인 이상부터 단체 예약이 가능하며, 특별 할인이나 좌석 배치에 관한 협의가 필요할 수 있습니다.', default);
+
 --
 -- notice
 INSERT INTO NOTICE 
@@ -691,11 +705,7 @@ chr(13)||chr(10) ||
 '부상자 분들의 빠른 쾌유를 기원합니다.' ||chr(13)||chr(10) ||
 chr(13)||chr(10) ||
 'BOOTBOX  일동.', default);
-insert into NOTICE values (seq_notice_id.nextval, 1, 'SYSTEM', '2023년 12월 시스템점검 안내', '원활하고 안정된 서비스 제공을 위하여 2023년 12월 새벽 시스템 점검 작업이 예정되어 있습니다.', default);
-insert into NOTICE values (seq_notice_id.nextval, 2, 'CINEMA', '[센텀시티] 백화점 휴점에 따른 극장 이용 안내', '22.09.09(금)~22.09.10(토) 신세계 백화점 센텀시티점 휴점에 따라 극장이용 동선 안내를 공지하오니 이용에 착오 없으시길 바랍니다.', default);
-insert into NOTICE values (seq_notice_id.nextval, 3, 'EVENT', '신규 초콜릿향 진행극장 변경 안내 ', '4DX 신규 초콜릿향 진행 극장 (1/31~2/6) CGV 계양, 광교, 광주터미널, 김해, 대구, 대구스타디움', default);
-insert into NOTICE values (seq_notice_id.nextval, 4, 'ETC', '개인정보처리방침 개정 공지 (23.11.06 시행)', '2023년 11월 6일 자로 BOOTBOX의 개인정보처리방침이 개정됨에 따라 회원님께 주요 개정 내용과 적용 일정을 아래와 같이 안내 드립니다.', default);
-insert into NOTICE values (seq_notice_id.nextval, 5, 'ETC', 'BOOTBOX 서비스 이용약관 개정 안내 (2024년 1월 23일 시행)', '2024년 1월 23일자로 BOOTBOX 서비스 이용약관을 일부 개정하게 되어 아래와 같이 사전 안내드립니다. 서비스 이용에 참고 부탁드립니다.', default);
+
 --
 -- schedule
 insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 09:10', 'YYYY-MM-DD HH24:MI'));
