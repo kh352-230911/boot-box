@@ -14,8 +14,14 @@
         <form>
             <div class="flex mb-3">
                 <div class="pt-2 relative text-slate-200">
-                    <input class="border-2 border-red-500 bg-gray-700 h-8 px-3 pr-24 rounded-lg text-sm focus:outline-none"
-                           type="search" name="search" placeholder="Search Movie">
+                    <th:block th:if="${search != null}">
+                        <input class="border-2 border-red-500 bg-gray-700 h-8 px-3 pr-24 rounded-lg text-sm focus:outline-none"
+                               type="search" name="search" placeholder="Search Movie" th:value="${search}">
+                    </th:block>
+                    <th:block th:if="${search == null}">
+                        <input class="border-2 border-red-500 bg-gray-700 h-8 px-3 pr-24 rounded-lg text-sm focus:outline-none"
+                               type="search" name="search" placeholder="Search Movie">
+                    </th:block>
                     <button type="submit" class="absolute right-0 top-0 mt-4 mr-4">
                         <svg class="text-gray-300 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg"
                              xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px"

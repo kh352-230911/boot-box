@@ -1,14 +1,16 @@
 textarea#title
 {
-    width: 50%;
+    width: 850px;
     height: 40px;
     background-color: rgba(255,255,255,0.3);
+    margin-left: -80px;
 }
 textarea#content
 {
-    width: 50%;
+    width: 850px;
     height: 500px;
     background-color: rgba(255,255,255,0.3);
+    margin-left: -80px;
 }
 div#createNotice
 {
@@ -19,7 +21,7 @@ div#createNotice
     cursor: pointer;
     position: fixed;
     top: 240px;
-    margin-left: 750px;
+    margin-left: 780px;
 }
 .dropdown-content select {
     color: black; /* 글씨 색상을 검정색으로 설정 */
@@ -55,9 +57,9 @@ div#createNotice
     margin-left: 20px;
 }
 #save:hover {
-    background-color: white;
+    background-color: forestgreen;
     color: black;
-    border-color: forestgreen;
+    border-color: white;
 }
 #selectedTypeDisplay
 {
@@ -68,4 +70,15 @@ div#createNotice
     cursor: pointer;
     position: fixed;
     bottom: 270px;
+}
+footer {
+    height: 60px;
+    /*position: relative;*/
+    transform: translateY(0%);
+    /* 페이지의 아래쪽에 고정 */
+    width: 99%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }

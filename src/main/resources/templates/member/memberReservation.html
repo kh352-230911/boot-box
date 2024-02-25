@@ -72,17 +72,17 @@
                         <div class="movie_info-left">
                             <h1 class="movie_title mt-4" th:text="${review.movie.title}" >웡카</h1>
                             <br><br><br>
-                            <th:block th:each="schedule, status3 : ${review.movie.schedules}" th:if="${status2.index == status3.index}">
-                                <div class="mt-4" th:each="theater, status4 : ${schedule.theater}">
+                            <th:block th:each="theater, status3 : ${reservation.schedule.theater}">
+                                <div class="mt-4">
                                     <div class="text-sm">
                                         <p class="text-gray-300">관람 극장</p>
                                         <span th:text="${theater.cinema.region_cinema}">강남</span>
                                     </div>
                                     <div class="text-sm">
                                         <p class="text-gray-300">관람 일시</p>
-                                        <span th:text="|${#temporals.format(schedule.time, 'yyyy-MM-dd HH:mm')}|">2024.02.03 (토) 15:30</span>
+                                        <span th:text="|${#temporals.format(reservation.schedule.time, 'yyyy-MM-dd HH:mm')}|">2024.02.03 (토) 15:30</span>
                                         <br>
-                                        <span th:text="|(${#temporals.dayOfWeekNameShort(schedule.time)})|"></span>
+                                        <span th:text="|(${#temporals.dayOfWeekNameShort(reservation.schedule.time)})|"></span>
                                     </div>
                                 </div>
                             </th:block>
