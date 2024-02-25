@@ -227,55 +227,6 @@ $(document).ready(function(){
 //0221 영화-극장-원하는날짜로 새 상영스케쥴을 받아온 후 가공하는 함수
 function makeNewSchedule(able,organizedSchedules)
 {
-    // const scheduleTable = document.getElementById('scheduleTable');
-    //
-    // // 기존의 행 삭제
-    // while (scheduleTable.rows.length > 1) {
-    //     scheduleTable.deleteRow(1); // 헤더를 제외한 행을 삭제합니다.
-    // }
-    //
-    // // 새로운 데이터 추가
-    // const [{ totalDuration, schedules, title }] = organizedSchedules;
-    // console.log("총 상영 시간:", totalDuration);
-    // console.log("제목:", title);
-    //
-    // const tbody = scheduleTable.querySelector('.tbody_schedule');
-    // tbody.innerHTML = ''; // tbody 내용을 비움
-    //
-    // // 선택된 행 추적을 위한 변수
-    // let selectedRow = null;
-    //
-    // schedules.forEach(({ times, theater }) => {
-    //     times.forEach(({ schId, time, seatsAvailable }) => {
-    //         const row = scheduleTable.insertRow();
-    //         const schIdCell = row.insertCell();
-    //         const timeCell = row.insertCell();
-    //         const theaterCell = row.insertCell();
-    //         const seatsAvailableCell = row.insertCell();
-    //         //상영일정id도 추가
-    //         schIdCell.textContent = schId;
-    //         timeCell.textContent = time;
-    //         theaterCell.textContent = theater;
-    //         seatsAvailableCell.textContent = seatsAvailable + '석';
-    //
-    //         // 행에 클릭 이벤트 리스너 추가
-    //         row.addEventListener('click', () => {
-    //             // 이전에 선택된 행이 존재한다면 배경색을 원래대로 되돌리기
-    //             if (selectedRow) {
-    //                 selectedRow.style.backgroundColor = ''; // 이전에 선택된 행의 배경색을 지움
-    //             }
-    //             // 선택된 행을 현재 클릭한 행으로 설정하고 배경색을 검은색으로 변경
-    //             selectedRow = row;
-    //             selectedRow.style.backgroundColor = 'black';
-    //             // 클릭된 행에 대한 동작을 여기에 추가
-    //             console.log('클릭된 행:', schId,time, theater, seatsAvailable);
-    //             selectedSheduleId = schId;
-    //             theaterDiv.innerHTML=theater;
-    //         });
-    //     });
-    // });
-
-
     const scheduleTable = document.getElementById('scheduleTable');
     const initialTableHeight = scheduleTable.offsetHeight; // 테이블의 초기 높이 저장
 
@@ -285,8 +236,8 @@ function makeNewSchedule(able,organizedSchedules)
     }
 
 // 추가할 행의 높이를 계산하여 테이블의 높이를 조정
-    const addedRowsHeight = scheduleTable.offsetHeight - initialTableHeight;
-    scheduleTable.style.height = initialTableHeight + addedRowsHeight + 'px';
+   // const addedRowsHeight = scheduleTable.offsetHeight - initialTableHeight;
+    //scheduleTable.style.height = initialTableHeight + addedRowsHeight + 'px';
 
 // 새로운 데이터 추가
     const [{ totalDuration, schedules, title }] = organizedSchedules;
@@ -332,14 +283,15 @@ function makeNewSchedule(able,organizedSchedules)
     // 새로운 tbody를 추가
     scheduleTable.appendChild(tbody);
 
-    schedules.forEach(({ times, theater }) => {
-        console.log("극장:", theater);
-        times.forEach(({ bookingUrl, time, seatsAvailable }) => {
-            console.log("시간:", time);
-            console.log("예약 링크:", bookingUrl);
-            console.log("남은 좌석:", seatsAvailable);
-        });
-    });
+    // 추가된 tbody의 높이에 따라 테이블의 높이를 조정
+    const newHeight = scheduleTable.offsetHeight;
+    console.log("newHeight:",newHeight);
+    const addedHeight = newHeight - initialTableHeight; // 새로운 tbody가 추가된 후에 높아진 높이 계산
+    console.log("addedHeight:",addedHeight);
+// 테이블의 스타일을 변경하여 높이를 조정
+    scheduleTable.style.height = initialTableHeight + addedHeight + 'px';
+    console.log("initialTableHeight + addedHeight :",initialTableHeight + addedHeight );
+    scheduleTable.style.height = "500px";
 }
 
 //10글자씩 잘라서 br 처리 (장문의 영화 타이틀 처리)
@@ -476,8 +428,8 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
         // error: 서버에서 반환된 오류 메시지입니다.
         error(request, status, error) {
             //console.error('~~~~Ajax request failed~~~~:', error);
-            console.log('~~~~Error response responseText~~~~:', request.responseText);
-            console.log('~~~~Error response status~~~~:', request.status);
+            // console.log('~~~~Error response responseText~~~~:', request.responseText);
+            // console.log('~~~~Error response status~~~~:', request.status);
             if(request.status==500)
             {
                 alert(`에러로 인해 메인페이지로 이동합니다. 이용에 불편을 끼쳐드려 죄송합니다.`+request.status)
