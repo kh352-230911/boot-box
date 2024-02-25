@@ -98,7 +98,7 @@ tbody {
 }
 /* 버튼 호버 효과 */
 .back-to-list-btn:hover {
-    background-color: cornflowerblue;
+    background-color: #bb0808;
     color: black;
     border-color: white;
 }
