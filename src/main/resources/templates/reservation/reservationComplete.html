@@ -5,20 +5,36 @@
         layout:decorate="~{layout/default}">
 <head>
     <title>예매완료</title>
+
 </head>
-<style layout:fragment="style"></style>
-<div layout:fragment="content">
-    <span>예매 완료</span>
-    <br>
-    <hr style="height: 1px">
-    <br>
-    <div>
-        예매가 완료 되었습니다.
+<style layout:fragment="style">
+    .wrap-container {
+        height: auto;
+        min-height: 100%;
+        padding-bottom: 60px;
+    }
+    .home-container {
+        min-height: 600px;
+    }
+    footer {
+        height: 60px;
+        position: relative;
+        transform: translateY(0%);
+    }
+</style>
+<div layout:fragment="content" class="wrap-container">
+    <div class="home-container">
+        <span>예매 완료</span>
         <br>
-        예매 확인
+        <hr style="height: 1px">
+        <br>
+        <div>
+            예매가 완료 되었습니다.
+            <br>
+            예매 확인
 
+        </div>
     </div>
-
 </div>
 <script th:inline="javascript" layout:fragment="script" th:src="@{/js/reservation/reservationComplete.js}">
 
