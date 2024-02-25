@@ -329,7 +329,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         bookmarkIcon.classList.remove('fa-beat-fade');
                         // fa-solid 추가
                         bookmarkIcon.classList.add('fa-solid');
-                        // console.log(bookmarkIcon);
                     }
                 })
             } else {

@@ -111,7 +111,7 @@ tbody {
     font-size: medium;
 }
 #createNotice:hover {
-    background-color: forestgreen;
+    background-color: #bb0808;
     color: black;
     border-color: navajowhite;
 }
