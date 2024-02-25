@@ -842,6 +842,7 @@ function requestPay()
 
                         //window.location.href = `${contextPath}bootbox/`;
                         window.location.href = `${contextPath}reservation/reservationComplete`; // 리다이렉트할 URL을 지정합니다.
+                        //member/memberReservation.do?id=1
                     },
                     error: function(xhr, status, error) {
                         // 요청이 실패했을 때 처리할 로직
