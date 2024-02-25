@@ -22,20 +22,22 @@
         <div class="container flex justify-center mt-4">
             <table>
                 <thead class="text-base">
-                <tr>
-                    <th th:text="${notice.id}">번호</th>
-                    <th th:text="${notice.noticeTitle}">제목</th>
-                    <th th:text="|[ ${notice.noticeType.name() == 'SYSTEM' ? '시스템' :
-                                              notice.noticeType.name() == 'CINEMA' ? '상영관' :
-                                              notice.noticeType.name() == 'EVENT' ? '이벤트' :
-                                              notice.noticeType.name() == 'ETC' ? '기타' : '기타'} ]|">구분</th>
-                    <th th:text="|등록일 : ${#temporals.format(notice.createdAt, 'yyyy/MM/dd HH:mm')}|">등록일</th>
-                </tr>
+                    <tr>
+                        <th th:text="${notice.id}">번호</th>
+                        <th th:text="${notice.noticeTitle}">제목</th>
+                        <th th:text="|[ ${notice.noticeType.name() == 'SYSTEM' ? '시스템' :
+                                                  notice.noticeType.name() == 'CINEMA' ? '상영관' :
+                                                  notice.noticeType.name() == 'EVENT' ? '이벤트' :
+                                                  notice.noticeType.name() == 'ETC' ? '기타' : '기타'} ]|">구분</th>
+                        <th th:text="|등록일 : ${#temporals.format(notice.createdAt, 'yyyy/MM/dd HH:mm')}|">등록일</th>
+                    </tr>
                 </thead>
                 <tbody class="py-50">
-                <tr>
-                    <td colspan="4" th:text="${notice.noticeContent}"></td>
-                </tr>
+<!--                        <td colspan="4" th:text="${notice.noticeContent}"></td>-->
+                    <tr>
+                                                                <!--  줄바꿈 문자를 <br/>로 치환 -->
+                        <td colspan="4" th:utext="${#strings.replace(notice.noticeContent, nlString, '<br/>')}"></td>
+                    </tr>
 
                 </tbody>
             </table>
