@@ -167,7 +167,7 @@ public class MemberController {
         createReviewDto.setMemberId(memberDetails.getMember().getId());
         reviewService.createReview(createReviewDto);
 
-        return "redirect:/member/memberWatchedMovie.do?id=" + memberDetails.getMember().getId();
+        return "redirect:/member/memberReviewList.do?id=" + memberDetails.getMember().getId();
     }
 
     @GetMapping("/memberAskList.do")
