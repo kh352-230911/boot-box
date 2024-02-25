@@ -22,7 +22,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude =  "reviews")
+@ToString(exclude =  {"schedules","reviews"})
 public class Movie {
     @Id
     private Long id;
