@@ -39,7 +39,8 @@
                                                       ask.askType.name() == 'CINEMA' ? '상영관' :
                                                       ask.askType.name() == 'MOVIE' ? '영화' :
                                                       ask.askType.name() == 'ETC' ? '기타' : '기타'} ]|" id="type"></td>
-            <td th:text="${ask.createdAt}"></td>
+<!--            <td th:text="${ask.createdAt}"></td>-->
+            <td th:text="${#temporals.format(ask.createdAt, 'yyyy/MM/dd HH:mm')}"></td>
             <td><button id="askDetail" th:onclick="|location.href = '@{/ask/askDetail.do(id=${ask.id})}'|" style="font-size: small">답변하기</button></td>
         </tr>
         </tbody>
