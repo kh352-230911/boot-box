@@ -100,6 +100,11 @@
 .sidebar i:hover {
     transform: scale(1.5);
 }
+/* 기본 bookmark 아이콘 스타일 */
+.bookmark {
+    color: rgba(255, 255, 0, 0.98); /* 클릭 시 색상 */
+}
+
 
 .container {
     background-color: #151515;

@@ -65,8 +65,8 @@ public class NoticeController {
 
     @PostMapping("/deleteNotice.do")
     public String deleteNotice(Long id, RedirectAttributes redirectAttributes) {
-        log.debug("id = {}", id);
-        System.out.println(id + "잘 왔나");
+//        log.debug("id = {}", id);
+//        System.out.println(id + "잘 왔나");
         noticeService.deleteById(id);
         redirectAttributes.addFlashAttribute("msg", "공지사항을 삭제했습니다.");
         return "redirect:/notice/noticeList.do";
@@ -74,8 +74,13 @@ public class NoticeController {
 
     @GetMapping("/noticeDetail.do")
     public void noticeDetail(Model model, Long id) {
+
         NoticeListDto notice = noticeService.findById(id);
-        log.debug("notice = {}", notice);
+
+        // System.getProperty("line.separator")는 현재 실행 중인 운영 체제의 기본 줄바꿈 문자열을 가져오는 메소드
+        String br = System.getProperty("line.separator");
+        // 운영 체제에 맞는 줄바꿈 문자를 가져와서 뷰에서 사용하기 위해 모델에 추가
+        model.addAttribute("nlString", br);
         model.addAttribute("notice", notice);
     }
 }

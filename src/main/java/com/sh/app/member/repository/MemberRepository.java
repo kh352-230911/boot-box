@@ -2,6 +2,7 @@ package com.sh.app.member.repository;
 
 import com.sh.app.auth.vo.MemberDetails;
 import com.sh.app.member.entity.Member;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -13,6 +14,7 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
     Member findByMemberLoginId(String username);
 
     @Query("from Member order by id asc")
+    @EntityGraph(attributePaths = {"reservations"})
     List<Member> findAll();
 
     @Query(value = """

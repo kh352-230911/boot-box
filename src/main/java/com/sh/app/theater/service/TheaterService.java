@@ -7,7 +7,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,5 +24,20 @@ public class TheaterService {
         return theaters.stream()
                 .map(theater -> modelMapper.map(theater, TheaterDto.class))
                 .collect(Collectors.toList());
+    }
+
+    public void deleteTheaterWithId(Long deleteId) {
+        theaterRepository.deleteById(deleteId);
+    }
+
+    public void createTheater(Long theaterId, Long cinemaId, String theaterName, int theaterSeat) {
+        TheaterDto theaterDto = new TheaterDto();
+        theaterDto.setId(theaterId);
+        theaterDto.setCinemaId(cinemaId);
+        theaterDto.setName(theaterName);
+        theaterDto.setSeat(theaterSeat);
+
+        Theater theater = modelMapper.map(theaterDto, Theater.class);
+        theaterRepository.save(theater);
     }
 }

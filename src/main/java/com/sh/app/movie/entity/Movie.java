@@ -6,6 +6,7 @@ import com.sh.app.schedule.entity.Schedule;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude =  "reviews")
+@ToString(exclude =  {"schedules","reviews"})
 public class Movie {
     @Id
     private Long id;

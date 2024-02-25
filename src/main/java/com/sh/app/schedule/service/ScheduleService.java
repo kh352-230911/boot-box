@@ -7,6 +7,7 @@ import com.sh.app.movie.entity.Movie;
 
 import com.sh.app.schedule.dto.IScheduleInfoDto;
 import com.sh.app.schedule.dto.ScheduleDto;
+import com.sh.app.schedule.dto.ScheduleListDto;
 import com.sh.app.schedule.entity.Schedule;
 import com.sh.app.schedule.repository.ScheduleRepository;
 import com.sh.app.seat.entity.SeatDto;
@@ -109,10 +110,10 @@ public class ScheduleService {
         return scheduleRepository.findScheduleDetailsByDateAndCinemaId(id, schDate);
     }
 
-    public List<ScheduleDto> findScheduleWithTheaterId(Long theaterId) {
+    public List<ScheduleListDto> findScheduleWithTheaterId(Long theaterId) {
         List<Schedule> schedules = scheduleRepository.findByTheaterId(theaterId);
         return schedules.stream()
-                .map(schedule -> modelMapper.map(schedule, ScheduleDto.class))
+                .map(schedule -> modelMapper.map(schedule, ScheduleListDto.class))
                 .collect(Collectors.toList());
 
     }

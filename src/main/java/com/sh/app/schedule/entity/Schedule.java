@@ -5,6 +5,9 @@ import com.sh.app.reservation.entity.Reservation;
 import com.sh.app.theater.entity.Theater;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.time.LocalDateTime;
 
@@ -21,12 +24,12 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = "movie")
+@ToString(exclude = {"movie", "reservations"})
 public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @ManyToOne(fetch = FetchType.LAZY) //0219 eager에서 수정
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE) //0219 eager에서 수정
     @JoinColumn(name = "theater_id")
     private Theater theater;
     @ManyToOne(fetch = FetchType.LAZY) //0219 eager에서 수정

@@ -27,11 +27,20 @@
 }
 #theaters-wrap>div {
     width: 25%;
-    height: 48px;
+    height: 96px;
     line-height: 48px;
     text-align: center;
     border: 1px solid #ff003b;
+    border-right: none;
 }
+#theaters-wrap>div:last-child {
+    border: 1px solid #ff003b;
+}
+#theaters-wrap>div:hover {
+    background: black;
+    cursor: pointer;
+}
+
 #theaterCrud-wrap {
     width: 100%;
     margin: 20px auto;
@@ -104,4 +113,17 @@
 
 .modal-content button:hover {
     text-decoration: underline;
+}
+.wrap-container {
+    height: auto;
+    min-height: 100%;
+    padding-bottom: 60px;
+}
+.home-container {
+    min-height: 600px;
+}
+footer {
+    height: 60px;
+    position: relative;
+    transform: translateY(0%);
 }
