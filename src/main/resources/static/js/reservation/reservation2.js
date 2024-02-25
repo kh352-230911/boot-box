@@ -480,18 +480,19 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
             console.log('~~~~Error response status~~~~:', request.status);
             if(request.status==500)
             {
-                alert(`에러로 인해 메인페이지로 이동합니다. 이용에 불편을 끼쳐드려 죄송합니다.`)
+                alert(`에러로 인해 메인페이지로 이동합니다. 이용에 불편을 끼쳐드려 죄송합니다.`+request.status)
                 window.location.href = `${contextPath}bootbox/`; // 리다이렉트할 URL을 지정합니다.
             }
             else if(request.status==401) //인증 관련 에러 잠시 주석처리..
             {
                 //주석처리
-                // alert(`예매는 로그인 후 이용하실 수 있습니다.`)
-                // window.location.href = `${contextPath}`+request.responseText; // 리다이렉트할 URL을 지정합니다.
+                alert(`예매는 로그인 후 이용하실 수 있습니다.`)
+                 window.location.href = `${contextPath}`+request.responseText; // 리다이렉트할 URL을 지정합니다.
             }
             else if(request.status==400)//잘못된 클라이언트 요청
             {
-                alert(`에러가 발생했습니다.`)
+                alert(`에러로 인해 메인페이지로 이동합니다. 이용에 불편을 끼쳐드려 죄송합니다.`+request.status)
+                window.location.href = `${contextPath}bootbox/`; // 리다이렉트할 URL을 지정합니다.
             }
 
         }
