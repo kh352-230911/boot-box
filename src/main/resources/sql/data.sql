@@ -1,5 +1,16 @@
 -- DML 작성
-
+-- seat
+-- 프로시저 반복문, 좌석 총 60개 (A~F열, 한 열당 10개)
+--set serveroutput on;
+--BEGIN
+--FOR i IN ASCII('A')..ASCII('F') LOOP
+--     FOR j IN 1..10 LOOP
+--       INSERT INTO SEAT VALUES (seq_seat_id.nextval, CHR(i) || LPAD(TO_CHAR(j), 2, '0'));
+--END LOOP;
+--END LOOP;
+--COMMIT;
+--END;
+--
 -- location
 insert into LOCATION values (02, '서울');
 insert into LOCATION values (031, '경기');
@@ -107,24 +118,258 @@ insert into AUTHORITY values (seq_authority_id.nextval, null, 3, 'ROLE_MANAGER')
 insert into AUTHORITY values (seq_authority_id.nextval, null, 4, 'ROLE_MANAGER');
 insert into AUTHORITY values (seq_authority_id.nextval, null, 5, 'ROLE_MANAGER');
 insert into AUTHORITY values (seq_authority_id.nextval, null, 6, 'ROLE_ADMIN');
--- seat
--- 프로시저 반복문, 좌석 총 60개 (A~F열, 한 열당 10개)
-set serveroutput on;
-BEGIN
-FOR i IN ASCII('A')..ASCII('F') LOOP
-     FOR j IN 1..10 LOOP
-       INSERT INTO SEAT VALUES (seq_seat_id.nextval, CHR(i) || LPAD(TO_CHAR(j), 2, '0'));
-END LOOP;
-END LOOP;
-COMMIT;
-END;
---
 -- theater
 insert into THEATER values (020101, 0201, '1관', 60);
+
+insert into THEATER values (020201, 0202, '1관', 60);
+insert into THEATER values (020202, 0202, '2관', 60);
+insert into THEATER values (020203, 0202, '3관', 60);
+insert into THEATER values (020204, 0202, '4관', 60);
+
+insert into THEATER values (020301, 0203, '1관', 60);
+insert into THEATER values (020302, 0203, '2관', 60);
+insert into THEATER values (020303, 0203, '3관', 60);
+insert into THEATER values (020304, 0203, '4관', 60);
+
+insert into THEATER values (020401, 0204, '1관', 60);
+insert into THEATER values (020402, 0204, '2관', 60);
+insert into THEATER values (020403, 0204, '3관', 60);
+insert into THEATER values (020404, 0204, '4관', 60);
+
+insert into THEATER values (020501, 0205, '1관', 60);
+insert into THEATER values (020502, 0205, '2관', 60);
+insert into THEATER values (020503, 0205, '3관', 60);
+insert into THEATER values (020504, 0205, '4관', 60);
+
+insert into THEATER values (020601, 0206, '1관', 60);
+insert into THEATER values (020602, 0206, '2관', 60);
+insert into THEATER values (020603, 0206, '3관', 60);
+insert into THEATER values (020604, 0206, '4관', 60);
+
+insert into THEATER values (020701, 0207, '1관', 60);
+insert into THEATER values (020702, 0207, '2관', 60);
+insert into THEATER values (020703, 0207, '3관', 60);
+insert into THEATER values (020704, 0207, '4관', 60);
+
+insert into THEATER values (020801, 0208, '1관', 60);
+insert into THEATER values (020802, 0208, '2관', 60);
+insert into THEATER values (020803, 0208, '3관', 60);
+insert into THEATER values (020804, 0208, '4관', 60);
+
+insert into THEATER values (020901, 0209, '1관', 60);
+insert into THEATER values (020902, 0209, '2관', 60);
+insert into THEATER values (020903, 0209, '3관', 60);
+insert into THEATER values (020904, 0209, '4관', 60);
+
+insert into THEATER values (021001, 0210, '1관', 60);
+insert into THEATER values (021002, 0210, '2관', 60);
+insert into THEATER values (021003, 0210, '3관', 60);
+insert into THEATER values (021004, 0210, '4관', 60);
+
 insert into THEATER values (0310101, 03101, '1관', 60);
+insert into THEATER values (0310102, 03101, '2관', 60);
+insert into THEATER values (0310103, 03101, '3관', 60);
+insert into THEATER values (0310104, 03101, '4관', 60);
+
+insert into THEATER values (0310201, 03102, '1관', 60);
+insert into THEATER values (0310202, 03102, '2관', 60);
+insert into THEATER values (0310203, 03102, '3관', 60);
+insert into THEATER values (0310204, 03102, '4관', 60);
+
+insert into THEATER values (0310301, 03103, '1관', 60);
+insert into THEATER values (0310302, 03103, '2관', 60);
+insert into THEATER values (0310303, 03103, '3관', 60);
+insert into THEATER values (0310304, 03103, '4관', 60);
+
+insert into THEATER values (0310401, 03104, '1관', 60);
+insert into THEATER values (0310402, 03104, '2관', 60);
+insert into THEATER values (0310403, 03104, '3관', 60);
+insert into THEATER values (0310404, 03104, '4관', 60);
+
+insert into THEATER values (0310501, 03105, '1관', 60);
+insert into THEATER values (0310502, 03105, '2관', 60);
+insert into THEATER values (0310503, 03105, '3관', 60);
+insert into THEATER values (0310504, 03105, '4관', 60);
+
+insert into THEATER values (0310601, 03106, '1관', 60);
+insert into THEATER values (0310602, 03106, '2관', 60);
+insert into THEATER values (0310603, 03106, '3관', 60);
+insert into THEATER values (0310604, 03106, '4관', 60);
+
 insert into THEATER values (0320101, 03201, '1관', 60);
+insert into THEATER values (0320102, 03201, '2관', 60);
+insert into THEATER values (0320103, 03201, '3관', 60);
+insert into THEATER values (0320104, 03201, '4관', 60);
+
+insert into THEATER values (0320201, 03202, '1관', 60);
+insert into THEATER values (0320202, 03202, '2관', 60);
+insert into THEATER values (0320203, 03202, '3관', 60);
+insert into THEATER values (0320204, 03202, '4관', 60);
+
+insert into THEATER values (0320301, 03203, '1관', 60);
+insert into THEATER values (0320302, 03203, '2관', 60);
+insert into THEATER values (0320303, 03203, '3관', 60);
+insert into THEATER values (0320304, 03203, '4관', 60);
+
+insert into THEATER values (0320401, 03204, '1관', 60);
+insert into THEATER values (0320402, 03204, '2관', 60);
+insert into THEATER values (0320403, 03204, '3관', 60);
+insert into THEATER values (0320404, 03204, '4관', 60);
+
+insert into THEATER values (0320501, 03205, '1관', 60);
+insert into THEATER values (0320502, 03205, '2관', 60);
+insert into THEATER values (0320503, 03205, '3관', 60);
+insert into THEATER values (0320504, 03205, '4관', 60);
+
+insert into THEATER values (0330101, 03301, '1관', 60);
+insert into THEATER values (0330102, 03301, '2관', 60);
+insert into THEATER values (0330103, 03301, '3관', 60);
+insert into THEATER values (0330104, 03301, '4관', 60);
+
+insert into THEATER values (0330201, 03302, '1관', 60);
+insert into THEATER values (0330202, 03302, '2관', 60);
+insert into THEATER values (0330203, 03302, '3관', 60);
+insert into THEATER values (0330204, 03302, '4관', 60);
+
+insert into THEATER values (0330301, 03303, '1관', 60);
+insert into THEATER values (0330302, 03303, '2관', 60);
+insert into THEATER values (0330303, 03303, '3관', 60);
+insert into THEATER values (0330304, 03303, '4관', 60);
+
+insert into THEATER values (0330401, 03304, '1관', 60);
+insert into THEATER values (0330402, 03304, '2관', 60);
+insert into THEATER values (0330403, 03304, '3관', 60);
+insert into THEATER values (0330404, 03304, '4관', 60);
+
+insert into THEATER values (0330501, 03305, '1관', 60);
+insert into THEATER values (0330502, 03305, '2관', 60);
+insert into THEATER values (0330503, 03305, '3관', 60);
+insert into THEATER values (0330504, 03305, '4관', 60);
+
 insert into THEATER values (0420101, 04201, '1관', 60);
+insert into THEATER values (0420102, 04201, '2관', 60);
+insert into THEATER values (0420103, 04201, '3관', 60);
+insert into THEATER values (0420104, 04201, '4관', 60);
+
+insert into THEATER values (0420201, 04202, '1관', 60);
+insert into THEATER values (0420202, 04202, '2관', 60);
+insert into THEATER values (0420203, 04202, '3관', 60);
+insert into THEATER values (0420204, 04202, '4관', 60);
+
+insert into THEATER values (0420301, 04203, '1관', 60);
+insert into THEATER values (0420302, 04203, '2관', 60);
+insert into THEATER values (0420303, 04203, '3관', 60);
+insert into THEATER values (0420304, 04203, '4관', 60);
+
+insert into THEATER values (0420401, 04204, '1관', 60);
+insert into THEATER values (0420402, 04204, '2관', 60);
+insert into THEATER values (0420403, 04204, '3관', 60);
+insert into THEATER values (0420404, 04204, '4관', 60);
+
+insert into THEATER values (0420501, 04205, '1관', 60);
+insert into THEATER values (0420502, 04205, '2관', 60);
+insert into THEATER values (0420503, 04205, '3관', 60);
+insert into THEATER values (0420504, 04205, '4관', 60);
+
+insert into THEATER values (0530101, 05301, '1관', 60);
+insert into THEATER values (0530102, 05301, '2관', 60);
+insert into THEATER values (0530103, 05301, '3관', 60);
+insert into THEATER values (0530104, 05301, '4관', 60);
+
+insert into THEATER values (0530201, 05302, '1관', 60);
+insert into THEATER values (0530202, 05302, '2관', 60);
+insert into THEATER values (0530203, 05302, '3관', 60);
+insert into THEATER values (0530204, 05302, '4관', 60);
+
+insert into THEATER values (0530301, 05303, '1관', 60);
+insert into THEATER values (0530302, 05303, '2관', 60);
+insert into THEATER values (0530303, 05303, '3관', 60);
+insert into THEATER values (0530304, 05303, '4관', 60);
+
 insert into THEATER values (0510101, 05101, '1관', 60);
+insert into THEATER values (0510102, 05101, '2관', 60);
+insert into THEATER values (0510103, 05101, '3관', 60);
+insert into THEATER values (0510104, 05101, '4관', 60);
+
+insert into THEATER values (0510201, 05102, '1관', 60);
+insert into THEATER values (0510202, 05102, '2관', 60);
+insert into THEATER values (0510203, 05102, '3관', 60);
+insert into THEATER values (0510204, 05102, '4관', 60);
+
+insert into THEATER values (0510301, 05103, '1관', 60);
+insert into THEATER values (0510302, 05103, '2관', 60);
+insert into THEATER values (0510303, 05103, '3관', 60);
+insert into THEATER values (0510304, 05103, '4관', 60);
+
+insert into THEATER values (0510401, 05104, '1관', 60);
+insert into THEATER values (0510402, 05104, '2관', 60);
+insert into THEATER values (0510403, 05104, '3관', 60);
+insert into THEATER values (0510404, 05104, '4관', 60);
+
+insert into THEATER values (0510501, 05105, '1관', 60);
+insert into THEATER values (0510502, 05105, '2관', 60);
+insert into THEATER values (0510503, 05105, '3관', 60);
+insert into THEATER values (0510504, 05105, '4관', 60);
+
+insert into THEATER values (0540101, 05401, '1관', 60);
+insert into THEATER values (0540102, 05401, '2관', 60);
+insert into THEATER values (0540103, 05401, '3관', 60);
+insert into THEATER values (0540104, 05401, '4관', 60);
+
+insert into THEATER values (0540201, 05402, '1관', 60);
+insert into THEATER values (0540202, 05402, '2관', 60);
+insert into THEATER values (0540203, 05402, '3관', 60);
+insert into THEATER values (0540204, 05402, '4관', 60);
+
+insert into THEATER values (0540301, 05403, '1관', 60);
+insert into THEATER values (0540302, 05403, '2관', 60);
+insert into THEATER values (0540303, 05403, '3관', 60);
+insert into THEATER values (0540304, 05403, '4관', 60);
+
+insert into THEATER values (0540401, 05404, '1관', 60);
+insert into THEATER values (0540402, 05404, '2관', 60);
+insert into THEATER values (0540403, 05404, '3관', 60);
+insert into THEATER values (0540404, 05404, '4관', 60);
+
+insert into THEATER values (0540501, 05405, '1관', 60);
+insert into THEATER values (0540502, 05405, '2관', 60);
+insert into THEATER values (0540503, 05405, '3관', 60);
+insert into THEATER values (0540504, 05405, '4관', 60);
+
+insert into THEATER values (0620101, 06201, '1관', 60);
+insert into THEATER values (0620102, 06201, '2관', 60);
+insert into THEATER values (0620103, 06201, '3관', 60);
+insert into THEATER values (0620104, 06201, '4관', 60);
+
+insert into THEATER values (0620201, 06202, '1관', 60);
+insert into THEATER values (0620202, 06202, '2관', 60);
+insert into THEATER values (0620203, 06202, '3관', 60);
+insert into THEATER values (0620204, 06202, '4관', 60);
+
+insert into THEATER values (0620301, 06203, '1관', 60);
+insert into THEATER values (0620302, 06203, '2관', 60);
+insert into THEATER values (0620303, 06203, '3관', 60);
+insert into THEATER values (0620304, 06203, '4관', 60);
+
+insert into THEATER values (0620401, 06204, '1관', 60);
+insert into THEATER values (0620402, 06204, '2관', 60);
+insert into THEATER values (0620403, 06204, '3관', 60);
+insert into THEATER values (0620404, 06204, '4관', 60);
+
+insert into THEATER values (0620501, 06205, '1관', 60);
+insert into THEATER values (0620502, 06205, '2관', 60);
+insert into THEATER values (0620503, 06205, '3관', 60);
+insert into THEATER values (0620504, 06205, '4관', 60);
+
+insert into THEATER values (0620601, 06206, '1관', 60);
+insert into THEATER values (0620602, 06206, '2관', 60);
+insert into THEATER values (0620603, 06206, '3관', 60);
+insert into THEATER values (0620604, 06206, '4관', 60);
+
+insert into THEATER values (0620701, 06207, '1관', 60);
+insert into THEATER values (0620702, 06207, '2관', 60);
+insert into THEATER values (0620703, 06207, '3관', 60);
+insert into THEATER values (0620704, 06207, '4관', 60);
 -- 강남점 상영관 추가
 insert into THEATER values (020102, 0201, '2관', 60);
 insert into THEATER values (020103, 0201, '3관', 60);
@@ -262,13 +507,13 @@ values (15, '파묘', 'FIFTEEN', '2024.02.22', 134,
 insert into
     movie
 values (16, '귀멸의 칼날-인연의 기적, 그리고 합동 강화 훈련으로', 'FIFTEEN', '2024.02.14', 103,
-        'http://h.vod.cgv.co.kr/vodCGVa/88000/88000_222754_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000088/88000/88000_1000.jpg',
+        'http://h.vod.cgv.co.kr/vodCGVa/87985/87985_222749_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000087/87985/87985_1000.jpg',
         '소토자키 하루오', '하나에 나츠키, 키토 아카리, 하나자와 카나, 카와니시 켄고', null,
         2.8);
 insert into
     movie
 values (17, '사운드 오브 프리덤', 'FIFTEEN', '2024.02.21', 131,
-        'http://h.vod.cgv.co.kr/vodCGVa/86750/86750_211203_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000086/86750/86750_1000.jpg',
+        'http://h.vod.cgv.co.kr/vodCGVa/88000/88000_222754_1200_128_960_540.mp4', 'https://img.cgv.co.kr/Movie/Thumbnail/Poster/000088/88000/88000_1000.jpg',
         '알레한드로 고메즈 몬테베르드', '제임스 카비젤', '인신매매시장 규모 연 1,500억불 전 세계 800만 명의 아이들이 사라졌다! 한 순간에 납치되어, 전 세계에 밀매되는 아이들. 믿을 수 없는 실화를 기반으로 한 구출 작전이 시작된다!',
         1.7);
 insert into
@@ -364,8 +609,6 @@ insert into ANSWER values (seq_answer_id.nextval, 10, 6, '단체 예약을 원�
 
 --
 -- notice
---delete from NOTICE WHERE id = 5;
---drop sequence seq_notice_id;
 INSERT INTO NOTICE 
 VALUES (
   seq_notice_id.nextval, 
@@ -465,27 +708,137 @@ chr(13)||chr(10) ||
 
 --
 -- schedule
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-01', 'YYYY-MM-DD'), to_date('2024-02-01 15:00', 'YYYY-MM-DD HH24:MI'));
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 2, to_date('2024-02-01', 'YYYY-MM-DD'), to_date('2024-02-01 20:00', 'YYYY-MM-DD HH24:MI'));
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 3, to_date('2024-02-03', 'YYYY-MM-DD'), to_date('2024-02-03 10:00', 'YYYY-MM-DD HH24:MI'));
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 4, to_date('2024-02-04', 'YYYY-MM-DD'), to_date('2024-02-04 22:00', 'YYYY-MM-DD HH24:MI'));
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 5, to_date('2024-02-06', 'YYYY-MM-DD'), to_date('2024-02-06 19:00', 'YYYY-MM-DD HH24:MI'));
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 6, to_date('2024-02-24', 'YYYY-MM-DD'), to_date('2024-02-24 12:30', 'YYYY-MM-DD HH24:MI'));
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 6, to_date('2024-02-29', 'YYYY-MM-DD'), to_date('2024-02-29 20:30', 'YYYY-MM-DD HH24:MI'));
--- 강남점 영화 추가
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 12:00', 'YYYY-MM-DD HH24:MI'));
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 16:00', 'YYYY-MM-DD HH24:MI'));
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 20:00', 'YYYY-MM-DD HH24:MI'));
-insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 1, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 14:00', 'YYYY-MM-DD HH24:MI'));
-insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 1, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 18:00', 'YYYY-MM-DD HH24:MI'));
-insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 4, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 20:00', 'YYYY-MM-DD HH24:MI'));
-insert into SCHEDULE values (seq_schedule_id.nextval, 020102, 4, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 23:00', 'YYYY-MM-DD HH24:MI'));
-insert into SCHEDULE values (seq_schedule_id.nextval, 020103, 5, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 13:00', 'YYYY-MM-DD HH24:MI'));
-insert into SCHEDULE values (seq_schedule_id.nextval, 020103, 5, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 17:00', 'YYYY-MM-DD HH24:MI'));
-insert into SCHEDULE values (seq_schedule_id.nextval, 020103, 5, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 21:00', 'YYYY-MM-DD HH24:MI'));
-insert into SCHEDULE values (seq_schedule_id.nextval, 020104, 6, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 14:00', 'YYYY-MM-DD HH24:MI'));
-insert into SCHEDULE values (seq_schedule_id.nextval, 020104, 6, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 17:00', 'YYYY-MM-DD HH24:MI'));
-insert into SCHEDULE values (seq_schedule_id.nextval, 020104, 6, to_date('2024-02-19', 'YYYY-MM-DD'), to_date('2024-02-19 20:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 09:10', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 14:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 16:30', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 09:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 11:25', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 13:50', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 2, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 11:40', 'YYYY-MM-DD HH24:MI'));
+
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020102, 15, To_Date('2024-02-26', 'YYYY-MM-DD'), To_Date('2024-02-26 09:45', 'YYYY-MM-DD HH24:MI'));
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020102, 15, To_Date('2024-02-26', 'YYYY-MM-DD'), To_Date('2024-02-26 12:30', 'YYYY-MM-DD HH24:MI'));
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020102, 15, To_Date('2024-02-26', 'YYYY-MM-DD'), To_Date('2024-02-26 15:15', 'YYYY-MM-DD HH24:MI'));
+
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020103, 15, To_Date('2024-02-26', 'YYYY-MM-DD'), To_Date('2024-02-26 10:30', 'YYYY-MM-DD HH24:MI'));
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020103, 15, To_Date('2024-02-26', 'YYYY-MM-DD'), To_Date('2024-02-26 13:15', 'YYYY-MM-DD HH24:MI'));
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020103, 15, To_Date('2024-02-26', 'YYYY-MM-DD'), To_Date('2024-02-26 16:00', 'YYYY-MM-DD HH24:MI'));
+
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020104, 15, To_Date('2024-02-26', 'YYYY-MM-DD'), To_Date('2024-02-26 09:00', 'YYYY-MM-DD HH24:MI'));
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020104, 15, To_Date('2024-02-26', 'YYYY-MM-DD'), To_Date('2024-02-26 11:45', 'YYYY-MM-DD HH24:MI'));
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020104, 15, To_Date('2024-02-26', 'YYYY-MM-DD'), To_Date('2024-02-26 14:30', 'YYYY-MM-DD HH24:MI'));
+
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020102, 15, To_Date('2024-02-27', 'YYYY-MM-DD'), To_Date('2024-02-27 09:45', 'YYYY-MM-DD HH24:MI'));
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020102, 15, To_Date('2024-02-27', 'YYYY-MM-DD'), To_Date('2024-02-27 15:15', 'YYYY-MM-DD HH24:MI'));
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020102, 15, To_Date('2024-02-27', 'YYYY-MM-DD'), To_Date('2024-02-27 20:45', 'YYYY-MM-DD HH24:MI'));
+
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020103, 15, To_Date('2024-02-27', 'YYYY-MM-DD'), To_Date('2024-02-27 10:30', 'YYYY-MM-DD HH24:MI'));
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020103, 15, To_Date('2024-02-27', 'YYYY-MM-DD'), To_Date('2024-02-27 18:50', 'YYYY-MM-DD HH24:MI'));
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020103, 15, To_Date('2024-02-27', 'YYYY-MM-DD'), To_Date('2024-02-27 21:40', 'YYYY-MM-DD HH24:MI'));
+
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020104, 15, To_Date('2024-02-27', 'YYYY-MM-DD'), To_Date('2024-02-27 17:15', 'YYYY-MM-DD HH24:MI'));
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020104, 15, To_Date('2024-02-27', 'YYYY-MM-DD'), To_Date('2024-02-27 20:00', 'YYYY-MM-DD HH24:MI'));
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020104, 15, To_Date('2024-02-27', 'YYYY-MM-DD'), To_Date('2024-02-27 22:45', 'YYYY-MM-DD HH24:MI'));
+
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020102, 16, To_Date('2024-02-26', 'YYYY-MM-DD'), To_Date('2024-02-26 19:10', 'YYYY-MM-DD HH24:MI'));
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020102, 16, To_Date('2024-02-26', 'YYYY-MM-DD'), To_Date('2024-02-26 21:20', 'YYYY-MM-DD HH24:MI'));
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020102, 16, To_Date('2024-02-26', 'YYYY-MM-DD'), To_Date('2024-02-26 23:40', 'YYYY-MM-DD HH24:MI'));
+
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020104, 16, To_Date('2024-02-26', 'YYYY-MM-DD'), To_Date('2024-02-26 09:50', 'YYYY-MM-DD HH24:MI'));
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020104, 16, To_Date('2024-02-26', 'YYYY-MM-DD'), To_Date('2024-02-26 14:40', 'YYYY-MM-DD HH24:MI'));
+
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020102, 16, To_Date('2024-02-27', 'YYYY-MM-DD'), To_Date('2024-02-27 19:50', 'YYYY-MM-DD HH24:MI'));
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020102, 16, To_Date('2024-02-27', 'YYYY-MM-DD'), To_Date('2024-02-27 21:00', 'YYYY-MM-DD HH24:MI'));
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020102, 16, To_Date('2024-02-27', 'YYYY-MM-DD'), To_Date('2024-02-27 23:40', 'YYYY-MM-DD HH24:MI'));
+
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020104, 16, To_Date('2024-02-27', 'YYYY-MM-DD'), To_Date('2024-02-27 09:50', 'YYYY-MM-DD HH24:MI'));
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020104, 16, To_Date('2024-02-27', 'YYYY-MM-DD'), To_Date('2024-02-27 14:40', 'YYYY-MM-DD HH24:MI'));
+
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020103, 17, To_Date('2024-02-26', 'YYYY-MM-DD'), To_Date('2024-02-26 12:00', 'YYYY-MM-DD HH24:MI'));
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020103, 17, To_Date('2024-02-26', 'YYYY-MM-DD'), To_Date('2024-02-26 16:50', 'YYYY-MM-DD HH24:MI'));
+
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020103, 17, To_Date('2024-02-27', 'YYYY-MM-DD'), To_Date('2024-02-26 12:00', 'YYYY-MM-DD HH24:MI'));
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020103, 17, To_Date('2024-02-27', 'YYYY-MM-DD'), To_Date('2024-02-26 16:50', 'YYYY-MM-DD HH24:MI'));
+
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020103, 17, To_Date('2024-02-26', 'YYYY-MM-DD'), To_Date('2024-02-26 15:00', 'YYYY-MM-DD HH24:MI'));
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020104, 15, To_Date('2024-02-26', 'YYYY-MM-DD'), To_Date('2024-02-26 15:00', 'YYYY-MM-DD HH24:MI'));
+Insert Into Schedule Values (Seq_Schedule_Id.Nextval, 020101, 13, To_Date('2024-02-26', 'YYYY-MM-DD'), To_Date('2024-02-26 15:00', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020201, 1, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 09:05', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020201, 1, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 13:45', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020201, 1, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 19:40', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020202, 1, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 08:20', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020202, 1, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 21:40', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020203, 1, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 12:30', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020204, 1, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 18:20', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020201, 15, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 16:05', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020201, 15, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 22:30', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020203, 15, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 15:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020203, 15, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 20:30', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020202, 15, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 12:30', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020202, 15, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 23:45', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020204, 15, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 10:15', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020204, 15, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 14:30', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020202, 16, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 15:10', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020202, 16, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 18:30', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020203, 16, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 17:50', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020203, 16, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 23:35', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020204, 16, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 18:00', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020204, 17, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 21:45', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020201, 18, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 07:00', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020203, 19, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 08:45', 'YYYY-MM-DD HH24:MI'));
+--
+insert into SCHEDULE values (seq_schedule_id.nextval, 020201, 1, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 09:05', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020201, 1, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 13:45', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020201, 1, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 19:40', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020202, 1, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 08:20', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020202, 1, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 21:40', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020203, 1, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 12:30', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020204, 1, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 18:20', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020201, 15, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 16:05', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020201, 15, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 22:30', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020203, 15, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 15:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020203, 15, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 20:30', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020202, 15, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 12:30', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020202, 15, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 23:45', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020204, 15, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 10:15', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020204, 15, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 14:30', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020202, 16, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 15:10', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020202, 16, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 18:30', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020203, 16, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 17:50', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020203, 16, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 23:35', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020204, 16, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 18:00', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020204, 17, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 21:45', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020201, 18, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 07:00', 'YYYY-MM-DD HH24:MI'));
+
+insert into SCHEDULE values (seq_schedule_id.nextval, 020203, 19, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 08:45', 'YYYY-MM-DD HH24:MI'));
 
 -- reservation
 insert into RESERVATION values ('box16443', 1, 1, 'CONFIRM');
@@ -496,6 +849,47 @@ insert into RESERVATION values ('box34332', 4, 6, 'CONFIRM');
 insert into RESERVATION values ('box32582', 5, 5, 'CONFIRM');
 insert into RESERVATION values ('box21482', 5, 7, 'CONFIRM');
 insert into RESERVATION values ('box47211', 2, 2, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box355887', 3, 28, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box342099', 1, 6, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box668654', 1, 73, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box832705', 3, 81, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box466187', 5, 88, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box270062', 2, 84, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box832326', 5, 15, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box863796', 1, 31, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box189237', 3, 43, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box310065', 3, 54, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box803382', 4, 68, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box385852', 2, 83, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box778932', 2, 33, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box019763', 2, 19, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box598265', 3, 19, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box725303', 3, 9, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box937255', 5, 83, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box935920', 2, 22, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box271694', 5, 27, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box530415', 1, 5, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box669004', 3, 55, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box259003', 3, 67, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box394037', 4, 4, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box112583', 3, 77, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box201716', 5, 26, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box273556', 4, 60, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box744759', 3, 14, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box123432', 2, 38, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box222023', 5, 17, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box056438', 5, 85, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box987369', 2, 62, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box520273', 4, 88, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box690854', 1, 59, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box388132', 2, 73, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box964008', 4, 36, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box607176', 5, 23, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box619529', 3, 62, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box935009', 3, 7, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box076625', 3, 48, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box179358', 5, 6, 'CONFIRM');
+
 
 -- 강남점 sample 예약 데이터 추가
 insert into RESERVATION values ('box57869', 1, 10, 'CONFIRM');

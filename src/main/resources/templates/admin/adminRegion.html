@@ -10,77 +10,64 @@
 </head>
 <style layout:fragment="style"></style>
 
-<div layout:fragment="content">
-    <!-- redirect 주소값 js에 전달 -->
-    <input type="hidden" id="adminRegionUrl" th:href = "@{/admin/adminRegion.do(name=${#authentication.name})}"/>
+<div layout:fragment="content" class="wrap-container">
+    <div class="home-container">
+        <!-- redirect 주소값 js에 전달 -->
+        <input type="hidden" id="adminRegionUrl" th:href = "@{/admin/adminRegion.do(name=${#authentication.name})}"/>
 
-    <div id="regionText">
-        <div id="regionTextHeader">
-            <p>현재 관리지점은 <span th:text="${region} + '  ' + '( 지점 고유ID : ' + ${cinemaId} + ' )'"></span> 입니다.</p>
-        </div>
-        <div id="theaterCrud-wrap">
-            <div>
-                <button type="button" id="createTheater">상영관 추가</button>
+        <div id="regionText">
+            <div id="regionTextHeader">
+                <p>현재 관리지점은 <span th:text="${region} + '  ' + '( 지점 고유ID : ' + ${cinemaId} + ' )'"></span> 입니다.</p>
             </div>
-            <div>
-                <button type="button" id="deleteTheater">상영관 삭제</button>
+            <div id="theaterCrud-wrap">
+                <div>
+                    <button type="button" id="createTheater">상영관 추가</button>
+                </div>
+                <div>
+                    <button type="button" id="deleteTheater">상영관 삭제</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="createModal">
-        <div class="modal-content">
-            <h3>상영관 추가</h3>
-            <label for="theaterId"></label>
-            <input type="text" id="theaterId" placeholder="상영관ID" required>
-            <label for="cinemaId"></label>
-            <input type="text" id="cinemaId" placeholder="극장ID" required>
-            <label for="theaterName"></label>
-            <input type="text" id="theaterName" placeholder="이름" required>
-            <label for="theaterSeat"></label>
-            <input type="number" id="theaterSeat" placeholder="좌석 수" required>
-            <button type="button" id="insert">추가하기</button>
-            <button type="button" class="back">취소</button>
+        <div class="createModal">
+            <div class="modal-content">
+                <h3>상영관 추가</h3>
+                <label for="theaterId"></label>
+                <input type="text" id="theaterId" placeholder="상영관ID" required>
+                <label for="cinemaId"></label>
+                <input type="text" id="cinemaId" placeholder="극장ID" required>
+                <label for="theaterName"></label>
+                <input type="text" id="theaterName" placeholder="이름" required>
+                <label for="theaterSeat"></label>
+                <input type="number" id="theaterSeat" placeholder="좌석 수" required>
+                <button type="button" id="insert">추가하기</button>
+                <button type="button" class="back">취소</button>
+            </div>
         </div>
-    </div>
-    <div class="deleteModal">
-        <div class="modal-content">
-            <h3>상영관 삭제</h3>
-            <label for="deleteId"></label>
-            <input type="text" id="deleteId" placeholder="삭제할 상영관 고유ID" required>
-            <button type="button" id="deleteSearch">삭제하기</button>
-            <button type="button" class="back">취소</button>
+        <div class="deleteModal">
+            <div class="modal-content">
+                <h3>상영관 삭제</h3>
+                <label for="deleteId"></label>
+                <input type="text" id="deleteId" placeholder="삭제할 상영관 고유ID" required>
+                <button type="button" id="deleteSearch">삭제하기</button>
+                <button type="button" class="back">취소</button>
+            </div>
         </div>
-    </div>
 
-    <br>
-    <div id="listText">
-        <p>해당 지점의 상영관 목록</p>
-    </div>
-
-    <div id="theaters-wrap">
-        <div class="theaters" th:each="theater : ${theaters}">
-            <input type="hidden" class="theaterId" th:value="${theater.id}"/>
-            <div th:text="'상영관 고유ID : ' + ${theater.id}"></div>
-            <div th:text="'상영관 이름 : ' + ${theater.name}"></div>
+        <br>
+        <div id="listText">
+            <p>해당 지점의 상영관 목록</p>
         </div>
+
+        <div id="theaters-wrap">
+            <div class="theaters" th:each="theater : ${theaters}">
+                <input type="hidden" class="theaterId" th:value="${theater.id}"/>
+                <div th:text="'상영관 고유ID : ' + ${theater.id}"></div>
+                <div th:text="'상영관 이름 : ' + ${theater.name}"></div>
+            </div>
+        </div>
+
     </div>
-
-    <div id="schedules">
-        <table>
-            <thead>
-                <tr>
-                    <th>아이디</th>
-                    <th>영화날짜</th>
-                    <th>영화시작시간</th>
-                </tr>
-            </thead>
-            <tbody>
-
-            </tbody>
-        </table>
-    </div>
-
 </div>
 
 <script layout:fragment="script" th:src="@{/js/admin/adminTheaters.js}"></script>
