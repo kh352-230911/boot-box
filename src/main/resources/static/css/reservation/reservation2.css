@@ -255,11 +255,9 @@
 .select-people-content
 {
     display: flex;
-    /*background-color: green;*/
-    width: 40vw;
+    width: 50vw;
     margin-bottom: 5px;
 }
-
 .all-seats
 {
     opacity: 0.8;
