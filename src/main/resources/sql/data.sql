@@ -1030,6 +1030,11 @@ insert into MOVIE_LIST values (seq_movie_list_id.nextval, 3, 05101);
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 4, 03201);
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 4, 0201);
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 5, 05101);
+
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 2, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 15, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 16, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 17, 0201);
 -- 강남점 영화 추가
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 5, 0201);
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 6, 0201);
