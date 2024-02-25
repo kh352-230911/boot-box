@@ -857,7 +857,7 @@ function requestPay()
                     memberId : 0,
                     imp : res.imp_uid,
                     inicis  : "html5_inicis",
-                    reservationAmount : res.paid_amount,
+                    reservationAmount : res.pay_method, //결제 방식
                     price : totalPay,
                     phone : "01012345678",
                     status : Status.CONFIRM
@@ -887,7 +887,8 @@ function requestPay()
                         // 요청이 성공했을 때 처리할 로직
                         console.log("응답:", response);
 
-                        // window.location.href = `${contextPath}bootbox/reservation/reservationComplete`; // 리다이렉트할 URL을 지정합니다.
+                        //window.location.href = `${contextPath}bootbox/`;
+                        window.location.href = `${contextPath}reservation/reservationComplete`; // 리다이렉트할 URL을 지정합니다.
                     },
                     error: function(xhr, status, error) {
                         // 요청이 실패했을 때 처리할 로직

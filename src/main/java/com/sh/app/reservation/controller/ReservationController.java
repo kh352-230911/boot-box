@@ -280,29 +280,31 @@ public class ReservationController {
     )
     {
 
-        List<SeatDto> seatDtos;
-        seatDtos = seatService.findSeatsByScheduleId(scheduleId);
-        System.out.println("===해당 스케쥴에 예약된 좌석===");
-        System.out.println(seatDtos);
-        return ResponseEntity.ok(seatDtos);
+//        List<SeatDto> seatDtos;
+//        seatDtos = seatService.findSeatsByScheduleId(scheduleId);
+//        System.out.println("===해당 스케쥴에 예약된 좌석===");
+//        System.out.println(seatDtos);
+//        return ResponseEntity.ok(seatDtos);
+
+
         //임시주석한 풀 코드
-//        if (isAuthenticated()) {
-//            getUserInfo();
-//            // 요청 처리
-//            System.out.println("============ 넘겨받은 상영 스케쥴 id============="+scheduleId);
-//            //좌석조회용 dto
-//            List<SeatDto> seatDtos;
-//            seatDtos = seatService.findSeatsByScheduleId(scheduleId);
-//            System.out.println("===해당 스케쥴에 예약된 좌석===");
-//            System.out.println(seatDtos);
-//            //model.addAttribute("testmovie", movies);
-//            //[SeatDto(id=23, name=C03), SeatDto(id=30, name=C10)]
-//            return ResponseEntity.ok(seatDtos);
-//        }
-//        else {
-//            // 로그인 인증 실패 시 로그인 화면 진입
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("auth/login.do");
-//        }
+        if (isAuthenticated()) {
+            getUserInfo();
+            // 요청 처리
+            System.out.println("============ 넘겨받은 상영 스케쥴 id============="+scheduleId);
+            //좌석조회용 dto
+            List<SeatDto> seatDtos;
+            seatDtos = seatService.findSeatsByScheduleId(scheduleId);
+            System.out.println("===해당 스케쥴에 예약된 좌석===");
+            System.out.println(seatDtos);
+            //model.addAttribute("testmovie", movies);
+            //[SeatDto(id=23, name=C03), SeatDto(id=30, name=C10)]
+            return ResponseEntity.ok(seatDtos);
+        }
+        else {
+            // 로그인 인증 실패 시 로그인 화면 진입
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("auth/login.do");
+        }
 
     }
 
@@ -420,15 +422,15 @@ public class ReservationController {
             System.out.println(combinedDataDto);
 
             ReservationDto reservationDto = combinedDataDto.getReservationDto();
-        System.out.println("id: " + memberDetails.getMember().getId()); //reservationDto.getId()<- x
-        System.out.println("memberId: " + reservationDto.getMemberId()); //회원아이디
-        System.out.println("scheduleId: " + reservationDto.getScheduleId());//상영아이디
-        System.out.println("status: " + reservationDto.getStatus());//스테이트[상태값]
+            System.out.println("id: " + memberDetails.getMember().getId()); //reservationDto.getId()<- x
+            System.out.println("memberId: " + reservationDto.getMemberId()); //회원아이디
+            System.out.println("scheduleId: " + reservationDto.getScheduleId());//상영아이디
+            System.out.println("status: " + reservationDto.getStatus());//스테이트[상태값]
 
             //예약건 추가하러가기
             Reservation reservation = reservationService.insertReservation(reservationDto);
 
-            //==============================================================================================================
+            //에약시트 저장하기==============================================================================================================
             //seatId가 여러개 즉, 2개 이상의 좌석을 예매했을 때를 고려하여 여러개의 객체를 만들어야 한다..
             // CombinedDataDto에서 ReservationSeatDto를 가져옴
             ReservationSeatDto reservationSeatDto = combinedDataDto.getReservationSeatDto();
@@ -449,8 +451,18 @@ public class ReservationController {
 
             }
 
-            //==============================================================================================================
+            //결제건 저장하기==============================================================================================================
             OrderPayDto orderPayDto = combinedDataDto.getOrderPayDto();
+            System.out.println(orderPayDto);
+            orderPayDto.setMemberId(memberDetails.getMember().getId());
+            orderPayDto.setPhone(memberDetails.getMember().getMemberPhone());
+            //정보 세팅 후 db저장하하기
+            orderPayDto = reservationService.insertOrderPay(orderPayDto);
+
+
+
+
+
 
             // 모든 저장이 성공한 경우 성공 응답을 보냄
             return ResponseEntity.ok().body("All entities saved successfully :)");
