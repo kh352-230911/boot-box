@@ -55,7 +55,9 @@
                 </tbody>
         </table>
             <input type="hidden" name="id" th:value="${ask.id}" />
-        <span><input type="submit" value="답변저장" id="save"></span>
+            <th:block th:if="${showAnswer == null}">
+                <span><input type="submit" value="답변저장" id="save"></span>
+            </th:block>
             <div class="button-container">
                 <a th:onclick="|location.href = '@{/ask/askList.do}';|" class="back-to-list-btn">목록으로</a>
             </div>
