@@ -100,10 +100,10 @@
                                         <li class="text-xs">
                                             <a th:href="@{/member/memberDetail.do}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">My Boot</a>
                                         </li>
-                                    </th:block>
                                     <li>
                                         <a th:href="@{/notice/noticeList.do}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">고객센터</a>
                                     </li>
+                                    </th:block>
                                     <!-- 관리자, 매니저만 사용가능 -->
                                     <th:block sec:authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_ADMIN')">
                                         <li>
@@ -114,17 +114,17 @@
 <!--                                        </li>-->
 
 <!--                                    </th:block>-->
-
                                         <li>
                                             <a th:href="@{/ask/askList.do}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">문의사항</a>
                                         </li>
-                                    </th:block>
+
+                                        <li>
+                                            <a th:href="@{/notice/noticeList.do}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">공지사항</a>
+                                        </li>
                                         <li>
                                             <a th:href="@{/admin/adminRegion.do(name=${#authentication.name})}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">지점관리</a>
                                         </li>
                                     </th:block>
-
-
 <!--                                    </th:block>-->
                                     <li>
                                         <form th:action="@{/auth/logout.do}" method="post" class="d-inline">
