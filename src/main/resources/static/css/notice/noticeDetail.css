@@ -98,7 +98,7 @@ tbody {
 }
 /* 버튼 호버 효과 */
 .back-to-list-btn:hover {
-    background-color: #bb0808;
+    background-color: cornflowerblue;
     color: black;
     border-color: white;
 }
@@ -142,4 +142,15 @@ tbody {
     position: fixed;
     bottom: 200px;
     right: 250px;
+}
+footer {
+    height: 60px;
+    /*position: relative;*/
+    transform: translateY(0%);
+    /* 페이지의 아래쪽에 고정 */
+    width: 99%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
