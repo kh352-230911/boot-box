@@ -1,3 +1,14 @@
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: "Calibri Light";
+    font-weight: 500;
+    font-size: 1.2em;
+}
 th,
 td {
     padding: 15px;
@@ -8,7 +19,7 @@ thead >tr>th{
     background-color: #232323;
     border-top: 2px solid #ff003b;
     border-bottom: 2px solid #ff003b;
-    text-align: center;
+    /*text-align: center;*/
 }
 tbody {
     tr {
@@ -25,10 +36,14 @@ tbody {
                 right: 0;
                 background-color: rgba(255,255,255,0.2);
                 z-index: -1;
-                text-align: center;
+                /*text-align: center;*/
             }
         }
     }
+}
+.title-box
+{
+    margin-bottom: 40px;
 }
 
 #memberId, #Title
@@ -57,19 +72,35 @@ th#askDate
 }
 td
 {
-    text-align: left;
+    /*text-align: left;*/
     vertical-align : middle;
     padding-left: 30px;
     padding-top: 8px;
+    /*text-align: center;*/
+}
+#type
+{
+    text-align: center;
 }
 button#askDetail
 {
     border-radius: 10px 10px 10px 10px;
     width: 68px;
     height: 30px;
-    background-color: darkslateblue;
+    background-color: #bb0808;
 }
 button#askDetail:active {
     /* 버튼클릭하면 색 바뀜 */
-    background-color: steelblue;
+    background-color: #d20707;
+}
+footer {
+    height: 60px;
+    /*position: relative;*/
+    transform: translateY(0%);
+    /* 페이지의 아래쪽에 고정 */
+    width: 99%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }

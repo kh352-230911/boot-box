@@ -55,13 +55,21 @@ public class AdminController {
         System.out.println("총 회원 수: " + totalMembers);
     }
 
-    @GetMapping("/askList.do")
-    public void ask(Model model) {
-        List<Ask> asks = askService.findAll();
+//    @GetMapping("/noticeList.do")
+//    public void notice(Model model) {
+//        List<Notice> notices = noticeService.findAll();
+//        log.debug("notices = {}", notices);
+//        model.addAttribute("notices", notices);
+//        System.out.println("공지조회 controller" + notices);
+//    }
+
+//    @GetMapping("/askList.do")
+//    public void ask(Model model) {
+//        List<Ask> asks = askService.findAll();
 //        log.debug("asks = {}", asks);
-        model.addAttribute("asks", asks);
-        System.out.println("문의조회 controller" + asks);
-    }
+//        model.addAttribute("asks", asks);
+//        System.out.println("문의조회 controller" + asks);
+//    }
     @PostMapping("/adminAuth.do")
     public String findByUsername(@RequestParam(value = "username") String username, RedirectAttributes redirectAttributes) {
 //        log.debug("username = {}", username);
