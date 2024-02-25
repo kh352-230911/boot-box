@@ -46,6 +46,8 @@ public class WebSecurityConfig {
                     .requestMatchers("/admin/**").hasAnyRole("ADMIN", "MANAGER")
                     .requestMatchers("/notice/createNotice.do").hasAnyRole("ADMIN", "MANAGER")
                     .requestMatchers("/notice/deleteNotice.do").hasAnyRole("ADMIN", "MANAGER")
+                    .requestMatchers("/ask/askList.do").hasAnyRole("ADMIN", "MANAGER")
+                    .requestMatchers("/ask/askDetail.do").hasAnyRole("ADMIN", "MANAGER")
                     .anyRequest().authenticated();
         }));
 

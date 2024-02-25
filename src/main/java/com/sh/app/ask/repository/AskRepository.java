@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface AskRepository extends JpaRepository<Ask, Long> {
-    @Query("from Ask order by id")
+    @Query("from Ask order by id asc")
     List<Ask> findAll();
 }
