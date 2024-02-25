@@ -104,6 +104,7 @@ insert into Admin values (seq_admin_id.nextval, 03201, 'adm392258', '$2a$10$zqEP
 insert into ADMIN values (seq_admin_id.nextval, 04201, 'adm852542', '$2a$10$uOpP/wdt8/bkTqXlKqu3JeqyIDqvnD3sF5S8xHEYHBxKYvy80HCvW');
 insert into ADMIN values (seq_admin_id.nextval, 05101, 'adm724198', '$2a$10$taKBaHUBRTNKEAUq.zu1lOTX2uvuoUqLnJvJRAaTKcUJbzNJOZtxm');
 insert into ADMIN values (seq_admin_id.nextval, null, 'adm322100', '$2a$10$Ix/RI6AiRdQEhOHd3nrQX.PxOua2R5kFYZxt67hmBiamIPqFfLhi2');
+select * from admin;
 --
 -- authority
 insert into AUTHORITY values (seq_authority_id.nextval, 1, null, 'ROLE_USER');
@@ -586,6 +587,13 @@ insert into ASK values (seq_ask_id.nextval, '2', '영화 시간보다 늦었어�
 insert into ASK values (seq_ask_id.nextval, '3', '음식물 반입', '상영관 내 다른 음식물의 반입이 되나요?', 'MOVIE', default);
 insert into ASK values (seq_ask_id.nextval, '4', '관람 등급', '관람 등급에 대해 알고 싶습니다.', 'MOVIE', default);
 insert into ASK values (seq_ask_id.nextval, '5', '영화 관람을 하다 소지품을 분실했어요', '영화 관람을 하다 소지품을 분실했어요. 분실물은 어떻게 찾나요?', 'CINEMA', default);
+insert into ASK values (seq_ask_id.nextval, '1', '주차장문의 입니다', '영화를 보면 주차장은 무료이용인가요?', 'CINEMA', default);
+insert into ASK values (seq_ask_id.nextval, '2', '시설 이용 규정', '유모차를 가지고 극장에 입장할 수 있나요?', 'ETC', default);
+insert into ASK values (seq_ask_id.nextval, '3', '웹사이트 오류', '웹사이트에서 영화 예매 시 오류가 발생하는데 어떻게 해야 하나요?', 'RESERVATION', default);
+insert into ASK values (seq_ask_id.nextval, '4', '장애인 시설', '극장 내 장애인 시설에는 어떤 것들이 있나요?', 'CINEMA', default);
+insert into ASK values (seq_ask_id.nextval, '5', '단체 예약', '단체로 영화를 보고 싶은데, 특별한 절차가 필요한가요?', 'RESERVATION', default);
+
+
 --
 -- answer
 insert into ANSWER values (seq_answer_id.nextval, 1, 6, '상영시간 이전까지만 가능하며, 상영시간 이후 취소나 환불은 되지 않습니다.', default);
@@ -593,6 +601,12 @@ insert into ANSWER values (seq_answer_id.nextval, 2, 6, '영화 시간 내 언�
 insert into ANSWER values (seq_answer_id.nextval, 3, 6, '상영관 내 외부 음식물 반입은 가능합니다.', default);
 insert into ANSWER values (seq_answer_id.nextval, 4, 6, 'CGV는 영화진흥법에 의한 영화별 관람등급을 철저히 준수하고 있습니다.', default);
 insert into ANSWER values (seq_answer_id.nextval, 5, 6, '분실물의 경우 발견 즉시 현장에서 보관을 진행하고 있으며, 확인 요청시 본인 확인 후 물품 확인을 도와드리고 있습니다.', default);
+insert into ANSWER values (seq_answer_id.nextval, 6, 6, '영화예매 티켓 하단에 주차장 관련 내용이 적혀있습니다. 영화예매하신분은 주차장요금은 3시간 무료입니다. 참고 부탁드려요..', default);
+insert into ANSWER values (seq_answer_id.nextval, 7, 6, '유모차를 가지고 극장에 입장하실 수 있습니다. 그러나 상영관 내에서는 유모차를 접어 보관해야 할 수도 있으니, 입장 전에 직원에게 문의해 주시기 바랍니다. 극장 내에는 유모차를 위한 특별 보관 공간을 마련해 두었습니다.', default);
+insert into ANSWER values (seq_answer_id.nextval, 8, 6, '웹사이트에서 발생한 오류에 대해 불편을 드려 죄송합니다. 현재 기술 팀이 문제를 해결하기 위해 노력하고 있습니다. 잠시 후 다시 시도해 보시기 바랍니다. 만약 문제가 지속된다면, 고객님의 화면 캡처와 함께 자세한 오류 메시지를 support@example.com 으로 보내주시면 더 빠르게 도움을 드릴 수 있습니다.', default);
+insert into ANSWER values (seq_answer_id.nextval, 9, 6, '저희 극장은 모든 고객이 편안하게 이용할 수 있도록 다양한 장애인 시설을 갖추고 있습니다. 이에는 휠체어 사용 가능한 좌석, 장애인 화장실, 그리고 우선 예약 서비스가 포함됩니다. 극장 방문 전 또는 방문 시에 직원에게 문의하시면 더 자세한 안내를 받으실 수 있습니다.', default);
+insert into ANSWER values (seq_answer_id.nextval, 10, 6, '단체 예약을 원하시는 경우, 저희 고객 서비스 센터로 연락 주시면 단체 예약 절차에 대해 안내해 드리겠습니다. 보통 10인 이상부터 단체 예약이 가능하며, 특별 할인이나 좌석 배치에 관한 협의가 필요할 수 있습니다.', default);
+
 --
 -- notice
 INSERT INTO NOTICE 
@@ -691,11 +705,7 @@ chr(13)||chr(10) ||
 '부상자 분들의 빠른 쾌유를 기원합니다.' ||chr(13)||chr(10) ||
 chr(13)||chr(10) ||
 'BOOTBOX  일동.', default);
-insert into NOTICE values (seq_notice_id.nextval, 1, 'SYSTEM', '2023년 12월 시스템점검 안내', '원활하고 안정된 서비스 제공을 위하여 2023년 12월 새벽 시스템 점검 작업이 예정되어 있습니다.', default);
-insert into NOTICE values (seq_notice_id.nextval, 2, 'CINEMA', '[센텀시티] 백화점 휴점에 따른 극장 이용 안내', '22.09.09(금)~22.09.10(토) 신세계 백화점 센텀시티점 휴점에 따라 극장이용 동선 안내를 공지하오니 이용에 착오 없으시길 바랍니다.', default);
-insert into NOTICE values (seq_notice_id.nextval, 3, 'EVENT', '신규 초콜릿향 진행극장 변경 안내 ', '4DX 신규 초콜릿향 진행 극장 (1/31~2/6) CGV 계양, 광교, 광주터미널, 김해, 대구, 대구스타디움', default);
-insert into NOTICE values (seq_notice_id.nextval, 4, 'ETC', '개인정보처리방침 개정 공지 (23.11.06 시행)', '2023년 11월 6일 자로 BOOTBOX의 개인정보처리방침이 개정됨에 따라 회원님께 주요 개정 내용과 적용 일정을 아래와 같이 안내 드립니다.', default);
-insert into NOTICE values (seq_notice_id.nextval, 5, 'ETC', 'BOOTBOX 서비스 이용약관 개정 안내 (2024년 1월 23일 시행)', '2024년 1월 23일자로 BOOTBOX 서비스 이용약관을 일부 개정하게 되어 아래와 같이 사전 안내드립니다. 서비스 이용에 참고 부탁드립니다.', default);
+
 --
 -- schedule
 insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 09:10', 'YYYY-MM-DD HH24:MI'));
@@ -829,56 +839,93 @@ insert into SCHEDULE values (seq_schedule_id.nextval, 020204, 17, to_date('2024-
 insert into SCHEDULE values (seq_schedule_id.nextval, 020201, 18, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 07:00', 'YYYY-MM-DD HH24:MI'));
 
 insert into SCHEDULE values (seq_schedule_id.nextval, 020203, 19, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 08:45', 'YYYY-MM-DD HH24:MI'));
-
+--89
+insert into SCHEDULE values (seq_schedule_id.nextval, 020303, 3, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 11:40', 'YYYY-MM-DD HH24:MI'));
+--90
+insert into SCHEDULE values (seq_schedule_id.nextval, 020404, 3, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 11:40', 'YYYY-MM-DD HH24:MI'));
+--91
+insert into SCHEDULE values (seq_schedule_id.nextval, 020503, 4, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 11:40', 'YYYY-MM-DD HH24:MI'));
+--92
+insert into SCHEDULE values (seq_schedule_id.nextval, 020603, 5, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 11:40', 'YYYY-MM-DD HH24:MI'));
+--93
+insert into SCHEDULE values (seq_schedule_id.nextval, 020702, 6, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 11:40', 'YYYY-MM-DD HH24:MI'));
+--94
+insert into SCHEDULE values (seq_schedule_id.nextval, 020801, 7, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 11:40', 'YYYY-MM-DD HH24:MI'));
+--95
+insert into SCHEDULE values (seq_schedule_id.nextval, 020902, 8, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 11:40', 'YYYY-MM-DD HH24:MI'));
+--96
+insert into SCHEDULE values (seq_schedule_id.nextval, 021004, 9, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 11:40', 'YYYY-MM-DD HH24:MI'));
+--97
+insert into SCHEDULE values (seq_schedule_id.nextval, 020401, 10, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 11:40', 'YYYY-MM-DD HH24:MI'));
+--98
+insert into SCHEDULE values (seq_schedule_id.nextval, 020402, 11, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 11:40', 'YYYY-MM-DD HH24:MI'));
+--99
+insert into SCHEDULE values (seq_schedule_id.nextval, 020403, 12, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 11:40', 'YYYY-MM-DD HH24:MI'));
+--100
+insert into SCHEDULE values (seq_schedule_id.nextval, 020501, 13, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 11:40', 'YYYY-MM-DD HH24:MI'));
+--101
+insert into SCHEDULE values (seq_schedule_id.nextval, 020504, 14, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 11:40', 'YYYY-MM-DD HH24:MI'));
+--102
+insert into SCHEDULE values (seq_schedule_id.nextval, 0310503, 15, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 11:40', 'YYYY-MM-DD HH24:MI'));
+--103
+insert into SCHEDULE values (seq_schedule_id.nextval, 0320201, 16, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 11:40', 'YYYY-MM-DD HH24:MI'));
+--104
+insert into SCHEDULE values (seq_schedule_id.nextval, 0320203, 17, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 11:40', 'YYYY-MM-DD HH24:MI'));
+--105
+insert into SCHEDULE values (seq_schedule_id.nextval, 0420304, 18, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 11:40', 'YYYY-MM-DD HH24:MI'));
+--106
+insert into SCHEDULE values (seq_schedule_id.nextval, 0530102, 19, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 11:40', 'YYYY-MM-DD HH24:MI'));
+--107
+insert into SCHEDULE values (seq_schedule_id.nextval, 0510503, 20, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 11:40', 'YYYY-MM-DD HH24:MI'));
 -- reservation
-insert into RESERVATION values ('box16443', 1, 1, 'CONFIRM');
-insert into RESERVATION values ('box25822', 2, 2, 'CONFIRM');
-insert into RESERVATION values ('box47220', 3, 3, 'CONFIRM');
-insert into RESERVATION values ('box42217', 4, 4, 'CONFIRM');
-insert into RESERVATION values ('box34332', 4, 6, 'CONFIRM');
-insert into RESERVATION values ('box32582', 5, 5, 'CONFIRM');
-insert into RESERVATION values ('box21482', 5, 7, 'CONFIRM');
-insert into RESERVATION values ('box47211', 2, 2, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box355887', 3, 28, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box342099', 1, 6, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box668654', 1, 73, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box832705', 3, 81, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box466187', 5, 88, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box270062', 2, 84, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box832326', 5, 15, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box863796', 1, 31, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box189237', 3, 43, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box310065', 3, 54, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box803382', 4, 68, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box385852', 2, 83, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box778932', 2, 33, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box019763', 2, 19, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box598265', 3, 19, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box725303', 3, 9, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box937255', 5, 83, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box935920', 2, 22, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box271694', 5, 27, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box530415', 1, 5, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box669004', 3, 55, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box259003', 3, 67, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box394037', 4, 4, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box112583', 3, 77, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box201716', 5, 26, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box273556', 4, 60, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box744759', 3, 14, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box123432', 2, 38, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box222023', 5, 17, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box056438', 5, 85, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box987369', 2, 62, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box520273', 4, 88, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box690854', 1, 59, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box388132', 2, 73, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box964008', 4, 36, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box607176', 5, 23, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box619529', 3, 62, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box935009', 3, 7, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box076625', 3, 48, 'CONFIRM');
-INSERT INTO RESERVATION VALUES ('box179358', 5, 6, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box16443', 1, 1, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box25822', 2, 2, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box47220', 3, 3, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box47211', 2, 3, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box42217', 4, 4, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box34332', 4, 6, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box34331', 5, 6, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box32582', 5, 5, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box35588', 1, 7, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box34209', 1, 89, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box66865', 1, 91, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box83270', 1, 92, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box46618', 1, 93, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box27006', 1, 94, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box83232', 1, 95, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box86379', 1, 96, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box18923', 2, 96, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box31006', 2, 97, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box80338', 2, 98, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box38585', 2, 99, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box77893', 2, 100, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box01976', 2, 101, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box59826', 2, 102, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box72530', 2, 103, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box93725', 3, 104, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box93592', 3, 105, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box27169', 3, 106, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box53041', 3, 107, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box66900', 3, 6, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box25900', 3, 7, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box39403', 3, 90, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box11258', 3, 91, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box20171', 4, 92, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box27355', 4, 93, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box74475', 4, 94, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box12343', 4, 95, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box22202', 4, 96, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box05643', 4, 97, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box98736', 4, 98, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box52027', 4, 99, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box69085', 5, 100, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box38813', 5, 101, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box96400', 5, 102, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box60717', 5, 103, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box61952', 5, 104, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box93500', 5, 105, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box07662', 5, 106, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box17935', 5, 107, 'CONFIRM');
 
 
 -- 강남점 sample 예약 데이터 추가
@@ -895,7 +942,49 @@ insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box47220'
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box42217', 4);
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box34332', 4);
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box32582', 5);
-insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box21482', 5);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box27006', 5);
+
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box35588', 11);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box34209', 12);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box66865', 13);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box83270', 14);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box46618', 15);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box27006', 16);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box83232', 17);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box86379', 18);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box18923', 22);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box31006', 23);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box80338', 25);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box38585', 27);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box77893', 29);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box01976', 21);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box59826', 20);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box72530', 24);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box93725', 31);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box93592', 32);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box27169', 33);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box53041', 34);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box66900', 35);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box25900', 36);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box39403', 37);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box11258', 38);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box20171', 43);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box27355', 42);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box74475', 41);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box12343', 44);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box22202', 45);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box05643', 46);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box98736', 47);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box52027', 48);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box69085', 51);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box38813', 55);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box96400', 52);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box60717', 53);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box61952', 56);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box93500', 57);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box07662', 58);
+INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box17935', 59);
+
 -- 강남점 좌석 여러개 추가
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box57869', 1);
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box57869', 2);
@@ -921,7 +1010,7 @@ insert into ORDER_PAY values ('order1544325425262', 'box47220', 3, 'imp32105587'
 insert into ORDER_PAY values ('order2142325845122', 'box34332', 4, 'imp32105587', 'html5_inicis', 'card', 12000 , '01022221111', 'CONFIRM');
 insert into ORDER_PAY values ('order2142311845122', 'box42217', 4, 'imp32105587', 'html5_inicis', 'card', 12000 , '01022221111', 'CONFIRM');
 insert into ORDER_PAY values ('order2244325135126', 'box32582', 5, 'imp32105587', 'html5_inicis', 'card', 12000 , '01013225521', 'CONFIRM');
-insert into ORDER_PAY values ('order2178238136122', 'box21482', 5, 'imp32105587', 'html5_inicis', 'card', 12000 , '01013225521', 'CONFIRM');
+insert into ORDER_PAY values ('order2178238136122', 'box27006', 5, 'imp32105587', 'html5_inicis', 'card', 12000 , '01013225521', 'CONFIRM');
 --
 -- cancel_pay
 insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 1, 12000, 'card');
@@ -941,6 +1030,11 @@ insert into MOVIE_LIST values (seq_movie_list_id.nextval, 3, 05101);
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 4, 03201);
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 4, 0201);
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 5, 05101);
+
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 2, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 15, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 16, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 17, 0201);
 -- 강남점 영화 추가
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 5, 0201);
 insert into MOVIE_LIST values (seq_movie_list_id.nextval, 6, 0201);
@@ -954,43 +1048,44 @@ insert into REVIEW values (seq_review_id.nextval, 'box42217', 4, 4, 5, '짱짱',
 insert into REVIEW values (seq_review_id.nextval, 'box34332', 4, 6, 5, '짱짱', default);
 insert into REVIEW values (seq_review_id.nextval, 'box34332', 5, 6, 3, '무난무난', default);
 insert into REVIEW values (seq_review_id.nextval, 'box32582', 5, 5, 2, '재미없어요', default);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box355887', 1, 1, 4, '재미있어요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box342099', 1, 2, 3, '괜찮네요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box668654', 1, 3, 5, '최고입니다!', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box832705', 1, 4, 2, '별로에요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box466187', 1, 5, 4, '추천합니다', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box270062', 1, 6, 1, '재미없어요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box832326', 1, 7, 5, '강추!', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box863796', 1, 8, 3, '무난해요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box189237', 2, 9, 3, '볼만해요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box310065', 2, 10, 2, '기대하진 마세요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box803382', 2, 11, 5, '명작입니다!', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box385852', 2, 12, 4, '감동적이었어요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box778932', 2, 13, 1, '시간 낭비예요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box019763', 2, 14, 4, '재미있게 봤습니다', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box598265', 2, 15, 3, '평범한 편이에요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box725303', 2, 16, 2, '조금 지루했어요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box937255', 3, 17, 5, '아주 훌륭해요!', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box935920', 3, 18, 3, '보통이에요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box271694', 3, 19, 4, '추천드립니다!', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box530415', 3, 20, 1, '별로였어요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box669004', 3, 1, 2, '재미없습니다', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box259003', 3, 2, 4, '좋았어요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box394037', 3, 3, 3, '괜찮았습니다', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box112583', 3, 4, 5, '대단히 잘 만들었어요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box201716', 4, 5, 2, '별로예요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box273556', 4, 6, 5, '완전 재밌어요!', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box744759', 4, 7, 3, '시간 가는 줄 몰랐어요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box123432', 4, 8, 1, '재미없어요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box222023', 4, 9, 4, '추천합니다!', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box056438', 4, 10, 2, '기대 이하였습니다', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box987369', 4, 11, 3, '보통이네요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box520273', 4, 12, 4, '좋았어요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box690854', 5, 13, 1, '실망스러웠어요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box388132', 5, 14, 4, '매우 재미있어요!', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box964008', 5, 15, 2, '그저 그래요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box607176', 5, 16, 5, '최고입니다!', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box619529', 5, 17, 3, '괜찮았어요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box935009', 5, 18, 4, '재미있게 봤어요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box076625', 5, 19, 1, '재미없어요', DEFAULT);
-INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box179358', 5, 20, 5, '강추합니다!', DEFAULT);
+
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box35588', 1, 2, 4, '재미있어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box34209', 1, 3, 3, '괜찮네요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box66865', 1, 4, 5, '최고입니다!', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box83270', 1, 5, 2, '별로에요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box46618', 1, 6, 4, '추천합니다', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box27006', 1, 7, 1, '재미없어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box83232', 1, 8, 5, '강추!', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box86379', 1, 9, 3, '무난해요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box18923', 2, 9, 3, '볼만해요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box31006', 2, 10, 2, '기대하진 마세요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box80338', 2, 11, 5, '명작입니다!', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box38585', 2, 12, 4, '감동적이었어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box77893', 2, 13, 1, '시간 낭비예요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box01976', 2, 14, 4, '재미있게 봤습니다', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box59826', 2, 15, 3, '평범한 편이에요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box72530', 2, 16, 2, '조금 지루했어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box93725', 3, 17, 5, '아주 훌륭해요!', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box93592', 3, 18, 3, '보통이에요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box27169', 3, 19, 4, '추천드립니다!', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box53041', 3, 20, 1, '별로였어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box66900', 3, 1, 2, '재미없습니다', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box25900', 3, 2, 4, '좋았어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box39403', 3, 10, 3, '괜찮았습니다', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box11258', 3, 4, 5, '대단히 잘 만들었어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box20171', 4, 5, 2, '별로예요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box27355', 4, 17, 5, '완전 재밌어요!', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box74475', 4, 7, 3, '시간 가는 줄 몰랐어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box12343', 4, 8, 1, '재미없어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box22202', 4, 9, 4, '추천합니다!', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box05643', 4, 10, 2, '기대 이하였습니다', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box98736', 4, 11, 3, '보통이네요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box52027', 4, 12, 4, '좋았어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box69085', 5, 13, 1, '실망스러웠어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box38813', 5, 14, 4, '매우 재미있어요!', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box96400', 5, 15, 2, '그저 그래요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box60717', 5, 16, 5, '최고입니다!', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box61952', 5, 17, 3, '괜찮았어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box93500', 5, 18, 4, '재미있게 봤어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box07662', 5, 19, 1, '재미없어요', DEFAULT);
+INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box17935', 5, 20, 5, '강추합니다!', DEFAULT);

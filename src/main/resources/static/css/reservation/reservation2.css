@@ -255,11 +255,9 @@
 .select-people-content
 {
     display: flex;
-    /*background-color: green;*/
-    width: 40vw;
+    width: 50vw;
     margin-bottom: 5px;
 }
-
 .all-seats
 {
     opacity: 0.8;
@@ -521,5 +519,12 @@ table{
 }
 ::-webkit-scrollbar-track {
     background: transparent;  /* 스크롤바 트랙의 배경색 변경 */
+}
+
+#minus {
+    margin-right: 5px;
+}
+#plus {
+    margin-left: 5px;
 }
 
