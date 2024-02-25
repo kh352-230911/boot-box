@@ -18,9 +18,9 @@
                 <th id="memberId" th:text="${ask.memberId}">회원아이디</th>
                 <th th:text="${ask.askTitle}">제목</th>
                 <th th:text="|[ ${ask.askType.name() == 'RESERVATION' ? '예매' :
-                                              ask.noticeType.name() == 'CINEMA' ? '상영관' :
-                                              ask.noticeType.name() == 'MOVIE' ? '영화' :
-                                              ask.noticeType.name() == 'ETC' ? '기타' : '기타'} ]|">문의유형</th>
+                                              ask.askType.name() == 'CINEMA' ? '상영관' :
+                                              ask.askType.name() == 'MOVIE' ? '영화' :
+                                              ask.askType.name() == 'ETC' ? '기타' : '기타'} ]|">문의유형</th>
                 <th th:text="|등록일 : ${ask.createdAt}|">등록일</th>
             </tr>
             </thead>
@@ -32,7 +32,10 @@
             </tbody>
         </table>
         <br>
-        <form id="askForm" action="@{/answer/createAnswer.do}" method="post">
+        <form id="answerForm"
+              th:action="@{/ask/createAnswer.do}"
+              method="post"
+              enctype="application/x-www-form-urlencoded">
         <table>
             <thead>
                 <tr>
@@ -41,22 +44,19 @@
             </thead>
                 <tbody>
                     <tr>
-                        <td>
-<!--                            <textarea id="answer" placeholder="답변을 남겨주세요."></textarea>-->
-                            <div id="answerContainer">
-                                <!-- JavaScript로 동적으로 채워질 텍스트 영역 -->
-                            </div>
-                        </td>
-<!--                        <td>-->
-<!--                            <div id="answerContainer">-->
-<!--                                &lt;!&ndash; JavaScript로 동적으로 채워질 텍스트 영역 &ndash;&gt;-->
-<!--                            </div>-->
-<!--                        </td>-->
+                        <th:block th:if="${showAnswer == null}">
+                            <td>
+                                <textarea id="answerContent" name="answerContent"></textarea>
+                            </td>
+                        </th:block>
+                        <th:block th:unless="${showAnswer == null}">
+                            <td th:text="${showAnswer}"></td>
+                        </th:block>
                     </tr>
                 </tbody>
         </table>
-        <span><input type="submit" value="답변저장" id="save"
-                     th:onclick="|location.href = '@{/answer/createAnswer.do}';|"></span>
+            <input type="hidden" name="id" th:value="${ask.id}" />
+        <span><input type="submit" value="답변저장" id="save"></span>
             <div class="button-container">
                 <a th:onclick="|location.href = '@{/ask/askList.do}';|" class="back-to-list-btn">목록으로</a>
             </div>
