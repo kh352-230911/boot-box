@@ -5,6 +5,7 @@
         layout:decorate="~{layout/default}">
 <head>
     <title>예매완료</title>
+    <link th:href="@{/css/reservation/reservationComplete.css}" rel="stylesheet">
 </head>
 <style layout:fragment="style"></style>
 <div layout:fragment="content">
@@ -12,17 +13,13 @@
     <br>
     <hr style="height: 1px">
     <br>
-    <div>
-        예매가 완료 되었습니다.
-        <br>
-        예매 확인
+    <div class="container">
+        <div class="centered-box">
+            예매가 완료 되었습니다.
+        </div>
 
+        <a th:href="@{/}" id="goHome" class="block text-xl font-semibold py-2 px-3 text-white rounded md:bg-transparent md:text-white md:p-0 md:dark:text-white md:hover:text-red-600 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">메인으로</a>
     </div>
 
 </div>
-<script th:inline="javascript" layout:fragment="script" th:src="@{/js/reservation/reservationComplete.js}">
-
-</script>
-
-
 </html>

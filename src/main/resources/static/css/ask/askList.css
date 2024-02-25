@@ -87,11 +87,11 @@ button#askDetail
     border-radius: 10px 10px 10px 10px;
     width: 68px;
     height: 30px;
-    background-color: darkslateblue;
+    background-color: #bb0808;
 }
 button#askDetail:active {
     /* 버튼클릭하면 색 바뀜 */
-    background-color: steelblue;
+    background-color: #d20707;
 }
 footer {
     height: 60px;

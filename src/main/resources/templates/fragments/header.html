@@ -35,9 +35,9 @@
                         <a class="block text-xl font-semibold py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"  th:href="@{/reservation/reservationBooking.do}">예매</a>
                     </li>
                     <!-- 0222 임시 링크 - 예매 완료 페이지-->
-                    <li>
-                        <a class="block text-xl font-semibold py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"  th:href="@{/reservation/reservationComplete}">예매 완료</a>
-                    </li>
+<!--                    <li>-->
+<!--                        <a class="block text-xl font-semibold py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"  th:href="@{/reservation/reservationComplete}">예매 완료</a>-->
+<!--                    </li>-->
 <!--                    <li>-->
 <!--                        <a class="block text-xl font-semibold py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"  th:href="@{/reservation1/reservationBooking4.do}">임시2</a>-->
 <!--                    </li>-->
@@ -115,19 +115,16 @@
 
 <!--                                    </th:block>-->
                                         <li>
-                                            <a th:href="@{/notice/noticeList.do}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">공지사항</a>
+                                            <a th:href="@{/ask/askList.do}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">문의사항</a>
                                         </li>
 
                                         <li>
-                                            <a th:href="@{/ask/askList.do}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">문의사항</a>
+                                            <a th:href="@{/notice/noticeList.do}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">공지사항</a>
                                         </li>
-<!--                                    </th:block>-->
                                         <li>
                                             <a th:href="@{/admin/adminRegion.do(name=${#authentication.name})}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">지점관리</a>
                                         </li>
                                     </th:block>
-
-
 <!--                                    </th:block>-->
                                     <li>
                                         <form th:action="@{/auth/logout.do}" method="post" class="d-inline">
