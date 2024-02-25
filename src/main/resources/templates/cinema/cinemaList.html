@@ -20,7 +20,7 @@
             <div class="favorite-list">
                 <ul>
                     <li th:each="memberLikeCinema, status : ${memberLikeCinemas}">
-                        <a href="#" th:text="${memberLikeCinema.cinema.region_cinema}">강남점</a>
+                        <a th:href="@{'/cinema/cinemaDetail.do'(id=${memberLikeCinema.cinema.id})}" th:text="${memberLikeCinema.cinema.region_cinema}">강남점</a>
                     </li>
                     <li class="like">
                         <p class="like-1">자주가는 영화관</p>

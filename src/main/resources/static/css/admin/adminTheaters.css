@@ -114,3 +114,16 @@
 .modal-content button:hover {
     text-decoration: underline;
 }
+.wrap-container {
+    height: auto;
+    min-height: 100%;
+    padding-bottom: 60px;
+}
+.home-container {
+    min-height: 600px;
+}
+footer {
+    height: 60px;
+    position: relative;
+    transform: translateY(0%);
+}

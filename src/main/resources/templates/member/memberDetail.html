@@ -52,17 +52,8 @@
                     <div class="menu-box block m-5 mt-10">
                         <h2 class="titular">자주가는 극장</h2>
                         <ul class="menu-box-menu">
-                            <li>
-                                <a class="menu-box-tab" href="#6"><span class="icon fontawesome-envelope scnd-font-color"></span></a>
-                            </li>
-                            <li>
-                                <a class="menu-box-tab" href="#8"><span class="icon entypo-paper-plane scnd-font-color"></span></a>
-                            </li>
-                            <li>
-                                <a class="menu-box-tab" href="#10"><span class="icon entypo-calendar scnd-font-color"></span></a>
-                            </li>
-                            <li>
-                                <a class="menu-box-tab" href="#12"><span class="icon entypo-cog scnd-font-color"></span></a>
+                            <li th:each="memberLikeCinema, status : ${memberLikeCinemas}">
+                                <a class="menu-box-tab" th:href="@{'/cinema/cinemaDetail.do'(id=${memberLikeCinema.cinema.id})}" th:text="${memberLikeCinema.cinema.region_cinema}"></a>
                             </li>
                         </ul>
                     </div>
