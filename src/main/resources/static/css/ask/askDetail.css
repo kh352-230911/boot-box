@@ -99,7 +99,7 @@ footer
     right: 130px;
 }
 #save:hover {
-    background-color: forestgreen;
+    background-color: #d20707;
     color: black;
     border-color: white;
 }
@@ -128,7 +128,7 @@ footer
 }
 /* 버튼 호버 효과 */
 .back-to-list-btn:hover {
-    background-color: cornflowerblue;
+    background-color: #d20707;
     color: black;
     border-color: white;
 }
