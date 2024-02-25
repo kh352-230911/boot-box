@@ -2,6 +2,7 @@
 <html
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
         layout:decorate="~{layout/default}">
 <head>
     <title>영화 목록</title>
@@ -66,11 +67,12 @@
                     <span class="text-sm" th:text="|${movie.releaseDate} 개봉|"></span>
                 </a>
                 <div class="movie_action">
-                    <button class="movie_button text-sm mb-3" th:onclick="|location.href = '@{/reservation/reservationMain.do}'|">예매하기</button>
+                    <button class="movie_button text-sm mb-3" th:onclick="|location.href = '@{/reservation/reservationBooking.do}'|">예매하기</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script layout:fragment="script"></script>
+
 </html>

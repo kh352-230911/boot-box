@@ -33,11 +33,9 @@ public class MovieDetailDto {
     private boolean searchResult;
     private String searchVaule;
 
-    @JsonIgnore
+    @JsonIgnore // 특정필드 제거
     private List<Review> reviews = new ArrayList<>();
 
     private Set<Genre> genres = new LinkedHashSet<>();
-
-
 
 }

@@ -25,6 +25,8 @@ public class Answer {
     )
     @Column
     private Long id;
+    private Long askId;
+    private Long adminId;
     private String content; // 내용
     private LocalDate createdAt; // 날짜
 }

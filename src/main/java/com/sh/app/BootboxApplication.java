@@ -9,7 +9,5 @@ import java.util.Date;
 public class BootboxApplication {
     public static void main(String[] args) {
         SpringApplication.run(BootboxApplication.class, args);
-        //0207 order +  new date().getTime(); test
-        System.out.println("order"+new Date().getTime());//order1707284119924
     }
 }

@@ -1,0 +1,84 @@
+textarea#title
+{
+    width: 850px;
+    height: 40px;
+    background-color: rgba(255,255,255,0.3);
+    margin-left: -80px;
+}
+textarea#content
+{
+    width: 850px;
+    height: 500px;
+    background-color: rgba(255,255,255,0.3);
+    margin-left: -80px;
+}
+div#createNotice
+{
+    margin-left: 33%;
+}
+.dropdown {
+    display: inline-block;
+    cursor: pointer;
+    position: fixed;
+    top: 240px;
+    margin-left: 780px;
+}
+.dropdown-content select {
+    color: black; /* 글씨 색상을 검정색으로 설정 */
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 120px;
+    z-index: 1;
+}
+.dropdown-content option {
+    color: black; /* 드롭다운 메뉴의 옵션 글씨 색상을 검정색으로 설정 */
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+#save
+{
+    padding: 7px 15px;
+    background-color: rgba(255,255,255,0.3);
+    color: white;
+    border: 2px solid black;
+    box-shadow: 0 0 0 3px #fff, 0 0 0 4px black;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    position: fixed;
+    bottom: 310px;
+    margin-left: 20px;
+}
+#save:hover {
+    background-color: forestgreen;
+    color: black;
+    border-color: white;
+}
+#selectedTypeDisplay
+{
+    padding: 7px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    position: fixed;
+    bottom: 270px;
+}
+footer {
+    height: 60px;
+    /*position: relative;*/
+    transform: translateY(0%);
+    /* 페이지의 아래쪽에 고정 */
+    width: 99%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}

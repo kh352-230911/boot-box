@@ -35,66 +35,51 @@
 //     });
 // });
 //=====================================================
+//https://api.iamport.kr/
 
 //th 영화 제목 클릭시 하단 div에 해당 영화 포스터 이름, 포스터 동적으로 출력
 //예매 페이지 첫 진입시 info-seats none 처리
 const infoMoviesNone = document.querySelector(".info-movies");
 const infoSeatsNone = document.querySelector(".info-seats");
- infoSeatsNone.style.display='none';
+infoSeatsNone.style.display='none';
+var cinemaDiv = container.querySelector('.seat-container2-2cinema');
+var dateDiv = container.querySelector('.seat-container2-2date');
+var theaterDiv = container.querySelector('.seat-container2-2theater');
+var peopleDiv = container.querySelector('.seat-container2-2people');
+//
+var selectSeatDiv = container.querySelector(".seat-container3-2");
+var totalPayDiv = container.querySelector(".seat-container3-4");
+var totalPay;
+//
+//0219
+let reservatoinPage=1; //기본 1부터 시작.
+//0223
+var checkedIds = []; // 체크된 체크박스의 아이디를 저장할 배열
+var checkedNumbers = []; // 체크된 체크박스의 넘버를 저장할 배열
+const Status = {
+    CONFIRM: 'CONFIRM',
+    PENDING: 'PENDING'
+};
 
-//영화 선택 시..
-$(document).ready(function(){
-    $(".movie-area tbody tr").click(function() {
-        console.log("영화 선택1");
-        // 모든 행의 선택을 취소하고 선택된 행에만 'selected' 클래스를 추가
-        $(this).siblings().removeClass("highlighted");
-        $(this).addClass("highlighted");
-    });
-});
-
-//지역 선택 시 ..1
-// $(document).ready(function(){
-//     $(".location-area tbody tr").click(function() {
-//         console.log("지역 선택");
-//         // 모든 행의 선택을 취소하고 선택된 행에만 'selected' 클래스를 추가
-//         $(this).siblings().removeClass("highlighted");
-//         $(this).addClass("highlighted");
-//         $(".cinema-area tbody tr").remove();
-//     });
-// });
-
-//지역 선택시 .. 2
-$(document).ready(function(){
-    $(".select_location").click(function()
+//영화 선택 시..0219
+var movieId;
+$(document).ready(function()
+{
+    $(".select-movie").click(function()
     {
-        //수정한 거
-        console.log("지역선택");
+        console.log("영화 선택");
+        // 모든 행의 선택을 취소하고 선택된 행에만 'selected' 클래스를 추가
+        $(this).css('background', 'linear-gradient(to right, black, black)');
+        // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
+        $(".select-movie").not(this).css('background', '');
 
-
+        //선택한 영화의 고유 id (pk)값 가져오기.
+        // 선택된 버튼의 ID(영화관 ID) 출력
+        movieId = $(this).data("movie-id");
+        console.log("선택된 영화 고유 ID:", movieId);
         
-        
-        
-        
-        
-        //기존 
-        // $(".select_location").eq(index).css("background-color", "yellow");
-        // // 선택된 행의 인덱스 가져오기
-        // var index = $(this).closest("tr").index();
-        // console.log("선택한 지역의 인덱스:",index);
-        // // 모든 행의 지점 목록 숨기기
-        // $(".theater-list").hide();
-        //
-        // // 현재 선택된 행의 지점 목록 표시
-        // $(".theater-list").eq(index).show();
-        // //$(".theater-list").eq(index).css("background-color", "yellow");
     });
 });
-
-
-
-const seatContainer1Div = document.querySelector(".seat-container1");
-// seatContainer1Div.style.backgroundColor = 'red';
-
 function showPoster(posterUrl,movieTitle) {
     console.log("출력할 포스터:"+posterUrl);
     console.log("출력할 영화명:"+movieTitle);
@@ -103,6 +88,7 @@ function showPoster(posterUrl,movieTitle) {
 
     // 해당 포스터 이미지를 표시하는 <img> 요소를 생성합니다.
     let imgElement = document.querySelector(".seat-container1-img");
+
     let textElement = document.querySelector(".seat-container1-title");
     // 이전에 표시된 이미지가 있다면 제거합니다.
     posterContainer.innerHTML = "";
@@ -118,14 +104,200 @@ function showPoster(posterUrl,movieTitle) {
         textElement.innerHTML = movieTitle;
     }
 
-
     posterContainer.appendChild(imgElement);
     posterContainer.appendChild(textElement);
 }
 
+
+//지역 선택시 .. 2
+$(document).ready(function(){
+    $(".select_location").click(function()
+    {
+        //수정한 거
+        console.log("지역선택");
+
+        $(this).css('background', 'linear-gradient(to right, black, black)');
+        // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
+        $(".select_location").not(this).css('background', '');
+        console.log("지역선택2");
+        var localName = $(this).text();
+        console.log("선택된 지역:", localName);
+
+        // 선택된 버튼의 ID(영화관 ID) 출력
+        var localId = $(this).data("local-id");
+        console.log("선택된 지역 ID:", localId);
+    });
+});
+
+
+
+
+var cinemaId;
+$(document).ready(function(){
+    $(".select_location2").click(function()
+    {
+        //수정한 거
+        $(this).css('background', 'linear-gradient(to right, black, black)');
+        // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
+        $(".select_location2").not(this).css('background', '');
+        console.log("지점선택2");
+        var cinemaName = $(this).text();
+        console.log("선택된 영화관:", cinemaName);
+
+        cinemaDiv.innerText = cinemaName;
+
+
+
+        // 선택된 버튼의 ID(영화관 ID) 출력
+        cinemaId = $(this).data("cinema-id");
+        console.log("선택된 영화관 ID:", cinemaId);
+    });
+});
+
+
+//0220 임시 - 날짜를 선택해야 비동기로 상영 스케줄을 가져오도록 함.
+$(document).ready(function(){
+    $(".select_date").click(function()
+    {
+        //수정한 거
+        console.log("날짜 선택");
+        $(this).css('background', 'linear-gradient(to right, black 0%, black 100%)');
+        // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
+        $(".select_date").not(this).css('background', '');
+
+        dateDiv.innerText = $(this).text();
+
+        // 선택된 버튼의 ID(영화관 ID) 출력
+        let dateId = $(this).data("date-id");
+        console.log("선택된 date ID:",dateId);
+
+        //현재 선택된 극장,상영관,날짜 한 번 더 체크하기.
+        console.log("현재 선택한 영화,상영관,날짜");
+        console.log(movieId,cinemaId,dateId);
+
+        /*
+        * test1.날짜선택시 스케쥴 출력
+        *
+        *
+        * */
+
+        $.ajax({
+            url: `${contextPath}reservation/findSchedules`,
+            type: 'get',
+            data:{
+                movieId, //영화
+                cinemaId, //샹영관
+                dateId //날짜
+            },
+            success(organizedSchedules){
+
+                makeNewSchedule(true,organizedSchedules);
+
+            },
+            //requests:  요청 객체입니다. 보통 HTTP 요청 정보를 포함하며, 요청한 클라이언트의 정보와 요청된 리소스에 대한 정보 등을 포함합니다.
+            // status: HTTP 상태 코드입니다. 실패한 요청의 상태 코드를 나타냅니다.
+            // error: 서버에서 반환된 오류 메시지입니다.
+            error(request, status, error) {
+                //console.error('~~~~Ajax request failed~~~~:', error);
+                console.log('~~~~Error response responseText~~~~:', request.responseText);
+                console.log('~~~~Error response status~~~~:', request.status);
+                if(request.status==500)
+                {
+                    alert(`에러로 인해 메인페이지로 이동합니다. 이용에 불편을 끼쳐드려 죄송합니다.`)
+                    window.location.href = `${contextPath}bootbox/`; // 리다이렉트할 URL을 지정합니다.
+                }
+                else if(request.status==401) //인증 관련 에러 잠시 주석처리..
+                {
+                    alert(`예매는 로그인 후 이용하실 수 있습니다.`)
+                    window.location.href = `${contextPath}`+request.responseText; // 리다이렉트할 URL을 지정합니다.
+                }
+                else if(request.status==404)
+                {
+                    //204는 delete 했을 때 경우라, select 조회 결과가 없는 경우 404로 처리
+                    makeNewSchedule(false,"해당 상영스케쥴이 존재하지 않습니다");
+                }
+
+            },
+
+        });
+
+    });
+});
+
+//0221 영화-극장-원하는날짜로 새 상영스케쥴을 받아온 후 가공하는 함수
+function makeNewSchedule(able,organizedSchedules)
+{
+    const scheduleTable = document.getElementById('scheduleTable');
+    const initialTableHeight = scheduleTable.offsetHeight; // 테이블의 초기 높이 저장
+
+// 기존의 행 삭제
+    while (scheduleTable.rows.length > 1) {
+        scheduleTable.deleteRow(1); // 헤더를 제외한 행을 삭제합니다.
+    }
+
+// 추가할 행의 높이를 계산하여 테이블의 높이를 조정
+   // const addedRowsHeight = scheduleTable.offsetHeight - initialTableHeight;
+    //scheduleTable.style.height = initialTableHeight + addedRowsHeight + 'px';
+
+// 새로운 데이터 추가
+    const [{ totalDuration, schedules, title }] = organizedSchedules;
+    console.log("총 상영 시간:", totalDuration);
+    console.log("제목:", title);
+
+    const tbody = scheduleTable.querySelector('.tbody_schedule');
+    tbody.innerHTML = ''; // tbody 내용을 비움
+
+// 선택된 행 추적을 위한 변수
+    let selectedRow = null;
+
+    schedules.forEach(({ times, theater }) => {
+        times.forEach(({ schId, time, seatsAvailable }) => {
+            const row = scheduleTable.insertRow();
+            const schIdCell = row.insertCell();
+            const timeCell = row.insertCell();
+            const theaterCell = row.insertCell();
+            const seatsAvailableCell = row.insertCell();
+            //상영일정id도 추가
+            schIdCell.textContent = schId;
+            timeCell.textContent = time;
+            theaterCell.textContent = theater;
+            seatsAvailableCell.textContent = seatsAvailable + '석';
+
+            // 행에 클릭 이벤트 리스너 추가
+            row.addEventListener('click', () => {
+                // 이전에 선택된 행이 존재한다면 배경색을 원래대로 되돌리기
+                if (selectedRow) {
+                    selectedRow.style.backgroundColor = ''; // 이전에 선택된 행의 배경색을 지움
+                }
+                // 선택된 행을 현재 클릭한 행으로 설정하고 배경색을 검은색으로 변경
+                selectedRow = row;
+                selectedRow.style.backgroundColor = 'black';
+                // 클릭된 행에 대한 동작을 여기에 추가
+                console.log('클릭된 행:', schId,time, theater, seatsAvailable);
+                selectedSheduleId = schId;
+                theaterDiv.innerHTML=theater;
+            });
+        });
+    });
+
+    // 새로운 tbody를 추가
+    scheduleTable.appendChild(tbody);
+
+    // 추가된 tbody의 높이에 따라 테이블의 높이를 조정
+    const newHeight = scheduleTable.offsetHeight;
+    console.log("newHeight:",newHeight);
+    const addedHeight = newHeight - initialTableHeight; // 새로운 tbody가 추가된 후에 높아진 높이 계산
+    console.log("addedHeight:",addedHeight);
+// 테이블의 스타일을 변경하여 높이를 조정
+    scheduleTable.style.height = initialTableHeight + addedHeight + 'px';
+    console.log("initialTableHeight + addedHeight :",initialTableHeight + addedHeight );
+    scheduleTable.style.height = "500px";
+}
+
+//10글자씩 잘라서 br 처리 (장문의 영화 타이틀 처리)
 function addLineBreaks(str, charsPerLine) {
-    var result = '';
-    for (var i = 0; i < str.length; i++) {
+    let result = '';
+    for (let i = 0; i < str.length; i++) {
         result += str[i];
         if ((i + 1) % charsPerLine === 0) {
             result += '<br>';
@@ -133,12 +305,68 @@ function addLineBreaks(str, charsPerLine) {
     }
     return result;
 }
+
+// URL에서 쿼리 파라미터를 가져오는 함수입니다.
+function getQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+        movieId: params.get('movieId'),
+        cinemaId: params.get('cinemaId'),
+        schId: params.get('schId'),
+        schDate: params.get('schDate')
+    };
+}
+
+// 페이지 로드 시 선택된 영화, 극장, 스케줄을 설정하는 함수입니다.
+function setSelectedOptions() {
+    const { movieId, cinemaId, schId , schDate} = getQueryParams();
+
+    if (movieId && cinemaId && schId) {
+        // 영화 선택
+        const movieOption = document.querySelector(`.select-movie[data-movie-id="${movieId}"]`);
+        if (movieOption) {
+            movieOption.click();
+        }
+
+        // 극장 선택
+        const cinemaOption = document.querySelector(`.select_location2[data-cinema-id="${cinemaId}"]`);
+        if (cinemaOption) {
+            cinemaOption.click();
+        }
+
+        // 스케줄 선택
+        const scheduleOption = document.querySelector(`.select_date[data-date-id="${schDate}"]`);
+        if (scheduleOption) {
+            scheduleOption.click();
+        }
+    } else {
+        console.error('파라미터를 읽을 수 없습니다.');
+    }
+}
+
+// 페이지가 로드될 때 자동으로 선택하는 로직을 실행합니다.
+document.addEventListener('DOMContentLoaded', setSelectedOptions);
+
+
 //======================================================================================
 document.querySelector(".select-seats-prev-button").addEventListener('click',function ()
 {
     //alert('이전버튼');
     console.log("...이전 버튼...");
+
+
+
+    const nextButton = document.querySelector('.select-seats-next-button');
+    const requestPayButton = document.querySelector('.select-requestPay-button');
+
+    if (requestPayButton.style.display === 'block') {
+        requestPayButton.style.display = 'none'; // 보이게 설정
+        nextButton.style.display='block';
+    }
+
+
     var cookieValue = getCookie("myCookie");
+    $('#test-area').html("");
 
     if (cookieValue !== null) {
         // 쿠키에서 가져온 JSON 형식의 문자열을 배열로 변환
@@ -150,25 +378,108 @@ document.querySelector(".select-seats-prev-button").addEventListener('click',fun
         console.log("쿠키를 찾을 수 없습니다.");
     }
 
-
     if (infoMoviesNone.style.display === 'none') {
         infoMoviesNone.style.display = 'block'; //보이고
         infoMoviesNone.style.display = 'flex'; //flex속성
         infoSeatsNone.style.display='none';
+        toClear();//인원,좌석 초기화
     } else {
         // div.style.display = 'none';
     }
 });
+
+let selectedSheduleId;
+
+//0219 다음 버튼을 눌렀을 때, 영화-극장-시간-상영시간 모두 선택되어야 한다. 한개라도 선택 안되어있다면 넘어가지 못함.
 document.querySelector(".select-seats-next-button").addEventListener('click',function ()
 {
-    /*
-    * 0216
-    * //1페이지에서 2페이지로 넘어가는 경우
-    *
-    *
-    *
-    * */
-    console.log("...다음 버튼...");
+    console.log("...다음 버튼 클릭...");
+    //0219 영화,극장,날짜,상영시간표를 모두 선택하지 않으면 다음으로 넘어갈 수 없음.
+    // if(!checkButtonAllSelect()) {
+    //     alert('모든 버튼을 누르셔야 다음으로 이동하실 수 있습니다.');
+    //     return;
+    // }
+
+//     const nextButton = document.querySelector('.select-seats-next-button');
+//     const requestPayButton = document.querySelector('.select-requestPay-button');
+// // nextButton의 display 속성을 조작하여 보이거나 숨깁니다.
+//     if (requestPayButton.style.display === 'none') {
+//         requestPayButton.style.display = 'block'; // 보이게 설정
+//         nextButton.style.display='none';
+//     } else {
+//         requestPayButton.style.display = 'none'; // 숨김 설정
+//     }
+
+
+    //비동기 test
+    $.ajax({
+        url: `${contextPath}reservation/detailSchedule`,
+        type: 'get',
+        data:{
+            scheduleId:selectedSheduleId
+        },
+        success(response){
+            console.log("success : 선택한 상영일정의 예약된 좌석 값 가져오기",response);
+            makeSeat(response);
+
+        },
+        //requests:  요청 객체입니다. 보통 HTTP 요청 정보를 포함하며, 요청한 클라이언트의 정보와 요청된 리소스에 대한 정보 등을 포함합니다.
+        // status: HTTP 상태 코드입니다. 실패한 요청의 상태 코드를 나타냅니다.
+        // error: 서버에서 반환된 오류 메시지입니다.
+        error(request, status, error) {
+            //console.error('~~~~Ajax request failed~~~~:', error);
+            // console.log('~~~~Error response responseText~~~~:', request.responseText);
+            // console.log('~~~~Error response status~~~~:', request.status);
+            if(request.status==500)
+            {
+                alert(`에러로 인해 메인페이지로 이동합니다. 이용에 불편을 끼쳐드려 죄송합니다.`+request.status)
+                window.location.href = `${contextPath}bootbox/`; // 리다이렉트할 URL을 지정합니다.
+            }
+            else if(request.status==401) //인증 관련 에러 잠시 주석처리..
+            {
+                //주석처리
+                alert(`예매는 로그인 후 이용하실 수 있습니다.`)
+                 window.location.href = `${contextPath}`+request.responseText; // 리다이렉트할 URL을 지정합니다.
+            }
+            else if(request.status==400)//잘못된 클라이언트 요청
+            {
+                alert(`에러로 인해 메인페이지로 이동합니다. 이용에 불편을 끼쳐드려 죄송합니다.`+request.status)
+                window.location.href = `${contextPath}bootbox/`; // 리다이렉트할 URL을 지정합니다.
+            }
+
+        }
+    });
+});
+
+//0219 다음 버튼 외에 영화,극장,시간 버튼 눌렀을 때에도 비동기로 쿼리를 전송하는 작업을 실행해야함..ㅎ..=>상영스케줄을 알기 위해서..
+//하나라도 false면 다음으로 넘어갈 수 없음.
+function  checkButtonAllSelect()
+{
+
+}
+
+
+function makeSeat(response)
+{
+    console.log("ajax에서 함수 불러오기.");
+    ////[SeatDto(id=23, name=C03), SeatDto(id=30, name=C10)]
+    // const [SeatDto] = response;
+    // console.log("testttttttttttttttttttttttttt", SeatDto);
+
+
+    //이미 예약된 자리 배열
+    const disabledSeat = [];
+    response.forEach((SeatDto)=>
+    {
+        console.log("testttttttttttttttttttttttttt", SeatDto);
+        const {id,name}=SeatDto;
+
+        console.log("id:", id);
+        console.log("name:", name);
+        disabledSeat.push(name);
+    });
+
+    reservatoinPage=2;
     let testArray = ['Aa', 'Bb', 'Cc', 'Dd', 'Ee', 'Ff'];
     setCookieForList("myCookie", testArray, 1); //1일
     if (infoSeatsNone.style.display === 'none') {
@@ -180,42 +491,27 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
         // div.style.display = 'none';
     }
 
-    //비동기 test
-    $.ajax({
-        url: `${contextPath}reservation/scheduleTest`,
-        type: 'get',
-        data:{
-            scheduleId:41
-        },
-        success(response){
-            console.log("~~~~success~~~~",response);
-            hohohoho();
-        },
-        error(error) {
-            console.error('~~~~Ajax request failed~~~~:', error);
-        }
-    });
-
-
-
-
-});
-
-
-function hohohoho()
-{
-    console.log("ajax에서 함수 불러오기~~~~~~~~~~~~~~~~~");
-    
+    // 6행 10열의 좌석 생성
+    createSeats(6, 10,disabledSeat);
 
 }
 
 //============================================================================================================================
 // 알파벳 배열(좌석행)
 let alphabet = ['A', 'B', 'C', 'D', 'E', 'F'];
-function createSeats(rows, cols) {
-    const seatTableBody = document.getElementById('seatTableBody');
+let checkbox;
+function createSeats(rows, cols,disabledSeat) {
+    console.log("createSeats :)");
 
-    // 행 반복
+    const seatTableBody = document.getElementById('seatTableBody');
+// seatTableBody에 있는 모든 자식 요소를 제거
+    while (seatTableBody.firstChild) {
+        seatTableBody.removeChild(seatTableBody.firstChild);
+    }
+
+    var seatNumber = 1; // 좌석 번호 초기값
+
+
     for (var i = 0; i < rows; i++) {
         var row = document.createElement('tr');
 
@@ -232,23 +528,29 @@ function createSeats(rows, cols) {
         // 좌석 생성하는 나머지 셀 생성
         for (var j = 1; j <= cols; j++)
         {
-            // 좌석 번호 계산
-            //var seatId = i * cols + j;
-
             //좌석 번호에서 알파벳+번호로 처리 a1 b5 이런식으로.
             //0216 한자리 수 인 경우 앞에 0 추가 1->01
             let seatId =alphabet[i] +  (j < 10 ? '0' + j : j);
             // 좌석 생성
-            var checkbox = document.createElement('input');
+            checkbox = document.createElement('input');
+            // 좌석 번호 계산 0224 순수 숫자값으로. 1~60
+            //var seatId = i * cols + j;
             checkbox.type = 'checkbox';
             checkbox.id = 's' + seatId;
             checkbox.name = 'tickets';
             checkbox.className = 'custom-checkbox'; // 사용자 정의 체크박스 클래스 추가
 
-            checkbox.setAttribute('data-seat-id', seatId); // 좌석 아이디를 데이터 속성으로 추가
 
-            checkbox.addEventListener('click', function() {
+
+            checkbox.setAttribute('data-seat-id', seatId); // 좌석 아이디를 데이터 속성으로 추가
+            checkbox.setAttribute('data-seat-number', seatNumber);
+            checkbox.value=seatNumber;
+
+            checkbox.addEventListener('click', function()
+            {
                 console.log('Clicked seat ID:', this.getAttribute('data-seat-id'));
+                console.log('Clicked seat NUMBER:', this.getAttribute('data-seat-number'));
+
                 //클릭시 관람인원이 0명인 경우 인원을 먼저 선택하라고 알려준다.
                 if(numberOfPeople==0)
                 {
@@ -257,14 +559,14 @@ function createSeats(rows, cols) {
                 }
                 else
                 {
-                     checkedCount = 0;
+                    checkedCount = 0;
                     // 페이지 내의 모든 체크박스를 반복하여 상태 확인
                     var checkboxes = document.querySelectorAll('input[type="checkbox"][name="tickets"]');
+
                     checkboxes.forEach(function(checkbox)
                     {
                         if (checkbox.checked) {
                             checkedCount++;
-
                         }
                     });
                     console.log("현재 체크된 체크박스:",checkedCount);
@@ -272,6 +574,29 @@ function createSeats(rows, cols) {
                     {
                         alert("관람인원 이상 좌석을 선택하실 수 없습니다.");
                         this.checked = false;
+                        checkedCount--; //증가된 것을 하나 차감한다.
+                    }
+                    //모든 체크박스들을 순회하여
+                    checkedIds = []; // 체크된 체크박스의 아이디를 저장할 배열
+                    checkedNumbers = []; // 체크된 체크박스의 숫자를 저장할 배열
+                    checkboxes.forEach(function(checkbox) {
+                        if (checkbox.checked) {
+                            //0224 좌석네임이 아닌 id값을 넣어줘야 할 것 같음.
+
+                            checkedIds.push(checkbox.id.replace('s','')); // 체크된 체크박스의 아이디를 배열에 추가
+                            checkedNumbers.push(checkbox.value);
+                        }
+                    });
+                    // 체크된 체크박스의 아이디를 출력
+                    selectSeatDiv.innerText = checkedIds;
+                    console.log("체크된 체크박스의 아이디: ", checkedIds);
+                    console.log("체크된 체크박스의 넘버즈: ", checkedNumbers);
+                    console.log("체크카운트:", checkedCount);
+                    totalPay = 100* checkedCount;
+                    totalPayDiv.innerText = "100 * "+ checkedCount +" = "+totalPay +"원";
+                    if(checkedIds.length==0) {
+                        totalPayDiv.innerText = "-";
+                        selectSeatDiv.innerText = "-";
                     }
                 }
             });
@@ -281,35 +606,25 @@ function createSeats(rows, cols) {
             label.className = 'seat';
             label.textContent = j; // 열 번호 추가
 
-            // 4번과 20번 체크박스는 disabled 처리
-            // if (seatId === 'A6' || seatId === 'F1') {
-            //     checkbox.disabled = true;
-            //     //this.parentNode.style.backgroundColor = 'red';
-            // }
-            //0215 isreservationSeat 배열에 예약된 좌석값을 넣은 후 반복문처리.
-            let isReservationSeat = [];
-            isReservationSeat.push('A06');
-            isReservationSeat.push('B03');
-            isReservationSeat.push('B04');
-            isReservationSeat.push('E10');
-            isReservationSeat.push('F01');
-
-            isReservationSeat.forEach(function(seat) {
+            disabledSeat.forEach(function(seat) {
                 if(seat===seatId)
                     checkbox.disabled = true;
             });
-
 
             // 테이블에 추가
             var col = document.createElement('td');
             col.appendChild(checkbox);
             col.appendChild(label);
             row.appendChild(col);
+
+
+            seatNumber++;
         }
         seatTableBody.appendChild(row);
     }
 }
 
+//선택한 좌석값 및 정보들을 초기화 하는 함수
 function toClear()
 {
     var checkboxes = document.querySelectorAll('input[type="checkbox"][name="tickets"]');
@@ -318,21 +633,23 @@ function toClear()
         checkbox.checked = false; //모든 체크박스 false
     });
     numberOfPeople = 0; //지정한 인원수도 초기화
+    peopleDiv.innerText = numberOfPeople +"명";
     resultElement.innerText = numberOfPeople;
+    selectSeatDiv.innerText = "-";
+    totalPayDiv.innerText = "-";
 }
 
 document.getElementById('btn-clear').addEventListener('click', function() {
-    // 페이지 내의 모든 체크박스를 선택
     toClear();
 });
 // 결과를 표시할 element
-const resultElement = document.getElementById('result');
+const resultElement = document.getElementById('peopleResult');
 
-// 현재 화면에 표시된 값
+// 현재 화면에 표시된 인원수 값
 let numberOfPeople = resultElement.innerText;
 function count(type)  {
 
-    // 더하기/빼기
+    // 더하기/빼기 numberOfPeople = 선택한 인원
     if(type === 'plus' && numberOfPeople<8 )
     {
         numberOfPeople = parseInt(numberOfPeople) + 1;
@@ -358,25 +675,12 @@ function count(type)  {
     }
     // 결과 출력
     resultElement.innerText = numberOfPeople;
+    peopleDiv.innerText = numberOfPeople +"명";
 }
 
 //================================================================
-
-function showAlert(element) {
-    let date = element.innerText;
-    alert('선택한 날짜: ' + date);
-
-    // var infoSeats = document.querySelectorAll(".info-seats");
-    // infoSeats.forEach(function(seat) {
-    //     seat.style.display = "none";
-    // });
-}
-
 //체크된 체크박수 갯수 확인하는 메소드
 var checkedCount = 0;
-// 페이지 내의 모든 체크박스를 반복하여 상태 확인
-
-
 
 function highlightCell(cell)
 {
@@ -392,18 +696,6 @@ function highlightCell(cell)
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-// 6행 10열의 좌석 생성
-createSeats(6, 10);
 
 
 //0216 내가 선택한 값 저장할 용도로 쓰일 쿠키 test
@@ -441,5 +733,177 @@ function select_member_like_cinema()
 {
     alert('선호극장 클릭!');
     //선호극장이 등록되어있든 안되어있든 이 부분을 누르면 지점쪽은 초기화가 되어있어야 함.
+
+}
+
+
+// 결제 연결
+// document.querySelector(".btn_pay").addEventListener('click', function ()
+// {
+//     // alert("결제");
+// });
+function check_before_requestPay()
+{
+    if(numberOfPeople!=checkedCount)
+    {
+        alert('관람인원과 선택된 좌석갯수가 맞지 않습니다.');
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+IMP.init("imp32105587"); // 가맹점코드 - 고정값
+function requestPay()
+{
+
+    console.log("결제 버튼을 클릭");
+    //0224 테스트 하다가 중요한 것을 잊었다. 인원수=체크박스갯수 확인해야함! ex)인원은 2명인데 1개만 선택한 경우를 발견함.
+    if(!check_before_requestPay())
+        return;
+
+    let pay_uid = new Date().getTime().toString();
+    IMP.request_pay({
+        pg: "html5_inicis", // PG사코드 - 고정값
+        pay_method: "card", // 결제방식 - 고정값
+        merchant_uid: "order" + pay_uid, // UTC , 결제 API 주문번호 고유값
+        name: "Boot-Box", // 고정값[상품명]
+        amount: totalPay, // 결제 금액
+        buyer_name: "rhgPwls",//회원명
+        buyer_tel: "01089405318", // 회원연락처
+    },
+
+        function(res) //결제창 띄우고 닫았을 때 여기까지 뜨고
+        {
+            console.log("res::::",res);
+            // console.log("Payment success!");
+            console.log("Payment ID : " + res.imp_uid);
+            console.log("Order ID : " + res.merchant_uid);
+            console.log("Payment Amount : " + res.paid_amount);
+            let boxId = "box"+new Date().getTime().toString().substring(8);
+            let orderId = "order"+new Date().getTime().toString();
+            console.log("생성된 box id:",boxId);
+
+            //결제응답정보를 db에 저장하기 위해 비동기를 사용하는 구간
+            if (res.success) //실제로 결제가 성공되면 이 구간으로 넘어오게 된다.
+            {
+
+                console.log("결제가 성공적으로 요청되었습니다!",res.success);
+
+                let sendData01 = {
+                    id: boxId,//예매id (랜덤조합)
+                    memberId: 1,//회원 아이디 long
+                    scheduleId: selectedSheduleId, //상영스케쥴 번호
+                    status : Status.CONFIRM //enum 화
+                };
+                //0224 seat_id는 A01 이 아니라 1 이런식으로 넘겨줘야함! checkedNumbers는 내가 선택 좌석의 순수 숫자값을 저장한 배열이다.
+                let sendData02 = {
+                    resId: boxId,
+                    seatId : checkedNumbers
+                };
+
+                //0224 결제관련 정보 객체 order_pay에 저장할..
+                let sendData03={
+                    id :res.merchant_uid,//orderId,
+                    reservationId : boxId,
+                    memberId : 0,
+                    imp : res.imp_uid,
+                    inicis  : "html5_inicis",
+                    reservationAmount : res.pay_method, //결제 방식
+                    price : totalPay,
+                    phone : "01012345678",
+                    status : Status.CONFIRM
+
+                };
+
+
+                //0224 객체 합치기
+                let combinedData = {
+                    reservationDto: sendData01,
+                    reservationSeatDto: sendData02,
+                    orderPayDto : sendData03
+                };
+
+
+
+                $.ajax({
+                    headers : {
+                        [csrfHeaderName] : csrfToken
+                    },
+                    type: "POST",
+                    url: `${contextPath}reservation/reservationStart`, // 전송할 URL
+                    contentType: "application/json", // 전송하는 데이터의 타입
+                    data: JSON.stringify(combinedData), // JSON 데이터로 변환하여 전송
+
+                    success: function(response) {
+                        // 요청이 성공했을 때 처리할 로직
+                        console.log("응답:", response);
+
+                        //window.location.href = `${contextPath}bootbox/`;
+                        window.location.href = `${contextPath}reservation/reservationComplete`; // 리다이렉트할 URL을 지정합니다.
+                        //member/memberReservation.do?id=1
+                    },
+                    error: function(xhr, status, error) {
+                        // 요청이 실패했을 때 처리할 로직
+                        alert("에러가 발생했습니다.:", status+"/"+error);
+                        console.error("에러가 발생했습니다.:", status+"/"+error);
+                    }
+                });
+
+            } else {
+                alert(res.error_msg);
+                console.error(res.error_msg);
+            }
+        });
+
+}
+
+function dtoTest()
+{
+    console.log("dtoTest");
+    let boxId = "box"+new Date().getTime().toString().substring(8);
+    console.log("생성된 box id:",boxId);
+    let sendData01 = {
+        id: boxId,//예매id (랜덤조합)
+        memberId: 1,//회원 아이디 long
+        scheduleId: selectedSheduleId, //상영스케쥴 번호
+        status : Status.CONFIRM //enum 화
+    };
+    //0224 seat_id는 A01 이 아니라 1 이런식으로 넘겨줘야함!
+    //쓰이는 dto와 필드명이 일치해야한다...
+
+    let sendData02 = {
+        resId: boxId,
+        seatId : checkedNumbers
+    };
+
+    //0224 객체 합치기
+    let combinedData = {
+        reservationDto: sendData01,
+        reservationSeatDto: sendData02
+    };
+    console.log("combinedData:",combinedData);
+        $.ajax({
+            headers : {
+                [csrfHeaderName] : csrfToken
+            },
+            type: "POST",
+            url: `${contextPath}reservation/reservationStart`, // 전송할 URL
+            contentType: "application/json", // 전송하는 데이터의 타입
+            data: JSON.stringify(combinedData), // JSON 데이터로 변환하여 전송
+
+            success: function(response) {
+                // 요청이 성공했을 때 처리할 로직
+                console.log("응답:", response);
+                // 응답 데이터의 정보들
+
+            },
+            error: function(xhr, status, error) {
+                // 요청이 실패했을 때 처리할 로직
+                alert("에러가 발생했습니다.:", status+"/"+error);
+                console.error("에러가 발생했습니다.:", status+"/"+error);
+            }
+        });
 
 }

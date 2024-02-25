@@ -1,16 +1,35 @@
 package com.sh.app.notice.dto;
 
 import com.sh.app.notice.entity.NoticeType;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Data
 public class NoticeCreateDto {
+    @Id
+    @GeneratedValue(generator = "seq_notice_id_generator")
+    @SequenceGenerator(
+            name = "seq_notice_id_generator",
+            sequenceName = "seq_notice_id",
+            allocationSize = 1
+    )
+    //  <!-- 시퀀스id, noticeType, title, content, createAt -->
+    private Long id;
+    private Long adminId; // notice table의 시퀀스
     @NotEmpty(message = "제목을 작성해주세요.")
     private String title;
     @NotEmpty(message = "내용을 작성해주세요.")
     private String content;
-    @NotEmpty(message = "유형을 선택해주세요.")
+    @NotNull
     private NoticeType noticeType;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
+    public NoticeCreateDto() {
+        this.createdAt = LocalDateTime.now();
+    }
 }

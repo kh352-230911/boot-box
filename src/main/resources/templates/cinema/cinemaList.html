@@ -10,9 +10,8 @@
 <style layout:fragment="style"></style>
 
 <div layout:fragment="content" class="px-10">
-    <span>전체극장</span>
+    <span class="border-b-2 border-red-600 font-semibold pb-1">전체극장</span>
     <br>
-    <hr style="height: 1px">
     <div class = "theater-box" >
         <div class="favorite-area">
             <div class="favorite-title">
@@ -20,20 +19,18 @@
             </div>
             <div class="favorite-list">
                 <ul>
-                    <li>
-                        <a href="#">강남점</a>
+                    <li th:each="memberLikeCinema, status : ${memberLikeCinemas}">
+                        <a th:href="@{'/cinema/cinemaDetail.do'(id=${memberLikeCinema.cinema.id})}" th:text="${memberLikeCinema.cinema.region_cinema}">강남점</a>
                     </li>
-                    <li>
-                        <a href="#"></a>
-                    </li>
-                    <li>
-                        <a href="#"></a>
-                    </li>
-                    <li>
-                        <button type="button">자주가는 영화관 설정</button>
+                    <li class="like">
+                        <p class="like-1">자주가는 영화관</p>
                     </li>
                 </ul>
+                <div class="mini flex justify-center">
+                    <p class="text-xs mt-5 w-200">자주가는 극장은 북마크로 체크해주세요.</p>
+                </div>
             </div>
+
         </div>
         <div class = "location-area">
             <ul>
@@ -51,6 +48,7 @@
         </div>
     </div>
     <br><br><br><br><br>
+
 
 </div>
 <br>

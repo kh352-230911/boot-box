@@ -9,7 +9,8 @@
 <style layout:fragment="style">
     table
     {
-        margin-left: 250px;
+        margin: auto;
+        font-size: 1.3rem;
     }
     th
     {
@@ -21,31 +22,67 @@
         vertical-align : middle;
         padding-top: 8px;
     }
+    b
+    {
+        font-size: xx-large;
+        color: khaki;
+    }
+    thead >tr>th{
+        background-color: #232323;
+        border-top: 2px solid #ff003b;
+        border-bottom: 2px solid #ff003b;
+        text-align: center;
+    }
+    .wrap-container {
+        height: auto;
+        min-height: 100%;
+        padding-bottom: 60px;
+    }
+    .home-container {
+        min-height: 600px;
+    }
+    /*footer {*/
+    /*    height: 60px;*/
+    /*    position: relative;*/
+    /*    transform: translateY(0%);*/
+    /*}*/
+    footer {
+        height: 60px;
+        /*position: relative;*/
+        transform: translateY(0%);
+        /* 페이지의 아래쪽에 고정 */
+        width: 99%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
 </style>
 
-<div layout:fragment="content">
-    <p style="margin-top: 30px; margin-right: 300px" align="right">지금까지 총 [[${totalMembers}]]명의 회원이 가입했습니다.</p>
-    <table id="memberList" style="margin-top: 30px">
-        <thead>
-        <tr>
-            <th style="margin: auto">회원번호</th>
-            <th>회원아이디</th>
-            <th>회원이름</th>
-            <th>회원이메일</th>
-            <th>회원전화번호</th>
-        </tr>
-        </thead>
-        <tbody style="margin: auto">
-        <tr th:each="member : ${members}" th:data-member-id="${member.id}">
-            <td th:text="${member.id}"></td>
-            <td th:text="${member.memberLoginId}"></td>
-            <td th:text="${member.memberName}"></td>
-            <td th:text="${member.memberEmail}"></td>
-            <td th:text="${member.memberPhone}"></td>
-        </tr>
-        </tbody>
-    </table>
-
+<div layout:fragment="content" class="wrap-container">
+    <div class="home-container">
+        <p style="margin-top: 30px; margin-right: 300px" align="right">총 <b>[[${totalMembers}]]</b>명의 회원이 가입했습니다.</p>
+        <table id="memberList" style="margin-top: 30px">
+            <thead>
+            <tr>
+                <th>회원번호</th>
+                <th>회원아이디</th>
+                <th>회원이름</th>
+                <th>회원이메일</th>
+                <th>회원전화번호</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="member : ${members}" th:data-member-id="${member.id}">
+                <td th:text="${member.id}"></td>
+                <td th:text="${member.memberLoginId}"></td>
+                <td th:text="${member.memberName}"></td>
+                <td th:text="${member.memberEmail}"></td>
+                <td th:text="${member.memberPhone}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
     <!-- 페이지바 -->
 <!--    <div id="pagebar">-->
 <!--        <nav aria-label="Page navigation example">-->

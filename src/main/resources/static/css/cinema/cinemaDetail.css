@@ -100,6 +100,11 @@
 .sidebar i:hover {
     transform: scale(1.5);
 }
+/* 기본 bookmark 아이콘 스타일 */
+.bookmark {
+    color: rgba(255, 255, 0, 0.98); /* 클릭 시 색상 */
+}
+
 
 .container {
     background-color: #151515;
@@ -319,6 +324,26 @@ footer.active {
     padding: 5px;
     border: 1px solid #fff;
     background-color: #333;
+    color: #fff; /* 텍스트 색상 기본값 */
+    text-decoration: none; /* 링크에 대한 밑줄 제거 */
+    transition: background-color 0.3s, color 0.3s; /* 부드러운 색상 전환 효과 */
+}
+
+.time-slot:hover {
+    background-color: #ff3939; /* 호버 상태의 배경색 */
+    color: #fff; /* 호버 상태의 텍스트 색상 */
+}
+
+.time-slot:hover .booking-text {
+    display: inline; /* 호버 상태에서만 예매하기 텍스트 표시 */
+}
+.time-slot:hover .seats-available {
+    display: none;
+}
+
+.booking-text {
+    display: none; /* 기본 상태에서는 예매하기 텍스트 숨김 */
+    font-weight: bold;
 }
 
 .seats-available {

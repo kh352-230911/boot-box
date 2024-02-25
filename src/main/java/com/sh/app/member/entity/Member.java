@@ -1,15 +1,20 @@
 package com.sh.app.member.entity;
 
+import com.sh.app.ask.entity.Ask;
 import com.sh.app.authority.entity.Authority;
+import com.sh.app.memberLikeCinema.entity.MemberLikeCinema;
+import com.sh.app.reservation.entity.Reservation;
 import com.sh.app.review.entity.Review;
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import lombok.*;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 0206 member entity - db member table
@@ -23,7 +28,8 @@ import java.util.List;
 @Builder
 @DynamicInsert //null이 아닌 필드값만 insert한다.
 @DynamicUpdate //영속성 컨텍스트의 엔티티와 달라진 필드만 update한다.
-@ToString(exclude = "reviews")
+//@ToString(exclude = "reviews")
+@ToString(exclude = "memberLikeCinemas")
 public class Member implements Serializable{
 
     @Id
@@ -36,29 +42,39 @@ public class Member implements Serializable{
     )
     private Long id;
 
-    @Column(nullable =false, unique = true)
+    @Column(nullable = false, unique = true)
     private String memberLoginId	; //uq
 
     @Column(nullable = false)
     private String memberPwd;
 
-    @Column(nullable =false, unique = true)
-    private String memberEmail; //uq
+    @Column(unique = true)
+    private String memberEmail; //uq null ok
 
     @Column(nullable = false)
     private String memberName;
 
-    @Column(nullable =false, unique = true)
-    private String memberPhone;
+    @Column(unique = true)
+    private String memberPhone; // null ok
 
     private String birthyear; //null ok
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "member")
     @Builder.Default
     private List<Review> reviews = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id") // authority.member_id 컬럼 작성
     private List<Authority> authorities;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+    private List<Ask> asks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+    private List<Reservation> reservations = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+    private List<MemberLikeCinema> memberLikeCinemas = new ArrayList<>();
 
 }

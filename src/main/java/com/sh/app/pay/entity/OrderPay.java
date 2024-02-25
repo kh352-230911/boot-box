@@ -3,10 +3,7 @@ package com.sh.app.pay.entity;
 import com.sh.app.common.Status;
 import com.sh.app.reservation.entity.Reservation;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * 0207 hyejin
@@ -20,6 +17,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode(exclude = {"reservation"})
+@ToString(exclude = "reservation")
 //서브
 public class OrderPay {
     @Id
@@ -36,7 +35,7 @@ public class OrderPay {
 
     private String inicis; //지원 pg사
 
-    @Column(nullable = false,name="reservation_amount")
+    //@Column(nullable = false,name="reservation_amount")
     private String reservationAmount; //결제 방식
 
     private int price; //총 결제 금액
@@ -47,7 +46,7 @@ public class OrderPay {
     @Enumerated(EnumType.STRING)
     private Status status; //결제 상태
 
-    @OneToOne//(fetch =  FetchType.EAGER)
+    @OneToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name="reservation_id")
     private Reservation reservation;
 

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/default}">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>booking</title>
+
+    <!--Google Fonts and Icons-->
+<!--    <link-->
+<!--            href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone"-->
+<!--            rel="stylesheet"/>-->
+<!--    <link rel="preconnect" href="https://fonts.googleapis.com" />-->
+<!--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />-->
+<!--    <link-->
+<!--            href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"-->
+<!--            rel="stylesheet"/>-->
+
+    <!-- 현재 페이지에 적용할 css 선언 -->
+    <link rel="stylesheet" th:href="@{/css/reservation1/reservation2.css}" />
+</head>
+<style layout:fragment="style"></style>
+
+
+<!-- 동적으로 변할 컨텐트가 들어갈 영역 div-->
+<div layout:fragment="content">
+    <div class="center">
+        <div class="tickets">
+            <div class="ticket-selector">
+                <div class="head">
+                    <div class="movietitle">영화 제목</div>
+                </div>
+                <div class="seats">
+                    <div class="status">
+                        <div class="item">선택 가능</div>
+                        <div class="item">선택 불가</div>
+                        <div class="item">선택한 좌석</div>
+                    </div>
+                    <div class="all-seats">
+                        <input type="checkbox" name="tickets" id="s1" />
+                        <label for="s1" class="seat booked"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="price">
+                <div class="total">
+                    <span> <span class="count">0</span> Tickets </span>
+                    <div class="amount">0</div>
+                </div>
+                <button type="button">Book</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="script" th:src="@{/js/reservation1/reservation2.js}"></script>
+</html>
+<!--
+참고 자료
+https://github.com/SnippetsDevelop/snippetsdevelop.github.io/blob/master/codes/ticket-booking-style.html
+-->

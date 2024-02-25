@@ -6,6 +6,7 @@ import com.sh.app.schedule.entity.Schedule;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = "schedules")
+@ToString(exclude =  {"schedules","reviews"})
 public class Movie {
     @Id
     private Long id;
@@ -41,7 +42,7 @@ public class Movie {
     private String summary;
     private double advanceReservation;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
            name = "movie_genre",
            joinColumns = @JoinColumn(name = "movie_id"),
@@ -53,7 +54,7 @@ public class Movie {
             this.genres.add(genre);
     }
 
-    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
     @Builder.Default
     private List<Schedule> schedules = new ArrayList<>();
 

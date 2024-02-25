@@ -255,13 +255,12 @@
 .select-people-content
 {
     display: flex;
-    /*background-color: green;*/
-    width: 40vw;
+    width: 50vw;
     margin-bottom: 5px;
 }
-
 .all-seats
 {
+    opacity: 0.8;
     width :fit-content;
     background-color: #ffffff;
     /*visibility: hidden;*/
@@ -276,6 +275,7 @@
 /* 스크린 영역 */
 .screen-div
 {
+    opacity: 0.8;
     margin-bottom: 30px;
     width: 40vw;
     height: 30px;
@@ -366,18 +366,15 @@ label_row
     align-items: center;
     /*   align-items: center;: 수직 중앙 정렬 */
 }
-/*이전버튼 다음버튼*/
+/* 이전 버튼 */
 .select-seats-prev-button
 {
-    padding: 10px;
+    width: 100px;
+    height: 100px;
+    margin-left: 10px;
     background-color: lightgray;
     border: none;
-    cursor: pointer;
-}
-.select-seats-next-button {
-    padding: 10px;
-    background-color: darkred;
-    border: none;
+    border-radius: 10px;
     cursor: pointer;
 }
 
@@ -398,7 +395,8 @@ label_row
 }
 
 .seat-container1-img {
-    width: 150px;
+
+    border-radius: 5px;
     height: 170px;
 }
 .seat-container1-title {
@@ -408,10 +406,16 @@ label_row
 
 /*극장,날짜(상영스케쥴),상영관 컨테이너*/
 .seat-container2 {
+    display: flex;
     padding: 10px;
     /*border: 1px solid lightgray;*/
     border-right: 2px solid red; /* 오른쪽 세로선 설정 */
     width: 20vw;
+}
+.seat-container2-1, .seat-container2-2
+{
+    margin-left: 5px;
+    display: block;
 }
 /*좌석 위치, 총 결제금액 */
 .seat-container3 {
@@ -419,10 +423,32 @@ label_row
     /*border: 1px solid lightgray;*/
     width: 20vw;
 }
+/* 다음 버튼 */
+.select-seats-next-button {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+    background-color: darkred;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.select-requestPay-button
+{
+    //display: none;
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+    background-color: darkred;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
 th
 {
     background-color: black;
 }
+
 /*td*/
 /*{*/
 /*    border-right: 1px solid red;*/
@@ -442,7 +468,8 @@ th
 
 table{
     border-collapse: collapse; /* 테이블 셀 테두리를 합칩니다. */
-    border: 2px solid red;
+    border: 1px solid red;
+    border-color: red;
 }
 
 .highlighted {
@@ -454,25 +481,34 @@ table{
     width:200px;
     /*display: none;*/
 }
-.mytr
-{
 
-}
 
 /* info-movies 하위의 모든 테이블들의 높이 고정 , 스크롤 추가 */
-.info-movies table {
+.info-movies table not #scheduleTable{
     height: 400px;
-    /*overflow: auto;*/
+    overflow: auto;
 }
 
 .info-movies tbody{
     /* 각 테이블의 스타일 */
-    width: 250px;
+    width: 300px;
     display: block;
     overflow-y: auto;
     height: 400px;
+
 }
 
+#scheduleTable {
+    width: 500px; /* 원하는 너비로 설정하세요 */
+    max-height: 400px; /* 원하는 높이로 설정하세요 */
+    overflow: auto; /* 세로 스크롤이 필요한 경우에만 스크롤을 표시합니다. */
+}
+.tbody_schedule
+{
+    width: 500px;
+    /*max-height: 400px; !* 원하는 높이로 설정하세요 *!*/
+    overflow-y: auto; /* 세로 스크롤이 필요한 경우에만 스크롤을 표시합니다. */
+}
 /* 수직 스크롤바 */
 ::-webkit-scrollbar {
     width: 10px;  /* 스크롤바의 폭 변경 */
@@ -484,3 +520,11 @@ table{
 ::-webkit-scrollbar-track {
     background: transparent;  /* 스크롤바 트랙의 배경색 변경 */
 }
+
+#minus {
+    margin-right: 5px;
+}
+#plus {
+    margin-left: 5px;
+}
+

@@ -39,7 +39,6 @@ public class HomeController {
             movieDetailDtos = movieService.findByTitleContaining(search);
             model.addAttribute("search", search);
         }
-        log.debug("movies = {}", movieDetailDtos);
         model.addAttribute("movies", movieDetailDtos);
         return "index";
     }

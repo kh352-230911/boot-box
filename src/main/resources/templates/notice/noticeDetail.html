@@ -1,0 +1,62 @@
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>공지&뉴스 상세페이지</title>
+    <link rel="stylesheet" th:href="@{/css/notice/noticeDetail.css}" />
+</head>
+<style layout:fragment="style"></style>
+
+<div layout:fragment="content" class="wrap-container">
+    <div class="home-container">
+        <div class="title-box flex justify-center">
+         <span class="border-b-2 border-red-600 font-semibold pb-2 pt-16 text-xl">
+             공지/뉴스
+         </span>
+        </div>
+        <p class="text-sm pt-2 flex justify-center">BootBox의 주요한 이슈 및 여러가지 소식들을 확인하실 수 있습니다.</p>
+
+        <!-- table박스 -->
+        <div class="container flex justify-center mt-4">
+            <table>
+                <thead class="text-base">
+                    <tr>
+                        <th th:text="${notice.id}">번호</th>
+                        <th th:text="${notice.noticeTitle}">제목</th>
+                        <th th:text="|[ ${notice.noticeType.name() == 'SYSTEM' ? '시스템' :
+                                                  notice.noticeType.name() == 'CINEMA' ? '상영관' :
+                                                  notice.noticeType.name() == 'EVENT' ? '이벤트' :
+                                                  notice.noticeType.name() == 'ETC' ? '기타' : '기타'} ]|">구분</th>
+                        <th th:text="|등록일 : ${#temporals.format(notice.createdAt, 'yyyy/MM/dd HH:mm')}|">등록일</th>
+                    </tr>
+                </thead>
+                <tbody class="py-50">
+<!--                        <td colspan="4" th:text="${notice.noticeContent}"></td>-->
+                    <tr>
+                                                                <!--  줄바꿈 문자를 <br/>로 치환 -->
+                        <td colspan="4" th:utext="${#strings.replace(notice.noticeContent, nlString, '<br/>')}"></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="deleteBtn">
+            <!-- 관리자만 삭제버튼 보여줌 -->
+            <th:block sec:authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_ADMIN')">
+                <form id="deleteForm" th:action="@{/notice/deleteNotice.do}" method="post">
+                    <input type="hidden" id="noticeId" name="id" value=""/>
+                    <button type="button" id="deleteNoticeBtn" onclick="confirmAndDelete()">삭제하기</button>
+                </form>
+            </th:block>
+        </div>
+        <!-- '목록으로' 버튼 -->
+        <div class="button-container">
+            <a th:onclick="|location.href = '@{/notice/noticeList.do}';|" class="back-to-list-btn text-base">목록으로</a>
+        </div>
+    </div>
+</div>
+
+<script layout:fragment="script" th:src="@{/js/notice/deleteNotice.js}"></script>
+</html>

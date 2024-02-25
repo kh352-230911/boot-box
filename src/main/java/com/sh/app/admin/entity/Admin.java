@@ -30,12 +30,12 @@ public class Admin implements Serializable {
             allocationSize = 1
     )
     private Long id;
-    private String cinemaId;
+    private Long cinemaId;
     @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false)
     private String password;
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "admin_id") // authority.member_id 컬럼 작성
+    @JoinColumn(name = "admin_id") // authority.admin_id 컬럼 작성
     private List<Authority> authorities;
 }

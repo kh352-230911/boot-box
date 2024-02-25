@@ -22,7 +22,7 @@ public class WebSecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/css/**", "/images/**", "/js/**");
+        return (web) -> web.ignoring().requestMatchers("/favicon.ico","/css/**", "/images/**", "/js/**");
     }
 
     @Bean
@@ -36,10 +36,18 @@ public class WebSecurityConfig {
                     .requestMatchers("/reservation/**").permitAll()
                     .requestMatchers("/reservation1/**").permitAll()
                     .requestMatchers("/admin/adminAuth.do").permitAll()
-                    .requestMatchers("/member/memberDetail.do").permitAll() // 마이페이지 작업 끝나면 삭제
+                    .requestMatchers("/member/memberDetail.do").authenticated()
+                    .requestMatchers("/notice/**").permitAll()
+                    .requestMatchers("/ask/**").authenticated() // 인증된 사용자만 접근가능
+                    .requestMatchers("/member/**").permitAll()
                     .requestMatchers("/member/createMember.do", "/member/checkIdDuplicate.do").anonymous()
 //                    .requestMatchers("/board/**").authenticated()
 //                    .requestMatchers("/admin/**").hasRole("ADMIN")
+                    .requestMatchers("/admin/**").hasAnyRole("ADMIN", "MANAGER")
+                    .requestMatchers("/notice/createNotice.do").hasAnyRole("ADMIN", "MANAGER")
+                    .requestMatchers("/notice/deleteNotice.do").hasAnyRole("ADMIN", "MANAGER")
+                    .requestMatchers("/ask/askList.do").hasAnyRole("ADMIN", "MANAGER")
+                    .requestMatchers("/ask/askDetail.do").hasAnyRole("ADMIN", "MANAGER")
                     .anyRequest().authenticated();
         }));
 
@@ -49,7 +57,7 @@ public class WebSecurityConfig {
 //                    .loginPage("/auth/adminLogin.do")
                     .loginProcessingUrl("/auth/login.do") // 로그인 처리 (POST)
 //                    .loginProcessingUrl("/auth/adminLogin.do")
-                    .successHandler(new CustomSuccessHandler())
+                    .successHandler(new CustomSuccessHandler()) //성공시 수행할 핸들러
                     .permitAll();
         }));
         http.logout(logoutConfigurer -> {

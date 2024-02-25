@@ -15,11 +15,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = "schedules")
+@ToString(exclude = {"schedules"})
 public class Theater {
     @Id
     private Long id;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cinema_id")
     private Cinema cinema;
     @Column(nullable = false)
@@ -27,7 +27,7 @@ public class Theater {
     @Column(nullable = false)
     private int seat;
 
-    @OneToMany(mappedBy = "theater", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "theater", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @Builder.Default
     private List<Schedule> schedules = new ArrayList<>();
 

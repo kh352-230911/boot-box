@@ -2,6 +2,7 @@
 <html
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
         layout:decorate="~{layout/default}">
 <head>
     <title>cinema</title>
@@ -29,20 +30,48 @@
                 </div>
             </div>
         </nav>
-        <div class="sidebar">
-            <i class="fas fa-home"></i>
-            <i class="fas fa-search" ></i>
-            <i class="fas fa-bookmark"></i>
-        </div>
+
+<!--  비회원일때  -->
+        <th:block sec:authorize="isAnonymous() or hasAnyAuthority('ROLE_MANAGER', 'ROLE_ADMIN')">
+    <!-- sidebar -->
+            <div class="sidebar">
+                <i class="fas fa-home"></i>
+                <i class="fas fa-search" ></i>
+                <i class="bookmark fa-regular fa-bookmark fa-beat-fade" style="color: #FFD43B;" th:data-cinema-id="${cinema.id}"></i>
+            </div>
+        </th:block>
+
+<!-- 회원일때 -->
+        <th:block sec:authorize="isAuthenticated() and (not hasAnyAuthority('ROLE_MANAGER', 'ROLE_ADMIN'))">
+<!-- sidebar -->
+            <div class="sidebar">
+                <i class="fas fa-home"></i>
+                <i class="fas fa-search" ></i>
+            <!-- 비어있지 않으면  -->
+                <th:block th:if="${not #lists.isEmpty(cinema.memberLikeCinemas)}">
+                    <i class="bookmark fa-solid fa-bookmark" style="color: #FFD43B;" th:data-cinema-id="${cinema.id}">
+                        <input class="memberId" type="hidden" th:data-member-id="${#authentication.principal.member.id}">
+                    </i>
+                </th:block>
+            <!-- 비어있으면  -->
+                <th:block th:if="${#lists.isEmpty(cinema.memberLikeCinemas)}">
+                    <i class="bookmark fa-regular fa-bookmark fa-beat-fade" style="color: #FFD43B;" th:data-cinema-id="${cinema.id}">
+                        <input class="memberId" type="hidden" th:data-member-id="${#authentication.principal.member.id}">
+                    </i>
+                </th:block>
+            </div>
+        </th:block>
+
+
         <div class="container">
             <div class="content-container">
                 <div class="featured-content" style="background:linear-gradient(to bottom, rgba(0,0,0,0),#151515), url('https://cdn.pixabay.com/photo/2015/12/15/08/50/theatre-1093862_1280.jpg');" >
                     <h1 class="active" th:text="${cinema.region_cinema}" th:data-cinema-id="${cinema.id}"></h1><!--극장명-->
                         <p class="featured-desc">
                         <ul>
-                            <li th:text="'주소 : ' + ${cinema.address}"></li><!--극장주소-->
-                            <li th:text="'상영관수 : ' + ${cinema.theater_number} + '관 / 총좌석수 : ' + ${cinema.theater_number}*60 + '석'"></li><!--상영관 및 총좌석수-->
-                            <li th:text="'전화번호 : ' + ${cinema.phone}"></li><!--극장전화번호-->
+                            <li class="mb-1" th:text="'주소 : ' + ${cinema.address}"></li><!--극장주소-->
+                            <li class="mb-1" th:text="'상영관수 : ' + ${cinema.theater_number} + '관 / 총좌석수 : ' + ${cinema.theater_number}*60 + '석'"></li><!--상영관 및 총좌석수-->
+                            <li class="mb-2" th:text="'전화번호 : ' + ${cinema.phone}"></li><!--극장전화번호-->
                         </ul>
                         </p>
                     <a href="#" class="featured-button"
@@ -81,47 +110,17 @@
                     </div>
                 <!-- 영화 스케줄 관리 -->
                 <!-- 1차 작업 -->
-<!--                <div th:fragment="scheduleList" id="movieSchedule">-->
-<!--                    <div th:each="movieEntry : ${movies}" class="movie-container">-->
-<!--                        <div class="movie-title" th:text="${movieEntry.key} + ' 상영시간: ' + ${movieEntry.value.get(0).times.get(0).runningTime} + '분'"></div>-->
-<!--                        <div th:each="theaterSchedule : ${movieEntry.value}" class="theater-container">-->
-<!--                            <div class="theater-info" th:text="'&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; ' + ${theaterSchedule.theater} + ' &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;'"></div>-->
-<!--                            <div class="time-slots">-->
-<!--                                <div th:each="time : ${theaterSchedule.times}" class="time-slot-container" style="display:inline-block;">-->
-<!--                                    <div class="time-slot" th:text="${time.startTime}"></div>-->
-<!--                                    <div class="seats-available" th:text="'남은좌석: ' + ${time.remainingSeats} + '석'"></div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <div id="movieSchedule"></div>
                 <!--2차작업-->
-                <div th:fragment="scheduleList" id="movieSchedule">
-                    <div th:each="detail : ${scheduleDetails}" class="schedule-container">
-                        <div class="movie-title" th:text="${detail.getMovieTitle()} + ' 상영시간: ' + ${detail.getRunningTime()} + '분'"></div>
-                        <div class="movie-schedule">
-                            <div class="theater-info" th:text="'--------------------' + ${detail.getTheaterName()} + '--------------------'"></div>
-                            <div class="time-slots">
-                                <div class="time-slot">
-                                    <span th:text="${#temporals.format(detail.getStartTime(), 'HH:mm')}"></span>
-                                    <div class="seats-available" th:text="'남은좌석: ' + ${detail.getRemainingSeats()} + '석'"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 3차 작업 -->
 <!--                <div th:fragment="scheduleList" id="movieSchedule">-->
-<!--                    <div th:each="movieGroup : ${moviesGroupedByTitle}">-->
-<!--                        <div class="movie-title" th:text="${movieGroup.key.getMovieTitle()} + ' 상영시간: ' + ${movieGroup.key.getRunningTime()} + '분'"></div>-->
-<!--                        <div th:each="theaterGroup : ${movieGroup.value.groupedByTheater}">-->
-<!--                            <div class="movie-schedule">-->
-<!--                                <div class="theater-info" th:text="'&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;' + ${theaterGroup.key.getTheaterName()} + '&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;'"></div>-->
-<!--                                <div class="time-slots">-->
-<!--                                    <div th:each="scheduleDetail : ${theaterGroup.value}" class="time-slot">-->
-<!--                                        <span th:text="${scheduleDetail.getStartTime()}"></span>-->
-<!--                                        <div class="seats-available" th:text="'남은좌석: ' + ${scheduleDetail.getRemainingSeats()} + '석'"></div>-->
-<!--                                    </div>-->
+<!--                    <div th:each="detail : ${scheduleDetails}" class="schedule-container">-->
+<!--                        <div class="movie-title" th:text="${detail.getMovieTitle()} + ' 상영시간: ' + ${detail.getRunningTime()} + '분'"></div>-->
+<!--                        <div class="movie-schedule">-->
+<!--                            <div class="theater-info" th:text="'&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;' + ${detail.getTheaterName()} + '&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;'"></div>-->
+<!--                            <div class="time-slots">-->
+<!--                                <div class="time-slot">-->
+<!--                                    <span th:text="${#temporals.format(detail.getStartTime(), 'HH:mm')}"></span>-->
+<!--                                    <div class="seats-available" th:text="'남은좌석: ' + ${detail.getRemainingSeats()} + '석'"></div>-->
 <!--                                </div>-->
 <!--                            </div>-->
 <!--                        </div>-->

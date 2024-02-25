@@ -3,6 +3,12 @@ server:
   port: 8080
   servlet:
     context-path: /bootbox
+
+# iamport
+imp.code: ${IMP_CODE}
+imp.api.key: ${IMP_API_KEY}
+imp.api.secretkey: ${IMP_API_SECRETKEY}
+
 # database
 spring:
   datasource:
@@ -37,7 +43,7 @@ spring:
           kakao:
             client-id: b01bd8d24bd31d50e3202dfe20900871
             client-secret: 0qL7cVTSU3GZ5l0SZogkd4QGpuAM2Wr3
-            redirect-uri: http://localhost:8080/spring/login/oauth2/code/kakao
+            redirect-uri: http://localhost:8080/bootbox/login/oauth2/code/kakao
             client-authentication-method: 'client_secret_post'
             client-name: kakao
             authorization-grant-type: authorization_code
@@ -53,6 +59,8 @@ spring:
             user-info-uri: https://kapi.kakao.com/v2/user/me # resource 서버
             user-info-authentication-method: POST
             user-name-attribute: id
+
+
 # logback (logging)
 logging:
   level:
@@ -63,4 +71,5 @@ logging:
     profiles:
 #      default: test
       active: prod
+
 

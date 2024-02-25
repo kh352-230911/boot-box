@@ -1,0 +1,129 @@
+#regionText {
+    width: 80%;
+    margin: 40px auto;
+    border: 2px solid #fff;
+}
+#regionTextHeader {
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+#regionTextHeader>p>span {
+    color: #ff003b;
+}
+#listText {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid #fff;
+    border-radius: 6px;
+}
+#theaters-wrap {
+    width: 80%;
+    margin: 10px auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+#theaters-wrap>div {
+    width: 25%;
+    height: 96px;
+    line-height: 48px;
+    text-align: center;
+    border: 1px solid #ff003b;
+    border-right: none;
+}
+#theaters-wrap>div:last-child {
+    border: 1px solid #ff003b;
+}
+#theaters-wrap>div:hover {
+    background: black;
+    cursor: pointer;
+}
+
+#theaterCrud-wrap {
+    width: 100%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+}
+#theaterCrud-wrap div {
+    width: 120px;
+    margin-left: 25px;
+    border: 1px solid #ff003b;
+    border-radius: 4px;
+    text-align: center;
+}
+#theaterCrud-wrap div:first-child {
+    margin-left: 0;
+}
+#theaterCrud-wrap div:hover {
+    background: black;
+}
+
+.createModal{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+.deleteModal{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background: black;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #ff003b;
+    width: 40%;
+    text-align: center;
+}
+
+.modal-content input {
+    width: 100%;
+    margin: 20px auto;
+    background: black;
+    border: 1px solid #ff003b;
+    border-radius: 4px;
+}
+.modal-content button {
+    width: 30%;
+    margin-top: 20px;
+    margin-left: 20px;
+    border: 1px solid #ff003b;
+    border-radius: 4px;
+}
+.modal-content button:first-child {
+    margin-left: 0;
+}
+
+.modal-content button:hover {
+    text-decoration: underline;
+}
+.wrap-container {
+    height: auto;
+    min-height: 100%;
+    padding-bottom: 60px;
+}
+.home-container {
+    min-height: 600px;
+}
+footer {
+    height: 60px;
+    position: relative;
+    transform: translateY(0%);
+}

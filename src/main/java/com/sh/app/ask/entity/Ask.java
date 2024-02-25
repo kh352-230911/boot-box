@@ -1,13 +1,14 @@
 package com.sh.app.ask.entity;
 
+import com.sh.app.member.entity.Member;
+import com.sh.app.movie.entity.Movie;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.CurrentTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "ask")
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(exclude = "member")
 public class Ask implements Serializable {
     @Id
     @GeneratedValue(generator = "seq_ask_id_generator")
@@ -25,13 +27,17 @@ public class Ask implements Serializable {
             allocationSize = 1
     )
     private Long id;
-    @Column(nullable = false, name = "member_login_id")
-    private String memberLoginId; // 문의작성한 회원아이디
+//    private Long memberId;
     private String askTitle; // 문의제목
     private String askDetail; // 문의내용
     @Column(nullable = false, name = "ask_type")
     @Enumerated(EnumType.STRING)
     private AskType askType; // 문의유형
-    private LocalDate createdAt;
+    @CurrentTimestamp
+    private LocalDateTime createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id") // member_id 컬럼지정
+    private Member member;
 
 }
