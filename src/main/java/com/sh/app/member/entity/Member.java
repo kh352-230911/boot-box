@@ -68,8 +68,8 @@ public class Member implements Serializable{
     @JoinColumn(name = "member_id") // authority.member_id 컬럼 작성
     private List<Authority> authorities;
 
-//    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
-//    private List<Ask> asks = new ArrayList<>();
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+    private List<Ask> asks = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
     private List<Reservation> reservations = new ArrayList<>();
