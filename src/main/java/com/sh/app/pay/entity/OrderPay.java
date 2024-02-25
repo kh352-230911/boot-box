@@ -35,7 +35,7 @@ public class OrderPay {
 
     private String inicis; //지원 pg사
 
-    @Column(nullable = false,name="reservation_amount")
+    //@Column(nullable = false,name="reservation_amount")
     private String reservationAmount; //결제 방식
 
     private int price; //총 결제 금액
