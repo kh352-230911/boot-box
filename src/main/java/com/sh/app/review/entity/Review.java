@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = "member")
+@ToString(exclude = {"member"})
 public class Review {
     @Id
     @GeneratedValue(generator = "seq_review_id_generator")

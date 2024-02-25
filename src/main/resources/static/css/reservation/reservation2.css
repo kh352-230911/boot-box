@@ -523,3 +523,10 @@ table{
     background: transparent;  /* 스크롤바 트랙의 배경색 변경 */
 }
 
+#minus {
+    margin-right: 5px;
+}
+#plus {
+    margin-left: 5px;
+}
+

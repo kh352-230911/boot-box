@@ -32,7 +32,7 @@
         </nav>
 
 <!--  비회원일때  -->
-        <th:block sec:authorize="isAnonymous()">
+        <th:block sec:authorize="isAnonymous() or hasAnyAuthority('ROLE_MANAGER', 'ROLE_ADMIN')">
     <!-- sidebar -->
             <div class="sidebar">
                 <i class="fas fa-home"></i>
@@ -42,7 +42,7 @@
         </th:block>
 
 <!-- 회원일때 -->
-        <th:block sec:authorize="isAuthenticated()">
+        <th:block sec:authorize="isAuthenticated() and (not hasAnyAuthority('ROLE_MANAGER', 'ROLE_ADMIN'))">
 <!-- sidebar -->
             <div class="sidebar">
                 <i class="fas fa-home"></i>

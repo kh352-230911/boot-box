@@ -53,29 +53,33 @@
         </ul>
         <div class="text-box p-6 text-medium text-white rounded-lg w-full">
             <h3 class="text-lg font-bold text-white dark:text-white mb-5">내가 본 영화</h3>
-            <th:block th:each="review, status1 : ${member.reviews}">
+            <th:block th:each="reservation, status1 : ${member.reservations}" >
                 <div class="flex movie_info">
-                    <th:block th:each="reservation, status2 : ${member.reservations}" th:if="${status1.index == status2.index}">
+                    <th:block th:each="review, status2 : ${member.reviews}"  th:if="${status1.index == status2.index}">
                         <div class="movie_info-right">
                             <div class="movie_img mr-8">
                                 <img th:src="${review.movie.poster}" alt="movie_image"
                                      class="w-40 h-60 movie_img-item movie_img-first"/>
                             </div>
                         </div>
-                        <div class="movie_info-left">
+                        <div class="movie_info-left" style="width: 300px">
                             <h1 class="movie_title mt-4" th:text="${review.movie.title}" >웡카</h1>
                             <br><br><br>
-                            <th:block th:each="schedule, status3 : ${review.movie.schedules}" th:if="${status2.index == status3.index}">
-                                <div class="mt-4" th:each="theater, status4 : ${schedule.theater}">
-                                    <div class="text-sm" th:each="seat, status5 : ${reservation.seats}" th:if="${status4.index == status5.index}">
+                            <th:block th:each="theater, status3 : ${reservation.schedule.theater}">
+                                <div class="mt-4">
+                                    <div class="text-sm" th:each="seat, status4 : ${reservation.seats}">
+<!--                                        <th:block th:if="${#lists.isEmpty(seat)}">-->
+<!--                                            <p class="text-gray-300">관람 극장</p>-->
+<!--                                            <span th:text="|${theater.cinema.region_cinema} ${theater.name}|">강남</span>-->
+<!--                                        </th:block>-->
                                         <p class="text-gray-300">관람 극장</p>
-                                        <span th:text="|${theater.cinema.region_cinema} ${theater.name} / ${status5.count}명|">강남</span>
+                                        <span th:text="|${theater.cinema.region_cinema} ${theater.name} / ${status4.count}명|">강남</span>
                                     </div>
                                     <div class="text-sm">
                                         <p class="text-gray-300">관람 일시</p>
-                                        <span th:text="|${#temporals.format(schedule.time, 'yyyy-MM-dd HH:mm')}|">2024.02.03 (토) 15:30</span>
+                                        <span th:text="|${#temporals.format(reservation.schedule.time, 'yyyy-MM-dd HH:mm')}|">2024.02.03 (토) 15:30</span>
                                         <br>
-                                        <span th:text="|(${#temporals.dayOfWeekNameShort(schedule.time)})|"></span>
+                                        <span th:text="|(${#temporals.dayOfWeekNameShort(reservation.schedule.time)})|"></span>
                                     </div>
                                 </div>
                             </th:block>

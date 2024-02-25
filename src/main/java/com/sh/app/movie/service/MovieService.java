@@ -76,9 +76,7 @@ public class MovieService {
         return movieRepository.findFirst5ByOrderByAdvanceReservationDesc()
                 .stream().map((movie) -> convertToMovieListDto(movie))
                 .collect(Collectors.toList());
-
     }
-
 
     private MovieDetailDto convertToMovieListDto(Movie movie) {
         MovieDetailDto movieDetailDto = modelMapper.map(movie, MovieDetailDto.class);

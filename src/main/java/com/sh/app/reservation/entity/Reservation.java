@@ -27,7 +27,7 @@ import java.util.Set;
 //@Builder.Default requires an initializing expression =>orderPay 초기화
 //@ToString(exclude = "orderPay") //ToString 무한루프 방지.
 //@ToString(exclude = "schedule")
-@ToString(exclude = {"member", "schedule"})
+@ToString(exclude = {"member"})
 public class Reservation {
 
     @Id
