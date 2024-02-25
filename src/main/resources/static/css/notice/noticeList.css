@@ -120,7 +120,7 @@ tbody {
     font-size: medium;
 }
 #createNotice:hover {
-    background-color: #bb0808;
+    background-color: forestgreen;
     color: black;
     border-color: navajowhite;
 }
