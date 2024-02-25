@@ -27,7 +27,7 @@ public class Ask implements Serializable {
             allocationSize = 1
     )
     private Long id;
-    private Long memberId;
+//    private Long memberId;
     private String askTitle; // 문의제목
     private String askDetail; // 문의내용
     @Column(nullable = false, name = "ask_type")
@@ -36,8 +36,8 @@ public class Ask implements Serializable {
     @CurrentTimestamp
     private LocalDateTime createdAt;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "member_id") // member_id 컬럼지정
-//    private Member member;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id") // member_id 컬럼지정
+    private Member member;
 
 }
