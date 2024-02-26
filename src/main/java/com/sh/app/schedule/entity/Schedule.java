@@ -39,7 +39,8 @@ public class Schedule {
     private LocalDate schDate;
     @Column(nullable = false)
     private LocalDateTime time;
-    @OneToMany(mappedBy = "schedule", fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY)
     @Builder.Default
     private Set<Reservation> reservations = new HashSet<>();
     

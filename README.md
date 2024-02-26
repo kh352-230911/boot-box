@@ -180,3 +180,33 @@ https://img.shields.io/badge/<텍스트>-<배경색>?logo=<로고>&logoColor=<�
 ![Discord](https://img.shields.io/badge/discord-5865F2?style=flat&logo=discord&logoColor=white)
 
 240226 v1.0.0
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: blue;
+        }
+        p {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+# 제목
+
+이것은 **Markdown** 파일입니다.
+
+- 리스트 항목 1
+- 리스트 항목 2
+
+[링크](https://www.example.com)
+
+</body>
+</html>
