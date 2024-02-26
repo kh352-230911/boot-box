@@ -42,11 +42,11 @@ public class Cinema implements Comparable<Cinema>{
     @JoinColumn(name = "location_id")
     private Location location;
 
-    @OneToMany(mappedBy = "cinema", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY)
     @Builder.Default
     private List<Theater> theaters = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cinema", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY)
     private List<MemberLikeCinema> memberLikeCinemas = new ArrayList<>();
 
 
