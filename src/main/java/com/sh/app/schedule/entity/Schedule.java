@@ -44,14 +44,14 @@ public class Schedule {
     @Builder.Default
     private Set<Reservation> reservations = new HashSet<>();
     
-    public void setTheater(Theater theater) {
-        this.theater = theater;
-
-        if(theater != null) {
-            if(theater.getSchedules().contains(this))
-                theater.getSchedules().add(this);
-        }
-    }
+//    public void setTheater(Theater theater) {
+//        this.theater = theater;
+//
+//        if(theater != null) {
+//            if(theater.getSchedules().contains(this))
+//                theater.getSchedules().add(this);
+//        }
+//    }
 
     public void setMovie(Movie movie) {
         this.movie = movie;

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface TheaterRepository extends JpaRepository<Theater, Long> {
 
-    @Query("from Theater t join fetch t.cinema c join fetch t.schedules s where c.id = :cinemaId order by t.id")
+//    @Query("from Theater t join fetch t.cinema c join fetch t.schedules s where c.id = :cinemaId order by t.id")
     List<Theater> findByCinemaId(Long cinemaId);
 
 
