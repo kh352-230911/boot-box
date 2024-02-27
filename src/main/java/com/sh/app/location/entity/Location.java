@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = "cinemas") // ToString 무한루프 방지
+//@ToString(exclude = "cinemas") // ToString 무한루프 방지
 public class Location {
 
     @Id
