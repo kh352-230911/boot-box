@@ -49,7 +49,7 @@ public class Schedule {
     @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY)
     @Builder.Default
     private Set<Reservation> reservations = new HashSet<>();
-    
+
 //    public void setTheater(Theater theater) {
 //        this.theater = theater;
 //

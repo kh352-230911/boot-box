@@ -11,5 +11,6 @@ import java.util.List;
 public class LocationDto {
     private Long id;
     private String location_name;
-    private List<CinemaTitleDto> cinemas = new ArrayList<>();
+    private List<CinemaDto> cinemas = new ArrayList<>();
+    private List<CinemaTitleDto> cinemaTitleDtos = new ArrayList<>();
 }
