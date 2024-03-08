@@ -137,33 +137,19 @@ public class ReservationController {
         System.out.println("movies start======================================================================================");
         List<MovieShortDto> movieList;
         movieList = movieService.shotMovie(); //가나다순으로 정렬
-        log.debug("movies = {}", movieList);
+        //log.debug("movies = {}", movieList);
         System.out.println("movies end======================================================================================");
-        System.out.println("locationsWithCinemas start======================================================================================");
+        System.out.println("지역정보 및 지점 가져오기 start====================================================================================");
         //0214 db 조회하여 지역정보 가져오기
         List<LocationDto> locationsWithCinemas = locationService.findAllLocationsWithCinemas();
-//        model.addAttribute("locations", locationsWithCinemas);z
 
-        //0215 db 조회하여 상영정보 가져오기
-//        List<Schedule> schedules = scheduleService.findAll();
-//        System.out.println("==========상영스케쥴 출력하기==========");
-//        for(int i=0;i<schedules.size();i++)
-//        System.out.println(schedules.get(i).getId());
-        System.out.println("locationsWithCinemas end======================================================================================");
-        //0219 dto로 변환한 스케쥴 잘 나오나
-        List<ScheduleDto> scheduleDtos = scheduleService.findAllSchedulesDto();
-        System.out.println("==========상영스케쥴 출력하기==========");
-        System.out.println(scheduleDtos);
-
+        System.out.println("지역정보 및 지점 가져오기 end======================================================================================");
         //0214 db조회 영화 결과값+ 날짜값 + 지역 결과값 묶어서 model값을 보내주고싶을때 map을 이용해서 여러개를 전달 할 수 있다.
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("movies", movieList); //영화정보
         dataMap.put("dateList", dateList); // 날짜 [로컬에서 계산함]
         dataMap.put("dayOfWeekList", dayOfWeekList); //요일 [로컬에서 계산함]
         dataMap.put("locations",locationsWithCinemas); //지역정보
-
-        //초기 세팅때는 dto가 아닌 init 문구만 띄워준다.
-        dataMap.put("scheduleDtos","영화,극장,시간을 선택해주세요 :)");
 
         // Model에 데이터 저장
         model.addAttribute("dataMap", dataMap);
@@ -414,7 +400,6 @@ public class ReservationController {
     @PostMapping("/reservationStart")
     public ResponseEntity<?> reservationStart(@AuthenticationPrincipal MemberDetails memberDetails,
                                               @RequestBody CombinedDataDto combinedDataDto ) throws IOException {
-
 
         //3번 저장 후 return
         try {

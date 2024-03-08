@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = {"schedules"})
+//@ToString(exclude = {"schedules"})
 public class Theater {
     @Id
     private Long id;
@@ -27,16 +27,16 @@ public class Theater {
     @Column(nullable = false)
     private int seat;
 
-    @OneToMany(mappedBy = "theater", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @Builder.Default
-    private List<Schedule> schedules = new ArrayList<>();
+//    @OneToMany(mappedBy = "theater", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+//    @Builder.Default
+//    private List<Schedule> schedules = new ArrayList<>();
 
-    public void setCinema(Cinema cinema) {
-        this.cinema = cinema;
-
-        if(cinema != null) {
-            if(cinema.getTheaters().contains(this))
-                cinema.getTheaters().add(this);
-        }
-    }
+//    public void setCinema(Cinema cinema) {
+//        this.cinema = cinema;
+//
+//        if(cinema != null) {
+//            if(cinema.getTheaters().contains(this))
+//                cinema.getTheaters().add(this);
+//        }
+//    }
 }

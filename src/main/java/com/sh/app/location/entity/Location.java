@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = "cinemas") // ToString 무한루프 방지
+//@ToString(exclude = "cinemas") // ToString 무한루프 방지
 public class Location {
 
     @Id
@@ -21,7 +21,7 @@ public class Location {
     @Column(nullable = false, unique = true)
     private String location_name;
 
-    @OneToMany(mappedBy = "location", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY)
     @Builder.Default
     private List<Cinema> cinemas = new ArrayList<>();
 }

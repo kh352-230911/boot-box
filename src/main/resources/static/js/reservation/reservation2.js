@@ -762,7 +762,7 @@ function requestPay()
     //0224 테스트 하다가 중요한 것을 잊었다. 인원수=체크박스갯수 확인해야함! ex)인원은 2명인데 1개만 선택한 경우를 발견함.
     if(!check_before_requestPay())
         return;
-
+    console.log("pass check_before_requestPay");
     let pay_uid = new Date().getTime().toString();
     IMP.request_pay({
         pg: "html5_inicis", // PG사코드 - 고정값
@@ -824,8 +824,6 @@ function requestPay()
                     reservationSeatDto: sendData02,
                     orderPayDto : sendData03
                 };
-
-
 
                 $.ajax({
                     headers : {
