@@ -31,12 +31,12 @@ public class Theater {
 //    @Builder.Default
 //    private List<Schedule> schedules = new ArrayList<>();
 
-    public void setCinema(Cinema cinema) {
-        this.cinema = cinema;
-
-        if(cinema != null) {
-            if(cinema.getTheaters().contains(this))
-                cinema.getTheaters().add(this);
-        }
-    }
+//    public void setCinema(Cinema cinema) {
+//        this.cinema = cinema;
+//
+//        if(cinema != null) {
+//            if(cinema.getTheaters().contains(this))
+//                cinema.getTheaters().add(this);
+//        }
+//    }
 }
