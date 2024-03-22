@@ -18,7 +18,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = {"movie", "reservations"})
+@ToString(exclude = {"movie"})
+//@ToString(exclude = {"movie", "reservations"})
 public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,18 +34,20 @@ public class Schedule {
     private LocalDate schDate;
     @Column(nullable = false)
     private LocalDateTime time;
-    @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY)
-    @Builder.Default
-    private Set<Reservation> reservations = new HashSet<>();
-    
-    public void setTheater(Theater theater) {
-        this.theater = theater;
 
-        if(theater != null) {
-            if(theater.getSchedules().contains(this))
-                theater.getSchedules().add(this);
-        }
-    }
+//    @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY)
+//    @Builder.Default
+//    private Set<Reservation> reservations = new HashSet<>();
+
+
+//    public void setTheater(Theater theater) {
+//        this.theater = theater;
+//
+//        if(theater != null) {
+//            if(theater.getSchedules().contains(this))
+//                theater.getSchedules().add(this);
+//        }
+//    }
 
     public void setMovieData(Movie movie) {
         this.movie = movie;
