@@ -1,7 +1,5 @@
 package com.sh.app.schedule.dto;
 
-import com.sh.app.movie.entity.Movie;
-import com.sh.app.theater.dto.TheaterDto;
 import lombok.Data;
 
 import java.time.LocalDate;

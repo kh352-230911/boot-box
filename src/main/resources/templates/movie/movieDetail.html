@@ -5,7 +5,7 @@
 <head>
     <title>영화상세페이지</title>
     <!-- 사용자css -->
-    <link rel="stylesheet" th:href="@{/css/movie/movieDetail.css}" />
+    <link rel="stylesheet" th:href="@{/css/movieData/movieDetail.css}" />
 </head>
 <style layout:fragment="style"></style>
 
@@ -18,9 +18,9 @@
                 <div class="movie_info">
 
                     <div class="movie_info-left">
-                        <h1 class="movie_title" th:text="${movie.title}">윙카</h1>
+                        <h1 class="movie_title" th:text="${movieData.title}">윙카</h1>
                         <div class="movie_rate">
-                            <th:block th:if="${movie.avgReviewScore} == 5.0">
+                            <th:block th:if="${movieData.avgReviewScore} == 5.0">
                                 <ul class="movie_stars">
                                     <li class="movie_star rated">
                                         <i class="fa-solid fa-star"></i>
@@ -39,7 +39,7 @@
                                     </li>
                                 </ul>
                             </th:block>
-                            <th:block th:if="${movie.avgReviewScore} >= 4.0 and ${movie.avgReviewScore} < 5.0">
+                            <th:block th:if="${movieData.avgReviewScore} >= 4.0 and ${movieData.avgReviewScore} < 5.0">
                                 <ul class="movie_stars">
                                     <li class="movie_star rated">
                                         <i class="fa-solid fa-star"></i>
@@ -58,7 +58,7 @@
                                     </li>
                                 </ul>
                             </th:block>
-                            <th:block th:if="${movie.avgReviewScore} >= 3.0 and ${movie.avgReviewScore} < 4.0">
+                            <th:block th:if="${movieData.avgReviewScore} >= 3.0 and ${movieData.avgReviewScore} < 4.0">
                                 <ul class="movie_stars">
                                     <li class="movie_star rated">
                                         <i class="fa-solid fa-star"></i>
@@ -77,7 +77,7 @@
                                     </li>
                                 </ul>
                             </th:block>
-                            <th:block th:if="${movie.avgReviewScore} >= 2.0 and ${movie.avgReviewScore} < 3.0">
+                            <th:block th:if="${movieData.avgReviewScore} >= 2.0 and ${movieData.avgReviewScore} < 3.0">
                                 <ul class="movie_stars">
                                     <li class="movie_star rated">
                                         <i class="fa-solid fa-star"></i>
@@ -96,7 +96,7 @@
                                     </li>
                                 </ul>
                             </th:block>
-                            <th:block th:if="${movie.avgReviewScore} >= 1.0 and ${movie.avgReviewScore} < 2.0">
+                            <th:block th:if="${movieData.avgReviewScore} >= 1.0 and ${movieData.avgReviewScore} < 2.0">
                                 <ul class="movie_stars">
                                     <li class="movie_star rated">
                                         <i class="fa-solid fa-star"></i>
@@ -115,7 +115,7 @@
                                     </li>
                                 </ul>
                             </th:block>
-                            <th:block th:if="${movie.avgReviewScore} >= 0.0 and ${movie.avgReviewScore} < 1.0">
+                            <th:block th:if="${movieData.avgReviewScore} >= 0.0 and ${movieData.avgReviewScore} < 1.0">
                                 <ul class="movie_stars">
                                     <li class="movie_star">
                                         <i class="fa-solid fa-star"></i>
@@ -134,25 +134,25 @@
                                     </li>
                                 </ul>
                             </th:block>
-                            <div class="movie_comment" th:text="|예매율 ${movie.advanceReservation}%|"></div>
+                            <div class="movie_comment" th:text="|예매율 ${movieData.advanceReservation}%|"></div>
                         </div>
-                        <div class="movie_infos" th:text="|개봉 : ${movie.releaseDate}|"></div>
+                        <div class="movie_infos" th:text="|개봉 : ${movieData.releaseDate}|"></div>
                         <div class="flex">
                             장르 :&nbsp;
-                            <span th:each="movieGenre, status : ${movie.genres}">
+                            <span th:each="movieGenre, status : ${movieData.genres}">
                                 <p th:text="|${movieGenre.genreList}${!status.last ? ', ' : ''}|"></p>
                             </span>
                         </div>
-                        <div th:text="|러닝타임 : ${movie.runningTime} 분|"></div>
-                        <div th:text="|감독 : ${movie.director}|"></div>
-                        <div th:text="|배우 : ${movie.actor}|"></div>
+                        <div th:text="|러닝타임 : ${movieData.runningTime} 분|"></div>
+                        <div th:text="|감독 : ${movieData.director}|"></div>
+                        <div th:text="|배우 : ${movieData.actor}|"></div>
                         <!-- name() 메소드는 열거형 상수의 이름을 문자열로 반환 -->
-                        <div th:text="|등급 : ${movie.filmRatings.name() == 'ALL' ? '전체관람가' :
-                                               movie.filmRatings.name() == 'EIGHTEEN' ? '18세이상관람가' :
-                                               movie.filmRatings.name() == 'FIFTEEN' ? '15세이상관람가' :
-                                               movie.filmRatings.name() == 'TWELVE' ? '12세이상관람가' :
-                                               movie.filmRatings.name() == 'NONE' ? '등급 없음' : '등급 없음'}|"></div>
-                        <div class="movie_des" th:text="${movie.summary}">
+                        <div th:text="|등급 : ${movieData.filmRatings.name() == 'ALL' ? '전체관람가' :
+                                               movieData.filmRatings.name() == 'EIGHTEEN' ? '18세이상관람가' :
+                                               movieData.filmRatings.name() == 'FIFTEEN' ? '15세이상관람가' :
+                                               movieData.filmRatings.name() == 'TWELVE' ? '12세이상관람가' :
+                                               movieData.filmRatings.name() == 'NONE' ? '등급 없음' : '등급 없음'}|"></div>
+                        <div class="movie_des" th:text="${movieData.summary}">
                             줄거리
                         </div>
                         <div class="movie_action">
@@ -165,7 +165,7 @@
                     <div class="movie_info-right">
                         <div class="movie_img">
                             <img
-                                    th:src= "${movie.poster}" alt="movie_image"
+                                    th:src= "${movieData.poster}" alt="movie_image"
                                     class="movie_img-item movie_img-first"
                             />
                         </div>
@@ -177,7 +177,7 @@
                 <div class="text-2xl">Trailer</div>
                 <div class="trailer-container">
                     <video autoplay muted controls loop>
-                        <source th:src= "${movie.trailer}" type="video/mp4">
+                        <source th:src= "${movieData.trailer}" type="video/mp4">
                     </video>
                 </div>
                 <div class="line"></div>
@@ -185,7 +185,7 @@
                 <!-- review -->
                 <div class="text-2xl">Review</div>
                 <br>
-                <div th:each="review, status : ${movie.reviews}">
+                <div th:each="review, status : ${movieData.reviews}">
                     <figure class="">
                         <th:block th:if="${review.reviewScore} == 5.0">
                             <ul class="movie_stars">

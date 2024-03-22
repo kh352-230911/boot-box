@@ -1,13 +1,11 @@
 package com.sh.app.ask.entity;
 
 import com.sh.app.member.entity.Member;
-import com.sh.app.movie.entity.Movie;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CurrentTimestamp;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity

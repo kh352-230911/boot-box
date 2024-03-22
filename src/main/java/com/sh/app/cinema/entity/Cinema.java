@@ -1,9 +1,7 @@
 package com.sh.app.cinema.entity;
 
-import com.sh.app.genre.entity.Genre;
 import com.sh.app.location.entity.Location;
 import com.sh.app.memberLikeCinema.entity.MemberLikeCinema;
-import com.sh.app.movie.entity.Movie;
 import com.sh.app.theater.entity.Theater;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,7 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = {"theaters", "movies", "memberLikeCinemas"})
+//@ToString(exclude = {"theaters", "movies", "memberLikeCinemas"})
 public class Cinema implements Comparable<Cinema>{
 
     @Id
@@ -42,13 +40,12 @@ public class Cinema implements Comparable<Cinema>{
     @JoinColumn(name = "location_id")
     private Location location;
 
-    @OneToMany(mappedBy = "cinema", fetch = FetchType.EAGER)
-    @Builder.Default
-    private List<Theater> theaters = new ArrayList<>();
-
-    @OneToMany(mappedBy = "cinema", fetch = FetchType.EAGER)
-    private List<MemberLikeCinema> memberLikeCinemas = new ArrayList<>();
-
+//    @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY)
+//    @Builder.Default
+//    private List<Theater> theaters = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY)
+//    private List<MemberLikeCinema> memberLikeCinemas = new ArrayList<>();
 
     public void setLocation(Location location) {
         this.location = location;
@@ -61,13 +58,13 @@ public class Cinema implements Comparable<Cinema>{
     }
 
     // 극장 브릿지 테이블
-    @ManyToMany
-    @JoinTable(
-            name = "movie_list",
-            joinColumns = @JoinColumn(name = "cinema_id"),
-            inverseJoinColumns = @JoinColumn(name = "movie_id"))
-    @Builder.Default
-    private Set<Movie> movies = new LinkedHashSet<>();
+//    @ManyToMany
+//    @JoinTable(
+//            name = "movie_list",
+//            joinColumns = @JoinColumn(name = "cinema_id"),
+//            inverseJoinColumns = @JoinColumn(name = "movie_id"))
+//    @Builder.Default
+//    private Set<Movie> movies = new LinkedHashSet<>();
 
     @Override
     public int compareTo(Cinema other) {

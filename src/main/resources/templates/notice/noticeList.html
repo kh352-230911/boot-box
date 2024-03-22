@@ -30,7 +30,7 @@
         <!-- table박스 -->
         <div class="container flex justify-center" style="width: 1550px">
 
-            <th:block sec:authorize="hasAuthority('ROLE_USER')">
+            <th:block sec:authorize="hasAuthority('ROLE_USER') or isAnonymous()">
             <div class="notice-List mr-10">
                 <div class="w-48 text-gray-900 bg-white border border-red-800 rounded-lg dark:bg-red-600 dark:border-red-800 dark:text-white">
                     <div type="text" class="bg-red-600 relative inline-flex justify-center w-full px-4 py-2 text-base font-semibold border-b border-red-600 rounded-t-lg">
