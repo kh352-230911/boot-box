@@ -1,9 +1,8 @@
 package com.sh.app.cinema.entity;
 
-import com.sh.app.genre.entity.Genre;
 import com.sh.app.location.entity.Location;
 import com.sh.app.memberLikeCinema.entity.MemberLikeCinema;
-import com.sh.app.movie.entity.Movie;
+import com.sh.app.movieData.entity.MovieData;
 import com.sh.app.theater.entity.Theater;
 import jakarta.persistence.*;
 import lombok.*;
@@ -42,11 +41,11 @@ public class Cinema implements Comparable<Cinema>{
     @JoinColumn(name = "location_id")
     private Location location;
 
-    @OneToMany(mappedBy = "cinema", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY)
     @Builder.Default
     private List<Theater> theaters = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cinema", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY)
     private List<MemberLikeCinema> memberLikeCinemas = new ArrayList<>();
 
 
@@ -67,7 +66,7 @@ public class Cinema implements Comparable<Cinema>{
             joinColumns = @JoinColumn(name = "cinema_id"),
             inverseJoinColumns = @JoinColumn(name = "movie_id"))
     @Builder.Default
-    private Set<Movie> movies = new LinkedHashSet<>();
+    private Set<MovieData> movieData = new LinkedHashSet<>();
 
     @Override
     public int compareTo(Cinema other) {

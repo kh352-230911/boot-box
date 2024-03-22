@@ -1,15 +1,12 @@
 package com.sh.app.reservation.entity;
 import com.sh.app.common.Status;
-import com.sh.app.genre.entity.Genre;
 import com.sh.app.member.entity.Member;
-import com.sh.app.pay.entity.OrderPay;
 import com.sh.app.schedule.entity.Schedule;
 import com.sh.app.seat.entity.Seat;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 
 import java.util.Set;
 

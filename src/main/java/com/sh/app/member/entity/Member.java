@@ -64,17 +64,17 @@ public class Member implements Serializable{
     @Builder.Default
     private List<Review> reviews = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id") // authority.member_id 컬럼 작성
     private List<Authority> authorities;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Ask> asks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Reservation> reservations = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<MemberLikeCinema> memberLikeCinemas = new ArrayList<>();
 
 }

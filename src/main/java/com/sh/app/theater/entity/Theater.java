@@ -1,7 +1,6 @@
 package com.sh.app.theater.entity;
 
 import com.sh.app.cinema.entity.Cinema;
-import com.sh.app.movie.entity.Movie;
 import com.sh.app.schedule.entity.Schedule;
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,7 +26,7 @@ public class Theater {
     @Column(nullable = false)
     private int seat;
 
-    @OneToMany(mappedBy = "theater", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "theater", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @Builder.Default
     private List<Schedule> schedules = new ArrayList<>();
 

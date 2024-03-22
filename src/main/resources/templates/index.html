@@ -4,7 +4,7 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{layout/default}">
 <head>
-    <title>movie</title>
+    <title>movieData</title>
 </head>
 <style layout:fragment="style">
 </style>
@@ -39,12 +39,19 @@
     <hr style="height: 1px">
     <br>
 
-    <th:block th:if="${not #lists.isEmpty(movies)}">
+    <th:block th:if="${not #lists.isEmpty(movieData)}">
         <banner>
-            <div class="video-banner flex">
-                    <video autoplay muted controls loop>
-                        <source th:src="${movies[0].trailer}" type="video/mp4">
+            <div class="video-banner flex justify-center">
+                    <video autoplay muted controls loop width="1100" height="650">
+                        <source th:src="${movieData[0].trailer}" type="video/mp4">
                     </video>
+<!--                <iframe src="https://www.youtube.com/embed/YCSaw66rkWc?autoplay=1&mute=1&controls=0&loop=1&playlist=YCSaw66rkWc"-->
+<!--                        width="1100" height="499" title="YouTube video player"-->
+<!--                        frameborder="0"-->
+<!--                        allow="accelerometer; autoplay; clipboard-write;-->
+<!--						encrypted-media; gyroscope; picture-in-picture; web-share"-->
+<!--                        allowfullscreen>-->
+<!--                </iframe>-->
             </div>
         </banner>
         <br>
@@ -52,37 +59,37 @@
         <!-- 검색이 없을때 메인영역  -->
         <div class="section-1">
             <div class="con">
-                <th:block th:if="${movies[0].searchResult == false}">
+                <th:block th:if="${movieData[0].searchResult == false}">
                     <div class="flex justify-between section-1-1">
                         <span class="border-b-2 border-red-600 font-semibold">무비 차트</span>
                         <div class="full-view">
                             <div class="flex-shrink-0 flex justify-center">
-                                <div><a th:href="@{/movie/movieList.do}" class="a-1 full-view flex align-center justify-center hover:bg-red-600 text-white">전체보기 ></a></div>
+                                <div><a th:href="@{/movieData/movieList.do}" class="a-1 full-view flex align-center justify-center hover:bg-red-600 text-white">전체보기 ></a></div>
                             </div>
                         </div>
                     </div>
                     <br>
                     <div class="section-1-2 flex">
-                        <div th:each="movie, status : ${movies}">
+                        <div th:each="movieData, status : ${movieData}">
                             <div>
-                                <a th:href="@{/movie/movieDetail.do(id=${movie.id})}">
+                                <a th:href="@{/movieData/movieDetail.do(id=${movieData.id})}">
                                     <p th:text="${status.count}" class="rank">1</p>
-                                    <img th:src="${movie.poster}" th:alt="${movie.title}">
+                                    <img th:src="${movieData.poster}" th:alt="${movieData.title}">
                                 </a>
                                 <div class="section-1-2-btn">
                                     <div class="section-1-2-btn-bg"></div>
                                     <div class="section-1-2-btn-de">
-                                        <div class="detail"><a th:href="@{/movie/movieDetail.do(id=${movie.id})}">상세보기</a></div>
+                                        <div class="detail"><a th:href="@{/movieData/movieDetail.do(id=${movieData.id})}">상세보기</a></div>
                                     </div>
                                 </div>
                             </div>
 
-                            <a class="movie-title mb-1" th:text="${#strings.abbreviate(movie.title, 18)}" href="#"></a>
+                            <a class="movieData-title mb-1" th:text="${#strings.abbreviate(movieData.title, 18)}" href="#"></a>
 
                             <a th:href="@{#}">
-                                <th:block th:if="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)} == 5.0">
+                                <th:block th:if="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)} == 5.0">
                                     <div class="flex items-center justify-center">
-                                        <p th:text="${#numbers.formatDecimal(#numbers.formatDecimal(#numbers.formatDecimal(movie.avgReviewScore, 1, 1), 1, 1), 1, 1)}"></p>
+                                        <p th:text="${#numbers.formatDecimal(#numbers.formatDecimal(#numbers.formatDecimal(movieData.avgReviewScore, 1, 1), 1, 1), 1, 1)}"></p>
                                         <svg class="w-4 h-4 text-yellow-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                                         </svg>
@@ -100,9 +107,9 @@
                                         </svg>
                                     </div>
                                 </th:block>
-                                <th:block th:if="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)} >= 4.0 and ${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)} < 5.0">
+                                <th:block th:if="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)} >= 4.0 and ${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)} < 5.0">
                                     <div class="flex items-center justify-center">
-                                        <p th:text="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)}"></p>
+                                        <p th:text="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)}"></p>
                                         <svg class="w-4 h-4 text-yellow-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                                         </svg>
@@ -120,9 +127,9 @@
                                         </svg>
                                     </div>
                                 </th:block>
-                                <th:block th:if="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)} >= 3.0 and ${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)} < 4.0">
+                                <th:block th:if="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)} >= 3.0 and ${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)} < 4.0">
                                     <div class="flex items-center justify-center">
-                                        <p th:text="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)}"></p>
+                                        <p th:text="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)}"></p>
                                         <svg class="w-4 h-4 text-yellow-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                                         </svg>
@@ -140,9 +147,9 @@
                                         </svg>
                                     </div>
                                 </th:block>
-                                <th:block th:if="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)} >= 2.0 and ${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)} < 3.0">
+                                <th:block th:if="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)} >= 2.0 and ${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)} < 3.0">
                                     <div class="flex items-center justify-center">
-                                        <p th:text="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)}"></p>
+                                        <p th:text="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)}"></p>
                                         <svg class="w-4 h-4 text-yellow-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                                         </svg>
@@ -160,9 +167,9 @@
                                         </svg>
                                     </div>
                                 </th:block>
-                                <th:block th:if="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)} >= 1.0 and ${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)} < 2.0">
+                                <th:block th:if="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)} >= 1.0 and ${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)} < 2.0">
                                     <div class="flex items-center justify-center">
-                                        <p th:text="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)}"></p>
+                                        <p th:text="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)}"></p>
                                         <svg class="w-4 h-4 text-yellow-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                                         </svg>
@@ -180,9 +187,9 @@
                                         </svg>
                                     </div>
                                 </th:block>
-                                <th:block th:if="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)} == 0 and ${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)} < 1.0">
+                                <th:block th:if="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)} == 0 and ${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)} < 1.0">
                                     <div class="flex items-center justify-center">
-                                        <p th:text="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)}"></p>
+                                        <p th:text="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)}"></p>
                                         <svg class="w-4 h-4 text-gray-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                                         </svg>
@@ -201,20 +208,20 @@
                                     </div>
                                 </th:block>
                             </a>
-                            <a class="movie-content" href="#"><img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">
-                                <span th:text="|${movie.advanceReservation}%|">예매율29.1%</span>
+                            <a class="movieData-content" href="#"><img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">
+                                <span th:text="|${movieData.advanceReservation}%|">예매율29.1%</span>
                             </a>
                         </div>
                     </div>
                 </th:block>
 
             <!-- 검색이 있을때 조회되는 영역 -->
-                <th:block th:if="${movies[0].searchResult == true}">
+                <th:block th:if="${movieData[0].searchResult == true}">
                     <div class="flex justify-between section-1-1">
                         <span class="border-b-2 border-red-600 font-semibold">검색 결과</span>
                         <div class="full-view">
                             <div class="flex-shrink-0 flex justify-center">
-                                <div><a th:href="@{/movie/movieList.do}" class="a-1 full-view flex align-center justify-center hover:bg-red-600 text-white">전체보기 ></a></div>
+                                <div><a th:href="@{/movieData/movieList.do}" class="a-1 full-view flex align-center justify-center hover:bg-red-600 text-white">전체보기 ></a></div>
                             </div>
                         </div>
                     </div>
@@ -223,22 +230,22 @@
                         <div>
                             <div>
                                 <a href="#">
-                                    <img th:src="${movies[0].poster}" th:alt="${movies[0].title}">
+                                    <img th:src="${movieData[0].poster}" th:alt="${movieData[0].title}">
                                 </a>
                                 <div class="section-1-2-btn">
                                     <div class="section-1-2-btn-bg"></div>
                                     <div class="section-1-2-btn-de">
-                                        <div class="detail"><a th:href="@{/movie/movieDetail.do(id=${movies[0].id})}">상세보기</a></div>
+                                        <div class="detail"><a th:href="@{/movieData/movieDetail.do(id=${movieData[0].id})}">상세보기</a></div>
                                     </div>
                                 </div>
                             </div>
 
-                            <a class="movie-title mb-1" th:text="${#strings.abbreviate(movies[0].title, 18)}" href="#"></a>
+                            <a class="movieData-title mb-1" th:text="${#strings.abbreviate(movieData[0].title, 18)}" href="#"></a>
 
                             <a th:href="@{#}">
-                                <th:block th:if="${#numbers.formatDecimal(movies[0].avgReviewScore, 1, 1)} == 5.0">
+                                <th:block th:if="${#numbers.formatDecimal(movieData[0].avgReviewScore, 1, 1)} == 5.0">
                                     <div class="flex items-center justify-center">
-                                        <p th:text="${#numbers.formatDecimal(movies[0].avgReviewScore, 1, 1)}"></p>
+                                        <p th:text="${#numbers.formatDecimal(movieData[0].avgReviewScore, 1, 1)}"></p>
                                         <svg class="w-4 h-4 text-yellow-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                                         </svg>
@@ -256,9 +263,9 @@
                                         </svg>
                                     </div>
                                 </th:block>
-                                <th:block th:if="${#numbers.formatDecimal(movies[0].avgReviewScore, 1, 1)} >= 4.0 and ${#numbers.formatDecimal(movies[0].avgReviewScore, 1, 1)} < 5.0">
+                                <th:block th:if="${#numbers.formatDecimal(movieData[0].avgReviewScore, 1, 1)} >= 4.0 and ${#numbers.formatDecimal(movieData[0].avgReviewScore, 1, 1)} < 5.0">
                                     <div class="flex items-center justify-center">
-                                        <p th:text="${#numbers.formatDecimal(movies[0].avgReviewScore, 1, 1)}"></p>
+                                        <p th:text="${#numbers.formatDecimal(movieData[0].avgReviewScore, 1, 1)}"></p>
                                         <svg class="w-4 h-4 text-yellow-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                                         </svg>
@@ -276,9 +283,9 @@
                                         </svg>
                                     </div>
                                 </th:block>
-                                <th:block th:if="${#numbers.formatDecimal(movies[0].avgReviewScore, 1, 1)} >= 3.0 and ${#numbers.formatDecimal(movies[0].avgReviewScore, 1, 1)} < 4.0">
+                                <th:block th:if="${#numbers.formatDecimal(movieData[0].avgReviewScore, 1, 1)} >= 3.0 and ${#numbers.formatDecimal(movieData[0].avgReviewScore, 1, 1)} < 4.0">
                                     <div class="flex items-center justify-center">
-                                        <p th:text="${#numbers.formatDecimal(movies[0].avgReviewScore, 1, 1)}"></p>
+                                        <p th:text="${#numbers.formatDecimal(movieData[0].avgReviewScore, 1, 1)}"></p>
                                         <svg class="w-4 h-4 text-yellow-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                                         </svg>
@@ -296,9 +303,9 @@
                                         </svg>
                                     </div>
                                 </th:block>
-                                <th:block th:if="${#numbers.formatDecimal(movies[0].avgReviewScore, 1, 1)} >= 2.0 and ${#numbers.formatDecimal(movies[0].avgReviewScore, 1, 1)} < 3.0">
+                                <th:block th:if="${#numbers.formatDecimal(movieData[0].avgReviewScore, 1, 1)} >= 2.0 and ${#numbers.formatDecimal(movieData[0].avgReviewScore, 1, 1)} < 3.0">
                                     <div class="flex items-center justify-center">
-                                        <p th:text="${#numbers.formatDecimal(movies[0].avgReviewScore, 1, 1)}"></p>
+                                        <p th:text="${#numbers.formatDecimal(movieData[0].avgReviewScore, 1, 1)}"></p>
                                         <svg class="w-4 h-4 text-yellow-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                                         </svg>
@@ -316,9 +323,9 @@
                                         </svg>
                                     </div>
                                 </th:block>
-                                <th:block th:if="${#numbers.formatDecimal(movies[0].avgReviewScore, 1, 1)} >= 1.0 and ${#numbers.formatDecimal(movies[0].avgReviewScore, 1, 1)} < 2.0">
+                                <th:block th:if="${#numbers.formatDecimal(movieData[0].avgReviewScore, 1, 1)} >= 1.0 and ${#numbers.formatDecimal(movieData[0].avgReviewScore, 1, 1)} < 2.0">
                                     <div class="flex items-center justify-center">
-                                        <p th:text="${#numbers.formatDecimal(movies[0].avgReviewScore, 1, 1)}"></p>
+                                        <p th:text="${#numbers.formatDecimal(movieData[0].avgReviewScore, 1, 1)}"></p>
                                         <svg class="w-4 h-4 text-yellow-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                                         </svg>
@@ -336,9 +343,9 @@
                                         </svg>
                                     </div>
                                 </th:block>
-                                <th:block th:if="${#numbers.formatDecimal(movies[0].avgReviewScore, 1, 1)} == 0 and ${#numbers.formatDecimal(movies[0].avgReviewScore, 1, 1)} < 1.0">
+                                <th:block th:if="${#numbers.formatDecimal(movieData[0].avgReviewScore, 1, 1)} == 0 and ${#numbers.formatDecimal(movieData[0].avgReviewScore, 1, 1)} < 1.0">
                                     <div class="flex items-center justify-center">
-                                        <p th:text="${#numbers.formatDecimal(movies[0].avgReviewScore, 1, 1)}"></p>
+                                        <p th:text="${#numbers.formatDecimal(movieData[0].avgReviewScore, 1, 1)}"></p>
                                         <svg class="w-4 h-4 text-gray-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                                         </svg>
@@ -357,8 +364,8 @@
                                     </div>
                                 </th:block>
                             </a>
-                            <a class="movie-content" href="#"><img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">
-                                <span th:text="|${movies[0].advanceReservation}%|">예매율29.1%</span>
+                            <a class="movieData-content" href="#"><img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">
+                                <span th:text="|${movieData[0].advanceReservation}%|">예매율29.1%</span>
                             </a>
                         </div>
                     </div>
@@ -377,24 +384,24 @@
             <div>
                 <div class="small">
                         <ul class="small-ul list-unstyled" data-small="">
-                            <th:block th:each="movie, status : ${movies}" th:if="${status.index != 0}">
+                            <th:block th:each="movieData, status : ${movieData}" th:if="${status.index != 0}">
                                 <li class="section-2-1">
                                     <div class="section-2-2">
-                                        <img th:src="${movie.poster}" width="200" height="200" alt="small" />
+                                        <img th:src="${movieData.poster}" width="200" height="200" alt="small" />
                                         <div class="section-1-2-btn">
                                             <div class="section-1-2-btn-bg"></div>
                                             <div class="section-1-2-btn-de">
-                                                <div class="detail"><a th:href="@{/movie/movieDetail.do(id=${movie.id})}">상세보기</a></div>
+                                                <div class="detail"><a th:href="@{/movieData/movieDetail.do(id=${movieData.id})}">상세보기</a></div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <a class="movie-title mb-1" th:text="${#strings.abbreviate(movie.title, 18)}" href="#"></a>
+                                    <a class="movieData-title mb-1" th:text="${#strings.abbreviate(movieData.title, 18)}" href="#"></a>
 
                                     <a th:href="@{#}">
-                                        <th:block th:if="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)} == 5.0">
+                                        <th:block th:if="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)} == 5.0">
                                             <div class="flex items-center justify-center">
-                                                <p th:text="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)}"></p>
+                                                <p th:text="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)}"></p>
                                                 <svg class="w-4 h-4 text-yellow-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                                     <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                                                 </svg>
@@ -412,9 +419,9 @@
                                                 </svg>
                                             </div>
                                         </th:block>
-                                        <th:block th:if="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)} >= 4.0 and ${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)} < 5.0">
+                                        <th:block th:if="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)} >= 4.0 and ${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)} < 5.0">
                                             <div class="flex items-center justify-center">
-                                                <p th:text="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)}"></p>
+                                                <p th:text="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)}"></p>
                                                 <svg class="w-4 h-4 text-yellow-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                                     <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                                                 </svg>
@@ -432,9 +439,9 @@
                                                 </svg>
                                             </div>
                                         </th:block>
-                                        <th:block th:if="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)} >= 3.0 and ${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)} < 4.0">
+                                        <th:block th:if="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)} >= 3.0 and ${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)} < 4.0">
                                             <div class="flex items-center justify-center">
-                                                <p th:text="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)}"></p>
+                                                <p th:text="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)}"></p>
                                                 <svg class="w-4 h-4 text-yellow-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                                     <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                                                 </svg>
@@ -452,9 +459,9 @@
                                                 </svg>
                                             </div>
                                         </th:block>
-                                        <th:block th:if="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)} >= 2.0 and ${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)} < 3.0">
+                                        <th:block th:if="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)} >= 2.0 and ${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)} < 3.0">
                                             <div class="flex items-center justify-center">
-                                                <p th:text="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)}"></p>
+                                                <p th:text="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)}"></p>
                                                 <svg class="w-4 h-4 text-yellow-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                                     <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                                                 </svg>
@@ -472,9 +479,9 @@
                                                 </svg>
                                             </div>
                                         </th:block>
-                                        <th:block th:if="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)} >= 1.0 and ${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)} < 2.0">
+                                        <th:block th:if="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)} >= 1.0 and ${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)} < 2.0">
                                             <div class="flex items-center justify-center">
-                                                <p th:text="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)}"></p>
+                                                <p th:text="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)}"></p>
                                                 <svg class="w-4 h-4 text-yellow-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                                     <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                                                 </svg>
@@ -492,9 +499,9 @@
                                                 </svg>
                                             </div>
                                         </th:block>
-                                        <th:block th:if="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)} == 0 and ${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)} < 1.0">
+                                        <th:block th:if="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)} == 0 and ${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)} < 1.0">
                                             <div class="flex items-center justify-center">
-                                                <p th:text="${#numbers.formatDecimal(movie.avgReviewScore, 1, 1)}"></p>
+                                                <p th:text="${#numbers.formatDecimal(movieData.avgReviewScore, 1, 1)}"></p>
                                                 <svg class="w-4 h-4 text-gray-300 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                                     <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                                                 </svg>
@@ -513,8 +520,8 @@
                                             </div>
                                         </th:block>
                                     </a>
-                                    <a class="movie-content" href="#"><img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">
-                                        <span th:text="|${movie.advanceReservation}%|">예매율29.1%</span>
+                                    <a class="movieData-content" href="#"><img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">
+                                        <span th:text="|${movieData.advanceReservation}%|">예매율29.1%</span>
                                     </a>
                                 </li>
                             </th:block>
@@ -527,7 +534,7 @@
     </th:block>
     <div>
     <!--  검색어가 영화title과 일치하지 않는 경우  -->
-        <th:block class="section-1" th:if="${#lists.isEmpty(movies)}">
+        <th:block class="section-1" th:if="${#lists.isEmpty(movieData)}">
             <div class="con">
                 <!-- 검색 결과가 존재하지 않는 경우 -->
                 <div  class="flex justify-between section-1-1">

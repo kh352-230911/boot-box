@@ -16,40 +16,40 @@
     <hr style="height: 1px">
     <br>
     <!-- 4개의 영역을 감싸는 최상단 div -->
-    <div class = "info-movies">
+    <div class = "info-movieData">
 
-        <table class="movie-area">
+        <table class="movieData-area">
             <thead>
             <tr>
                 <th colspan="2">영화 리스트</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="movie, status : ${dataMap.movies}">
-                <img th:src="${movie.poster}" th:style="'display:none;'">
-                <td class="select-movie"
-                    th:data-poster="${movie.poster}"
-                    th:data-title="${movie.title}"
-                    th:attr="data-movie-id=${movie.id}"
+            <tr th:each="movieData, status : ${dataMap.movieData}">
+                <img th:src="${movieData.poster}" th:style="'display:none;'">
+                <td class="select-movieData"
+                    th:data-poster="${movieData.poster}"
+                    th:data-title="${movieData.title}"
+                    th:attr="data-movieData-id=${movieData.id}"
                     onclick="showPoster(this.getAttribute('data-poster'), this.getAttribute('data-title'))">
-                    <th:block th:if="|${movie.filmRatings.name() == 'ALL'}|">
+                    <th:block th:if="|${movieData.filmRatings.name() == 'ALL'}|">
                         <span style="font-size: 0.2em" class="grade bg-gradient-to-r shadow-lg shadow-green-100/50 bg-green-100 text-green-800 text-m font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">ALL</span>
                     </th:block>
-                    <th:block th:if="|${movie.filmRatings.name() == 'TWELVE'}|">
+                    <th:block th:if="|${movieData.filmRatings.name() == 'TWELVE'}|">
                         <span style="font-size: 0.2em" class="grade bg-gradient-to-r shadow-lg shadow-yellow-100/50 bg-yellow-100 text-yellow-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">12</span>
                     </th:block>
-                    <th:block th:if="|${movie.filmRatings.name() == 'FIFTEEN'}|">
+                    <th:block th:if="|${movieData.filmRatings.name() == 'FIFTEEN'}|">
                         <span style="font-size: 0.2em" class="grade bg-gradient-to-r shadow-lg shadow-purple-100/50 bg-purple-100 text-purple-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-purple-400 border border-purple-400">15</span>
                     </th:block>
-                    <th:block th:if="|${movie.filmRatings.name() == 'EIGHTEEN'}|">
+                    <th:block th:if="|${movieData.filmRatings.name() == 'EIGHTEEN'}|">
                         <span style="font-size: 0.2em" class="grade bg-gradient-to-r shadow-lg shadow-red-100/50 bg-red-100 text-red-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">18</span>
                     </th:block>
-                    <th:block th:if="|${movie.filmRatings.name() == 'NONE'}|">
+                    <th:block th:if="|${movieData.filmRatings.name() == 'NONE'}|">
                         <span style="font-size: 0.2em" class="grade bg-gradient-to-r shadow-lg shadow-gray-100/50 bg-gray-100 text-gray-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-500">미정</span>
                     </th:block>
 
                     <button
-                            th:text="${#strings.abbreviate(movie.title, 10)}">
+                            th:text="${#strings.abbreviate(movieData.title, 10)}">
                     </button>
                 </td>
 

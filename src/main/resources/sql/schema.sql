@@ -122,41 +122,94 @@ CREATE TABLE THEATER (
 );
 --
 --15.장르
-CREATE TABLE GENRE(
-    id	number NOT NULL, --pk
-    genre_list varchar2(200) NOT NULL,
-    constraints pk_genre_id primary key(id) --pk
+create table genre(
+  id number not null, -- pk 시퀀스 id
+  genre_id number null, -- 장르 식별 id
+  genre_name varchar2(255) NOT NULL, -- 장르명
+  constraints pk_genre_id primary key(id)
 );
 create sequence seq_genre_id;
 --
--- 1.예매 가능한 영화
-CREATE TABLE MOVIE(
-    id number NOT NULL , --영화 id (api로 받아올 때 - 고유값이라 겹치지 않음)
-    title varchar2(500) NOT NULL, --영화 제목
-    film_ratings varchar2(20) default 'NONE' NOT NULL, -- 관람등급
-    release_date varchar2(20) NOT NULL, -- 개봉일(상영가능한 날짜의 첫 날)
-    running_time number NOT NULL, --상영시간
-    trailer	varchar2(500) NULL, --예고편
-    poster varchar2(500) NULL, --포스터
-    director varchar2(100) NULL, --감독
-    actor	varchar2(500) NULL, --배우
-    summary varchar2(4000) NULL, --줄거리(5000자 length에러 나서 4000으로 수정)
-    advance_reservation number(4,1) NOT NULL, -- 예매율
-    constraints pk_movie_id primary key(id), -- pk
-    constraints ck_movie_film_ratings check(film_ratings in('ALL', 'TWELVE', 'FIFTEEN', 'EIGHTEEN', 'NONE')) -- ck
+-- 예고편
+create table vod (
+    id number not null, -- pk 시퀀스 id
+    movie_id number not null, -- fk 영화 고유 id
+    vod_name varchar2(500) not null, -- 비디오 제목
+    vod_url varchar2(255) not null, -- url
+    type varchar2(255) not null, -- vod 타입
+    constraints pk_vod_id primary key(id),
+    constraints fk_vod_movie_id foreign key(movie_id) references movie(id) on delete set cascade
+);
+create sequence seq_vod_id;
+--
+-- 배우
+create table actor (
+    id number not null, -- pk 시퀀스 id
+    actor_id number null, -- 배우 식별 id
+    actor_name varchar2(255) not null, -- 배우명
+    constraints pk_actor_id primary key(id)
+);
+create sequence seq_actor_id;
+--
+-- 감독
+create table director (
+    id number not null, -- pk 시퀀스 id
+    director_id number null, -- 감독 식별 id
+    director_name varchar2(255) not null, -- 감독명
+    constraints pk_director_id primary key(id)
+);
+create sequence seq_director_id;
+--
+-- 영화(박스오피스 + 현재 상영작)
+create table movie(
+    id number not null , -- 영화 id (api로 받아올 때 - 고유값이라 겹치지 않음)
+    rank number null, -- 박스오피스 식별 랭킹
+    status varchar2(20) default 'current_movie' not null
+    title varchar2(500) not null, -- 영화 제목
+    normalized_title varchar2(500) not null, -- 정규화된 영화 제목(tmdb/kmdb 영화 제목 식별용 정규화 제목)
+    release_date date not null, -- 개봉일(상영가능한 날짜의 첫 날)
+    film_ratings varchar2(255) default '정보 없음' not null, -- 관람등급
+    runtime number default 0 not null, -- 상영시간
+    overview varchar2(2000) null, -- 줄거리
+    vote_average number(2, 1) default 0 not null, -- 평점
+    poster_url varchar2(500), -- 포스터
+    constraints pk_movie_id primary key(id),
+    constraints ck_movie_status check(status in('box_office', 'current_movie'))
 );
 -- 시퀀스 사용x
 --
 --19.영화 장르
-CREATE TABLE MOVIE_GENRE(
-    id	number NOT NULL,
-    genre_id number NOT NULL,
-    movie_id number NOT NULL,
+create table movie_genre(
+    id	number not null, -- pk 시퀀스 id
+    movie_id number not null, -- fk 영화 고유 id
+    genre_id number not null, -- fk 장르 시퀀스 id
     constraint pk_movie_genre_id primary key(id),
-    constraint fk_movie_genre_genre_id foreign key(genre_id) references genre(id) on delete set null,
-    constraint fk_movie_genre_movie_id foreign key(movie_id) references movie(id) on delete set null
+    constraint fk_movie_genre_movie_id foreign key(movie_id) references movie(id) on delete cascade,
+    constraint fk_movie_genre_genre_id foreign key(genre_id) references genre(id) on delete cascade
 );
 create sequence seq_movie_genre_id;
+--
+-- 영화 배우
+create table movie_actor (
+    id number not null, -- pk 시퀀스 id
+    movie_id number not null, -- fk 영화 고유 id
+    actor_id number not null, -- fk 배우 시퀀스 id
+    constraints pk_movie_actor_id primary key(id),
+    constraints fk_movie_actor_movie_id foreign key(movie_id) references movie(id) on delete set cascade,
+    constraints fk_movie_actor_actor_id foreign key(actor_id) references actor(id) on delete set cascade
+);
+create sequence seq_movie_actor_id;
+--
+-- 영화 감독
+create table movie_director (
+    id number not null, -- pk 시퀀스 id
+    movie_id number not null, -- fk 영화 고유 id
+    director_id number not null, -- fk 감독 시퀀스 id
+    constraints pk_movie_director_id primary key(id),
+    constraints fk_movie_director_movie_id foreign key(movie_id) references movie(id) on delete set cascade,
+    constraints fk_movie_director_director_id foreign key(director_id) references director(id) on delete set cascade
+);
+create sequence seq_movie_director_id;
 --
 --20.회원이 선호하는 장르
 CREATE TABLE MEMBER_LIKE_GENRE(

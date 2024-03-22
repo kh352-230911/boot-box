@@ -58,12 +58,12 @@
                 <div class="flex movie_info" >
                     <div class="movie_info-right">
                         <div class="movie_img mr-8">
-                            <img th:src="${review.movie.poster}" alt="movie_image"
+                            <img th:src="${review.movieData.poster}" alt="movie_image"
                                  class="w-40 h-60 movie_img-item movie_img-first"/>
                         </div>
                     </div>
                     <div class="movie_info-left">
-                        <h1 class="movie_title mt-4" th:text="${review.movie.title}">웡카</h1>
+                        <h1 class="movie_title mt-4" th:text="${review.movieData.title}">웡카</h1>
                         <div class="mt-2" >
                             <div class="flex text-sm mb-4">
                                 <p class="text-gray-300" th:text="${#authentication.principal.member.memberLoginId}">아이디</p>

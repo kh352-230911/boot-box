@@ -5,17 +5,11 @@ import com.sh.app.reservation.entity.Reservation;
 import com.sh.app.theater.entity.Theater;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import java.time.LocalDateTime;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 @Entity
@@ -39,7 +33,7 @@ public class Schedule {
     private LocalDate schDate;
     @Column(nullable = false)
     private LocalDateTime time;
-    @OneToMany(mappedBy = "schedule", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY)
     @Builder.Default
     private Set<Reservation> reservations = new HashSet<>();
     
@@ -52,7 +46,7 @@ public class Schedule {
         }
     }
 
-    public void setMovie(Movie movie) {
+    public void setMovieData(Movie movie) {
         this.movie = movie;
 
         if(movie != null) {

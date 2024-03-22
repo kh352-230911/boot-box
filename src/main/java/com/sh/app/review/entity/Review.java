@@ -1,11 +1,10 @@
 package com.sh.app.review.entity;
 
 import com.sh.app.member.entity.Member;
-import com.sh.app.movie.entity.Movie;
+import com.sh.app.movieData.entity.MovieData;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.CurrentTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -35,9 +34,9 @@ public class Review {
     @CreationTimestamp
     private LocalDateTime reviewCreatedAt; // 리뷰작성날짜
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "movie_id") // movie.movie_id 컬럼지정
-    private Movie movie;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "movie_id") // movie.movie_id 컬럼지정
+//    private MovieData movieData;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id") // movie.member_id 컬럼지정

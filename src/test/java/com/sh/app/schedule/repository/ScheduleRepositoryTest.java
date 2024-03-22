@@ -2,9 +2,9 @@ package com.sh.app.schedule.repository;
 
 import com.sh.app.cinema.entity.Cinema;
 import com.sh.app.cinema.repository.CinemaRepository;
-import com.sh.app.movie.entity.Movie;
-import com.sh.app.movie.entity.Rating;
-import com.sh.app.movie.repository.MovieRepository;
+import com.sh.app.movieData.entity.MovieData;
+import com.sh.app.movieData.entity.Rating;
+import com.sh.app.movieData.repository.MovieDataRepository;
 import com.sh.app.schedule.entity.Schedule;
 import com.sh.app.theater.entity.Theater;
 import com.sh.app.theater.repository.TheaterRepository;
@@ -16,7 +16,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,7 +29,7 @@ public class ScheduleRepositoryTest {
     @Autowired
     TheaterRepository theaterRepository;
     @Autowired
-    MovieRepository movieRepository;
+    MovieDataRepository movieDataRepository;
     @Autowired
     CinemaRepository cinemaRepository;
 
@@ -49,18 +48,18 @@ public class ScheduleRepositoryTest {
     }
 
     private void insertScheduleData() {
-        Movie movie = Movie.builder().title("웡카").filmRatings(Rating.ALL).releaseDate("2024.01.31").runningTime(116)
+        MovieData movieData = MovieData.builder().title("웡카").filmRatings(Rating.ALL).releaseDate("2024.01.31").runningTime(116)
                 .trailer("https://www.kmdb.or.kr/trailer/trailerPlayPop?pFileNm=MK060560_P02.mp4")
                 .poster("http://file.koreafilm.or.kr/thm/02/99/18/30/tn_DPF028589.jpg")
                 .director("폴 킹").actor("티모시 샬라메").summary("세상에서 가장 달콤한 여정 좋은 일은 모두 꿈에서부터 시작된다!")
                 .advanceReservation(98).build();
-        Movie movie2 = Movie.builder().title("시민덕희").filmRatings(Rating.FIFTEEN).releaseDate("2024.01.24").runningTime(114)
+        MovieData movieData2 = MovieData.builder().title("시민덕희").filmRatings(Rating.FIFTEEN).releaseDate("2024.01.24").runningTime(114)
                 .trailer("https://www.kmdb.or.kr/trailer/trailerPlayPop?pFileNm=MK060515_P02.mp4")
                 .poster("http://file.koreafilm.or.kr/thm/02/99/18/28/tn_DPK021526.jpg")
                 .director("박영주").actor("라미란").summary("내 돈을 사기 친 그 놈이 구조 요청을 해왔다!")
                 .advanceReservation(99).build();
-        movieRepository.save(movie);
-        movieRepository.save(movie2);
+        movieDataRepository.save(movieData);
+        movieDataRepository.save(movieData2);
         Cinema cinema = Cinema.builder()
                 .region_cinema("영등포점")
                 .theater_number(10)
@@ -95,22 +94,22 @@ public class ScheduleRepositoryTest {
         theaterRepository.save(theater2);
         Schedule schedule1 =
                 Schedule.builder()
-                        .movie(movie)
+                        .movieData(movieData)
                         .schDate("2024.01.31")
                         .theater(theater)
                         .time("120분")
                         .build();
         Schedule schedule2 =
                 Schedule.builder()
-                        .movie(movie)
+                        .movieData(movieData)
                         .schDate("2024.02.31")
                         .theater(theater)
                         .time("180분")
                         .build();
         schedule1.setTheater(theater);
-        schedule1.setMovie(movie);
+        schedule1.setMovieData(movieData);
         schedule2.setTheater(theater2);
-        schedule2.setMovie(movie2);
+        schedule2.setMovieData(movieData2);
         scheduleRepository.save(schedule1);
         scheduleRepository.save(schedule2);
     }
