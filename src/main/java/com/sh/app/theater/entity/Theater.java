@@ -1,7 +1,6 @@
 package com.sh.app.theater.entity;
 
 import com.sh.app.cinema.entity.Cinema;
-import com.sh.app.movie.entity.Movie;
 import com.sh.app.schedule.entity.Schedule;
 import jakarta.persistence.*;
 import lombok.*;

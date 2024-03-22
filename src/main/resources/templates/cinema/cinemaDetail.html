@@ -83,14 +83,14 @@
                         실시간 길찾기
                     </a>
                 </div>
-                    <div class="movie-list-container">
+                    <div class="movieData-list-container">
                         <h2>현재 상영작</h2>
-                        <div class="movie-list-wrapper">
-                            <div class="movie-list">
-                                <div th:each="movie : ${currentMovies}" class="movie-list-item">
-                                    <img th:src="${movie.poster}" class="movie-list-item-img" alt="" th:alt="${movie.title}">
-<!--                                    <span class="movie-list-item-title" th:text="${movie.title}"></span>-->
-<!--                                    <button class="movie-list-item-button">상세보기</button>-->
+                        <div class="movieData-list-wrapper">
+                            <div class="movieData-list">
+                                <div th:each="movieData : ${currentMovies}" class="movieData-list-item">
+                                    <img th:src="${movieData.poster}" class="movieData-list-item-img" alt="" th:alt="${movieData.title}">
+<!--                                    <span class="movieData-list-item-title" th:text="${movieData.title}"></span>-->
+<!--                                    <button class="movieData-list-item-button">상세보기</button>-->
                                 </div>
                             <i class="fas fa-chevron-right arrow"></i>
                             </div>
@@ -114,8 +114,8 @@
                 <!--2차작업-->
 <!--                <div th:fragment="scheduleList" id="movieSchedule">-->
 <!--                    <div th:each="detail : ${scheduleDetails}" class="schedule-container">-->
-<!--                        <div class="movie-title" th:text="${detail.getMovieTitle()} + ' 상영시간: ' + ${detail.getRunningTime()} + '분'"></div>-->
-<!--                        <div class="movie-schedule">-->
+<!--                        <div class="movieData-title" th:text="${detail.getMovieTitle()} + ' 상영시간: ' + ${detail.getRunningTime()} + '분'"></div>-->
+<!--                        <div class="movieData-schedule">-->
 <!--                            <div class="theater-info" th:text="'&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;' + ${detail.getTheaterName()} + '&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;'"></div>-->
 <!--                            <div class="time-slots">-->
 <!--                                <div class="time-slot">-->
