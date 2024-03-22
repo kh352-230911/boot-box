@@ -69,6 +69,7 @@ public class Movie {
     @BatchSize(size = 50)
     private List<MovieDirector> movieDirectors = new ArrayList<>();
 
+
 //    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 //    @Builder.Default
 //    private List<Review> reviews = new ArrayList<>();
