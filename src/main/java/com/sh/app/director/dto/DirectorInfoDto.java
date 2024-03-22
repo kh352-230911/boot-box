@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 public class DirectorInfoDto {
     private Long directorId;
 
-    private String directorNm;
+    private String directorName;
 }
