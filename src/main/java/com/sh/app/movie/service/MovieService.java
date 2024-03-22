@@ -465,7 +465,7 @@ public class MovieService {
                                 String[] splitGenre = kmdbMovieInfoDto.getGenre().split(",");
                                 for (String genreName : splitGenre) {
                                     String normalizedGenreName = GenreNormalization.normalizeGenreName(genreName.trim());
-                                    Genre genre = genreRepository.findByName(normalizedGenreName).orElseGet(() -> {
+                                    Genre genre = genreRepository.findByGenreName(normalizedGenreName).orElseGet(() -> {
                                         Genre newGenre = Genre.builder()
                                                 .genreId(null)
                                                 .genreName(normalizedGenreName)
@@ -651,11 +651,11 @@ public class MovieService {
         return movieDetailDtos;
     }
 
-    public List<MovieDetailDto> findByGenreName(String genre) {
-        return movieRepository.findByGenreName(genre).stream()
-                .map((movie) -> convertToMovieDetailDto(movie))
-                .collect(Collectors.toList());
-    }
+//    public List<MovieDetailDto> findByGenreName(String genre) {
+//        return movieRepository.findByGenreName(genre).stream()
+//                .map((movie) -> convertToMovieDetailDto(movie))
+//                .collect(Collectors.toList());
+//    }
 
     public List<MovieListDto> getCurrentMovies() {
         return movieRepository.findAll().stream() // 현재는 findAll을 사용했지만, 실제로는 현재 상영 중인 영화를 필터링하는 로직
@@ -686,9 +686,9 @@ public class MovieService {
                 .collect(Collectors.toList());
     }
 
-    public List<MovieDetailDto> findByTitleContaining(String search) {
-        return movieRepository.findByTitleContaining(search)
-                .stream().map((movie) -> convertToMovieDetailDto(movie))
-                .collect(Collectors.toList());
-    }
+//    public List<MovieDetailDto> findByTitleContaining(String search) {
+//        return movieRepository.findByTitleContaining(search)
+//                .stream().map((movie) -> convertToMovieDetailDto(movie))
+//                .collect(Collectors.toList());
+//    }
 }

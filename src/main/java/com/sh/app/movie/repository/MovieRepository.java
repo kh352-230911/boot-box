@@ -12,51 +12,51 @@ import java.util.Optional;
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     Optional<Movie> findByNormalizedTitle(String normalizedTitle);
 
-    List<Movie> findByGenreName(String genre);
+//    List<Movie> findByGenreName(String genre);
 
     List<Movie> findAllByOrderByTitleAsc();
 
     List<Movie> findAllByOrderByRankAsc();
 
     List<Movie> findFirst10ByOrderByRankAsc();
-    @Query(value = """  
-         SELECT
-             m.id,
-             m.title,
-             m.film_ratings,
-             m.release_date,
-             m.running_time,
-             m.trailer,
-             m.poster,
-             m.director,
-             m.actor,
-             m.summary,
-             m.advance_reservation,
-             AVG(r.review_score) AS average_score
-         FROM
-             movieData m
-         JOIN
-             review r ON m.id = r.movie_id
-         GROUP BY
-             m.id,
-             m.title,
-             m.film_ratings,
-             m.release_date,
-             m.running_time,
-             m.trailer,
-             m.poster,
-             m.director,
-             m.actor,
-             m.summary,
-             m.advance_reservation
-         HAVING
-             AVG(r.review_score) >= (SELECT AVG(review_score)
-                                    FROM review
-                                    WHERE movie_id IN (SELECT id
-                                                       FROM movieData
-                                                       WHERE title LIKE %:title%))
-         ORDER BY
-                 CASE WHEN m.title LIKE %:title% THEN 0 ELSE 1 END,
-                    average_score asc""", nativeQuery = true)
-    List<Movie> findByTitleContaining(String search);
+//    @Query(value = """
+//         SELECT
+//             m.id,
+//             m.title,
+//             m.film_ratings,
+//             m.release_date,
+//             m.running_time,
+//             m.trailer,
+//             m.poster,
+//             m.director,
+//             m.actor,
+//             m.summary,
+//             m.advance_reservation,
+//             AVG(r.review_score) AS average_score
+//         FROM
+//             movieData m
+//         JOIN
+//             review r ON m.id = r.movie_id
+//         GROUP BY
+//             m.id,
+//             m.title,
+//             m.film_ratings,
+//             m.release_date,
+//             m.running_time,
+//             m.trailer,
+//             m.poster,
+//             m.director,
+//             m.actor,
+//             m.summary,
+//             m.advance_reservation
+//         HAVING
+//             AVG(r.review_score) >= (SELECT AVG(review_score)
+//                                    FROM review
+//                                    WHERE movie_id IN (SELECT id
+//                                                       FROM movieData
+//                                                       WHERE title LIKE %:title%))
+//         ORDER BY
+//                 CASE WHEN m.title LIKE %:title% THEN 0 ELSE 1 END,
+//                    average_score asc""", nativeQuery = true)
+//    List<Movie> findByTitleContaining(String search);
 }

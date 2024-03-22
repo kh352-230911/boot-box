@@ -24,13 +24,13 @@ public class HomeController {
     public String home(@RequestParam(value = "search", required = false) String search, Model model) {
         movieService.fetchAndStoreMovie();
         List<MovieDetailDto> movieDetailDtos;
-        if(search == null) {
+//        if(search == null) {
             movieDetailDtos = movieService.findFirst10ByOrderByRankAsc();
-        }
-        else {
-            movieDetailDtos = movieService.findByTitleContaining(search);
-            model.addAttribute("search", search);
-        }
+//        }
+//        else {
+//            movieDetailDtos = movieService.findByTitleContaining(search);
+//            model.addAttribute("search", search);
+//        }
         model.addAttribute("movies", movieDetailDtos);
         return "index";
     }
