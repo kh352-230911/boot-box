@@ -19,9 +19,9 @@ public class ReviewService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public void createReview(CreateReviewDto createReviewDto) {
-        Review review = reviewRepository.save(convertToReview(createReviewDto));
-    }
+//    public void createReview(CreateReviewDto createReviewDto) {
+//        Review review = reviewRepository.save(convertToReview(createReviewDto));
+//    }
 
     private Review convertToReview(CreateReviewDto createReviewDto) {
         return modelMapper.map(createReviewDto, Review.class);

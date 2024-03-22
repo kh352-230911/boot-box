@@ -14,10 +14,16 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Actor {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_actor_id_generator")
+    @SequenceGenerator(
+            name = "seq_actor_id_generator",
+            sequenceName = "seq_actor_id",
+            initialValue = 1,
+            allocationSize = 1
+    )
     private Long id;
 
     private Long actorId;
 
-    private String actorNm;
+    private String actorName;
 }

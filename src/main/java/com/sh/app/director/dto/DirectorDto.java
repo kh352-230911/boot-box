@@ -17,7 +17,7 @@ public class DirectorDto {
     private Long directorId;
 
     @JsonProperty("name")
-    private String directorNm;
+    private String directorName;
 
     private String job;
 }

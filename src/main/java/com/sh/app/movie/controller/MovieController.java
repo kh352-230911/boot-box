@@ -36,12 +36,13 @@ public class MovieController {
     @GetMapping("/movieList.do")
     public void movieList(String genre, Model model) {
         List<MovieDetailDto> movies;
-        if (genre == null) {
-            movies = movieService.findAllByOrderByRankAsc();
-        }
-        else {
-            movies = movieService.findByGenreName(genre);
-        }
+//        if (genre == null) {
+//
+//        }
+//        else {
+//            movies = movieService.findByGenreName(genre);
+//        }
+        movies = movieService.findAllByOrderByRankAsc();
         model.addAttribute("movies", movies);
     }
 

@@ -14,7 +14,13 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Genre {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_genre_id_generator")
+    @SequenceGenerator(
+            name = "seq_genre_id_generator",
+            sequenceName = "seq_genre_id",
+            initialValue = 1,
+            allocationSize = 1
+    )
     private Long id;
 
     private Long genreId;
