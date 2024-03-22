@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-    @Query("SELECT AVG(r.reviewScore) FROM Review r WHERE r.movie.id = :id")
-    Double getAverageRatingByMovieId(Long id);
+//    @Query("SELECT AVG(r.reviewScore) FROM Review r WHERE r.movie.id = :id")
+//    Double getAverageRatingByMovieId(Long id);
 }

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DirectorRepository extends JpaRepository<Director, Long> {
-    Optional<Director> findByDirectorNm(String directorNm);
-
     List<Director> findByIdIn(ArrayList<Long> longs);
+
+    Optional<Director> findByDirectorName(String directorName);
 }

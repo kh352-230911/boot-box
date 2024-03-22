@@ -1,5 +1,5 @@
 package com.sh.app.movie.entity;
 
 public enum Status {
-    boxOffice, currentMovie;
+    box_office, current_movie;
 }

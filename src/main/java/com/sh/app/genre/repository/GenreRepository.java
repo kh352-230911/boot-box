@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface GenreRepository extends JpaRepository<Genre, Long> {
     Optional<Genre> findByGenreId(Long genreId);
 
-    Optional<Genre> findByName(String normalizedGenreName);
+    Optional<Genre> findByGenreName(String normalizedGenreName);
 
     List<Genre> findByIdIn(ArrayList<Long> longs);
 }

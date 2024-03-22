@@ -1,6 +1,5 @@
 package com.sh.app.movie.dto;
 
-import com.sh.app.movieData.entity.Rating;
 import lombok.Data;
 
 @Data

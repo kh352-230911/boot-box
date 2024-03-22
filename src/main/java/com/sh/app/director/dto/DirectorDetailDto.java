@@ -14,5 +14,5 @@ public class DirectorDetailDto {
 
     private Long directorId;
 
-    private String directorNm;
+    private String directorName;
 }

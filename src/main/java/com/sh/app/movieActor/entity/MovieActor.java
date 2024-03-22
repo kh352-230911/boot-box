@@ -15,7 +15,13 @@ import lombok.*;
 @EqualsAndHashCode(of = "id")
 public class MovieActor {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_movie_actor_id_generator")
+    @SequenceGenerator(
+            name = "seq_movie_actor_id_generator",
+            sequenceName = "seq_movie_actor_id",
+            initialValue = 1,
+            allocationSize = 1
+    )
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

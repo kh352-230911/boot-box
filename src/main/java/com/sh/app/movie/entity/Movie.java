@@ -30,6 +30,7 @@ public class Movie {
 
     private Integer rank;
 
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     private String title; // 원본 제목
@@ -68,11 +69,11 @@ public class Movie {
     @BatchSize(size = 50)
     private List<MovieDirector> movieDirectors = new ArrayList<>();
 
-    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default
-    private List<Review> reviews = new ArrayList<>();
-
-    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<Schedule> schedules = new ArrayList<>();
+//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    @Builder.Default
+//    private List<Review> reviews = new ArrayList<>();
+//
+//    @OneToMany(fetch = FetchType.LAZY)
+//    @Builder.Default
+//    private List<Schedule> schedules = new ArrayList<>();
 }

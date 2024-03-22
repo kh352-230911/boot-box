@@ -49,13 +49,13 @@ public class Schedule {
 //        }
 //    }
 
-    public void setMovieData(Movie movie) {
-        this.movie = movie;
-
-        if(movie != null) {
-            if(movie.getSchedules().contains(this))
-                movie.getSchedules().add(this);
-        }
-    }
+//    public void setMovieData(Movie movie) {
+//        this.movie = movie;
+//
+//        if(movie != null) {
+//            if(movie.getSchedules().contains(this))
+//                movie.getSchedules().add(this);
+//        }
+//    }
 
 }

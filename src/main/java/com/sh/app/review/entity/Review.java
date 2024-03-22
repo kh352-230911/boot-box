@@ -1,7 +1,6 @@
 package com.sh.app.review.entity;
 
 import com.sh.app.member.entity.Member;
-import com.sh.app.movieData.entity.MovieData;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
