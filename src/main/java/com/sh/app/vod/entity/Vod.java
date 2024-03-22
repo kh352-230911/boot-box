@@ -14,7 +14,13 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Vod {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_vod_id_generator")
+    @SequenceGenerator(
+            name = "seq_vod_id_generator",
+            sequenceName = "seq_vod_id",
+            initialValue = 1,
+            allocationSize = 1
+    )
     private Long id;
 
     private String vodName;

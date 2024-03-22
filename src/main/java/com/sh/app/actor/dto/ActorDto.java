@@ -17,7 +17,7 @@ public class ActorDto {
     private Long actorId;
 
     @JsonProperty("name")
-    private String actorNm;
+    private String actorName;
 
     private Integer order;
 }

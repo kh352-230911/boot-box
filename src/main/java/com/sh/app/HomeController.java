@@ -22,7 +22,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(@RequestParam(value = "search", required = false) String search, Model model) {
-        movieService.fetchAndStoreMovie();
         List<MovieDetailDto> movieDetailDtos;
 //        if(search == null) {
             movieDetailDtos = movieService.findFirst10ByOrderByRankAsc();

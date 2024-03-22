@@ -37,11 +37,15 @@ public class MovieController {
     public void movieList(String genre, Model model) {
         List<MovieDetailDto> movies;
 //        if (genre == null) {
+
             movies = movieService.findAllByOrderByRankAsc();
+
+
 //        }
 //        else {
 //            movies = movieService.findByGenreName(genre);
 //        }
+
         model.addAttribute("movies", movies);
     }
 

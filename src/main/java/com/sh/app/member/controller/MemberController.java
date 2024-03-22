@@ -158,17 +158,17 @@ public class MemberController {
         model.addAttribute("member", member);
     }
 
-    @PostMapping("/memberWatchedMovie.do")
-    public String createReview(@Valid CreateReviewDto createReviewDto,
-            @AuthenticationPrincipal MemberDetails memberDetails,
-                               RedirectAttributes redirectAttributes) {
-        log.debug("createReviewDto = {}", createReviewDto);
-
-        createReviewDto.setMemberId(memberDetails.getMember().getId());
-        reviewService.createReview(createReviewDto);
-
-        return "redirect:/member/memberReviewList.do?id=" + memberDetails.getMember().getId();
-    }
+//    @PostMapping("/memberWatchedMovie.do")
+//    public String createReview(@Valid CreateReviewDto createReviewDto,
+//            @AuthenticationPrincipal MemberDetails memberDetails,
+//                               RedirectAttributes redirectAttributes) {
+//        log.debug("createReviewDto = {}", createReviewDto);
+//
+//        createReviewDto.setMemberId(memberDetails.getMember().getId());
+//        reviewService.createReview(createReviewDto);
+//
+//        return "redirect:/member/memberReviewList.do?id=" + memberDetails.getMember().getId();
+//    }
 
     @GetMapping("/memberAskList.do")
     public void memberAskList(Long id, Model model) {

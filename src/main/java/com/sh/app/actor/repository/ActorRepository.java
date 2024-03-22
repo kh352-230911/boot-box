@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ActorRepository extends JpaRepository<Actor, Long> {
-    Optional<Actor> findByActorNm(String actorNm);
-
     List<Actor> findByIdIn(ArrayList<Long> longs);
+
+    Optional<Actor> findByActorName(String actorName);
 }
