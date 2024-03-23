@@ -23,13 +23,16 @@ public class HomeController {
     @GetMapping("/")
     public String home(@RequestParam(value = "search", required = false) String search, Model model) {
         List<MovieDetailDto> movieDetailDtos;
-//        if(search == null) {
-            movieDetailDtos = movieService.findFirst10ByOrderByRankAsc();
-//        }
-//        else {
-//            movieDetailDtos = movieService.findByTitleContaining(search);
-//            model.addAttribute("search", search);
-//        }
+        if(search == null) {
+            movieDetailDtos = movieService.findFirst6ByOrderByRankAsc();
+            log.debug("movieDetailDtos = {}", movieDetailDtos);
+        }
+        else {
+            movieDetailDtos = movieService.findByTitleContaining(search);
+            model.addAttribute("search", search);
+            log.debug("movieDetailDtos = {}", movieDetailDtos);
+
+        }
         model.addAttribute("movies", movieDetailDtos);
         return "index";
     }

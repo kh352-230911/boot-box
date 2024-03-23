@@ -17,5 +17,6 @@ import org.springframework.stereotype.Component;
 //    @Override
 //    public void run(ApplicationArguments args) throws Exception {
 //        movieService.scheduledCallApi();
+
 //    }
 //}

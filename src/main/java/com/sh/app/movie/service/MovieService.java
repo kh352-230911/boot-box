@@ -571,7 +571,9 @@ public class MovieService {
     }
 
     private MovieDetailDto convertToMovieDetailDto(Movie movie) {
-        return modelMapper.map(movie, MovieDetailDto.class);
+        MovieDetailDto movieDetailDto = modelMapper.map(movie, MovieDetailDto.class);
+        movieDetailDto.setSearchResult(true);
+        return movieDetailDto;
     }
 
     public List<MovieDetailDto> findAllByOrderByRankAsc() {
@@ -697,15 +699,15 @@ public class MovieService {
         return modelMapper.map(movie, MovieShortDto.class);
     }
 
-    public List<MovieDetailDto> findFirst10ByOrderByRankAsc() {
-        return movieRepository.findFirst10ByOrderByRankAsc()
+    public List<MovieDetailDto> findFirst6ByOrderByRankAsc() {
+        return movieRepository.findFirst6ByOrderByRankAsc()
                 .stream().map((movie) -> convertToMovieDetailDto(movie))
                 .collect(Collectors.toList());
     }
 
-//    public List<MovieDetailDto> findByTitleContaining(String search) {
-//        return movieRepository.findByTitleContaining(search)
-//                .stream().map((movie) -> convertToMovieDetailDto(movie))
-//                .collect(Collectors.toList());
-//    }
+    public List<MovieDetailDto> findByTitleContaining(String title) {
+        return movieRepository.findByTitleContaining(title)
+                .stream().map((movie) -> convertToMovieDetailDto(movie))
+                .collect(Collectors.toList());
+    }
 }
