@@ -61,9 +61,9 @@ public class MovieService {
 
     private static final String KMDB_URL = "https://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp";
 
+    private static final String GENRE_URL = "https://api.themoviedb.org/3/genre/movie/list";
+
     private static final String NOW_PLAYING_URL = "https://api.themoviedb.org/3/movie/now_playing";
-
-
 
     private static final String VODS_URL = "https://api.themoviedb.org/3/movie/%d/videos?language=ko-KR&api_key=%s";
 
@@ -116,6 +116,14 @@ public class MovieService {
     private MovieDirectorRepository movieDirectorRepository;
 
     public void scheduledCallApi() {
+        movieGenreRepository.deleteAll();
+        genreRepository.deleteAll();
+        vodRepository.deleteAll();
+        movieActorRepository.deleteAll();
+        actorRepository.deleteAll();
+        movieDirectorRepository.deleteAll();
+        directorRepository.deleteAll();
+        movieRepository.deleteAll();
         fetchAndStoreMovie();
     }
 
@@ -125,10 +133,36 @@ public class MovieService {
     }
 
     public void fetchAndStoreMovie() {
+        fetchAndStoreGenres();
         fetchAndStoreAllMovies();
         fetchAndStoreBoxOfficeData();
     }
 
+    private void fetchAndStoreGenres() {
+        genreRepository.deleteAll();
+        String url = UriComponentsBuilder
+                .fromHttpUrl(GENRE_URL)
+                .queryParam("api_key", tmdbApiKey)
+                .queryParam("language", "ko-KR")
+                .toUriString();
+
+        GenreResponse genreResponse = restTemplate.getForObject(url, GenreResponse.class);
+//        log.debug("genreResponse = {}", genreResponse);
+        if (genreResponse != null) {
+            try {
+                for (GenreDto genreDto : genreResponse.getGenreDtos()) {
+                    Genre genre = convertToGenre(genreDto);
+                    genreRepository.save(genre);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private Genre convertToGenre(GenreDto genreDto) {
+        return modelMapper.map(genreDto, Genre.class);
+    }
 
 
     public void fetchAndStoreAllMovies() {
@@ -175,11 +209,11 @@ public class MovieService {
                     movie.setRank(null);
                     movie.setStatus(Status.current_movie);
 
-                    Movie savedMovie = movieRepository.save(movie); // 영화 정보 저장
+                    Movie savedMovie = movieRepository.saveAndFlush(movie); // 영화 정보 저장
 
-                    fetchAndStoreMovieVods(movie.getId());
+                    fetchAndStoreMovieVods(savedMovie.getId());
 
-                    fetchAndStoreMovieCredits(movie.getId());
+                    fetchAndStoreMovieCredits(savedMovie.getId());
 
                     // 장르 ID 리스트를 반복하면서 MovieGenre 인스턴스를 생성하고 저장
                     for (Long genreId : tmdbMovieInfoDto.getGenreIds()) {
@@ -192,7 +226,7 @@ public class MovieService {
                                 .movie(savedMovie)
                                 .genre(genre)
                                 .build();
-
+                        savedMovie.addMovieGenre(movieGenre);
                         // MovieGenre 인스턴스 저장
                         movieGenreRepository.save(movieGenre);
                     }
@@ -224,6 +258,7 @@ public class MovieService {
                             .movie(movie)
                             .actor(actor)
                             .build();
+                    movie.addMovieActor(movieActor);
                     movieActorRepository.save(movieActor);
                 }
             }
@@ -247,6 +282,7 @@ public class MovieService {
                             .movie(movie)
                             .director(director)
                             .build();
+                    movie.addMovieDirector(movieDirector);
                     movieDirectorRepository.save(movieDirector);
                 }
             }
@@ -259,27 +295,29 @@ public class MovieService {
 
         Movie movie = movieRepository.findById(id).orElseThrow(() -> new RuntimeException("Movie not found"));
 
-//        if (vodsResponse != null && vodsResponse.getVodDtos().isEmpty()){
-//            String vodUrl = fetchVodUrlFromYoutube("영화 " + movie.getTitle() + "메인 예고편");
-//            if (vodUrl != null) {
-//                VodDto vodDto = VodDto.builder()
-//                        .vodName(movie.getTitle() + " 메인 예고편")
-//                        .vodUrl(vodUrl)
-//                        .type("trailer")
-//                        .build();
-//                Vod vod = convertToVod(vodDto);
-//                movie.getVods().add(vod);
-//                vodRepository.save(vod);
-//
-//            }
-//        }
-//        else if (vodsResponse != null) {
+        if (vodsResponse != null && vodsResponse.getVodDtos().isEmpty()){
+            String vodUrl = fetchVodUrlFromYoutube("영화 " + movie.getTitle() + "메인 예고편");
+            if (vodUrl != null) {
+                VodDto vodDto = VodDto.builder()
+                        .vodName(movie.getTitle() + " 메인 예고편")
+                        .vodUrl(vodUrl)
+                        .type("trailer")
+                        .build();
+                Vod vod = convertToVod(vodDto);
+                vod.setMovie(movie);
+                movie.getVods().add(vod);
+                vodRepository.save(vod);
+
+            }
+        }
+        else if (vodsResponse != null) {
             for (VodDto vodDto : vodsResponse.getVodDtos()) {
                 Vod vod = convertToVod(vodDto);
+                vod.setMovie(movie);
                 movie.getVods().add(vod);
                 vodRepository.save(vod);
             }
-//        }
+        }
     }
 
     private Vod convertToVod(VodDto vodDto) {
@@ -406,34 +444,34 @@ public class MovieService {
                             movie.setStatus(Status.box_office);
                             movie.setVoteAverage(0.0);
 
+                            Movie savedMovie = movieRepository.saveAndFlush(movie);
+
                             // 예고편 처리
                             if (kmdbMovieInfoDto.getVods() != null) {
                                 List<VodInfoDto> vodInfoDtos = kmdbMovieInfoDto.getVods().getVodInfoDtos();
-//                                if (vodInfoDtos == null || vodInfoDtos.isEmpty() || vodInfoDtos.stream().allMatch(v -> v.getVodUrl().isEmpty())) {
-//                                    String vodUrl = fetchVodUrlFromYoutube("영화 " + movie.getTitle() + " 메인 예고편");
-//                                    Vod vod = Vod.builder()
-//                                            .vodName(movie.getTitle() + " 메인 예고편")
-//                                            .vodUrl(vodUrl)
-//                                            .type("trailer")
-//                                            .build();
-//                                    vodRepository.save(vod);
-//
-//                                    movie.getVods().add(vod);
-//                                } else {
+                                if (vodInfoDtos == null || vodInfoDtos.isEmpty() || vodInfoDtos.stream().allMatch(v -> v.getVodUrl().isEmpty())) {
+                                    String vodUrl = fetchVodUrlFromYoutube("영화 " + movie.getTitle() + " 메인 예고편");
+                                    Vod vod = Vod.builder()
+                                            .vodName(movie.getTitle() + " 메인 예고편")
+                                            .vodUrl(vodUrl)
+                                            .type("trailer")
+                                            .movie(savedMovie)
+                                            .build();
+                                    movie.getVods().add(vod);
+                                    vodRepository.save(vod);
+                                } else {
                                     vodInfoDtos.forEach(vodDto -> {
                                         Vod vod = Vod.builder()
                                                 .vodName(vodDto.getVodName())
                                                 .vodUrl(vodDto.getVodUrl().replace("trailerPlayPop?pFileNm=", "play/"))
                                                 .type("trailer")
+                                                .movie(savedMovie)
                                                 .build();
-                                        vodRepository.save(vod);
-
                                         movie.getVods().add(vod);
+                                        vodRepository.save(vod);
                                     });
-//                                }
+                                }
                             }
-
-                            Movie savedMovie = movieRepository.save(movie);
 
                             // 장르 정보 처리
                             if (kmdbMovieInfoDto.getGenre() != null) {
@@ -451,6 +489,7 @@ public class MovieService {
                                             .movie(savedMovie)
                                             .genre(genre)
                                             .build();
+                                    savedMovie.addMovieGenre(movieGenre);
                                     movieGenreRepository.save(movieGenre);
                                 }
                             }
@@ -475,6 +514,7 @@ public class MovieService {
                                                 .movie(savedMovie)
                                                 .actor(actor)
                                                 .build(); // 새 BoxMovieActor 객체 생성
+                                        movie.addMovieActor(movieActor);
                                         movieActorRepository.save(movieActor); // BoxMovieActor 저장
                                     });
                                 }
@@ -500,6 +540,7 @@ public class MovieService {
                                                 .movie(savedMovie)
                                                 .director(director)
                                                 .build();
+                                        movie.addMovieDirector(movieDirector);
                                         movieDirectorRepository.save(movieDirector);
                                     });
                                 }
@@ -538,92 +579,93 @@ public class MovieService {
         List<Movie> movies = movieRepository.findAllByOrderByRankAsc();
         List<MovieDetailDto> movieDetailDtos = new ArrayList<>();
 
-        // 모든 영화에 대한 배우 ID를 한 번에 수집하기
-        Set<Long> allActorIds = new HashSet<>();
-        movies.forEach(movie -> allActorIds.addAll(
-                movie.getMovieActors().stream()
-                        .map(movieActor -> movieActor.getActor().getId())
-                        .collect(Collectors.toSet())
-        ));
-
-        // 배우 ID 목록을 사용하여 배우 정보를 한 번의 쿼리로 가져오기
-        List<Actor> allActors = actorRepository.findByIdIn(new ArrayList<>(allActorIds));
-        Map<Long, ActorDetailDto> actorInfoMap = allActors.stream()
-                .map(actor -> modelMapper.map(actor, ActorDetailDto.class))
-                .collect(Collectors.toMap(ActorDetailDto::getId, Function.identity()));
-
-        // 모든 영화에 대한 감독 ID를 한 번에 수집하기
-        Set<Long> allDirectorIds = new HashSet<>();
-        movies.forEach(movie -> allDirectorIds.addAll(
-                movie.getMovieDirectors().stream()
-                        .map(movieDirector -> movieDirector.getDirector().getId())
-                        .collect(Collectors.toSet())
-        ));
-
-        // 감독 ID 목록을 사용하여 감독 정보를 한 번의 쿼리로 가져오기
-        List<Director> allDirectors = directorRepository.findByIdIn(new ArrayList<>(allDirectorIds));
-        Map<Long, DirectorDetailDto> directorInfoMap = allDirectors.stream()
-                .map(director -> modelMapper.map(director, DirectorDetailDto.class))
-                .collect(Collectors.toMap(DirectorDetailDto::getId, Function.identity()));
-
-        // 모든 영화에 대한 장르 ID를 한 번에 수집하기
-        Set<Long> allGenreIds = new HashSet<>();
-        movies.forEach(movie -> allGenreIds.addAll(
-                movie.getMovieGenres().stream()
-                        .map(movieGenre -> movieGenre.getGenre().getId())
-                        .collect(Collectors.toSet())
-        ));
-
-        // 장르 ID 목록을 사용하여 장르 정보를 한 번의 쿼리로 가져오기
-        List<Genre> allGenres = genreRepository.findByIdIn(new ArrayList<>(allGenreIds));
-        Map<Long, GenreDetailDto> genreInfoMap = allGenres.stream()
-                .map(genre -> modelMapper.map(genre, GenreDetailDto.class))
-                .collect(Collectors.toMap(GenreDetailDto::getId, Function.identity()));
-
-        // 영화 목록을 반복하면서 DTO를 생성합니다.
+//        // 모든 영화에 대한 배우 ID를 한 번에 수집하기
+//        Set<Long> allActorIds = new HashSet<>();
+//        movies.forEach(movie -> allActorIds.addAll(
+//                movie.getMovieActors().stream()
+//                        .map(movieActor -> movieActor.getActor().getId())
+//                        .collect(Collectors.toSet())
+//        ));
+//
+//        // 배우 ID 목록을 사용하여 배우 정보를 한 번의 쿼리로 가져오기
+//        List<Actor> allActors = actorRepository.findByIdIn(new ArrayList<>(allActorIds));
+//        Map<Long, ActorDetailDto> actorInfoMap = allActors.stream()
+//                .map(actor -> modelMapper.map(actor, ActorDetailDto.class))
+//                .collect(Collectors.toMap(ActorDetailDto::getId, Function.identity()));
+//
+//        // 모든 영화에 대한 감독 ID를 한 번에 수집하기
+//        Set<Long> allDirectorIds = new HashSet<>();
+//        movies.forEach(movie -> allDirectorIds.addAll(
+//                movie.getMovieDirectors().stream()
+//                        .map(movieDirector -> movieDirector.getDirector().getId())
+//                        .collect(Collectors.toSet())
+//        ));
+//
+//        // 감독 ID 목록을 사용하여 감독 정보를 한 번의 쿼리로 가져오기
+//        List<Director> allDirectors = directorRepository.findByIdIn(new ArrayList<>(allDirectorIds));
+//        Map<Long, DirectorDetailDto> directorInfoMap = allDirectors.stream()
+//                .map(director -> modelMapper.map(director, DirectorDetailDto.class))
+//                .collect(Collectors.toMap(DirectorDetailDto::getId, Function.identity()));
+//
+//        // 모든 영화에 대한 장르 ID를 한 번에 수집하기
+//        Set<Long> allGenreIds = new HashSet<>();
+//        movies.forEach(movie -> allGenreIds.addAll(
+//                movie.getMovieGenres().stream()
+//                        .map(movieGenre -> movieGenre.getGenre().getId())
+//                        .collect(Collectors.toSet())
+//        ));
+//
+//        // 장르 ID 목록을 사용하여 장르 정보를 한 번의 쿼리로 가져오기
+//        List<Genre> allGenres = genreRepository.findByIdIn(new ArrayList<>(allGenreIds));
+//        Map<Long, GenreDetailDto> genreInfoMap = allGenres.stream()
+//                .map(genre -> modelMapper.map(genre, GenreDetailDto.class))
+//                .collect(Collectors.toMap(GenreDetailDto::getId, Function.identity()));
+//
+//        // 영화 목록을 반복하면서 DTO를 생성합니다.
         for (Movie movie : movies) {
-            // BoxVideoInfoDto 변환
-            List<VodDetailDto> vodDetailDtos = movie.getVods().stream()
-                    .map(vod -> modelMapper.map(vod, VodDetailDto.class))
-                    .collect(Collectors.toList());
-
-            // 영화별로 연관된 장르 정보를 매핑
-            List<GenreDetailDto> genreDetailDtos = movie.getMovieGenres().stream()
-                    .map(MovieGenre::getGenre)
-                    .map(genre -> genreInfoMap.get(genre.getId()))
-                    .collect(Collectors.toList());
-
-            // 영화별로 연관된 배우 정보를 매핑
-            List<ActorDetailDto> actorDetailDtos = movie.getMovieActors().stream()
-                    .map(MovieActor::getActor)
-                    .map(actor -> actorInfoMap.get(actor.getId()))
-                    .collect(Collectors.toList());
-
-            // 영화별로 연관된 감독 정보를 매핑
-            List<DirectorDetailDto> directorDetailDtos = movie.getMovieDirectors().stream()
-                    .map(MovieDirector::getDirector)
-                    .map(director -> directorInfoMap.get(director.getId()))
-                    .collect(Collectors.toList());
+//            // BoxVideoInfoDto 변환
+//            List<VodDetailDto> vodDetailDtos = movie.getVods().stream()
+//                    .map(vod -> modelMapper.map(vod, VodDetailDto.class))
+//                    .collect(Collectors.toList());
+//
+//            // 영화별로 연관된 장르 정보를 매핑
+//            List<GenreDetailDto> genreDetailDtos = movie.getMovieGenres().stream()
+//                    .map(MovieGenre::getGenre)
+//                    .map(genre -> genreInfoMap.get(genre.getId()))
+//                    .collect(Collectors.toList());
+//
+//            // 영화별로 연관된 배우 정보를 매핑
+//            List<ActorDetailDto> actorDetailDtos = movie.getMovieActors().stream()
+//                    .map(MovieActor::getActor)
+//                    .map(actor -> actorInfoMap.get(actor.getId()))
+//                    .collect(Collectors.toList());
+//
+//            // 영화별로 연관된 감독 정보를 매핑
+//            List<DirectorDetailDto> directorDetailDtos = movie.getMovieDirectors().stream()
+//                    .map(MovieDirector::getDirector)
+//                    .map(director -> directorInfoMap.get(director.getId()))
+//                    .collect(Collectors.toList());
 
             // DTO 빌더를 사용하여 BoxMovieInfoDto를 생성합니다.
-            MovieDetailDto movieDetailDto = MovieDetailDto.builder()
-                    .rank(movie.getRank())
-                    .title(movie.getTitle())
-                    .releaseDate(movie.getReleaseDate())
-                    .filmRatings(movie.getFilmRatings())
-                    .runtime(movie.getRuntime())
-                    .overview(movie.getOverview())
-                    .voteAverage(movie.getVoteAverage())
-                    .posterUrl(movie.getPosterUrl())
-                    .vodDetailDtos(vodDetailDtos)
-                    .genreDetailDtos(genreDetailDtos)
-                    .actorDetailDtos(actorDetailDtos)
-                    .directorDetailDtos(directorDetailDtos)
-                    .build();
-
+            MovieDetailDto movieDetailDto = convertToMovieList(movie);
+//            MovieDetailDto movieDetailDto = MovieDetailDto.builder()
+//                    .rank(movie.getRank())
+//                    .title(movie.getTitle())
+//                    .releaseDate(movie.getReleaseDate())
+//                    .filmRatings(movie.getFilmRatings())
+//                    .runtime(movie.getRuntime())
+//                    .overview(movie.getOverview())
+//                    .voteAverage(movie.getVoteAverage())
+//                    .posterUrl(movie.getPosterUrl())
+//                    .build();
+//
             movieDetailDtos.add(movieDetailDto);
         }
         return movieDetailDtos;
+    }
+
+    private MovieDetailDto convertToMovieList(Movie movie) {
+        return modelMapper.map(movie, MovieDetailDto.class);
     }
 
 //    public List<MovieDetailDto> findByGenreName(String genre) {

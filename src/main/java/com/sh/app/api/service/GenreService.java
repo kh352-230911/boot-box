@@ -1,15 +1,15 @@
-package com.sh.app.genre.service;
+package com.sh.app.api.service;
 
 import com.sh.app.genre.dto.GenreDto;
 import com.sh.app.genre.dto.GenreResponse;
 import com.sh.app.genre.entity.Genre;
 import com.sh.app.genre.repository.GenreRepository;
-import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -35,6 +35,7 @@ public class GenreService {
     }
 
     private void fetchAndStoreGenres() {
+        genreRepository.deleteAll();
         String url = UriComponentsBuilder
                 .fromHttpUrl(GENRE_URL)
                 .queryParam("api_key", tmdbApiKey)
@@ -47,7 +48,6 @@ public class GenreService {
             try {
                 for (GenreDto genreDto : genreResponse.getGenreDtos()) {
                     Genre genre = convertToGenre(genreDto);
-                    log.debug("genre = {}", genre);
                     genreRepository.save(genre);
                 }
             } catch (Exception e) {
