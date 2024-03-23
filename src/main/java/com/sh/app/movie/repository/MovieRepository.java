@@ -18,7 +18,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     List<Movie> findAllByOrderByRankAsc();
 
-    List<Movie> findFirst10ByOrderByRankAsc();
+    List<Movie> findFirst6ByOrderByRankAsc();
 //    @Query(value = """
 //         SELECT
 //             m.id,
@@ -59,4 +59,17 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 //                 CASE WHEN m.title LIKE %:title% THEN 0 ELSE 1 END,
 //                    average_score asc""", nativeQuery = true)
 //    List<Movie> findByTitleContaining(String search);
+    @Query(value = """
+    SELECT
+         m.*
+      FROM
+          movie m
+      WHERE
+          m.vote_average >= (SELECT AVG(m2.vote_average)
+                             FROM movie m2
+                             WHERE m2.title LIKE %:title%)
+      ORDER BY
+          CASE WHEN m.title LIKE %:title% THEN 0 ELSE 1 END,
+          m.vote_average DESC""", nativeQuery = true)
+    List<Movie> findByTitleContaining(String title);
 }

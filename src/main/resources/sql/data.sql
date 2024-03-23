@@ -609,106 +609,106 @@ insert into ANSWER values (seq_answer_id.nextval, 10, 6, '단체 예약을 원�
 
 --
 -- notice
-INSERT INTO NOTICE 
+INSERT INTO NOTICE
 VALUES (
-  seq_notice_id.nextval, 
-  1, 
-  'SYSTEM',
-  '2024년 3월 시스템점검 안내', 
-  '원활하고 안정된 서비스 제공을 위하여 2024년 3월 새벽 시스템 점검 작업이 예정되어 있습니다.' || chr(13)||chr(10) ||
-  '점검 시간 중 BOOTBOX홈페이지 및 모바일의 모든 서비스가 중단될 예정이오니 이용에 불편 없으시기 바랍니다.' || chr(13)||chr(10) ||
-  chr(13)||chr(10) || -- 빈 줄 추가
-  '1. 일시' || chr(13)||chr(10) ||
-  chr(13)||chr(10) || -- 빈 줄 추가
-  '- 03/29 (화) 02시 ~ 07시 (월요일에서 화요일 넘어가는 새벽)' || chr(13)||chr(10) ||
-  chr(13)||chr(10) || -- 빈 줄 추가
-  '2. 내용' || chr(13)||chr(10) || 
-  chr(13)||chr(10) || -- 빈 줄 추가
-  '- 정기 PM작업(시스템 성능 개선 작업), 극장영업 DB 최적화' || chr(13)||chr(10) ||
-  '- 작업 대상 : 극장영업시스템, 온라인 서비스(홈페이지/모바일), 광고통합서버(보안 업데이트)' || chr(13)||chr(10) ||
-  chr(13)||chr(10) || -- 빈 줄 추가
-  '더욱 안정적이고 편리한 서비스를 제공하는 BOOTBOX가 되겠습니다.' || chr(13)||chr(10) ||
-  '감사합니다.',
-  DEFAULT);
+           seq_notice_id.nextval,
+           1,
+           'SYSTEM',
+           '2024년 3월 시스템점검 안내',
+           '원활하고 안정된 서비스 제공을 위하여 2024년 3월 새벽 시스템 점검 작업이 예정되어 있습니다.' || chr(13)||chr(10) ||
+           '점검 시간 중 BOOTBOX홈페이지 및 모바일의 모든 서비스가 중단될 예정이오니 이용에 불편 없으시기 바랍니다.' || chr(13)||chr(10) ||
+           chr(13)||chr(10) || -- 빈 줄 추가
+           '1. 일시' || chr(13)||chr(10) ||
+           chr(13)||chr(10) || -- 빈 줄 추가
+           '- 03/29 (화) 02시 ~ 07시 (월요일에서 화요일 넘어가는 새벽)' || chr(13)||chr(10) ||
+           chr(13)||chr(10) || -- 빈 줄 추가
+           '2. 내용' || chr(13)||chr(10) ||
+           chr(13)||chr(10) || -- 빈 줄 추가
+           '- 정기 PM작업(시스템 성능 개선 작업), 극장영업 DB 최적화' || chr(13)||chr(10) ||
+           '- 작업 대상 : 극장영업시스템, 온라인 서비스(홈페이지/모바일), 광고통합서버(보안 업데이트)' || chr(13)||chr(10) ||
+           chr(13)||chr(10) || -- 빈 줄 추가
+           '더욱 안정적이고 편리한 서비스를 제공하는 BOOTBOX가 되겠습니다.' || chr(13)||chr(10) ||
+           '감사합니다.',
+           DEFAULT);
 
 insert into NOTICE values (seq_notice_id.nextval, 2, 'CINEMA', '[센텀시티] 백화점 휴점에 따른 극장 이용 안내',
-'안녕하십니까, BOOTBOX 센텀시티입니다.'  || chr(13)||chr(10) ||
-chr(13)||chr(10) || -- 빈 줄 추가
-'24.03.09(토)~24.03.11(월) 신세계 백화점 센텀시티점 휴점에 따라 극장이용 동선 안내를 공지하오니 이용에 착오 없으시길 바랍니다.'  || chr(13)||chr(10) ||
-chr(13)||chr(10) || -- 빈 줄 추가
-'■도보/ 대중 교통 이용 시,' || chr(13)||chr(10) ||
- ' : 백화점 3번 GATE (3번 홀 엘리베이터)' || chr(13)||chr(10) ||
- ' : 백화점 4번 GATE (4번 홀 엘리베이터)_ 스파랜드 매장 입구' || chr(13)||chr(10) ||
-'■자차 이용 시,' || chr(13)||chr(10) ||
- ' : 지하 3층~4층 엘리베이터 3번 or 4번 홀 이용 가능' || chr(13)||chr(10) ||
- chr(13)||chr(10) || -- 빈 줄 추가
- 'BOOTBOX센텀시티 많은이용 부탁드립니다.' || chr(13)||chr(10) ||
-'감사합니다.', default);
+                           '안녕하십니까, BOOTBOX 센텀시티입니다.'  || chr(13)||chr(10) ||
+                           chr(13)||chr(10) || -- 빈 줄 추가
+                           '24.03.09(토)~24.03.11(월) 신세계 백화점 센텀시티점 휴점에 따라 극장이용 동선 안내를 공지하오니 이용에 착오 없으시길 바랍니다.'  || chr(13)||chr(10) ||
+                           chr(13)||chr(10) || -- 빈 줄 추가
+                           '■도보/ 대중 교통 이용 시,' || chr(13)||chr(10) ||
+                           ' : 백화점 3번 GATE (3번 홀 엘리베이터)' || chr(13)||chr(10) ||
+                           ' : 백화점 4번 GATE (4번 홀 엘리베이터)_ 스파랜드 매장 입구' || chr(13)||chr(10) ||
+                           '■자차 이용 시,' || chr(13)||chr(10) ||
+                           ' : 지하 3층~4층 엘리베이터 3번 or 4번 홀 이용 가능' || chr(13)||chr(10) ||
+                           chr(13)||chr(10) || -- 빈 줄 추가
+                           'BOOTBOX센텀시티 많은이용 부탁드립니다.' || chr(13)||chr(10) ||
+                           '감사합니다.', default);
 
 insert into NOTICE values (seq_notice_id.nextval, 3, 'EVENT', '[웡카] 신규 초콜릿향 진행극장 변경 안내 ',
-'안녕하세요. [웡카] 신규 초콜릿향 진행극장이 변경되어 안내드립니다.' || chr(13)||chr(10)||
-chr(13)||chr(10) ||
-'[웡카] 신규 초콜릿향 진행 극장 (1/31~2/6) BOOTBOX 계양, 광교, 광주터미널, 김해, 대구, 대구스타디움,대구죽전, 대전, 대전터미널, 동수원, 동탄역, 방학, 서면, 센텀시티, 신세계경기, 안산, 연남, 영등포, 왕십리, 용산아이파크몰, 인천,
-전주고사, 제주, 청주지웰시티, 판교, 평택' || chr(13)||chr(10) ||
-chr(13)||chr(10) ||
-'극장 이용 전 확인 부탁드리겠습니다.'  || chr(13)||chr(10) ||
-'감사합니다.', default);
+                           '안녕하세요. [웡카] 신규 초콜릿향 진행극장이 변경되어 안내드립니다.' || chr(13)||chr(10)||
+                           chr(13)||chr(10) ||
+                           '[웡카] 신규 초콜릿향 진행 극장 (1/31~2/6) BOOTBOX 계양, 광교, 광주터미널, 김해, 대구, 대구스타디움,대구죽전, 대전, 대전터미널, 동수원, 동탄역, 방학, 서면, 센텀시티, 신세계경기, 안산, 연남, 영등포, 왕십리, 용산아이파크몰, 인천,
+                           전주고사, 제주, 청주지웰시티, 판교, 평택' || chr(13)||chr(10) ||
+                           chr(13)||chr(10) ||
+                           '극장 이용 전 확인 부탁드리겠습니다.'  || chr(13)||chr(10) ||
+                           '감사합니다.', default);
 
 insert into NOTICE values (seq_notice_id.nextval, 4, 'ETC', '개인정보처리방침 개정 공지 (24.04.06 시행)',
-'2024년 4월 6일 자로 BOOTBOX의 개인정보처리방침이 개정됨에 따라 회원님께 주요 개정 내용과 적용 일정을 아래와 같이 안내 드립니다.'  || chr(13)||chr(10) ||
-'1. 개정 약관 시행일'  || chr(13)||chr(10) ||
-chr(13)||chr(10) ||
-'2024년 1월 23일 (화)'   || chr(13)||chr(10) ||
-chr(13)||chr(10) ||
-'2. 주요 개정 내용'  || chr(13)||chr(10) ||
-chr(13)||chr(10) ||
-'- 보다 쉽고 명확한 이해를 위한 약관의 전반적인 문구 정비'  || chr(13)||chr(10) ||
-'- 회원의 금지 의무 추가'  || chr(13)||chr(10) ||
-'- 게시물의 관리 및 운영 정책 관련 내용 추가'  || chr(13)||chr(10) ||
-'- 손해배상 및 면책 관련 문구 수정'  ||chr(13)||chr(10) ||
-chr(13)||chr(10) ||
-'개정 약관에 대한 이의제기 및 문의사항이 있으신 경우, 고객센터(1544-1122)로 문의하여 주시기 바랍니다.' ||chr(13)||chr(10) ||
-'감사합니다.', default);
+                           '2024년 4월 6일 자로 BOOTBOX의 개인정보처리방침이 개정됨에 따라 회원님께 주요 개정 내용과 적용 일정을 아래와 같이 안내 드립니다.'  || chr(13)||chr(10) ||
+                           '1. 개정 약관 시행일'  || chr(13)||chr(10) ||
+                           chr(13)||chr(10) ||
+                           '2024년 1월 23일 (화)'   || chr(13)||chr(10) ||
+                           chr(13)||chr(10) ||
+                           '2. 주요 개정 내용'  || chr(13)||chr(10) ||
+                           chr(13)||chr(10) ||
+                           '- 보다 쉽고 명확한 이해를 위한 약관의 전반적인 문구 정비'  || chr(13)||chr(10) ||
+                           '- 회원의 금지 의무 추가'  || chr(13)||chr(10) ||
+                           '- 게시물의 관리 및 운영 정책 관련 내용 추가'  || chr(13)||chr(10) ||
+                           '- 손해배상 및 면책 관련 문구 수정'  ||chr(13)||chr(10) ||
+                           chr(13)||chr(10) ||
+                           '개정 약관에 대한 이의제기 및 문의사항이 있으신 경우, 고객센터(1544-1122)로 문의하여 주시기 바랍니다.' ||chr(13)||chr(10) ||
+                           '감사합니다.', default);
 
 insert into NOTICE values (seq_notice_id.nextval, 5, 'EVENT', '[행사/이벤트]] [BOOTBOX] 무대인사 예매취소 정책 변경 안내',
-'안녕하세요, BOOTBOX입니다.'  ||chr(13)||chr(10) ||
-chr(13)||chr(10) ||
-'최근 무대인사 티켓을 대량구매하여 높은 가격으로 재판매하거나 상영 직전 환불하는 등의 사례가 빈번하게 발생하고 있습니다.'  ||chr(13)||chr(10) || 
-'이에 CGV는 실제로 행사를 즐기고자 하시는 고객님들께 참여 기회를 제공하기 위하여'  ||chr(13)||chr(10) ||
-'무대인사 회차에 대한 예매취소 정책을 아래와 같이 변경하오니 이용에 참고 부탁드립니다.'  ||chr(13)||chr(10) ||
-chr(13)||chr(10) ||
-'기존 : 상영시간 20분 전까지 취소 가능' ||chr(13)||chr(10) ||
-'변경 후 : 상영 시간 20분 전까지 매표소에서 취소 가능(키오스크 환불 불가, PRIVATE BOX는 기존과 같이 당일 환불 불가)' ||chr(13)||chr(10) ||
-chr(13)||chr(10) ||
-'시행일: 2월 2일 이후 진행하는 무대인사부터 시행' ||chr(13)||chr(10) ||
-'감사합니다.', default);
+                           '안녕하세요, BOOTBOX입니다.'  ||chr(13)||chr(10) ||
+                           chr(13)||chr(10) ||
+                           '최근 무대인사 티켓을 대량구매하여 높은 가격으로 재판매하거나 상영 직전 환불하는 등의 사례가 빈번하게 발생하고 있습니다.'  ||chr(13)||chr(10) ||
+                           '이에 CGV는 실제로 행사를 즐기고자 하시는 고객님들께 참여 기회를 제공하기 위하여'  ||chr(13)||chr(10) ||
+                           '무대인사 회차에 대한 예매취소 정책을 아래와 같이 변경하오니 이용에 참고 부탁드립니다.'  ||chr(13)||chr(10) ||
+                           chr(13)||chr(10) ||
+                           '기존 : 상영시간 20분 전까지 취소 가능' ||chr(13)||chr(10) ||
+                           '변경 후 : 상영 시간 20분 전까지 매표소에서 취소 가능(키오스크 환불 불가, PRIVATE BOX는 기존과 같이 당일 환불 불가)' ||chr(13)||chr(10) ||
+                           chr(13)||chr(10) ||
+                           '시행일: 2월 2일 이후 진행하는 무대인사부터 시행' ||chr(13)||chr(10) ||
+                           '감사합니다.', default);
 
 insert into NOTICE values (seq_notice_id.nextval, 6, 'CINEMA', '[BOOTBOX 영등포점] 기계식 주차장 공사 안내',
-'안녕하십니까, BOOTBOX 영등포점입니다.' ||chr(13)||chr(10) ||
-chr(13)||chr(10) ||
-'먼저 BOOTBOX 영등포점을 방문해주시는 고객님들께 깊은 감사의 말씀드립니다.' ||chr(13)||chr(10) ||
-chr(13)||chr(10) ||
-'BOOTBOX 영등포점 입점건물 씨네시티영등포 지하주차장 內 기계식 주차장 공사가 예정되어 일정 안내드립니다.' ||chr(13)||chr(10) ||
-chr(13)||chr(10) ||
-' ● 공사일정 : 2024.03.02(화) ~ 2024.04.30(화)'  ||chr(13)||chr(10) || 
-'※ 공사 일정은 상황에 따라 변동 될 수 있습니다.' ||chr(13)||chr(10) || 
-chr(13)||chr(10) ||
-'공사 기간 중에는 기계식 주차장 이용이 불가하므로 주차 지연 및 입차가 불가할 수 있으니 가급적 대중교통 이용 부탁드립니다.' ||chr(13)||chr(10) ||
-chr(13)||chr(10) ||
-'보다 안전하고 편리한 주차공간으로 재 정비하여 찾아 뵙겠습니다. 감사합니다.', default);
+                           '안녕하십니까, BOOTBOX 영등포점입니다.' ||chr(13)||chr(10) ||
+                           chr(13)||chr(10) ||
+                           '먼저 BOOTBOX 영등포점을 방문해주시는 고객님들께 깊은 감사의 말씀드립니다.' ||chr(13)||chr(10) ||
+                           chr(13)||chr(10) ||
+                           'BOOTBOX 영등포점 입점건물 씨네시티영등포 지하주차장 內 기계식 주차장 공사가 예정되어 일정 안내드립니다.' ||chr(13)||chr(10) ||
+                           chr(13)||chr(10) ||
+                           ' ● 공사일정 : 2024.03.02(화) ~ 2024.04.30(화)'  ||chr(13)||chr(10) ||
+                           '※ 공사 일정은 상황에 따라 변동 될 수 있습니다.' ||chr(13)||chr(10) ||
+                           chr(13)||chr(10) ||
+                           '공사 기간 중에는 기계식 주차장 이용이 불가하므로 주차 지연 및 입차가 불가할 수 있으니 가급적 대중교통 이용 부탁드립니다.' ||chr(13)||chr(10) ||
+                           chr(13)||chr(10) ||
+                           '보다 안전하고 편리한 주차공간으로 재 정비하여 찾아 뵙겠습니다. 감사합니다.', default);
 
 insert into NOTICE values (seq_notice_id.nextval, 1, 'ETC', '[BOOTBOX] 이태원 사고에 애도를 표합니다.',
-'이태원 사고의 희생자와 유가족분들께'  ||chr(13)||chr(10) ||
-chr(13)||chr(10) ||
-'깊은 애도와 위로의 마음을 전하며,'  ||chr(13)||chr(10) ||
- chr(13)||chr(10) ||
-'부상자 분들의 빠른 쾌유를 기원합니다.' ||chr(13)||chr(10) ||
-chr(13)||chr(10) ||
-'BOOTBOX  일동.', default);
+                           '이태원 사고의 희생자와 유가족분들께'  ||chr(13)||chr(10) ||
+                           chr(13)||chr(10) ||
+                           '깊은 애도와 위로의 마음을 전하며,'  ||chr(13)||chr(10) ||
+                           chr(13)||chr(10) ||
+                           '부상자 분들의 빠른 쾌유를 기원합니다.' ||chr(13)||chr(10) ||
+                           chr(13)||chr(10) ||
+                           'BOOTBOX  일동.', default);
 
 --
 -- schedule
---insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 09:10', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 838209, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 09:10', 'YYYY-MM-DD HH24:MI'));
 --insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 14:00', 'YYYY-MM-DD HH24:MI'));
 --insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 16:30', 'YYYY-MM-DD HH24:MI'));
 --
@@ -878,7 +878,7 @@ chr(13)||chr(10) ||
 ----107
 --insert into SCHEDULE values (seq_schedule_id.nextval, 0510503, 20, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 11:40', 'YYYY-MM-DD HH24:MI'));
 -- reservation
---INSERT INTO RESERVATION VALUES ('box16443', 1, 1, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box16443', 21, 2, 'CONFIRM');
 --INSERT INTO RESERVATION VALUES ('box25822', 2, 2, 'CONFIRM');
 --INSERT INTO RESERVATION VALUES ('box47220', 3, 3, 'CONFIRM');
 --INSERT INTO RESERVATION VALUES ('box47211', 2, 3, 'CONFIRM');
@@ -936,7 +936,7 @@ chr(13)||chr(10) ||
 --insert into RESERVATION values ('box27586', 2, 14, 'CONFIRM');
 --insert into RESERVATION values ('box83657', 2, 15, 'CONFIRM');
 -- reservation_seat
---insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box16443', 1);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box16443', 1);
 --insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box25822', 2);
 --insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box47220', 3);
 --insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box42217', 4);
@@ -1004,7 +1004,7 @@ chr(13)||chr(10) ||
 --insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box83657', 4);
 --insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box83657', 5);
 ---- order_pay
---insert into ORDER_PAY values ('order1644325835123', 'box16443', 1, 'imp32105587', 'html5_inicis', 'card', 12000 , '01012341234', 'CONFIRM');
+insert into ORDER_PAY values ('order1644325835123', 'box16443', 21, 'imp32105587', 'html5_inicis', 'card', 12000 , '01012341234', 'CONFIRM');
 --insert into ORDER_PAY values ('order1414325835223', 'box25822', 2, 'imp32105587', 'html5_inicis', 'card', 12000 , '01012345678', 'CONFIRM');
 --insert into ORDER_PAY values ('order1544325425262', 'box47220', 3, 'imp32105587', 'html5_inicis', 'card', 12000 , '01011112222', 'CONFIRM');
 --insert into ORDER_PAY values ('order2142325845122', 'box34332', 4, 'imp32105587', 'html5_inicis', 'card', 12000 , '01022221111', 'CONFIRM');
@@ -1040,7 +1040,7 @@ insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 5, 12000, 'card');
 --insert into MOVIE_LIST values (seq_movie_list_id.nextval, 6, 0201);
 
 -- review
---insert into REVIEW values (seq_review_id.nextval, 'box16443', 1, 1, 3, '너무 지루해요', default);
+insert into REVIEW values (seq_review_id.nextval, 'box16443', 21, 838209, 4, '너무 지루해요', default);
 --insert into REVIEW values (seq_review_id.nextval, 'box25822', 2, 2, 4, '최고', default);
 --insert into REVIEW values (seq_review_id.nextval, 'box47220', 3, 3, 5, '시간 가는 줄 모르고 봤어용', default);
 --insert into REVIEW values (seq_review_id.nextval, 'box47211', 2, 3, 2, '시간 가는 줄 모르고 봤어용', default);
