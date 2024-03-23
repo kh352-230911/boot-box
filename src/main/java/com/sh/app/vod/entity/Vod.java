@@ -1,10 +1,8 @@
 package com.sh.app.vod.entity;
 
+import com.sh.app.movie.entity.Movie;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "vod")
@@ -12,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(exclude = "movie")
 public class Vod {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_vod_id_generator")
@@ -28,4 +27,8 @@ public class Vod {
     private String vodUrl;
 
     private String type;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "movie_id")
+    private Movie movie;
 }

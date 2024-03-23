@@ -49,8 +49,7 @@ public class Movie {
 
     private String posterUrl;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "movie_id")
+    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @BatchSize(size = 50)
     private List<Vod> vods = new ArrayList<>();
 
@@ -59,15 +58,30 @@ public class Movie {
     @BatchSize(size = 50)
     private List<MovieGenre> movieGenres = new ArrayList<>();
 
+    public void addMovieGenre(MovieGenre movieGenre) {
+        movieGenres.add(movieGenre);
+        movieGenre.setMovie(this);
+    }
+
     @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     @BatchSize(size = 50)
     private List<MovieActor> movieActors = new ArrayList<>();
 
+    public void addMovieActor(MovieActor movieActor) {
+        movieActors.add(movieActor);
+        movieActor.setMovie(this);
+    }
+
     @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     @BatchSize(size = 50)
     private List<MovieDirector> movieDirectors = new ArrayList<>();
+
+    public void addMovieDirector(MovieDirector movieDirector) {
+        movieDirectors.add(movieDirector);
+        movieDirector.setMovie(this);
+    }
 
 //    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 //    @Builder.Default
