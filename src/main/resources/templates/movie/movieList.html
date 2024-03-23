@@ -77,6 +77,7 @@
                 </a>
                 <a class="movie-content" th:href="@{/movie/movieDetail.do(id=${movie.id})}">
                     <span class="text-sm" th:text="|${#temporals.format(movie.releaseDate, 'yyyy.MM.dd')} 개봉|"></span>
+                    <span class="text-sm" th:if="|${movie.dDay != ''}|" th:text="${movie.dDay}"></span>
                 </a>
                 <div class="movie_action">
                     <button class="movie_button text-sm mb-3" th:onclick="|location.href = '@{/reservation/reservationBooking.do}'|">예매하기</button>

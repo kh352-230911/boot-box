@@ -49,6 +49,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -667,7 +668,21 @@ public class MovieService {
     }
 
     private MovieDetailDto convertToMovieList(Movie movie) {
-        return modelMapper.map(movie, MovieDetailDto.class);
+        MovieDetailDto movieDetailDto = modelMapper.map(movie, MovieDetailDto.class);
+        movieDetailDto.setDDay(calculateDday(movie.getReleaseDate()));
+        return movieDetailDto;
+    }
+
+    private String calculateDday(LocalDate releaseDate) {
+        LocalDate today = LocalDate.now();
+        if (releaseDate.isAfter(today)) {
+            long daysBetween = ChronoUnit.DAYS.between(today, releaseDate);
+            return "D-" + daysBetween;
+        } else {
+            // 개봉일이 현재 날짜보다 이전이거나 같은 경우
+            return ""; // 빈 문자열 반환 또는 "개봉됨", "N/A" 등 원하는 값 반환
+        }
+
     }
 
 //    public List<MovieDetailDto> findByGenreName(String genre) {
