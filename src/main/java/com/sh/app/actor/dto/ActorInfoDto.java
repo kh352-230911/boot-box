@@ -13,5 +13,6 @@ import lombok.NoArgsConstructor;
 public class ActorInfoDto {
     private Long actorId;
 
+    @JsonProperty("actorNm")
     private String actorName;
 }

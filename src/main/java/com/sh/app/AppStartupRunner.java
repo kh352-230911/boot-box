@@ -1,11 +1,12 @@
 package com.sh.app;
 
-import com.sh.app.genre.service.GenreService;
+import com.sh.app.api.service.BoxOfficeService;
+import com.sh.app.api.service.CurrentMovieService;
+import com.sh.app.api.service.GenreService;
 import com.sh.app.movie.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 //@Component
@@ -13,13 +14,9 @@ import org.springframework.stereotype.Component;
 //    @Autowired
 //    private MovieService movieService;
 //
-//    @Autowired
-//    private GenreService genreService;
-//
-//
 //    @Override
 //    public void run(ApplicationArguments args) throws Exception {
-////        genreService.fetchAndStoreGenre();
-////        movieService.scheduledCallApi();
+//        movieService.scheduledCallApi();
+
 //    }
 //}

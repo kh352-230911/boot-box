@@ -144,7 +144,7 @@ create sequence seq_genre_id;
 create table actor (
     id number not null, -- pk 시퀀스 id
     actor_id number null, -- 배우 식별 id
-    actor_name varchar2(255) null, -- 배우명
+    actor_name varchar2(255) not null, -- 배우명
     constraints pk_actor_id primary key(id)
 );
 create sequence seq_actor_id;
@@ -153,7 +153,7 @@ create sequence seq_actor_id;
 create table director (
     id number not null, -- pk 시퀀스 id
     director_id number null, -- 감독 식별 id
-    director_name varchar2(255) null, -- 감독명
+    director_name varchar2(255) not null, -- 감독명
     constraints pk_director_id primary key(id)
 );
 create sequence seq_director_id;
@@ -179,7 +179,7 @@ create table movie(
 -- 예고편
 create table vod (
     id number not null, -- pk 시퀀스 id
-    movie_id number null, -- fk 영화 고유 id
+    movie_id number not null, -- fk 영화 고유 id
     vod_name varchar2(500) not null, -- 비디오 제목
     vod_url varchar2(255) not null, -- url
     type varchar2(255) not null, -- vod 타입
