@@ -1,4 +1,4 @@
-package com.sh.app;
+//package com.sh.app;
 
 import com.sh.app.api.service.BoxOfficeService;
 import com.sh.app.api.service.CurrentMovieService;

@@ -59,4 +59,6 @@ public class MovieDetailDto {
     private List<ActorDetailDto> actorDetailDtos;
 
     private List<DirectorDetailDto> directorDetailDtos;
+
+    private String dDay;
 }

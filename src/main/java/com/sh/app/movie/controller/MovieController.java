@@ -42,6 +42,7 @@ public class MovieController {
 //        else {
 //            movies = movieService.findByGenreName(genre);
 //        }
+        log.debug("movies = {}", movies);
         model.addAttribute("movies", movies);
     }
 
