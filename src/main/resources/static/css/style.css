@@ -79,7 +79,7 @@ footer {
     background-color: #212121;
     background-clip: content-box;
     height: 95px;
-    position: absolute; /* 푸터를 절대 위치로 설정 */
+    /*position: absolute; !* 푸터를 절대 위치로 설정 *!*/
     bottom: 0; /* 바디 하단에 배치 */
     width: 100%; /* 너비를 바디와 일치시킴 */
 }

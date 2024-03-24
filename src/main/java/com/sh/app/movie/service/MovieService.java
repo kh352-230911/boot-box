@@ -681,7 +681,6 @@ public class MovieService {
             // 개봉일이 현재 날짜보다 이전이거나 같은 경우
             return ""; // 빈 문자열 반환 또는 "개봉됨", "N/A" 등 원하는 값 반환
         }
-
     }
 
     public List<MovieDetailDto> findByGenreName(String genre) {
@@ -817,11 +816,11 @@ public class MovieService {
                     .map(director -> directorInfoMap.get(director.getId()))
                     .collect(Collectors.toList());
 
-
             // 영화 별로 연관된 VOD 정보를 매핑
             List<VodDetailDto> vodDetailDtos = movie.getVods().stream()
                     .map(vod -> modelMapper.map(vod, VodDetailDto.class))
                     .collect(Collectors.toList());
+
 
             // 영화 정보를 MovieDetailDto로 변환
             MovieDetailDto movieDetailDto = modelMapper.map(movie, MovieDetailDto.class);
@@ -835,6 +834,46 @@ public class MovieService {
         }).orElseThrow(() -> new EntityNotFoundException("Movie not found for ID: " + id));
 
 
+    }
+
+    public List<MovieDetailDto> findAllByReleaseDateAfterOrderByRankAsc() {
+        LocalDate today = LocalDate.now();
+        List<Movie> movies = movieRepository.findAllByReleaseDateAfterOrderByRankAsc(today);
+        List<MovieDetailDto> movieDetailDtos = new ArrayList<>();
+
+        // 모든 영화에 대한 장르 ID를 한 번에 수집하기
+        Set<Long> allGenreIds = new HashSet<>();
+        movies.forEach(movie -> allGenreIds.addAll(
+                movie.getMovieGenres().stream()
+                        .map(movieGenre -> movieGenre.getGenre().getId())
+                        .collect(Collectors.toSet())
+        ));
+
+        // 장르 ID 목록을 사용하여 장르 정보를 한 번의 쿼리로 가져오기
+        List<Genre> allGenres = genreRepository.findByIdIn(new ArrayList<>(allGenreIds));
+        Map<Long, GenreDetailDto> genreInfoMap = allGenres.stream()
+                .map(genre -> modelMapper.map(genre, GenreDetailDto.class))
+                .collect(Collectors.toMap(GenreDetailDto::getId, Function.identity()));
+
+        for (Movie movie : movies) {
+            // 영화별로 연관된 장르 정보를 매핑
+            List<GenreDetailDto> genreDetailDtos = movie.getMovieGenres().stream()
+                    .map(MovieGenre::getGenre)
+                    .map(genre -> genreInfoMap.get(genre.getId()))
+                    .collect(Collectors.toList());
+
+            // DTO 빌더를 사용하여 BoxMovieInfoDto를 생성합니다.
+            MovieDetailDto movieDetailDto = convertToMovieList(movie);
+            movieDetailDto.setGenreDetailDtos(genreDetailDtos);
+            movieDetailDtos.add(movieDetailDto);
+        }
+        return movieDetailDtos;
+    }
+
+    public List<MovieDetailDto> findByGenresNameAndReleaseDateAfter(String genre) {
+        LocalDate today = LocalDate.now();
+        List<Movie> movies = movieRepository.findByGenresNameAndReleaseDateAfter(genre, today);
+        return movies.stream().map(this::convertToMovieDetailDto).collect(Collectors.toList());
     }
 
 }

@@ -21,6 +21,7 @@
                     <div class="movie_info-left">
                         <h1 class="movie_title" th:text="${movie.title}">윙카</h1>
                         <div class="movie_rate">
+
 <!--                            <th:block th:if="${movieData.avgReviewScore} == 5.0">-->
 <!--                                <ul class="movie_stars">-->
 <!--                                    <li class="movie_star rated">-->
@@ -183,12 +184,14 @@
 
                     <div class="movie_info-right">
                         <div class="movie_img">
+
                             <th:block th:if="${#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">
                                 <img class="movie_img-item movie_img-first" th:src="${movie.posterUrl}">
                             </th:block>
                             <th:block th:if="${!#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">
                                 <img class="movie_img-item movie_img-first" th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" >
                             </th:block>
+
                         </div>
                     </div>
                 </div>
@@ -196,6 +199,7 @@
                 <div class="line"></div>
                 <!-- trailer -->
                 <div class="text-2xl">Trailer</div>
+
                 <div class="line2"></div>
 
                 <div class="trailer-container flex justify-center" style="overflow: hidden;">

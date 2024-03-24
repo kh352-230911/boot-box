@@ -123,14 +123,14 @@ footer {
     font-size: 1.5rem;
 }
 
-#scheduled-movie img {
+#movie-list img {
     display: none;
 }
 
-#scheduled-movie:hover img {
+#movie-list:hover img {
     display: block;
 }
 
-#scheduled-movie:hover #hover-text {
+#movie-list:hover .li-text {
     color: rgb(239 68 68);
 }

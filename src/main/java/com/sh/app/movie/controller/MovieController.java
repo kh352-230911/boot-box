@@ -49,5 +49,19 @@ public class MovieController {
         model.addAttribute("movies", movies);
     }
 
+    @GetMapping("/preMovieList.do")
+    public void preMovieList(@RequestParam(value = "genre", required = false) String genre, Model model) {
+        List<MovieDetailDto> movies;
+        if (genre == null || genre.isEmpty()) {
+            movies = movieService.findAllByReleaseDateAfterOrderByRankAsc();
+        }
+        else {
+            movies = movieService.findByGenresNameAndReleaseDateAfter(genre);
+        }
+//        log.debug("movies = {}", movies);
+        model.addAttribute("genre", genre);
+        model.addAttribute("movies", movies);
+    }
+
     // ---------------------------------------------- //
 }
