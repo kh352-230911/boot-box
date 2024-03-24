@@ -12,7 +12,8 @@ import java.util.Optional;
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     Optional<Movie> findByNormalizedTitle(String normalizedTitle);
 
-//    List<Movie> findByGenreName(String genre);
+    @Query("SELECT m FROM Movie m JOIN m.movieGenres g WHERE g.genre.genreName = :genre")
+    List<Movie> findByGenreName(String genre);
 
     List<Movie> findAllByOrderByTitleAsc();
 
@@ -74,4 +75,5 @@ ORDER BY CASE WHEN m.title LIKE %:title% THEN 0 ELSE 1 END ASC, -- 'title'를 �
          m.vote_average DESC -- 동일 평점 내에서는 높은 평점 우선
 FETCH FIRST 10 ROWS ONLY""", nativeQuery = true)
     List<Movie> findByTitleContaining(String title);
+
 }
