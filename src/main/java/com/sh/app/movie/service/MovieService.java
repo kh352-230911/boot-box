@@ -573,7 +573,6 @@ public class MovieService {
 
     private MovieDetailDto convertToMovieDetailDto(Movie movie) {
         MovieDetailDto movieDetailDto = modelMapper.map(movie, MovieDetailDto.class);
-        movieDetailDto.setSearchResult(true);
         return movieDetailDto;
     }
 
@@ -609,34 +608,34 @@ public class MovieService {
 //        Map<Long, DirectorDetailDto> directorInfoMap = allDirectors.stream()
 //                .map(director -> modelMapper.map(director, DirectorDetailDto.class))
 //                .collect(Collectors.toMap(DirectorDetailDto::getId, Function.identity()));
-//
-//        // 모든 영화에 대한 장르 ID를 한 번에 수집하기
-//        Set<Long> allGenreIds = new HashSet<>();
-//        movies.forEach(movie -> allGenreIds.addAll(
-//                movie.getMovieGenres().stream()
-//                        .map(movieGenre -> movieGenre.getGenre().getId())
-//                        .collect(Collectors.toSet())
-//        ));
-//
-//        // 장르 ID 목록을 사용하여 장르 정보를 한 번의 쿼리로 가져오기
-//        List<Genre> allGenres = genreRepository.findByIdIn(new ArrayList<>(allGenreIds));
-//        Map<Long, GenreDetailDto> genreInfoMap = allGenres.stream()
-//                .map(genre -> modelMapper.map(genre, GenreDetailDto.class))
-//                .collect(Collectors.toMap(GenreDetailDto::getId, Function.identity()));
-//
+
+        // 모든 영화에 대한 장르 ID를 한 번에 수집하기
+        Set<Long> allGenreIds = new HashSet<>();
+        movies.forEach(movie -> allGenreIds.addAll(
+                movie.getMovieGenres().stream()
+                        .map(movieGenre -> movieGenre.getGenre().getId())
+                        .collect(Collectors.toSet())
+        ));
+
+        // 장르 ID 목록을 사용하여 장르 정보를 한 번의 쿼리로 가져오기
+        List<Genre> allGenres = genreRepository.findByIdIn(new ArrayList<>(allGenreIds));
+        Map<Long, GenreDetailDto> genreInfoMap = allGenres.stream()
+                .map(genre -> modelMapper.map(genre, GenreDetailDto.class))
+                .collect(Collectors.toMap(GenreDetailDto::getId, Function.identity()));
+
 //        // 영화 목록을 반복하면서 DTO를 생성합니다.
         for (Movie movie : movies) {
 //            // BoxVideoInfoDto 변환
 //            List<VodDetailDto> vodDetailDtos = movie.getVods().stream()
 //                    .map(vod -> modelMapper.map(vod, VodDetailDto.class))
 //                    .collect(Collectors.toList());
-//
-//            // 영화별로 연관된 장르 정보를 매핑
-//            List<GenreDetailDto> genreDetailDtos = movie.getMovieGenres().stream()
-//                    .map(MovieGenre::getGenre)
-//                    .map(genre -> genreInfoMap.get(genre.getId()))
-//                    .collect(Collectors.toList());
-//
+
+            // 영화별로 연관된 장르 정보를 매핑
+            List<GenreDetailDto> genreDetailDtos = movie.getMovieGenres().stream()
+                    .map(MovieGenre::getGenre)
+                    .map(genre -> genreInfoMap.get(genre.getId()))
+                    .collect(Collectors.toList());
+
 //            // 영화별로 연관된 배우 정보를 매핑
 //            List<ActorDetailDto> actorDetailDtos = movie.getMovieActors().stream()
 //                    .map(MovieActor::getActor)
@@ -661,7 +660,7 @@ public class MovieService {
 //                    .voteAverage(movie.getVoteAverage())
 //                    .posterUrl(movie.getPosterUrl())
 //                    .build();
-//
+            movieDetailDto.setGenreDetailDtos(genreDetailDtos);
             movieDetailDtos.add(movieDetailDto);
         }
         return movieDetailDtos;
@@ -685,11 +684,11 @@ public class MovieService {
 
     }
 
-//    public List<MovieDetailDto> findByGenreName(String genre) {
-//        return movieRepository.findByGenreName(genre).stream()
-//                .map((movie) -> convertToMovieDetailDto(movie))
-//                .collect(Collectors.toList());
-//    }
+    public List<MovieDetailDto> findByGenreName(String genre) {
+        return movieRepository.findByGenreName(genre).stream()
+                .map((movie) -> convertToMovieDetailDto(movie))
+                .collect(Collectors.toList());
+    }
 
     public List<MovieListDto> getCurrentMovies() {
         return movieRepository.findAll().stream() // 현재는 findAll을 사용했지만, 실제로는 현재 상영 중인 영화를 필터링하는 로직
@@ -719,35 +718,36 @@ public class MovieService {
 //                .stream().map((movie) -> convertToMovieDetailDto(movie))
 //                .collect(Collectors.toList());
 //    }
-//
+
+
 //    public List<MovieDetailDto> findByTitleContaining(String title) {
 //        return movieRepository.findByTitleContaining(title)
 //                .stream().map((movie) -> convertToMovieDetailDto(movie))
 //                .collect(Collectors.toList());
 //    }
-public List<MovieDetailDto> findFirst6ByOrderByRankAsc() {
-    List<Movie> movies = movieRepository.findFirst6ByOrderByRankAsc();
-    List<MovieDetailDto> movieDetailDtos = new ArrayList<>();
 
-    for (Movie movie : movies) {
-        List<VodDetailDto> vodDetailDtos = movie.getVods().stream()
-                .map(vod -> modelMapper.map(vod, VodDetailDto.class))
-                .collect(Collectors.toList());
+    public List<MovieDetailDto> findFirst6ByOrderByRankAsc() {
+        List<Movie> movies = movieRepository.findFirst6ByOrderByRankAsc();
+        List<MovieDetailDto> movieDetailDtos = new ArrayList<>();
 
-        MovieDetailDto dto = convertToMovieList(movie);
-        dto.setVodDetailDtos(vodDetailDtos);
+        for (Movie movie : movies) {
+            List<VodDetailDto> vodDetailDtos = movie.getVods().stream()
+                    .map(vod -> modelMapper.map(vod, VodDetailDto.class))
+                    .collect(Collectors.toList());
 
-        movieDetailDtos.add(dto);
+            MovieDetailDto dto = convertToMovieList(movie);
+            dto.setVodDetailDtos(vodDetailDtos);
+
+            movieDetailDtos.add(dto);
+        }
+        return movieDetailDtos;
     }
-    return movieDetailDtos;
-}
 
     public List<MovieDetailDto> findByTitleContaining(String title) {
         // 입력된 제목의 길이를 체크하여 한 글자인 경우 빈 리스트를 반환
         if (title == null || title.trim().length() <= 1) {
             return Collections.emptyList();
         }
-
         List<Movie> movies = movieRepository.findByTitleContaining(title);
         List<MovieDetailDto> movieDetailDtos = new ArrayList<>();
 
