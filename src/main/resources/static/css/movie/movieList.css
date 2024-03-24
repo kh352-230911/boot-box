@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
 /* 영화이미지 밑 영화제목*/
 .movie-title {
     display:flex;
@@ -36,15 +37,15 @@
     height: 270px;
     border-radius:10px;
 }
-.section-1-2 > div > div {
+.section-1-2 > div > div > div {
     position:relative;
     width: auto;
     height: auto;
     margin: 10px;
 }
-.section-1-2 > div:nth-child(5) > div{
-    margin:10px;
-}
+/*.section-1-2 > div:nth-child(5) > div{*/
+/*    margin:10px;*/
+/*}*/
 /* section-1-1 */
 .section-1 {
     width:100%;
@@ -110,4 +111,23 @@ footer {
     height: 60px;
     position: relative;
     transform: translateY(0%);
+}
+
+.li-text{
+    font-family: "Dongle", sans-serif;
+    font-weight: normal;
+    font-style: italic;
+    font-size: x-large;
+}
+
+#scheduled-movie img {
+    display: none;
+}
+
+#scheduled-movie:hover img {
+    display: block;
+}
+
+#scheduled-movie:hover #hover-text {
+    color: rgb(239 68 68);
 }

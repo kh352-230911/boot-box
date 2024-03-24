@@ -14,29 +14,48 @@
     <div class="home-container">
         <br>
         <div class="flex justify-between w-full h-auto">
-            <span class="font-semibold ml-5">영화 목록</span>
-            <form>
-                <label for="underline_select" class="sr-only">Underline select</label>
-                    <select id="underline_select" name="genreData" th:onchange="this.form.submit()"
-                            class="block mr-5 mb-2 text-sm text-gray-500 bg-transparent border-0 border-b-2 border-red-600 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-red-600 peer">
-                        <option selected>Select genreData</option>
-                        <option value="드라마">드라마</option>
-                        <option value="액션">액션</option>
-                        <option value="코미디">코미디</option>
-                        <option value="판타지">판타지</option>
-                        <option value="범죄">범죄</option>
-                        <option value="멜로">멜로</option>
-                        <option value="느와르">느와르</option>
-                        <option value="스릴러">스릴러</option>
-                        <option value="공포">공포</option>
-                        <option value="전쟁">전쟁</option>
-                        <option value="애니메이션">애니메이션</option>
-                        <option value="로맨스">로맨스</option>
-                        <option value="호러">호러</option>
-                    </select>
-            </form>
+            <span class="font-semibold ml-5 mb-2">영화 목록</span>
+            <div class="flex items-center w-36">
+                <ul class="release flex">
+                    <a class="flex mx-2 cursor-pointer">
+                        <img width="10px" height="10px" th:src="@{/images/icons8-forward-16.png}" alt="pointer">
+                        <li class="li-text text-base text-red-500 font-medium">현재상영작</li>
+                    </a>
+                    <a id="scheduled-movie" class="flex mx-2 cursor-pointer">
+                        <img width="10px" height="10px" th:src="@{/images/icons8-forward-16.png}" alt="pointer">
+                        <li id="hover-text" class="li-text text-base font-medium">상영예정작</li>
+                    </a>
+                </ul>
+            </div>
         </div>
         <hr style="height: 1px">
+        <form class="flex justify-end mt-1">
+            <label for="underline_select" class="sr-only">Underline select</label>
+            <select id="underline_select" name="genre" th:onchange="this.form.submit()"
+                    class="block mr-1 mb-2 text-sm text-gray-500 bg-transparent border-0 border-b-2 border-red-600 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-red-600 peer">
+                <option value="" th:selected="${genre == null or genre == ''}">Select genre</option>
+                <option value="액션" th:selected="${genre == '액션'}">액션</option>
+                <option value="모험" th:selected="${genre == '모험'}">모험</option>
+                <option value="애니메이션" th:selected="${genre == '애니메이션'}">애니메이션</option>
+                <option value="코미디" th:selected="${genre == '코미디'}">코미디</option>
+                <option value="범죄" th:selected="${genre == '범죄'}">범죄</option>
+                <option value="다큐멘터리" th:selected="${genre == '다큐멘터리'}">다큐멘터리</option>
+                <option value="드라마" th:selected="${genre == '드라마'}">드라마</option>
+                <option value="가족" th:selected="${genre == '가족'}">가족</option>
+                <option value="판타지" th:selected="${genre == '판타지'}">판타지</option>
+                <option value="역사" th:selected="${genre == '역사'}">역사</option>
+                <option value="공포" th:selected="${genre == '공포'}">공포</option>
+                <option value="음악" th:selected="${genre == '음악'}">음악</option>
+                <option value="미스터리" th:selected="${genre == '미스터리'}">미스터리</option>
+                <option value="로맨스" th:selected="${genre == '로맨스'}">로맨스</option>
+                <option value="SF" th:selected="${genre == 'SF'}">SF</option>
+                <option value="TV 영화" th:selected="${genre == 'TV 영화'}">TV 영화</option>
+                <option value="스릴러" th:selected="${genre == '스릴러'}">스릴러</option>
+                <option value="전쟁" th:selected="${genre == '전쟁'}">전쟁</option>
+                <option value="서부" th:selected="${genre == '서부'}">서부</option>
+                <option value="뮤지컬" th:selected="${genre == '뮤지컬'}">뮤지컬</option>
+            </select>
+        </form>
         <br>
         <br>
         <div class="section-1-2 flex flex-wrap w-full h-auto">
@@ -65,20 +84,24 @@
                             <img th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" th:alt="${movie.title}">
                         </th:block>
                     </a>
-
-
                 </div>
                     <a class="movie-title mb-1" th:href="@{/movie/movieDetail.do(id=${movie.id})}" th:text="${#strings.abbreviate(movie.title, 20)}"></a>
                 <a th:href="@{/movie/movieDetail.do(id=${movie.id})}">
                 </a>
-                <a class="movie-content" th:href="@{/movie/movieDetail.do(id=${movie.id})}">
+<!--                <a class="movie-content" th:href="@{/movie/movieDetail.do(id=${movie.id})}">-->
 <!--                    <img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">-->
-                    <span th:text="|평점 ${movie.voteAverage}|"></span>
-                </a>
-                <a class="movie-content" th:href="@{/movie/movieDetail.do(id=${movie.id})}">
-                    <span class="text-sm" th:text="|${#temporals.format(movie.releaseDate, 'yyyy.MM.dd')} 개봉|"></span>
-                    <span class="text-sm" th:if="|${movie.dDay != ''}|" th:text="${movie.dDay}"></span>
-                </a>
+<!--                </a>-->
+                <!--                <a class="movie-content" th:href="@{/movie/movieDetail.do(id=${movie.id})}"></a>-->
+                <div class="m-0 p-0">
+                    <strong class="text-xs text-zinc-400">
+                        평점
+                        <span class="text-xs text-zinc-400" th:text="${movie.voteAverage}"></span>
+                    </strong>
+                </div>
+                <span class="text-xs text-zinc-400">
+                    <strong th:text="|${#temporals.format(movie.releaseDate, 'yyyy.MM.dd')} 개봉|"></strong>
+                </span>
+                <em class="text-base text-red-500 ml-2" th:if="|${movie.dDay != ''}|" th:text="${movie.dDay}"></em>
                 <div class="movie_action">
                     <button class="movie_button text-sm mb-3" th:onclick="|location.href = '@{/reservation/reservationBooking.do}'|">예매하기</button>
                 </div>

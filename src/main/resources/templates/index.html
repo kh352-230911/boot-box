@@ -42,20 +42,19 @@
     <th:block th:if="${not #lists.isEmpty(movies)}">
 
 
-<!--        <banner>-->
-<!--            <div class="video-banner flex justify-center">-->
-<!--                    <video autoplay muted controls loop width="1100" height="650">-->
-<!--                        <source th:src="${movie[0].trailer}" type="video/mp4">-->
-<!--                    </video>-->
-<!--&lt;!&ndash;                <iframe src="https://www.youtube.com/embed/YCSaw66rkWc?autoplay=1&mute=1&controls=0&loop=1&playlist=YCSaw66rkWc"&ndash;&gt;-->
-<!--&lt;!&ndash;                        width="1100" height="499" title="YouTube video player"&ndash;&gt;-->
-<!--&lt;!&ndash;                        frameborder="0"&ndash;&gt;-->
-<!--&lt;!&ndash;                        allow="accelerometer; autoplay; clipboard-write;&ndash;&gt;-->
-<!--&lt;!&ndash;						encrypted-media; gyroscope; picture-in-picture; web-share"&ndash;&gt;-->
-<!--&lt;!&ndash;                        allowfullscreen>&ndash;&gt;-->
-<!--&lt;!&ndash;                </iframe>&ndash;&gt;-->
-<!--            </div>-->
-<!--        </banner>-->
+        <banner>
+            <div class="video-banner flex justify-center">
+                <th:block th:if="${#strings.startsWith(movies[0].vodDetailDtos[0].vodUrl, 'https://www.kmdb.or.kr')}">
+                    <video autoplay muted controls loop width="1300" height="450" style="margin-top: 20px;">
+                        <source th:src="${movies[0].vodDetailDtos[0].vodUrl}" type="video/mp4">
+                    </video>
+                </th:block>
+                <th:block th:if="${!#strings.startsWith(movies[0].vodDetailDtos[0].vodUrl, 'https://www.kmdb.or.kr')}">
+                    <iframe th:src="|https://www.youtube.com/embed/${movies[0].vodDetailDtos[0].vodUrl}?autoplay=1&mute=1&controls=0&loop=1&playlist=${movies[0].vodDetailDtos[0].vodUrl}|" width="1300" height="450" title="YouTube video player" type="video/mp4" style="margin-top: 20px;">
+                    </iframe>
+                </th:block>
+            </div>
+        </banner>
         <br>
 
         <!-- 검색이 없을때 메인영역  -->
@@ -398,7 +397,8 @@
 <!--                                </th:block>-->
 <!--                            </a>-->
 
-                            <a class="movieData-content" href="#"><img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">
+                            <a class="movieData-content" href="#">
+                                <img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">
                                 <span th:text="|${movies[0].voteAverage}%|">예매율29.1%</span>
                             </a>
                         </div>

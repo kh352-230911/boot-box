@@ -45,13 +45,6 @@ public class MovieDetailDto {
 
     private String posterUrl;
 
-    private boolean searchResult;
-
-    private String searchVaule;
-
-    @JsonIgnore // 특정필드 제거
-    private List<Review> reviews;
-
     private List<VodDetailDto> vodDetailDtos;
 
     private List<GenreDetailDto> genreDetailDtos;
