@@ -816,14 +816,24 @@ public class MovieService {
                     .map(director -> directorInfoMap.get(director.getId()))
                     .collect(Collectors.toList());
 
+            // 영화 별로 연관된 VOD 정보를 매핑
+            List<VodDetailDto> vodDetailDtos = movie.getVods().stream()
+                    .map(vod -> modelMapper.map(vod, VodDetailDto.class))
+                    .collect(Collectors.toList());
+
+
             // 영화 정보를 MovieDetailDto로 변환
             MovieDetailDto movieDetailDto = modelMapper.map(movie, MovieDetailDto.class);
             movieDetailDto.setGenreDetailDtos(genreDetailDtos);
             movieDetailDto.setActorDetailDtos(actorDetailDtos);
             movieDetailDto.setDirectorDetailDtos(directorDetailDtos);
+            movieDetailDto.setVodDetailDtos(vodDetailDtos); // VOD 정보 추가
+
 
             return movieDetailDto;
         }).orElseThrow(() -> new EntityNotFoundException("Movie not found for ID: " + id));
+
+
     }
 
     public List<MovieDetailDto> findAllByReleaseDateAfterOrderByRankAsc() {
@@ -865,4 +875,5 @@ public class MovieService {
         List<Movie> movies = movieRepository.findByGenresNameAndReleaseDateAfter(genre, today);
         return movies.stream().map(this::convertToMovieDetailDto).collect(Collectors.toList());
     }
+
 }
