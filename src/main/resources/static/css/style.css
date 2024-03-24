@@ -368,3 +368,14 @@ i.arrow:hover {
     height: 100%;
     z-index: 1; /* z-index를 1로 설정하여 기본값보다 높지만 숫자보다는 낮게 설정 */
 }
+
+.movie_star {
+    margin-right: 5px;
+    margin-bottom: 0px;
+}
+.movie_star > path{
+    color: yellow;
+}
+.movie_star.rated > path{
+    color: yellow;
+}
