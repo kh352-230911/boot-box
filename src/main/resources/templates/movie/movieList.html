@@ -34,7 +34,8 @@
             <form class="flex justify-end mt-1">
                 <label for="underline_select" class="sr-only">Underline select</label>
                 <select id="underline_select" name="genre" th:onchange="this.form.submit()"
-                        class="block mr-1 mb-2 text-sm text-gray-500 bg-transparent border-0 border-b-2 border-red-600 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-red-600 peer">
+                        class="block mr-7 mb-2 text-sm text-gray-500 bg-transparent border-0 border-b-2 border-red-600 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-red-600 peer"
+                        style="width: 250px; font-size: 1.0rem;">
                     <option value="" th:selected="${genre == null or genre == ''}">Select genre</option>
                     <option value="액션" th:selected="${genre == '액션'}">액션</option>
                     <option value="모험" th:selected="${genre == '모험'}">모험</option>
@@ -110,7 +111,7 @@
                 <span class="text-xs text-zinc-400">
                     <strong th:text="|${#temporals.format(movie.releaseDate, 'yyyy.MM.dd')} 개봉|"></strong>
                 </span>
-                <em class="text-base text-red-500 ml-2" th:if="|${movie.dDay != ''}|" th:text="${movie.dDay}"></em>
+                <em class="text-lg text-red-500 ml-2" th:if="|${movie.dDay != ''}|" th:text="${movie.dDay}"></em>
                 <div class="movie_action">
                     <button class="movie_button mb-3" th:onclick="|location.href = '@{/reservation/reservationBooking.do}'|">예매하기</button>
                 </div>
