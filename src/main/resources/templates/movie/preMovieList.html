@@ -117,7 +117,7 @@
                 </span>
 				<em class="text-base text-red-500 ml-2" th:if="|${movie.dDay != ''}|" th:text="${movie.dDay}"></em>
 				<div class="movie_action">
-					<button class="movie_button mb-3" th:onclick="|location.href = '@{/reservation/reservationBooking.do}'|">예매하기</button>
+					<button class="movie_button text-sm mb-3" th:onclick="|location.href = '@{/reservation/reservationBooking.do}'|">예매하기</button>
 				</div>
 			</div>
 		</div>
