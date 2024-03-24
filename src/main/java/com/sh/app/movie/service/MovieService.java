@@ -828,6 +828,7 @@ public class MovieService {
             movieDetailDto.setActorDetailDtos(actorDetailDtos);
             movieDetailDto.setDirectorDetailDtos(directorDetailDtos);
             movieDetailDto.setVodDetailDtos(vodDetailDtos); // VOD 정보 추가
+            movieDetailDto.setDDay(calculateDday(movie.getReleaseDate()));
 
 
             return movieDetailDto;
