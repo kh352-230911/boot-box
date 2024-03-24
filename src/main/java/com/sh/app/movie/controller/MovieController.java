@@ -28,7 +28,7 @@ public class MovieController {
     @GetMapping("/movieDetail.do")
     public void movieDetail(Long id, Model model){
         MovieDetailDto movieDetailDto = movieService.findById(id);
-//        log.debug("movieDetailDto = {}", movieDetailDto);
+        log.debug("movieDetailDto = {}", movieDetailDto);
         model.addAttribute("movie", movieDetailDto);
     }
     // ---------------------------------------------- //
@@ -42,6 +42,20 @@ public class MovieController {
         }
         else {
             movies = movieService.findByGenreName(genre);
+        }
+//        log.debug("movies = {}", movies);
+        model.addAttribute("genre", genre);
+        model.addAttribute("movies", movies);
+    }
+
+    @GetMapping("/preMovieList.do")
+    public void preMovieList(@RequestParam(value = "genre", required = false) String genre, Model model) {
+        List<MovieDetailDto> movies;
+        if (genre == null || genre.isEmpty()) {
+            movies = movieService.findAllByReleaseDateAfterOrderByRankAsc();
+        }
+        else {
+            movies = movieService.findByGenresNameAndReleaseDateAfter(genre);
         }
 //        log.debug("movies = {}", movies);
         model.addAttribute("genre", genre);

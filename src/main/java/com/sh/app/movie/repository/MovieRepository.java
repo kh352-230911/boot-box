@@ -5,6 +5,7 @@ import com.sh.app.movie.entity.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -76,4 +77,10 @@ ORDER BY CASE WHEN m.title LIKE %:title% THEN 0 ELSE 1 END ASC, -- 'title'를 �
 FETCH FIRST 10 ROWS ONLY""", nativeQuery = true)
     List<Movie> findByTitleContaining(String title);
 
+    // 현재 날짜 이후의 개봉일을 가진 영화 조회
+    List<Movie> findAllByReleaseDateAfterOrderByRankAsc(LocalDate today);
+
+    // 특정 장르의 현재 날짜 이후 개봉 예정인 영화 조회
+    @Query("SELECT m FROM Movie m JOIN m.movieGenres g WHERE g.genre.genreName = :genre AND m.releaseDate > :today ORDER BY m.rank ASC")
+    List<Movie> findByGenresNameAndReleaseDateAfter(String genre, LocalDate today);
 }
