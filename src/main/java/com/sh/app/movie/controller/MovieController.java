@@ -27,7 +27,7 @@ public class MovieController {
     @GetMapping("/movieDetail.do")
     public void movieDetail(Long id, Model model){
         MovieDetailDto movieDetailDto = movieService.findById(id);
-//        log.debug("movieDetailDto = {}", movieDetailDto);
+        log.debug("movieDetailDto = {}", movieDetailDto);
         model.addAttribute("movie", movieDetailDto);
     }
     // ---------------------------------------------- //
