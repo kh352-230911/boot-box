@@ -31,6 +31,7 @@ public class MovieController {
         log.debug("movieDetailDto = {}", movieDetailDto);
         model.addAttribute("movie", movieDetailDto);
     }
+
     // ---------------------------------------------- //
 
     // 정호
