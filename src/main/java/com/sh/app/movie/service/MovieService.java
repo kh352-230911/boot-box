@@ -565,11 +565,11 @@ public class MovieService {
     }
 
 
-    public MovieDetailDto findById(Long id) {
-        return movieRepository.findById(id)
-                .map((movie) -> convertToMovieDetailDto(movie))
-                .orElseThrow();
-    }
+//    public MovieDetailDto findById(Long id) {
+//        return movieRepository.findById(id)
+//                .map((movie) -> convertToMovieDetailDto(movie))
+//                .orElseThrow();
+//    }
 
     private MovieDetailDto convertToMovieDetailDto(Movie movie) {
         MovieDetailDto movieDetailDto = modelMapper.map(movie, MovieDetailDto.class);
@@ -762,6 +762,79 @@ public class MovieService {
             movieDetailDtos.add(dto);
         }
         return movieDetailDtos;
+    }
+
+    public MovieDetailDto findById(Long id) {
+        // 영화 정보 조회
+        return movieRepository.findById(id).map(movie -> {
+            // 장르 정보를 한 번의 쿼리로 가져 오기
+            List<Genre> allGenres = genreRepository.findByIdIn(
+                    (ArrayList<Long>) movie.getMovieGenres().stream()
+                            .map(movieGenre -> movieGenre.getGenre().getId())
+                            .collect(Collectors.toList()));
+
+            Map<Long, GenreDetailDto> genreInfoMap = allGenres.stream()
+                    .map(genre -> modelMapper.map(genre, GenreDetailDto.class))
+                    .collect(Collectors.toMap(GenreDetailDto::getId, Function.identity()));
+
+            // 영화 별로 연관된 장르 정보를 매핑
+            List<GenreDetailDto> genreDetailDtos = movie.getMovieGenres().stream()
+                    .map(MovieGenre::getGenre)
+                    .map(genre -> genreInfoMap.get(genre.getId()))
+                    .collect(Collectors.toList());
+
+            // 배우 정보를 한 번의 쿼리로 가져 오기
+            List<Actor> allActors = actorRepository.findByIdIn(
+                    (ArrayList<Long>) movie.getMovieActors().stream()
+                            .map(movieActor -> movieActor.getActor().getId())
+                            .collect(Collectors.toList())
+            );
+
+            Map<Long, ActorDetailDto> actorInfoMap = allActors.stream()
+                    .map(actor -> modelMapper.map(actor, ActorDetailDto.class))
+                    .collect(Collectors.toMap(ActorDetailDto::getId, Function.identity()));
+
+            // 영화 별로 연관된 배우 정보를 매핑
+            List<ActorDetailDto> actorDetailDtos = movie.getMovieActors().stream()
+                    .map(MovieActor::getActor)
+                    .map(actor -> actorInfoMap.get(actor.getId()))
+                    .collect(Collectors.toList());
+
+            // 감독 정보를 한 번의 쿼리로 가져 오기
+            List<Director> allDirectors = directorRepository.findByIdIn(
+                    (ArrayList<Long>) movie.getMovieDirectors().stream()
+                            .map(movieDirector -> movieDirector.getDirector().getId())
+                            .collect(Collectors.toList())
+            );
+
+            Map<Long, DirectorDetailDto> directorInfoMap = allDirectors.stream()
+                    .map(director -> modelMapper.map(director, DirectorDetailDto.class))
+                    .collect(Collectors.toMap(DirectorDetailDto::getId, Function.identity()));
+
+            // 영화 별로 연관된 감독 정보를 매핑
+            List<DirectorDetailDto> directorDetailDtos = movie.getMovieDirectors().stream()
+                    .map(MovieDirector::getDirector)
+                    .map(director -> directorInfoMap.get(director.getId()))
+                    .collect(Collectors.toList());
+
+
+            // 영화 별로 연관된 VOD 정보를 매핑
+            List<VodDetailDto> vodDetailDtos = movie.getVods().stream()
+                    .map(vod -> modelMapper.map(vod, VodDetailDto.class))
+                    .collect(Collectors.toList());
+
+            // 영화 정보를 MovieDetailDto로 변환
+            MovieDetailDto movieDetailDto = modelMapper.map(movie, MovieDetailDto.class);
+            movieDetailDto.setGenreDetailDtos(genreDetailDtos);
+            movieDetailDto.setActorDetailDtos(actorDetailDtos);
+            movieDetailDto.setDirectorDetailDtos(directorDetailDtos);
+            movieDetailDto.setVodDetailDtos(vodDetailDtos); // VOD 정보 추가
+
+
+            return movieDetailDto;
+        }).orElseThrow(() -> new EntityNotFoundException("Movie not found for ID: " + id));
+
+
     }
 
 }

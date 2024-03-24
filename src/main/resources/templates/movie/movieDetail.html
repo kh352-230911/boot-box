@@ -14,6 +14,7 @@
         <div class="content">
             <!-- Home -->
             <main class="movie_home">
+                <div class="line"></div>
                 <!-- Movie information -->
                 <div class="movie_info">
 
@@ -134,25 +135,43 @@
 <!--                                    </li>-->
 <!--                                </ul>-->
 <!--                            </th:block>-->
-                            <div class="movie_comment" th:text="|예매율 ${movie.voteAverage}%|"></div>
+                            <div class="movie_comment" th:text="|평점 ${movie.voteAverage}%|"></div>
                         </div>
-                        <div class="movie_infos" th:text="|개봉 : ${movie.releaseDate}|"></div>
+                        <div class="movie_infos">
+                            개봉<span style="display:inline-block; width:5px;"></span>:<span style="display:inline-block; width:5px;"></span>
+                            <span th:text="${movie.releaseDate}"></span>
+                        </div>
                         <div class="flex">
-                            장르 :&nbsp;
-<!--                            <span th:each="movieGenre, status : ${movie.GenreDetailDto.genreName}">-->
-<!--&lt;!&ndash;                                <p th:text="|${movieGenre.genreList}${!status.last ? ', ' : ''}|"></p>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <p th:text="${movieGenre.genreName}"></p>&ndash;&gt;-->
-<!--                            </span>-->
+                            장르 : <span style="margin-left:10px;"></span>
+                            <span th:each="genreDetail, iterStat : ${movie.genreDetailDtos}">
+                                <span th:text="${genreDetail.genreName}"></span>
+                                <span th:if="${not iterStat.last}" style="margin-left:5px;margin-right:5px;">, </span>
+                            </span>
                         </div>
-                        <div th:text="|러닝타임 : ${movie.runtime} 분|"></div>
-<!--                        <div th:text="|감독 : ${movie.director}|"></div>-->
-<!--                        <div th:text="|배우 : ${movie.actor}|"></div>-->
-                        <!-- name() 메소드는 열거형 상수의 이름을 문자열로 반환 -->
-<!--                        <div th:text="|등급 : ${movieData.filmRatings.name() == 'ALL' ? '전체관람가' :-->
-<!--                                               movieData.filmRatings.name() == 'EIGHTEEN' ? '18세이상관람가' :-->
-<!--                                               movieData.filmRatings.name() == 'FIFTEEN' ? '15세이상관람가' :-->
-<!--                                               movieData.filmRatings.name() == 'TWELVE' ? '12세이상관람가' :-->
-<!--                                               movieData.filmRatings.name() == 'NONE' ? '등급 없음' : '등급 없음'}|"></div>-->
+
+                        <div class="movie_infos">
+                            러닝타임<span style="display:inline-block; width:5px;"></span>:<span style="display:inline-block; width:5px;"></span>
+                            <span th:text="|${movie.runtime} 분|"></span>
+                        </div>
+                        <div class="flex">
+                            감독 : <span style="margin-left:10px;"></span>
+                            <th:block th:each="directorDetail, iterStat : ${movie.directorDetailDtos}">
+                                <span th:text="${directorDetail.directorName}"></span>
+                            </th:block>
+                        </div>
+                        <div class="flex">
+                            배우 : <span style="margin-left:10px;"></span>
+                            <span  th:each="actorDetail, iterStat : ${movie.actorDetailDtos}">
+                                <span th:utext="${actorDetail.actorName} + '&nbsp;'"></span>
+                                <span th:if="${not iterStat.last}">, </span>
+                            </span>
+                        </div>
+
+                        <div class="movie_infos">
+                            등급<span style="display:inline-block; width:5px;"></span>:<span style="display:inline-block; width:5px;"></span>
+                            <span th:text="${movie.filmRatings}"></span>
+                        </div>
+
                         <div class="movie_des" th:text="${movie.overview}">
                             줄거리
                         </div>
@@ -161,7 +180,6 @@
                             <button class="movie_button" th:onclick="|location.href = '@{/reservation/reservationBooking.do}'|">예매하기</button>
                         </div>
                     </div>
-
 
                     <div class="movie_info-right">
                         <div class="movie_img">
@@ -178,23 +196,20 @@
                 <div class="line"></div>
                 <!-- trailer -->
                 <div class="text-2xl">Trailer</div>
-<!--                <div class="trailer-container">-->
-<!--                    <video autoplay muted controls loop>-->
-<!--                        <source th:src= "${movieData.trailer}" type="video/mp4">-->
-<!--                    </video>-->
-<!--                </div>-->
-                    <div class="trailer-container flex justify-center" style="overflow: hidden;">
-                        <th:block th:if="${#strings.startsWith(movies[0].vodDetailDtos[0].vodUrl, 'https://www.kmdb.or.kr')}">
-                            <video autoplay muted controls loop width="1300" height="450" style="margin-top: 20px;">
-                                <source th:src="${movies[0].vodDetailDtos[0].vodUrl}" type="video/mp4">
-                            </video>
-                        </th:block>
-                        <th:block th:if="${!#strings.startsWith(movies[0].vodDetailDtos[0].vodUrl, 'https://www.kmdb.or.kr')}">
-                            <iframe th:src="|https://www.youtube.com/embed/${movies[0].vodDetailDtos[0].vodUrl}?autoplay=1&mute=1&controls=0&loop=1&playlist=${movies[0].vodDetailDtos[0].vodUrl}|" width="1300" height="450" title="YouTube video player" type="video/mp4" style="margin-top: 20px;">
-                            </iframe>
+                <div class="line2"></div>
+
+                <div class="trailer-container flex justify-center" style="overflow: hidden;">
+                    <th:block th:if="${#strings.startsWith(movie.vodDetailDtos[0].vodUrl, 'https://www.kmdb.or.kr')}">
+                        <video autoplay muted controls loop width="1300" height="450" style="margin-top: 20px;">
+                            <source th:src="${movie.vodDetailDtos[0].vodUrl}" type="video/mp4">
+                        </video>
+                    </th:block>
+                    <th:block th:if="${!#strings.startsWith(movie.vodDetailDtos[0].vodUrl, 'https://www.kmdb.or.kr')}">
+                        <iframe th:src="|https://www.youtube.com/embed/${movie.vodDetailDtos[0].vodUrl}?autoplay=1&mute=1&controls=0&loop=1&playlist=${movie.vodDetailDtos[0].vodUrl}|" width="1300" height="450" title="YouTube video player" type="video/mp4" style="margin-top: 20px;">
+                        </iframe>
                         </th:block>
                     </div>
-                <div class="line"></div>
+                <div class="line2"></div>
 
                 <!-- review -->
 <!--                <div class="text-2xl">Review</div>-->
