@@ -565,11 +565,11 @@ public class MovieService {
     }
 
 
-    public MovieDetailDto findById(Long id) {
-        return movieRepository.findById(id)
-                .map((movie) -> convertToMovieDetailDto(movie))
-                .orElseThrow();
-    }
+//    public MovieDetailDto findById(Long id) {
+//        return movieRepository.findById(id)
+//                .map((movie) -> convertToMovieDetailDto(movie))
+//                .orElseThrow();
+//    }
 
     private MovieDetailDto convertToMovieDetailDto(Movie movie) {
         MovieDetailDto movieDetailDto = modelMapper.map(movie, MovieDetailDto.class);
@@ -681,7 +681,6 @@ public class MovieService {
             // 개봉일이 현재 날짜보다 이전이거나 같은 경우
             return ""; // 빈 문자열 반환 또는 "개봉됨", "N/A" 등 원하는 값 반환
         }
-
     }
 
     public List<MovieDetailDto> findByGenreName(String genre) {
@@ -764,4 +763,106 @@ public class MovieService {
         return movieDetailDtos;
     }
 
+    public MovieDetailDto findById(Long id) {
+        // 영화 정보 조회
+        return movieRepository.findById(id).map(movie -> {
+            // 장르 정보를 한 번의 쿼리로 가져 오기
+            List<Genre> allGenres = genreRepository.findByIdIn(
+                    (ArrayList<Long>) movie.getMovieGenres().stream()
+                            .map(movieGenre -> movieGenre.getGenre().getId())
+                            .collect(Collectors.toList()));
+
+            Map<Long, GenreDetailDto> genreInfoMap = allGenres.stream()
+                    .map(genre -> modelMapper.map(genre, GenreDetailDto.class))
+                    .collect(Collectors.toMap(GenreDetailDto::getId, Function.identity()));
+
+            // 영화 별로 연관된 장르 정보를 매핑
+            List<GenreDetailDto> genreDetailDtos = movie.getMovieGenres().stream()
+                    .map(MovieGenre::getGenre)
+                    .map(genre -> genreInfoMap.get(genre.getId()))
+                    .collect(Collectors.toList());
+
+            // 배우 정보를 한 번의 쿼리로 가져 오기
+            List<Actor> allActors = actorRepository.findByIdIn(
+                    (ArrayList<Long>) movie.getMovieActors().stream()
+                            .map(movieActor -> movieActor.getActor().getId())
+                            .collect(Collectors.toList())
+            );
+
+            Map<Long, ActorDetailDto> actorInfoMap = allActors.stream()
+                    .map(actor -> modelMapper.map(actor, ActorDetailDto.class))
+                    .collect(Collectors.toMap(ActorDetailDto::getId, Function.identity()));
+
+            // 영화 별로 연관된 배우 정보를 매핑
+            List<ActorDetailDto> actorDetailDtos = movie.getMovieActors().stream()
+                    .map(MovieActor::getActor)
+                    .map(actor -> actorInfoMap.get(actor.getId()))
+                    .collect(Collectors.toList());
+
+            // 감독 정보를 한 번의 쿼리로 가져 오기
+            List<Director> allDirectors = directorRepository.findByIdIn(
+                    (ArrayList<Long>) movie.getMovieDirectors().stream()
+                            .map(movieDirector -> movieDirector.getDirector().getId())
+                            .collect(Collectors.toList())
+            );
+
+            Map<Long, DirectorDetailDto> directorInfoMap = allDirectors.stream()
+                    .map(director -> modelMapper.map(director, DirectorDetailDto.class))
+                    .collect(Collectors.toMap(DirectorDetailDto::getId, Function.identity()));
+
+            // 영화 별로 연관된 감독 정보를 매핑
+            List<DirectorDetailDto> directorDetailDtos = movie.getMovieDirectors().stream()
+                    .map(MovieDirector::getDirector)
+                    .map(director -> directorInfoMap.get(director.getId()))
+                    .collect(Collectors.toList());
+
+            // 영화 정보를 MovieDetailDto로 변환
+            MovieDetailDto movieDetailDto = modelMapper.map(movie, MovieDetailDto.class);
+            movieDetailDto.setGenreDetailDtos(genreDetailDtos);
+            movieDetailDto.setActorDetailDtos(actorDetailDtos);
+            movieDetailDto.setDirectorDetailDtos(directorDetailDtos);
+
+            return movieDetailDto;
+        }).orElseThrow(() -> new EntityNotFoundException("Movie not found for ID: " + id));
+    }
+
+    public List<MovieDetailDto> findAllByReleaseDateAfterOrderByRankAsc() {
+        LocalDate today = LocalDate.now();
+        List<Movie> movies = movieRepository.findAllByReleaseDateAfterOrderByRankAsc(today);
+        List<MovieDetailDto> movieDetailDtos = new ArrayList<>();
+
+        // 모든 영화에 대한 장르 ID를 한 번에 수집하기
+        Set<Long> allGenreIds = new HashSet<>();
+        movies.forEach(movie -> allGenreIds.addAll(
+                movie.getMovieGenres().stream()
+                        .map(movieGenre -> movieGenre.getGenre().getId())
+                        .collect(Collectors.toSet())
+        ));
+
+        // 장르 ID 목록을 사용하여 장르 정보를 한 번의 쿼리로 가져오기
+        List<Genre> allGenres = genreRepository.findByIdIn(new ArrayList<>(allGenreIds));
+        Map<Long, GenreDetailDto> genreInfoMap = allGenres.stream()
+                .map(genre -> modelMapper.map(genre, GenreDetailDto.class))
+                .collect(Collectors.toMap(GenreDetailDto::getId, Function.identity()));
+
+        for (Movie movie : movies) {
+            // 영화별로 연관된 장르 정보를 매핑
+            List<GenreDetailDto> genreDetailDtos = movie.getMovieGenres().stream()
+                    .map(MovieGenre::getGenre)
+                    .map(genre -> genreInfoMap.get(genre.getId()))
+                    .collect(Collectors.toList());
+
+            // DTO 빌더를 사용하여 BoxMovieInfoDto를 생성합니다.
+            MovieDetailDto movieDetailDto = convertToMovieList(movie);
+            movieDetailDto.setGenreDetailDtos(genreDetailDtos);
+            movieDetailDtos.add(movieDetailDto);
+        }
+        return movieDetailDtos;
+    }
+
+    public List<MovieDetailDto> findByGenresNameAndReleaseDateAfter(String genre) {
+        LocalDate today = LocalDate.now();
+        List<Movie> movies = movieRepository.findByGenresNameAndReleaseDateAfter(genre, today);
+        return movies.stream().map(this::convertToMovieDetailDto).collect(Collectors.toList());
+    }
 }
