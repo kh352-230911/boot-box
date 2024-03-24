@@ -714,15 +714,54 @@ public class MovieService {
         return modelMapper.map(movie, MovieShortDto.class);
     }
 
-    public List<MovieDetailDto> findFirst6ByOrderByRankAsc() {
-        return movieRepository.findFirst6ByOrderByRankAsc()
-                .stream().map((movie) -> convertToMovieDetailDto(movie))
+//    public List<MovieDetailDto> findFirst6ByOrderByRankAsc() {
+//        return movieRepository.findFirst6ByOrderByRankAsc()
+//                .stream().map((movie) -> convertToMovieDetailDto(movie))
+//                .collect(Collectors.toList());
+//    }
+//
+//    public List<MovieDetailDto> findByTitleContaining(String title) {
+//        return movieRepository.findByTitleContaining(title)
+//                .stream().map((movie) -> convertToMovieDetailDto(movie))
+//                .collect(Collectors.toList());
+//    }
+public List<MovieDetailDto> findFirst6ByOrderByRankAsc() {
+    List<Movie> movies = movieRepository.findFirst6ByOrderByRankAsc();
+    List<MovieDetailDto> movieDetailDtos = new ArrayList<>();
+
+    for (Movie movie : movies) {
+        List<VodDetailDto> vodDetailDtos = movie.getVods().stream()
+                .map(vod -> modelMapper.map(vod, VodDetailDto.class))
                 .collect(Collectors.toList());
+
+        MovieDetailDto dto = convertToMovieList(movie);
+        dto.setVodDetailDtos(vodDetailDtos);
+
+        movieDetailDtos.add(dto);
     }
+    return movieDetailDtos;
+}
 
     public List<MovieDetailDto> findByTitleContaining(String title) {
-        return movieRepository.findByTitleContaining(title)
-                .stream().map((movie) -> convertToMovieDetailDto(movie))
-                .collect(Collectors.toList());
+        // 입력된 제목의 길이를 체크하여 한 글자인 경우 빈 리스트를 반환
+        if (title == null || title.trim().length() <= 1) {
+            return Collections.emptyList();
+        }
+
+        List<Movie> movies = movieRepository.findByTitleContaining(title);
+        List<MovieDetailDto> movieDetailDtos = new ArrayList<>();
+
+        for (Movie movie : movies) {
+            List<VodDetailDto> vodDetailDtos = movie.getVods().stream()
+                    .map(vod -> modelMapper.map(vod, VodDetailDto.class))
+                    .collect(Collectors.toList());
+
+            MovieDetailDto dto = convertToMovieList(movie);
+            dto.setVodDetailDtos(vodDetailDtos);
+
+            movieDetailDtos.add(dto);
+        }
+        return movieDetailDtos;
     }
+
 }
