@@ -719,6 +719,7 @@ public class MovieService {
 //                .collect(Collectors.toList());
 //    }
 
+
 //    public List<MovieDetailDto> findByTitleContaining(String title) {
 //        return movieRepository.findByTitleContaining(title)
 //                .stream().map((movie) -> convertToMovieDetailDto(movie))
@@ -743,6 +744,10 @@ public class MovieService {
     }
 
     public List<MovieDetailDto> findByTitleContaining(String title) {
+        // 입력된 제목의 길이를 체크하여 한 글자인 경우 빈 리스트를 반환
+        if (title == null || title.trim().length() <= 1) {
+            return Collections.emptyList();
+        }
         List<Movie> movies = movieRepository.findByTitleContaining(title);
         List<MovieDetailDto> movieDetailDtos = new ArrayList<>();
 
@@ -758,4 +763,5 @@ public class MovieService {
         }
         return movieDetailDtos;
     }
+
 }

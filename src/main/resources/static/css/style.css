@@ -211,20 +211,20 @@ footer {
 
 .movie-title {
     display:flex;
-    justify-content:center;
-    font-size: 80%;
-    font-weight:bold;
-    margin-top: 10px;
+    font-size: large;
+    /*margin: 5px;*/
+    width: 100%; /* 부모 요소의 전체 너비를 사용하도록 설정 */
 }
 
 .movie-content {
     display:flex;
     justify-content:center;
+    width: 100%;
 }
 .movie-content > img {
-    width:10%;
-    height: 20%;
-    margin-top:8px;
+    width: 14%;
+    height: 60%;
+    margin-top: 8px;
 }
 .movie-content > span {
     padding:7px;
@@ -232,6 +232,14 @@ footer {
     font-weight:bold;
     color: #c7c7c7;
 }
+.movie-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
 /* 전체보기 버튼 스타일 */
 .full-view a {
     border: 1px solid white; /* 흰색 테두리 추가 */
@@ -244,21 +252,7 @@ footer {
 .a-1 {
     background-color: #232323;
 }
-/*.rank {*/
-/*    position: absolute;*/
-/*    left: 0;*/
-/*    top: 0;*/
-/*    width: 100%;*/
-/*    height: 150px;*/
-/*    padding: 10px 0 0 15px;*/
-/*    line-height: 1.1;*/
-/*    font-size: 3em;*/
-/*    font-style: italic;*/
-/*    font-family: 'Roboto';*/
-/*    font-weight: 300;*/
-/*    color: #fff;*/
-/*    text-shadow: 2px 2px 2px rgba(0, 0, 0, .8);*/
-/*}*/
+
 /* 동영상 배너 */
 .video-banner {
     border-top: #ff3939 1px solid;
@@ -332,9 +326,12 @@ i.arrow:hover {
 .movie-container {
     position: relative;
     width: 210px;
+    margin: 20px;
     margin-right: 10px;
-    /*overflow: hidden;*/
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .movie-box {
@@ -361,7 +358,8 @@ i.arrow:hover {
     width: 100%;
     height: auto;
     transition: opacity 0.3s;
-    border-radius: 10px; /* 이미지 모서리 둥글게 */
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 .movie-poster {
