@@ -27,6 +27,8 @@ import com.sh.app.director.repository.DirectorRepository;
 import com.sh.app.movieDirector.repository.MovieDirectorRepository;
 import com.sh.app.movieGenre.entity.MovieGenre;
 import com.sh.app.movieGenre.repository.MovieGenreRepository;
+import com.sh.app.review.entity.Review;
+import com.sh.app.review.repository.ReviewRepository;
 import com.sh.app.util.GenreNormalization;
 import com.sh.app.vod.dto.VodDetailDto;
 import com.sh.app.vod.dto.VodDto;
@@ -48,6 +50,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -115,6 +119,9 @@ public class MovieService {
 
     @Autowired
     private MovieDirectorRepository movieDirectorRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     public void scheduledCallApi() {
         movieGenreRepository.deleteAll();
@@ -877,4 +884,30 @@ public class MovieService {
         return movies.stream().map(this::convertToMovieDetailDto).collect(Collectors.toList());
     }
 
+//    public void updateAllMovieRatings() {
+//        LocalDate yesterday = LocalDate.now().minusDays(1);
+//
+//        // 전날 동안 작성된 모든 리뷰를 가져옵니다.
+//        List<Review> yesterdayReviews = reviewRepository.findByCreatedAtBetween(
+//                yesterday.atStartOfDay(),
+//                yesterday.atTime(23, 59, 59)
+//        );
+//
+//        // 각 리뷰에 대해 처리
+//        Map<Long, List<Review>> reviewsByMovie = yesterdayReviews.stream()
+//                .collect(Collectors.groupingBy(Review::getId));
+//
+//        reviewsByMovie.forEach((movieId, reviews) -> {
+//            Movie movie = movieRepository.findById(movieId).orElse(null);
+//            if (movie != null) {
+//                int newSum = reviews.stream().mapToInt(Review::getReviewScore).sum();
+//                int newCount = reviews.size();
+//                double newAverage = ((movie.getRatingSum() + newSum) / (double) (movie.getReviewCount() + newCount)) * 2; // 5점 만점을 10점 만점으로 환산
+//                movie.setVoteAverage(newAverage);
+//                movie.setRatingSum(movie.getRatingSum() + newSum);
+//                movie.setReviewCount(movie.getReviewCount() + newCount);
+//                movieRepository.save(movie);
+//            }
+//        });
+//    }
 }

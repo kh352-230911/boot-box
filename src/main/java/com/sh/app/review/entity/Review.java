@@ -37,9 +37,9 @@ public class Review {
 //    @JoinColumn(name = "movie_id") // movie.movie_id 컬럼지정
 //    private MovieData movieData;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id") // movie.member_id 컬럼지정
-    private Member member;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "member_id") // movie.member_id 컬럼지정
+//    private Member member;
 
 
 }
