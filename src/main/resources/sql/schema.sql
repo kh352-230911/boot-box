@@ -38,6 +38,16 @@ drop table cinema;
 drop table location;
 drop table movie;
 
+--0.스케쥴로 특정시간에 db insert test(향후 api 및 예매율 등 처리 위해..)
+CREATE TABLE TEST_SCH(
+                         id number NOT NULL,
+                         createdAt date NOT NULL DEFAULT current_date,
+                         msg varchar2(200) NOT NULL,
+                         CONSTRAINT pk_test_sch_id PRIMARY KEY(id) --pk
+);
+
+create sequence seq_test_sch_id; --지점 시퀀스
+
 
 --17.지역
 CREATE TABLE LOCATION(
