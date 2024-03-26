@@ -41,4 +41,6 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
 
     @Query("select m from Member m join fetch m.reservations where m.id = :id")
     Optional<Member> findByReservation(Long id);
+
+    Optional<Member> findById(Long memberId);
 }

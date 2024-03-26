@@ -23,122 +23,7 @@
                         <em class="text-2xl text-red-500 ml-2" th:if="|${movie.dDay != ''}|" th:text="${movie.dDay}"></em>
                         <div class="movie_rate">
 
-<!--                            <th:block th:if="${movieData.avgReviewScore} == 5.0">-->
-<!--                                <ul class="movie_stars">-->
-<!--                                    <li class="movie_star rated">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star rated">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star rated">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star rated">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star rated">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                </ul>-->
-<!--                            </th:block>-->
-<!--                            <th:block th:if="${movieData.avgReviewScore} >= 4.0 and ${movieData.avgReviewScore} < 5.0">-->
-<!--                                <ul class="movie_stars">-->
-<!--                                    <li class="movie_star rated">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star rated">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star rated">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star rated">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                </ul>-->
-<!--                            </th:block>-->
-<!--                            <th:block th:if="${movieData.avgReviewScore} >= 3.0 and ${movieData.avgReviewScore} < 4.0">-->
-<!--                                <ul class="movie_stars">-->
-<!--                                    <li class="movie_star rated">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star rated">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star rated">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                </ul>-->
-<!--                            </th:block>-->
-<!--                            <th:block th:if="${movieData.avgReviewScore} >= 2.0 and ${movieData.avgReviewScore} < 3.0">-->
-<!--                                <ul class="movie_stars">-->
-<!--                                    <li class="movie_star rated">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star rated">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                </ul>-->
-<!--                            </th:block>-->
-<!--                            <th:block th:if="${movieData.avgReviewScore} >= 1.0 and ${movieData.avgReviewScore} < 2.0">-->
-<!--                                <ul class="movie_stars">-->
-<!--                                    <li class="movie_star rated">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                </ul>-->
-<!--                            </th:block>-->
-<!--                            <th:block th:if="${movieData.avgReviewScore} >= 0.0 and ${movieData.avgReviewScore} < 1.0">-->
-<!--                                <ul class="movie_stars">-->
-<!--                                    <li class="movie_star">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                    <li class="movie_star">-->
-<!--                                        <i class="fa-solid fa-star"></i>-->
-<!--                                    </li>-->
-<!--                                </ul>-->
-<!--                            </th:block>-->
-
-                            <div class="flex items-center justify-center">
+                            <div class="star flex items-center justify-center">
                                 <th:block th:each="star : ${#numbers.sequence(1, 5)}">
                                     <th:block th:if="${movie.voteAverage / 2.0 >= star}">
                                         <!-- 채워진 별 표시 -->
@@ -164,7 +49,7 @@
                                 </th:block>
                             </div>
 
-                            <div class="movie_comment" th:text="|평점 ${movie.voteAverage}|"></div>
+                            <div class="movie_comment" th:text="|평점 ${movie.voteAverage}%|"></div>
                         </div>
                         <div class="movie_infos">
                             개봉<span style="display:inline-block; width:5px;"></span>:<span style="display:inline-block; width:5px;"></span>
@@ -243,11 +128,16 @@
                     </div>
                 <div class="line2"></div>
 
+
+                <div class="line"></div>
                 <!-- review -->
-<!--                <div class="text-2xl">Review</div>-->
-<!--                <br>-->
-<!--                <div th:each="review, status : ${movieData.reviews}">-->
-<!--                    <figure class="">-->
+                <div class="text-2xl">Review</div>
+
+                <div class="line2"></div>
+
+                <br>
+                <div th:each="reviewDetail, status : ${movie.reviewDetailDtos}">
+                    <figure class="">
 <!--                        <th:block th:if="${review.reviewScore} == 5.0">-->
 <!--                            <ul class="movie_stars">-->
 <!--                                <li class="movie_star rated">-->
@@ -362,21 +252,21 @@
 <!--                                </li>-->
 <!--                            </ul>-->
 <!--                        </th:block>-->
-<!--                        <blockquote class="shadow-2xl shadow-red-100/50">-->
-<!--                                <p class="m-2 text-xl font-semibold text-white dark:text-white" th:text="${review.reviewDetail}">"Flowbite is just awesome. It contains tons of predesigned components and pages starting from login screen to complex dashboard. Perfect choice for your next SaaS application."</p>-->
-<!--                                <figcaption class="mx-2 flex items-center mt-6 space-x-3 rtl:space-x-reverse">-->
-<!--                                    <img class="w-6 h-6 rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSokjeTAtRKHg0qff0jJb9jRcB9_MGXYOrulw&usqp=CAU" alt="profile picture">-->
-<!--                                    <div class="flex items-center divide-x-2 rtl:divide-x-reverse divide-gray-300 dark:divide-gray-700">-->
-<!--                                        <cite class="pe-3 font-medium text-white" th:text="${review.member.memberName}">UserName</cite>-->
-<!--                                        <cite class="ps-3 text-sm text-gray-500 dark:text-gray-400" th:text="${review.member.memberLoginId}">ID</cite>-->
-<!--                                    </div>-->
-<!--                                </figcaption>-->
-<!--                            <div class="createAt">-->
-<!--                                <cite class="ps-3 text-sm text-gray-500 dark:text-gray-400 " th:text="|${#temporals.format(review.reviewCreatedAt, 'yyyy/MM/dd HH:mm')}|">date</cite>-->
-<!--                            </div>-->
-<!--                        </blockquote>-->
-<!--                    </figure>-->
-<!--                </div>-->
+                        <blockquote class="shadow-2xl shadow-red-100/50">
+                                <p class="m-4 text-xl font-semibold text-white dark:text-white" th:text="${reviewDetail.reviewDetail}">"Flowbite is just awesome. It contains tons of predesigned components and pages starting from login screen to complex dashboard. Perfect choice for your next SaaS application."</p>
+                                <figcaption class="mx-3 flex items-center mt-6 space-x-3 rtl:space-x-reverse">
+                                    <img class="w-6 h-6 rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSokjeTAtRKHg0qff0jJb9jRcB9_MGXYOrulw&usqp=CAU" alt="profile picture">
+                                    <div class="flex items-center divide-x-2 rtl:divide-x-reverse divide-gray-300 dark:divide-gray-700">
+                                        <cite class="pe-3 font-medium text-white" th:text="${reviewDetail.member.memberName}">UserName</cite>
+                                        <cite class="ps-3 text-sm text-gray-500 dark:text-gray-400" th:text="${reviewDetail.member.memberLoginId}">ID</cite>
+                                    </div>
+                                </figcaption>
+                            <div class="createAt">
+                                <cite class="ps-3 text-sm text-gray-500 dark:text-gray-400 " th:text="|${#temporals.format(reviewDetail.reviewCreatedAt, 'yyyy/MM/dd HH:mm')}|">date</cite>
+                            </div>
+                        </blockquote>
+                    </figure>
+                </div>
             </main>
         </div>
     </div>
