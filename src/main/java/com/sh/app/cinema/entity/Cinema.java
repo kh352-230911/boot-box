@@ -1,9 +1,7 @@
 package com.sh.app.cinema.entity;
 
-import com.sh.app.genre.entity.Genre;
 import com.sh.app.location.entity.Location;
 import com.sh.app.memberLikeCinema.entity.MemberLikeCinema;
-import com.sh.app.movie.entity.Movie;
 import com.sh.app.theater.entity.Theater;
 import jakarta.persistence.*;
 import lombok.*;
@@ -48,7 +46,6 @@ public class Cinema implements Comparable<Cinema>{
 //
 //    @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY)
 //    private List<MemberLikeCinema> memberLikeCinemas = new ArrayList<>();
-
 
     public void setLocation(Location location) {
         this.location = location;

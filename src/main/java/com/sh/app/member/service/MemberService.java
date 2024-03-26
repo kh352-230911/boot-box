@@ -4,17 +4,32 @@ package com.sh.app.member.service;
 import com.sh.app.authority.entity.Authority;
 import com.sh.app.authority.entity.RoleAuth;
 import com.sh.app.authority.service.AuthorityService;
+import com.sh.app.cinema.dto.CinemaInfoDto;
+import com.sh.app.location.dto.LocationInfoDto;
+import com.sh.app.member.dto.MemberReservationDto;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.repository.MemberRepository;
+import com.sh.app.movie.dto.MovieInfoDto;
+import com.sh.app.reservation.dto.ReservationInfoDto;
+import com.sh.app.reservation.entity.Reservation;
+import com.sh.app.reservation.repository.ReservationRepository;
+import com.sh.app.schedule.dto.ScheduleInfomDto;
+import com.sh.app.schedule.entity.Schedule;
+import com.sh.app.seat.dto.SeatInfoDto;
+import com.sh.app.theater.dto.TheaterInfoDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional //기존 mvc패턴 처럼 rollback 처리. class 단에서 선언하면 하위 모든 메소드에도 모두 어노테이션 처리됨
@@ -26,10 +41,16 @@ public class MemberService {
     private HttpServletResponse response;
 
     @Autowired
-    MemberRepository memberRepository;
+    private MemberRepository memberRepository;
 
     @Autowired
-    AuthorityService authorityService;
+    private AuthorityService authorityService;
+
+    @Autowired
+    private ReservationRepository reservationRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     public Member findByMemberLoginId(String username) {
         return memberRepository.findByMemberLoginId(username);
@@ -66,8 +87,51 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
-    public Member findByReservation(Long id) {
-        return memberRepository.findByReservation(id);
+    public MemberReservationDto findByReservation(Long id) {
+        return memberRepository.findByReservation(id).map(member -> {
+            Set<ReservationInfoDto> reservationInfoDtos = member.getReservations()
+                    .stream().map(reservation -> {
+                        // 예약 정보에서 SeatInfoDto로 변환
+                        Set<SeatInfoDto> seatInfoDtos = reservation.getSeats()
+                                .stream().map(seat -> modelMapper.map(seat, SeatInfoDto.class))
+                                .collect(Collectors.toSet());
+
+                        // 예약 정보에서 ScheduleInfomDto로 변환
+                        ScheduleInfomDto scheduleInfomDto = modelMapper.map(reservation.getSchedule(), ScheduleInfomDto.class);
+
+                        // 예약 정보의 스케쥴의 상영관과 영화를 각각 dto로 변환
+                        TheaterInfoDto theaterInfoDto = modelMapper.map(reservation.getSchedule().getTheater(), TheaterInfoDto.class);
+                        MovieInfoDto movieInfoDto = modelMapper.map(reservation.getSchedule().getMovie(), MovieInfoDto.class);
+
+                        // 예약 정보의 스케쥴의 상영관의 극장을 CinemaInfoDto 변환
+                        CinemaInfoDto cinemaInfoDto = modelMapper.map(reservation.getSchedule().getTheater().getCinema(), CinemaInfoDto.class);
+
+                        // 예약 정보의 스케쥴의 상영관의 극장의 지점을 LocationInfoDto 변환
+                        LocationInfoDto locationInfoDto = modelMapper.map(reservation.getSchedule().getTheater().getCinema().getLocation(), LocationInfoDto.class);
+
+                        cinemaInfoDto.setName(reservation.getSchedule().getTheater().getCinema().getRegion_cinema());
+                        cinemaInfoDto.setLocation(locationInfoDto);
+
+                        locationInfoDto.setName(reservation.getSchedule().getTheater().getCinema().getLocation().getLocation_name());
+
+                        theaterInfoDto.setCinema(cinemaInfoDto);
+
+                        scheduleInfomDto.setTheaters(theaterInfoDto);
+                        scheduleInfomDto.setMovie(movieInfoDto);
+
+                        ReservationInfoDto reservationInfoDto = modelMapper.map(reservation, ReservationInfoDto.class);
+                        reservationInfoDto.setSets(seatInfoDtos);
+                        reservationInfoDto.setSchedule(scheduleInfomDto);
+
+                        return reservationInfoDto;
+                    }).collect(Collectors.toSet());
+
+            return MemberReservationDto.builder()
+                    .id(member.getId())
+                    .name(member.getMemberName())
+                    .reservations(reservationInfoDtos)
+                    .build();
+        }).orElse(null);
     }
 
 

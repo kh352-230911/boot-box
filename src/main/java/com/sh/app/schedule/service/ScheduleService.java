@@ -1,16 +1,13 @@
 package com.sh.app.schedule.service;
 
 
-import com.sh.app.movie.dto.MovieDetailDto;
-import com.sh.app.movie.dto.MovieListDto;
-import com.sh.app.movie.entity.Movie;
 
+import com.sh.app.movie.entity.Movie;
 import com.sh.app.schedule.dto.IScheduleInfoDto;
 import com.sh.app.schedule.dto.ScheduleDto;
 import com.sh.app.schedule.dto.ScheduleListDto;
 import com.sh.app.schedule.entity.Schedule;
 import com.sh.app.schedule.repository.ScheduleRepository;
-import com.sh.app.seat.entity.SeatDto;
 import com.sh.app.theater.dto.TheaterDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

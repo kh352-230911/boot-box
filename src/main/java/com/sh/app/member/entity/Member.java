@@ -6,6 +6,7 @@ import com.sh.app.memberLikeCinema.entity.MemberLikeCinema;
 import com.sh.app.reservation.entity.Reservation;
 import com.sh.app.review.entity.Review;
 import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.*;
@@ -59,19 +60,19 @@ public class Member implements Serializable{
 
     private String birthyear; //null ok
 
-    @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(mappedBy = "member")
-    @Builder.Default
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
     private List<Review> reviews = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id") // authority.member_id 컬럼 작성
     private List<Authority> authorities;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Ask> asks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "member_id")
     private List<Reservation> reservations = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)

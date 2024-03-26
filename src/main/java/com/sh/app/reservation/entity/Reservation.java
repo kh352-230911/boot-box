@@ -1,15 +1,12 @@
 package com.sh.app.reservation.entity;
 import com.sh.app.common.Status;
-import com.sh.app.genre.entity.Genre;
 import com.sh.app.member.entity.Member;
-import com.sh.app.pay.entity.OrderPay;
 import com.sh.app.schedule.entity.Schedule;
 import com.sh.app.seat.entity.Seat;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 
 import java.util.Set;
 
@@ -57,9 +54,9 @@ public class Reservation {
             inverseJoinColumns = @JoinColumn(name = "seat_id"))//상대 entity의 pk - 상대 외래키
     private Set<Seat> seats = new HashSet<>();//브릿지를 통해 연결할 상대entity
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "member_id")
+//    private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_id")
