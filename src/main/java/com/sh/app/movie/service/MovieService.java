@@ -124,14 +124,6 @@ public class MovieService {
     private ReviewRepository reviewRepository;
 
     public void scheduledCallApi() {
-        movieGenreRepository.deleteAll();
-        genreRepository.deleteAll();
-        vodRepository.deleteAll();
-        movieActorRepository.deleteAll();
-        actorRepository.deleteAll();
-        movieDirectorRepository.deleteAll();
-        directorRepository.deleteAll();
-        movieRepository.deleteAll();
         fetchAndStoreMovie();
     }
 
@@ -147,7 +139,6 @@ public class MovieService {
     }
 
     private void fetchAndStoreGenres() {
-        genreRepository.deleteAll();
         String url = UriComponentsBuilder
                 .fromHttpUrl(GENRE_URL)
                 .queryParam("api_key", tmdbApiKey)
@@ -159,8 +150,11 @@ public class MovieService {
         if (genreResponse != null) {
             try {
                 for (GenreDto genreDto : genreResponse.getGenreDtos()) {
-                    Genre genre = convertToGenre(genreDto);
-                    genreRepository.save(genre);
+                    boolean exists = genreRepository.existsByGenreName(genreDto.getGenreName());
+                    if (!exists) {
+                        Genre genre = convertToGenre(genreDto);
+                        genreRepository.save(genre);
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -193,7 +187,7 @@ public class MovieService {
         if (movieResponse != null) {
             for (TmdbMovieInfoDto tmdbMovieInfoDto : movieResponse.getTmdbMovieInfoDtos()) {
                 String normalizedTitle = normalizeTitle(tmdbMovieInfoDto.getTitle());
-                Optional<Movie> existingMovie = movieRepository.findByNormalizedTitle(normalizedTitle);
+                Optional<Movie> existingMovie = movieRepository.findByNormalizedTitleAndReleaseDate(normalizedTitle, tmdbMovieInfoDto.getReleaseDate());
                 if (!existingMovie.isPresent()) {
                     Movie movie = convertToMovie(tmdbMovieInfoDto);
 
@@ -420,7 +414,7 @@ public class MovieService {
             if (dailyBoxOfficeList != null && dailyBoxOfficeList.getBoxOfficeInfoDtos() != null) {
                 for (BoxOfficeInfoDto boxOfficeInfoDto : dailyBoxOfficeList.getBoxOfficeInfoDtos()) {
                     String normalizedTitle = normalizeTitle(boxOfficeInfoDto.getTitle());
-                    Optional<Movie> existingMovie = movieRepository.findByNormalizedTitle(normalizedTitle);
+                    Optional<Movie> existingMovie = movieRepository.findByNormalizedTitleAndReleaseDate(normalizedTitle, boxOfficeInfoDto.getReleaseDate());
                     if (!existingMovie.isPresent()) {
                         Movie movie = convertToBoxOffice(boxOfficeInfoDto);
 
