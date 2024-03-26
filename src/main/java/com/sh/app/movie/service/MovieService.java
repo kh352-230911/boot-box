@@ -408,6 +408,9 @@ public class MovieService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         String formattedDate = yesterday.format(formatter);
 
+        // 박스오피스 데이터를 가져오기 전에 모든 영화 순위 정보 초기화
+        initializeAllMovieRanks();
+        
         String url = UriComponentsBuilder
                 .fromHttpUrl(BOX_OFFICE_URL)
                 .queryParam("key", kobisApiKey)
@@ -563,6 +566,14 @@ public class MovieService {
                 }
             }
         }
+    }
+
+    private void initializeAllMovieRanks() {
+        List<Movie> allMovies = movieRepository.findAll();
+        for (Movie movie : allMovies) {
+            movie.setRank(null); // 영화 순위 정보 초기화
+        }
+        movieRepository.saveAll(allMovies); // 변경된 정보를 데이터베이스에 저장
     }
 
     private Movie convertToBoxOffice(BoxOfficeInfoDto boxOfficeInfoDto) {
@@ -828,7 +839,6 @@ public class MovieService {
                     .map(vod -> modelMapper.map(vod, VodDetailDto.class))
                     .collect(Collectors.toList());
 
-
             // 리뷰 정보 가져오기 및 DTO로 변환, 멤버 정보 포함
             List<ReviewDetailDto> reviewDetailDtos = movie.getReviews().stream()
                     .map(review -> {
@@ -842,16 +852,14 @@ public class MovieService {
                     })
                     .collect(Collectors.toList());
 
-
             // 영화 정보를 MovieDetailDto로 변환
             MovieDetailDto movieDetailDto = modelMapper.map(movie, MovieDetailDto.class);
             movieDetailDto.setGenreDetailDtos(genreDetailDtos);
             movieDetailDto.setActorDetailDtos(actorDetailDtos);
             movieDetailDto.setDirectorDetailDtos(directorDetailDtos);
-            movieDetailDto.setVodDetailDtos(vodDetailDtos);
+            movieDetailDto.setVodDetailDtos(vodDetailDtos); // VOD 정보 추가
             movieDetailDto.setDDay(calculateDday(movie.getReleaseDate()));
             movieDetailDto.setReviewDetailDtos(reviewDetailDtos);
-
 
             return movieDetailDto;
         }).orElseThrow(() -> new EntityNotFoundException("Movie not found for ID: " + id));
@@ -901,8 +909,8 @@ public class MovieService {
 
     public void updateMovieRatings() {
         LocalDate today = LocalDate.now();
-        LocalDateTime startOfToday = today.atStartOfDay();
-        LocalDateTime endOfToday = today.plusDays(1).atStartOfDay();
+        LocalDateTime startOfToday = today.minusDays(1).atStartOfDay();
+        LocalDateTime endOfToday = today.atStartOfDay();
 
         // 오늘 작성된 모든 리뷰를 가져옵니다.
         List<Review> todayReviews = reviewRepository.findByReviewCreatedAtBetween(startOfToday, endOfToday);
