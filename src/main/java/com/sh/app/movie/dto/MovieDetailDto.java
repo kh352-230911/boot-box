@@ -7,6 +7,7 @@ import com.sh.app.genre.dto.GenreDetailDto;
 import com.sh.app.movieActor.entity.MovieActor;
 import com.sh.app.movieDirector.entity.MovieDirector;
 import com.sh.app.movieGenre.entity.MovieGenre;
+import com.sh.app.review.dto.ReviewDetailDto;
 import com.sh.app.review.entity.Review;
 import com.sh.app.vod.dto.VodDetailDto;
 import com.sh.app.vod.dto.VodDto;
@@ -52,6 +53,8 @@ public class MovieDetailDto {
     private List<ActorDetailDto> actorDetailDtos;
 
     private List<DirectorDetailDto> directorDetailDtos;
+
+    private List<ReviewDetailDto> reviewDetailDtos;
 
     private String dDay;
 
