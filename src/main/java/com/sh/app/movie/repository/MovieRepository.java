@@ -83,4 +83,6 @@ FETCH FIRST 10 ROWS ONLY""", nativeQuery = true)
     // 특정 장르의 현재 날짜 이후 개봉 예정인 영화 조회
     @Query("SELECT m FROM Movie m JOIN m.movieGenres g WHERE g.genre.genreName = :genre AND m.releaseDate > :today ORDER BY m.rank ASC")
     List<Movie> findByGenresNameAndReleaseDateAfter(String genre, LocalDate today);
+
+    Optional<Movie> findByNormalizedTitleAndReleaseDate(String normalizedTitle, LocalDate releaseDate);
 }

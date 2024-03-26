@@ -1,7 +1,11 @@
 package com.sh.app.reservation.repository;
 
+import com.sh.app.reservation.dto.ReservationInfoDto;
 import com.sh.app.reservation.entity.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  *  <Entity객체클래스,해당 객체클래스의 pk DataType>

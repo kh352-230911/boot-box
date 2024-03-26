@@ -87,8 +87,14 @@
                         <h2>현재 상영작</h2>
                         <div class="movieData-list-wrapper">
                             <div class="movieData-list">
-                                <div th:each="movieData : ${currentMovies}" class="movieData-list-item">
-                                    <img th:src="${movieData.poster}" class="movieData-list-item-img" alt="" th:alt="${movieData.title}">
+                                <div th:each="movie : ${currentMovies}" class="movieData-list-item">
+                                    <th:block th:if="${#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">
+                                        <img class="movie-list-item-img" th:src="${movie.posterUrl}" th:alt="${movie.title}">
+                                    </th:block>
+                                    <th:block th:if="${!#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">
+                                        <img class="movie-list-item-img" th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" th:alt="${movie.title}">
+                                    </th:block>
+<!--                                    <img th:src="${movie.posterUrl}" class="movieData-list-item-img" alt="" th:alt="${movie.title}">-->
 <!--                                    <span class="movieData-list-item-title" th:text="${movieData.title}"></span>-->
 <!--                                    <button class="movieData-list-item-button">상세보기</button>-->
                                 </div>

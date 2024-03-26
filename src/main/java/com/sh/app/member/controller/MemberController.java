@@ -142,8 +142,7 @@ public class MemberController {
 
     @GetMapping("/memberReservation.do")
     public void memberReservation(Long id, Model model) {
-        log.debug("id = {}", id);
-        Member member = memberService.findByReservation(id);
+        MemberReservationDto member = memberService.findByReservation(id);
         log.debug("member = {}", member);
 
         model.addAttribute("member", member);
@@ -152,7 +151,7 @@ public class MemberController {
     @GetMapping("/memberWatchedMovie.do")
     public void memberWatchedMovie(Long id, Model model) {
         log.debug("id = {}", id);
-        Member member = memberService.findByReservation(id);
+        MemberReservationDto member = memberService.findByReservation(id);
         log.debug("member = {}", member);
 
         model.addAttribute("member", member);

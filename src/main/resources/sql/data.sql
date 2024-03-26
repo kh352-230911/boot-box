@@ -708,8 +708,8 @@ insert into NOTICE values (seq_notice_id.nextval, 1, 'ETC', '[BOOTBOX] 이태원
 
 --
 -- schedule
-insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 838209, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 09:10', 'YYYY-MM-DD HH24:MI'));
---insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 14:00', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 838209, to_date('2024-03-26', 'YYYY-MM-DD'), to_date('2024-03-26 09:10', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 792307, to_date('2024-03-26', 'YYYY-MM-DD'), to_date('2024-03-26 14:00', 'YYYY-MM-DD HH24:MI'));
 --insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 16:30', 'YYYY-MM-DD HH24:MI'));
 --
 --insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 09:00', 'YYYY-MM-DD HH24:MI'));
@@ -878,8 +878,8 @@ insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 838209, to_date('2
 ----107
 --insert into SCHEDULE values (seq_schedule_id.nextval, 0510503, 20, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 11:40', 'YYYY-MM-DD HH24:MI'));
 -- reservation
-INSERT INTO RESERVATION VALUES ('box16443', 21, 2, 'CONFIRM');
---INSERT INTO RESERVATION VALUES ('box25822', 2, 2, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box16443', 1, 1, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box25822', 3, 21, 'CONFIRM');
 --INSERT INTO RESERVATION VALUES ('box47220', 3, 3, 'CONFIRM');
 --INSERT INTO RESERVATION VALUES ('box47211', 2, 3, 'CONFIRM');
 --INSERT INTO RESERVATION VALUES ('box42217', 4, 4, 'CONFIRM');
@@ -926,7 +926,7 @@ INSERT INTO RESERVATION VALUES ('box16443', 21, 2, 'CONFIRM');
 --INSERT INTO RESERVATION VALUES ('box93500', 5, 105, 'CONFIRM');
 --INSERT INTO RESERVATION VALUES ('box07662', 5, 106, 'CONFIRM');
 --INSERT INTO RESERVATION VALUES ('box17935', 5, 107, 'CONFIRM');
---
+INSERT INTO RESERVATION VALUES ('box24521', 3, 1, 'CONFIRM');
 --
 ---- 강남점 sample 예약 데이터 추가
 --insert into RESERVATION values ('box57869', 1, 10, 'CONFIRM');
@@ -937,13 +937,13 @@ INSERT INTO RESERVATION VALUES ('box16443', 21, 2, 'CONFIRM');
 --insert into RESERVATION values ('box83657', 2, 15, 'CONFIRM');
 -- reservation_seat
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box16443', 1);
---insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box25822', 2);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box25822', 1);
 --insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box47220', 3);
 --insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box42217', 4);
 --insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box34332', 4);
 --insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box32582', 5);
 --insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box27006', 5);
---
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box24521', 2);
 --INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box35588', 11);
 --INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box34209', 12);
 --INSERT INTO reservation_seat VALUES (seq_reservation_seat_id.nextval, 'box66865', 13);
@@ -1020,8 +1020,8 @@ insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 4, 12000, 'card');
 insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 5, 12000, 'card');
 --
 -- movie_list
---insert into MOVIE_LIST values (seq_movie_list_id.nextval, 1, 0201);
---insert into MOVIE_LIST values (seq_movie_list_id.nextval, 1, 03101);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 838209, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 792307, 0201);
 --insert into MOVIE_LIST values (seq_movie_list_id.nextval, 2, 03101);
 --insert into MOVIE_LIST values (seq_movie_list_id.nextval, 2, 04201);
 --insert into MOVIE_LIST values (seq_movie_list_id.nextval, 3, 03201);
@@ -1040,8 +1040,8 @@ insert into CANCEL_PAY values (seq_cancel_pay_id.nextval, 5, 12000, 'card');
 --insert into MOVIE_LIST values (seq_movie_list_id.nextval, 6, 0201);
 
 -- review
-insert into REVIEW values (seq_review_id.nextval, 'box16443', 21, 838209, 4, '너무 지루해요', default);
---insert into REVIEW values (seq_review_id.nextval, 'box25822', 2, 2, 4, '최고', default);
+insert into REVIEW values (seq_review_id.nextval, 'box16443', 1, 838209, 2, '너무 지루해요', default);
+insert into REVIEW values (seq_review_id.nextval, 'box25822', 3, 792307, 4, '최고', default);
 --insert into REVIEW values (seq_review_id.nextval, 'box47220', 3, 3, 5, '시간 가는 줄 모르고 봤어용', default);
 --insert into REVIEW values (seq_review_id.nextval, 'box47211', 2, 3, 2, '시간 가는 줄 모르고 봤어용', default);
 --insert into REVIEW values (seq_review_id.nextval, 'box42217', 4, 4, 5, '짱짱', default);
@@ -1089,3 +1089,4 @@ insert into REVIEW values (seq_review_id.nextval, 'box16443', 21, 838209, 4, '�
 --INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box93500', 5, 18, 4, '재미있게 봤어요', DEFAULT);
 --INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box07662', 5, 19, 1, '재미없어요', DEFAULT);
 --INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box17935', 5, 20, 5, '강추합니다!', DEFAULT);
+insert into REVIEW values (seq_review_id.nextval, 'box24521', 3, 838209, 3, '괜찮았어요', default);

@@ -18,7 +18,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = {"movie"})
 //@ToString(exclude = {"movie", "reservations"})
 public class Schedule {
     @Id
@@ -27,7 +26,7 @@ public class Schedule {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE) //0219 eager에서 수정
     @JoinColumn(name = "theater_id")
     private Theater theater;
-    @ManyToOne(fetch = FetchType.LAZY) //0219 eager에서 수정
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) //0219 eager에서 수정
     @JoinColumn(name = "movie_id")
     private Movie movie;
     @Column(nullable = false)
