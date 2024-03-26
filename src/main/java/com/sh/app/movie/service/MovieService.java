@@ -16,8 +16,6 @@ import com.sh.app.genre.dto.GenreDto;
 import com.sh.app.genre.dto.GenreResponse;
 import com.sh.app.genre.entity.Genre;
 import com.sh.app.genre.repository.GenreRepository;
-import com.sh.app.member.entity.Member;
-import com.sh.app.member.repository.MemberRepository;
 import com.sh.app.movie.dto.*;
 import com.sh.app.movie.entity.Movie;
 import com.sh.app.movie.entity.Status;
@@ -29,7 +27,6 @@ import com.sh.app.director.repository.DirectorRepository;
 import com.sh.app.movieDirector.repository.MovieDirectorRepository;
 import com.sh.app.movieGenre.entity.MovieGenre;
 import com.sh.app.movieGenre.repository.MovieGenreRepository;
-import com.sh.app.review.dto.ReviewDetailDto;
 import com.sh.app.review.entity.Review;
 import com.sh.app.review.repository.ReviewRepository;
 import com.sh.app.util.GenreNormalization;
@@ -125,9 +122,6 @@ public class MovieService {
 
     @Autowired
     private ReviewRepository reviewRepository;
-
-    @Autowired
-    private MemberRepository memberRepository;
 
     public void scheduledCallApi() {
         fetchAndStoreMovie();
@@ -829,28 +823,13 @@ public class MovieService {
                     .collect(Collectors.toList());
 
 
-            // 리뷰 정보 가져오기 및 DTO로 변환, 멤버 정보 포함
-            List<ReviewDetailDto> reviewDetailDtos = movie.getReviews().stream()
-                    .map(review -> {
-                        ReviewDetailDto dto = modelMapper.map(review, ReviewDetailDto.class);
-
-                        Member member = memberRepository.findById(review.getMemberId())
-                                .orElseThrow(() -> new EntityNotFoundException("Member not found with id: " + review.getMemberId()));
-                        dto.setMember(member);
-
-                        return dto;
-                    })
-                    .collect(Collectors.toList());
-
-
             // 영화 정보를 MovieDetailDto로 변환
             MovieDetailDto movieDetailDto = modelMapper.map(movie, MovieDetailDto.class);
             movieDetailDto.setGenreDetailDtos(genreDetailDtos);
             movieDetailDto.setActorDetailDtos(actorDetailDtos);
             movieDetailDto.setDirectorDetailDtos(directorDetailDtos);
-            movieDetailDto.setVodDetailDtos(vodDetailDtos);
+            movieDetailDto.setVodDetailDtos(vodDetailDtos); // VOD 정보 추가
             movieDetailDto.setDDay(calculateDday(movie.getReleaseDate()));
-            movieDetailDto.setReviewDetailDtos(reviewDetailDtos);
 
 
             return movieDetailDto;
@@ -901,8 +880,8 @@ public class MovieService {
 
     public void updateMovieRatings() {
         LocalDate today = LocalDate.now();
-        LocalDateTime startOfToday = today.atStartOfDay();
-        LocalDateTime endOfToday = today.plusDays(1).atStartOfDay();
+        LocalDateTime startOfToday = today.minusDays(1).atStartOfDay();
+        LocalDateTime endOfToday = today.atStartOfDay();
 
         // 오늘 작성된 모든 리뷰를 가져옵니다.
         List<Review> todayReviews = reviewRepository.findByReviewCreatedAtBetween(startOfToday, endOfToday);
