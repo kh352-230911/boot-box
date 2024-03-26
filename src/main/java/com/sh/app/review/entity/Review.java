@@ -32,6 +32,8 @@ public class Review {
     private String reviewDetail; // 리뷰내용
     @CreationTimestamp
     private LocalDateTime reviewCreatedAt; // 리뷰작성날짜
+    @Column(name = "movie_id")
+    private Long movieId;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "movie_id") // movie.movie_id 컬럼지정

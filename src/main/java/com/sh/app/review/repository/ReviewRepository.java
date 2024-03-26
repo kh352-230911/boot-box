@@ -8,7 +8,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-//    List<Review> findByCreatedAtBetween(LocalDateTime localDateTime, LocalDateTime localDateTime1);
+    List<Review> findByReviewCreatedAtBetween(LocalDateTime localDateTime, LocalDateTime localDateTime1);
+
+    long countByMovieId(Long movieId);
 //    @Query("SELECT AVG(r.reviewScore) FROM Review r WHERE r.movie.id = :id")
 //    Double getAverageRatingByMovieId(Long id);
 }
