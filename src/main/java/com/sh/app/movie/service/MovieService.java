@@ -880,8 +880,8 @@ public class MovieService {
 
     public void updateMovieRatings() {
         LocalDate today = LocalDate.now();
-        LocalDateTime startOfToday = today.minusDays(1).atStartOfDay();
-        LocalDateTime endOfToday = today.atStartOfDay();
+        LocalDateTime startOfToday = today.atStartOfDay();
+        LocalDateTime endOfToday = today.plusDays(1).atStartOfDay();
 
         // 오늘 작성된 모든 리뷰를 가져옵니다.
         List<Review> todayReviews = reviewRepository.findByReviewCreatedAtBetween(startOfToday, endOfToday);
