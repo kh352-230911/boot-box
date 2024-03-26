@@ -13,4 +13,6 @@ public interface GenreRepository extends JpaRepository<Genre, Long> {
     Optional<Genre> findByGenreName(String normalizedGenreName);
 
     List<Genre> findByIdIn(ArrayList<Long> longs);
+
+    boolean existsByGenreName(String genreName);
 }

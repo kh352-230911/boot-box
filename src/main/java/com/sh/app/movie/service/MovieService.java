@@ -27,6 +27,8 @@ import com.sh.app.director.repository.DirectorRepository;
 import com.sh.app.movieDirector.repository.MovieDirectorRepository;
 import com.sh.app.movieGenre.entity.MovieGenre;
 import com.sh.app.movieGenre.repository.MovieGenreRepository;
+import com.sh.app.review.entity.Review;
+import com.sh.app.review.repository.ReviewRepository;
 import com.sh.app.util.GenreNormalization;
 import com.sh.app.vod.dto.VodDetailDto;
 import com.sh.app.vod.dto.VodDto;
@@ -48,6 +50,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -116,15 +120,10 @@ public class MovieService {
     @Autowired
     private MovieDirectorRepository movieDirectorRepository;
 
+    @Autowired
+    private ReviewRepository reviewRepository;
+
     public void scheduledCallApi() {
-        movieGenreRepository.deleteAll();
-        genreRepository.deleteAll();
-        vodRepository.deleteAll();
-        movieActorRepository.deleteAll();
-        actorRepository.deleteAll();
-        movieDirectorRepository.deleteAll();
-        directorRepository.deleteAll();
-        movieRepository.deleteAll();
         fetchAndStoreMovie();
     }
 
@@ -140,7 +139,6 @@ public class MovieService {
     }
 
     private void fetchAndStoreGenres() {
-        genreRepository.deleteAll();
         String url = UriComponentsBuilder
                 .fromHttpUrl(GENRE_URL)
                 .queryParam("api_key", tmdbApiKey)
@@ -152,8 +150,11 @@ public class MovieService {
         if (genreResponse != null) {
             try {
                 for (GenreDto genreDto : genreResponse.getGenreDtos()) {
-                    Genre genre = convertToGenre(genreDto);
-                    genreRepository.save(genre);
+                    boolean exists = genreRepository.existsByGenreName(genreDto.getGenreName());
+                    if (!exists) {
+                        Genre genre = convertToGenre(genreDto);
+                        genreRepository.save(genre);
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -186,7 +187,7 @@ public class MovieService {
         if (movieResponse != null) {
             for (TmdbMovieInfoDto tmdbMovieInfoDto : movieResponse.getTmdbMovieInfoDtos()) {
                 String normalizedTitle = normalizeTitle(tmdbMovieInfoDto.getTitle());
-                Optional<Movie> existingMovie = movieRepository.findByNormalizedTitle(normalizedTitle);
+                Optional<Movie> existingMovie = movieRepository.findByNormalizedTitleAndReleaseDate(normalizedTitle, tmdbMovieInfoDto.getReleaseDate());
                 if (!existingMovie.isPresent()) {
                     Movie movie = convertToMovie(tmdbMovieInfoDto);
 
@@ -413,7 +414,7 @@ public class MovieService {
             if (dailyBoxOfficeList != null && dailyBoxOfficeList.getBoxOfficeInfoDtos() != null) {
                 for (BoxOfficeInfoDto boxOfficeInfoDto : dailyBoxOfficeList.getBoxOfficeInfoDtos()) {
                     String normalizedTitle = normalizeTitle(boxOfficeInfoDto.getTitle());
-                    Optional<Movie> existingMovie = movieRepository.findByNormalizedTitle(normalizedTitle);
+                    Optional<Movie> existingMovie = movieRepository.findByNormalizedTitleAndReleaseDate(normalizedTitle, boxOfficeInfoDto.getReleaseDate());
                     if (!existingMovie.isPresent()) {
                         Movie movie = convertToBoxOffice(boxOfficeInfoDto);
 
@@ -828,6 +829,7 @@ public class MovieService {
             movieDetailDto.setActorDetailDtos(actorDetailDtos);
             movieDetailDto.setDirectorDetailDtos(directorDetailDtos);
             movieDetailDto.setVodDetailDtos(vodDetailDtos); // VOD 정보 추가
+            movieDetailDto.setDDay(calculateDday(movie.getReleaseDate()));
 
 
             return movieDetailDto;
@@ -876,4 +878,39 @@ public class MovieService {
         return movies.stream().map(this::convertToMovieDetailDto).collect(Collectors.toList());
     }
 
+    public void updateMovieRatings() {
+        LocalDate today = LocalDate.now();
+        LocalDateTime startOfToday = today.atStartOfDay();
+        LocalDateTime endOfToday = today.plusDays(1).atStartOfDay();
+
+        // 오늘 작성된 모든 리뷰를 가져옵니다.
+        List<Review> todayReviews = reviewRepository.findByReviewCreatedAtBetween(startOfToday, endOfToday);
+
+        // 영화 ID별로 리뷰를 그룹화합니다.
+        Map<Long, List<Review>> reviewsByMovie = todayReviews.stream()
+                .collect(Collectors.groupingBy(Review::getMovieId));
+
+        reviewsByMovie.forEach((movieId, reviews) -> {
+            Movie movie = movieRepository.findById(movieId).orElse(null);
+            if (movie != null && !reviews.isEmpty()) {
+                // 새 리뷰들의 평균 점수를 계산합니다.
+                double newReviewsAverage = reviews.stream()
+                        .mapToInt(Review::getReviewScore)
+                        .average()
+                        .orElse(0.0) * 2;
+                // 기존 리뷰 개수
+                long existingReviewCount = reviewRepository.countByMovieId(movieId);
+                // 새 리뷰 개수
+                long newReviewCount = reviews.size();
+                // 총 리뷰 개수
+                long totalReviewCount = existingReviewCount + newReviewCount;
+                // 새로운 평균 평점을 계산합니다.
+                double totalAverage = ((movie.getVoteAverage() * existingReviewCount) + (newReviewsAverage * newReviewCount)) / totalReviewCount;
+
+                movie.setVoteAverage(totalAverage); // 새로운 평점으로 업데이트
+                movieRepository.save(movie);
+            }
+        });
+    }
 }
+

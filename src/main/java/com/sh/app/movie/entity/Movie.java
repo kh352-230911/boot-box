@@ -86,8 +86,4 @@ public class Movie {
 //    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 //    @Builder.Default
 //    private List<Review> reviews = new ArrayList<>();
-//
-//    @OneToMany(fetch = FetchType.LAZY)
-//    @Builder.Default
-//    private List<Schedule> schedules = new ArrayList<>();
 }

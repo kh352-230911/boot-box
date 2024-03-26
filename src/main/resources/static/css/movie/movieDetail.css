@@ -118,19 +118,30 @@ div {
     margin-top: 30px;
     font-size: 10px;
 }
-.movie_stars {
-    display: flex;
-}
+/*.movie_stars {*/
+/*    display: flex;*/
+/*}*/
+/*.movie_star {*/
+/*    margin-right: 10px;*/
+/*    margin-bottom: 0px;*/
+/*}*/
+/*.movie_star i {*/
+/*    color: var(--color-gray-1);*/
+/*}*/
+/*.movie_star.rated i {*/
+/*    color: yellow;*/
+/*}*/
 .movie_star {
     margin-right: 10px;
     margin-bottom: 0px;
 }
-.movie_star i {
-    color: var(--color-gray-1);
-}
-.movie_star.rated i {
+.movie_star > path{
     color: yellow;
 }
+.movie_star.rated > path{
+    color: yellow;
+}
+
 .movie_comment {
     font-size: 14px;
     color: var(--color-gray-1);
