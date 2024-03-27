@@ -6,6 +6,7 @@ import com.sh.app.actor.dto.ActorInfoDto;
 import com.sh.app.actor.dto.ActorResponse;
 import com.sh.app.actor.entity.Actor;
 import com.sh.app.actor.repository.ActorRepository;
+import com.sh.app.cinema.repository.CinemaRepository;
 import com.sh.app.director.dto.DirectorDetailDto;
 import com.sh.app.director.dto.DirectorDto;
 import com.sh.app.director.dto.DirectorInfoDto;
@@ -707,18 +708,18 @@ public class MovieService {
                 .collect(Collectors.toList());
     }
 
-    public List<MovieListDto> getCurrentMovies() {
-        return movieRepository.findAll().stream() // 현재는 findAll을 사용했지만, 실제로는 현재 상영 중인 영화를 필터링하는 로직
-                .map(movie -> {
-                    MovieListDto dto = new MovieListDto();
-                    dto.setId(movie.getId());
-                    dto.setTitle(movie.getTitle());
-                    dto.setPosterUrl(movie.getPosterUrl());
-                    // 필요한 정보만 설정
-                    return dto;
-                })
-                .collect(Collectors.toList());
-    }
+//    public List<MovieListDto> getCurrentMovies() {
+//        return movieRepository.findAll().stream() // 현재는 findAll을 사용했지만, 실제로는 현재 상영 중인 영화를 필터링하는 로직
+//                .map(movie -> {
+//                    MovieListDto dto = new MovieListDto();
+//                    dto.setId(movie.getId());
+//                    dto.setTitle(movie.getTitle());
+//                    dto.setPosterUrl(movie.getPosterUrl());
+//                    // 필요한 정보만 설정
+//                    return dto;
+//                })
+//                .collect(Collectors.toList());
+//    }
 
     public List<MovieShortDto> shotMovie() {
         return movieRepository.findAllByOrderByTitleAsc()
