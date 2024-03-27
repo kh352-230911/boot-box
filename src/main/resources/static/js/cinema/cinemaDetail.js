@@ -101,30 +101,42 @@ const leftArrow = document.querySelector(".left");
 const rightArrow = document.querySelector(".right");
 const movieList = document.querySelector(".movie-list");
 const movieItems = document.querySelectorAll(".movie-list-item");
-const gap = parseInt(window.getComputedStyle(movieItems[0]).marginRight); // CSS에서 설정한 margin-right 값
-const itemWidth = movieItems[0].clientWidth + gap; // 영화 포스터 하나의 너비 + gap
 
-let index = 0; // 현재 위치
+// gap을 기본값으로 미리 선언합니다.
+let gap = 0;
+
+// movieItems 배열이 존재하고, 적어도 하나의 요소가 있는지 확인합니다.
+if (movieItems.length > 0) {
+    gap = parseInt(window.getComputedStyle(movieItems[0]).marginRight);
+}
+
+// 여기에서 'itemWidth'와 'maxIndex'를 사용하기 전에 'gap'이 정의되었는지 확인합니다.
+const itemWidth = movieItems[0] ? movieItems[0].clientWidth + gap : 0; // 영화 포스터 하나의 너비 + gap
 const maxIndex = movieItems.length - 1; // 슬라이드를 넘길 수 있는 마지막 아이템 인덱스
 
-rightArrow.addEventListener("click", () => {
-    if (index < maxIndex) {
-        index++; // 다음 아이템으로 이동
-    } else {
-        index = 0; // 처음으로 되돌아감
-    }
-    movieList.style.transform = `translateX(${-itemWidth * index}px)`; // 슬라이드 이동
-});
+let index = 0; // 현재 위치
 
-leftArrow.addEventListener("click", () => {
-    if (index > 0) {
-        index--; // 이전 아이템으로 이동
-    } else {
-        index = maxIndex; // 마지막으로 이동
-    }
-    movieList.style.transform = `translateX(${-itemWidth * index}px)`; // 슬라이드 이동
-});
+if (rightArrow) {
+    rightArrow.addEventListener("click", () => {
+        if (index < maxIndex) {
+            index++; // 다음 아이템으로 이동
+        } else {
+            index = 0; // 처음으로 되돌아감
+        }
+        movieList.style.transform = `translateX(${-itemWidth * index}px)`; // 슬라이드 이동
+    });
+}
 
+if (leftArrow) {
+    leftArrow.addEventListener("click", () => {
+        if (index > 0) {
+            index--; // 이전 아이템으로 이동
+        } else {
+            index = maxIndex; // 마지막으로 이동
+        }
+        movieList.style.transform = `translateX(${-itemWidth * index}px)`; // 슬라이드 이동
+    });
+}
 
 // 한 줄 달력
 const monthElement = document.getElementById('month');
@@ -174,6 +186,12 @@ function renderCalendar(date) {
                     selectedDate.classList.remove('selected');
                 }
 
+                const todayElement = calendarContainer.querySelector('.today');
+                if (todayElement) {
+                    todayElement.classList.remove('back-color');
+                    todayElement.classList.add('selected');
+                }
+
                 dayElement.classList.add('selected');
 
                 selectedDate = dayElement;
@@ -195,7 +213,7 @@ function renderCalendar(date) {
                 // 오늘 날짜의 스타일을 기본 상태로 되돌립니다.
                 const todayElement = calendarContainer.querySelector('.today');
                 if (todayElement) {
-                    todayElement.style.backgroundColor = '#333';
+                    todayElement.classList.add('back-color');
                 }
 
                 // 클릭한 요소에 'selected' 클래스를 추가합니다.
@@ -242,7 +260,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCalendar(currentDate);
     selectedDateElement.textContent = formatDate(today); // 페이지 로드 시 오늘 날짜를 선택하도록 설정
     scheduleManager();
-
     // 오늘 날짜 요소를 찾아 'selected' 클래스를 추가합니다.
     const todayElement = calendarContainer.querySelector('.today');
     todayElement.classList.remove('disabled');
