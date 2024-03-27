@@ -271,24 +271,82 @@ footer {
     height: 498px;
 }
 
-/* slider 영역 */
+ /*수정 전 slider 영역 */
+/*.small {*/
+/*    overflow: hidden;*/
+/*    position: relative;*/
+/*}*/
+/*.small-ul {*/
+/*    list-style: none;*/
+/*    padding: 0;*/
+/*    margin: 0;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    transition: transform 0.5s ease;*/
+/*}*/
+/*.small-ul li {*/
+/*    margin-right: 30px;*/
+/*    margin-top: 50px;*/
+/*}*/
+/*.small-span {*/
+/*    position: absolute;*/
+/*    top: 50%;*/
+/*    transform: translateY(-50%);*/
+/*    cursor: pointer;*/
+/*    color: #070707;*/
+/*    background-color: rgba(255, 255, 255, 0.5);*/
+/*    padding: 5px;*/
+/*    border-radius: 50%;*/
+/*}*/
+/*.small-span:hover {*/
+/*    background-color: rgba(255, 255, 255, 0.7);*/
+/*}*/
+/*i.arrow {*/
+/*    position: absolute;*/
+/*    top: 45%;*/
+/*    cursor: pointer;*/
+/*    padding: 5px;*/
+/*    border-radius: 50%;*/
+/*    color: lightgray;*/
+/*    font-size: 100px;*/
+/*    transition: 0.5s all ease;*/
+/*}*/
+/*i.arrow:hover {*/
+/*    transform: scale(1.2);*/
+/*}*/
+/*.right {*/
+/*    right: 0;*/
+/*}*/
+/*.left{*/
+/*    left: 0;*/
+/*}*/
+
+/* 수정 후 slider 영역 */
 .small {
-    overflow: hidden;
-    position: relative;
+    overflow: hidden; /* 슬라이더 넘어가는 부분 숨김 */
+    position: relative; /* 상대적 위치 설정 */
+    width: 100%; /* 슬라이더의 너비를 부모 요소에 맞춤 */
 }
+
 .small-ul {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
-    justify-content: center;
     transition: transform 0.5s ease;
+    /* 아이템을 컨테이너의 왼쪽에서 시작하도록 조정 */
+    justify-content: flex-start; /* 수정된 부분 */
 }
+
 .small-ul li {
+    /* 첫 번째 아이템이 잘리지 않도록 오른쪽에만 마진을 적용 */
     margin-right: 30px;
-    margin-top: 50px;
+    /* 상단 마진을 제거하거나 조정하여 첫 번째 아이템이 잘 보이게 함 */
+    margin-top: 0; /* 수정된 부분 */
 }
+
 .small-span {
+    /* 상태 인디케이터 스타일 */
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -298,10 +356,13 @@ footer {
     padding: 5px;
     border-radius: 50%;
 }
+
 .small-span:hover {
     background-color: rgba(255, 255, 255, 0.7);
 }
+
 i.arrow {
+    /* 화살표 버튼 스타일 */
     position: absolute;
     top: 45%;
     cursor: pointer;
@@ -311,13 +372,16 @@ i.arrow {
     font-size: 100px;
     transition: 0.5s all ease;
 }
+
 i.arrow:hover {
     transform: scale(1.2);
 }
+
 .right {
     right: 0;
 }
-.left{
+
+.left {
     left: 0;
 }
 
