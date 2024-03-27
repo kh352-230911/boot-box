@@ -19,7 +19,7 @@ public class ScheduleTaskInitiator implements ApplicationListener<ApplicationRea
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        taskScheduler.schedule(this::scheduledTask, new CronTrigger("0 0 3 * * *"));
+        taskScheduler.schedule(this::scheduledTask, new CronTrigger("0 00 03 * * *"));
         taskScheduler.schedule(this::calculateReviewRatings, new CronTrigger("0 0 2 * * *"));
     }
 
