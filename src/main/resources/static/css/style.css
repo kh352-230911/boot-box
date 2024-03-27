@@ -336,6 +336,8 @@ footer {
     transition: transform 0.5s ease;
     /* 아이템을 컨테이너의 왼쪽에서 시작하도록 조정 */
     justify-content: flex-start; /* 수정된 부분 */
+    flex-wrap: nowrap; /* 아이템들이 줄바꿈 되지 않도록 설정 */
+    align-items: stretch; /* 아이템 높이를 컨테이너에 맞추기 */
 }
 
 .small-ul li {
@@ -343,6 +345,7 @@ footer {
     margin-right: 30px;
     /* 상단 마진을 제거하거나 조정하여 첫 번째 아이템이 잘 보이게 함 */
     margin-top: 0; /* 수정된 부분 */
+    flex: 0 0 195px; /* 아이템이 공간에 맞추어 축소되거나 확장되지 않음 */
 }
 
 .small-span {
@@ -374,7 +377,7 @@ i.arrow {
 }
 
 i.arrow:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
 }
 
 .right {
