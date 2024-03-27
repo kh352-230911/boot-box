@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Table(name = "memberLikeCinema")
-//@ToString(exclude = {"member", "cinema"})
+@ToString(exclude = {"member", "cinema"})
 public class MemberLikeCinema {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_member_like_cinema_id_generator")

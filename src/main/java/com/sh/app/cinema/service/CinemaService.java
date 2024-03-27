@@ -3,6 +3,7 @@ package com.sh.app.cinema.service;
 import com.sh.app.cinema.entity.Cinema;
 import com.sh.app.cinema.repository.CinemaRepository;
 import com.sh.app.cinema.dto.CinemaDto;
+import com.sh.app.movie.dto.MovieListDto;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -60,5 +63,11 @@ public class CinemaService {
 
     public Optional<Cinema> findById(Long cinemaId) {
         return cinemaRepository.findById(cinemaId);
+    }
+
+    public List<MovieListDto> getMoviesByCinemaId(Long id) {
+        return cinemaRepository.findMoviesByCinemaId(id).stream()
+                .map(movie -> modelMapper.map(movie, MovieListDto.class))
+                .collect(Collectors.toList());
     }
 }

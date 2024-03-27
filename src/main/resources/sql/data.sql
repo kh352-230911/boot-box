@@ -1034,10 +1034,16 @@ insert into MOVIE_LIST values (seq_movie_list_id.nextval, 792307, 0201);
 --insert into MOVIE_LIST values (seq_movie_list_id.nextval, 2, 0201);
 --insert into MOVIE_LIST values (seq_movie_list_id.nextval, 15, 0201);
 --insert into MOVIE_LIST values (seq_movie_list_id.nextval, 16, 0201);
---insert into MOVIE_LIST values (seq_movie_list_id.nextval, 17, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 1063241, 0201);
 ---- 강남점 영화 추가
---insert into MOVIE_LIST values (seq_movie_list_id.nextval, 5, 0201);
---insert into MOVIE_LIST values (seq_movie_list_id.nextval, 6, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 693134, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 1062807, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 666277, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 20236180, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 969492, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 1208997, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 1256544, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 844417, 0201);
 
 -- review
 insert into REVIEW values (seq_review_id.nextval, 'box16443', 1, 838209, 2, '너무 지루해요', default);

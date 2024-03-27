@@ -84,7 +84,7 @@
     position: absolute;
     height: 100vh;
     width: 50px;
-    top: 87px;
+    /*top: 87px;*/
     background-color: black;
     display: flex;
     flex-direction: column;
@@ -147,6 +147,9 @@
 .movie-list-wrapper {
     position: relative;
     overflow: hidden;
+
+    max-width: 100%; /* 컨테이너 최대 너비 설정 */
+    margin: auto; /* 가운데 정렬 */
 }
 .movie-list-container {
     padding: 0 20px;
@@ -157,10 +160,16 @@
     height: 300px;
     transform: translateX(0);
     transition: all 1s ease;
+
+    width: fit-content; /* 자식 요소의 너비만큼 크기 조정 */
 }
 .movie-list-item {
-    margin: 0 10px;
-    position: relative;
+    margin: 0 5px;
+
+    flex: 0 0 auto; /* flex-item의 너비가 줄어들지 않도록 설정 */
+    width: 200px; /* 포스터의 너비 설정 */
+    height: 200px; /* 포스터의 높이 설정, 필요에 따라 조정 */
+    /*position: relative;*/
 }
 .movie-list-item:hover .movie-list-item-img {
     transform: scale(1.2);
@@ -174,9 +183,10 @@
 }
 .movie-list-item-img {
     transition: all 1s ease-in-out;
-    width: 270px;
+    width: 200px;
     height: 200px;
-    object-fit: cover;
+    /*object-fit: cover;*/
+    object-fit: fill;
     border-radius: 20px;
 }
 .movie-list-item-title {
@@ -220,14 +230,24 @@
     opacity: 0;
     transition: 1s all ease-in-out;
 }
-i.arrow {
+i.right.arrow {
     color: lightgray;
     font-size: 100px;
     transition: 0.5s all ease;
     cursor: pointer;
-    position: fixed;
+    /*position: fixed;*/
     top: 90px;
     right: 0px;
+    z-index: 10; /* 다른 요소 위에 표시되도록 z-index 설정 */
+}
+i.left.arrow {
+    color: lightgray;
+    font-size: 100px;
+    transition: 0.5s all ease;
+    cursor: pointer;
+    /*position: fixed;*/
+    top: 90px;
+    /*right: 0px;*/
     z-index: 10; /* 다른 요소 위에 표시되도록 z-index 설정 */
 }
 
@@ -401,14 +421,14 @@ footer.active {
 .calendar li.today {
     background-color: #555;
     color: white; /* Ensures text color is white */
-    border-radius: 4px;
+    /*border-radius: 4px;*/
 }
 
-.calendar .today, .calendar li:not(.disabled):hover {
-    background-color: #666;
-    color: white;
-    border-radius: 4px;
-}
+/*.calendar .today, .calendar li:not(.disabled):hover {*/
+/*    background-color: #666;*/
+/*    color: white;*/
+/*    border-radius: 4px;*/
+/*}*/
 .arrow, .today-btn {
     cursor: pointer;
     user-select: none;
@@ -424,4 +444,24 @@ footer.active {
     font-size: 1em;
     line-height: 30px;
     height: 50px;
+}
+
+.today-btn:hover {
+    background-color: #666;
+    color: white;
+    /*border-radius: 4px;*/
+}
+
+/* 오늘 날짜 및 선택 가능한 요소에 대한 호버 효과 */
+.calendar .today:hover, .calendar li.clickable:hover {
+    background-color: #666; /* 호버 시 배경색 */
+    color: white;
+    cursor: pointer;
+}
+
+/* 선택된 날짜 스타일 */
+.calendar li.selected {
+    background-color: #555; /* 선택된 날짜의 배경색 */
+    color: #fff; /* 선택된 날짜의 글자색 */
+    /* 여기에 추가 스타일을 정의할 수 있습니다. */
 }
