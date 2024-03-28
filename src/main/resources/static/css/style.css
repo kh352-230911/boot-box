@@ -42,7 +42,7 @@ body#container {
     background-color: #232323;
 }
 
-/********** header **********/
+/*!********** header **********!*/
 #header-container {
     background-color: #212121;
 }
@@ -61,6 +61,46 @@ header div#dropdownNavbar1{
 nav {
     background-color: #212121;
 }
+
+/********** header **********/
+/*#header-container {*/
+/*    background-color: #212121;*/
+/*    height: 100px; !* 헤더 높이 설정 *!*/
+/*    position: fixed; !* 헤더를 고정 위치로 설정 *!*/
+/*    top: 0; !* 상단에 고정 *!*/
+/*    left: 0; !* 왼쪽 끝에 고정 *!*/
+/*    right: 0; !* 오른쪽 끝에 고정 *!*/
+/*    z-index: 1000; !* 다른 요소들 위에 오도록 z-index 설정 *!*/
+/*    display: flex; !* Flexbox 레이아웃 적용 *!*/
+/*    justify-content: space-between; !* 양쪽 끝에 내용을 붙임 *!*/
+/*    align-items: center; !* 세로축 중앙 정렬 *!*/
+/*    padding: 0 20px; !* 좌우 패딩 설정 *!*/
+/*}*/
+
+/*!* 헤더 내부 브랜드 로고 및 내비게이션 메뉴 스타일링 *!*/
+/*.brand-logo {*/
+/*    !* 로고 스타일링 필요시 추가 *!*/
+/*}*/
+
+/*.navigation {*/
+/*    !* 내비게이션 메뉴 스타일링 필요시 추가 *!*/
+/*}*/
+
+/*!* 반응형 디자인을 위한 미디어 쿼리 *!*/
+/*@media (max-width: 768px) {*/
+/*    #header-container {*/
+/*        padding: 0 10px; !* 모바일 화면에서 좌우 패딩 줄임 *!*/
+/*    }*/
+/*}*/
+
+/*nav {*/
+/*    background-color: #212121;*/
+/*    display: flex; !* Flexbox 레이아웃 사용 *!*/
+/*    justify-content: space-between; !* 내용을 양쪽 끝에 정렬 *!*/
+/*    align-items: center; !* 세로축 중앙 정렬 *!*/
+/*    padding: 0 10px; !* 좌우 패딩 추가 *!*/
+/*    height: 100%; !* 헤더 높이와 같게 설정 *!*/
+/*}*/
 
 /********** content **********/
 section#content {
