@@ -334,18 +334,27 @@ footer {
     margin: 0;
     display: flex;
     transition: transform 0.5s ease;
-    /* 아이템을 컨테이너의 왼쪽에서 시작하도록 조정 */
-    justify-content: flex-start; /* 수정된 부분 */
-    flex-wrap: nowrap; /* 아이템들이 줄바꿈 되지 않도록 설정 */
-    align-items: stretch; /* 아이템 높이를 컨테이너에 맞추기 */
+    justify-content: space-around; /* 아이템들 사이에 공간을 균등하게 분배 */
+    flex-wrap: nowrap;
+    align-items: stretch;
 }
 
 .small-ul li {
-    /* 첫 번째 아이템이 잘리지 않도록 오른쪽에만 마진을 적용 */
-    margin-right: 30px;
-    /* 상단 마진을 제거하거나 조정하여 첫 번째 아이템이 잘 보이게 함 */
-    margin-top: 0; /* 수정된 부분 */
-    flex: 0 0 195px; /* 아이템이 공간에 맞추어 축소되거나 확장되지 않음 */
+    margin-right: 30px; /* 아이템 사이 간격 */
+    flex: 0 0 auto; /* flex-basis를 auto로 설정하여 아이템의 원래 크기를 기준으로 함 */
+}
+
+/* 화면 크기에 따라 스타일을 조정 */
+@media (max-width: 768px) { /* 태블릿 */
+    .small-ul li {
+        margin-right: 15px; /* 아이템 사이 간격 줄임 */
+    }
+}
+
+@media (max-width: 480px) { /* 모바일 */
+    .small-ul li {
+        margin-right: 10px; /* 아이템 사이 간격 더 줄임 */
+    }
 }
 
 .small-span {
