@@ -6,6 +6,7 @@ import com.sh.app.auth.vo.MemberDetails;
 import com.sh.app.genre.entity.Genre;
 import com.sh.app.member.dto.MemberCreateDto;
 import com.sh.app.member.dto.MemberReservationDto;
+import com.sh.app.member.dto.MemberReviewDto;
 import com.sh.app.member.dto.MemberUpdateDto;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
@@ -69,19 +70,19 @@ public class MemberController {
         log.debug("memberCreateDto = {}", memberCreateDto);
 
 
-        Member member = memberCreateDto.toMember();
-        String encodedPassword = passwordEncoder.encode(member.getMemberPwd());
-        member.setMemberPwd(encodedPassword);
+//        Member member = memberCreateDto.toMember();
+//        String encodedPassword = passwordEncoder.encode(member.getMemberPwd());
+//        member.setMemberPwd(encodedPassword);
+//
+//        // 단일 장르만을 받도록 수정
+//        Genre selectedGenre = new Genre();
+//        selectedGenre.setGenreName(genre);
+//        log.debug("Selected genre = {}", selectedGenre);
+//
+//        member = memberService.createMember(member, selectedGenre);
 
-        // 단일 장르만을 받도록 수정
-        Genre selectedGenre = new Genre();
-        selectedGenre.setGenreName(genre);
-        log.debug("Selected genre = {}", selectedGenre);
 
-        member = memberService.createMember(member, selectedGenre);
-
-
-        redirectAttributes.addFlashAttribute("msg", "반갑습니다." + member.getMemberName() + "님😀");
+//        redirectAttributes.addFlashAttribute("msg", "반갑습니다." + member.getMemberName() + "님😀");
         return "redirect:/auth/login.do";
     }
 
@@ -143,7 +144,7 @@ public class MemberController {
 
     @PostMapping("/deleteMember.do")
     public String deleteMember(Long id) {
-        log.debug("id = {}", id);
+//        log.debug("id = {}", id);
         memberService.deleteById(id);
         memberService.logoutAndInvalidateSession();
         return "redirect:/";
@@ -152,16 +153,16 @@ public class MemberController {
     @GetMapping("/memberReservation.do")
     public void memberReservation(Long id, Model model) {
         MemberReservationDto member = memberService.findByReservation(id);
-        log.debug("member = {}", member);
+//        log.debug("member = {}", member);
 
         model.addAttribute("member", member);
     }
 
     @GetMapping("/memberWatchedMovie.do")
     public void memberWatchedMovie(Long id, Model model) {
-        log.debug("id = {}", id);
+//        log.debug("id = {}", id);
         MemberReservationDto member = memberService.findPastReservationsById(id);
-        log.debug("member = {}", member);
+//        log.debug("member = {}", member);
 
         model.addAttribute("member", member);
     }
@@ -188,7 +189,7 @@ public class MemberController {
 
     @GetMapping("/memberReviewList.do")
     public void memberReviewList(Long id, Model model) {
-        Member member = memberService.findById(id);
+        MemberReviewDto member = memberService.getMemberWithReviews(id);
 
         log.debug("member = {}", member);
         model.addAttribute("member", member);

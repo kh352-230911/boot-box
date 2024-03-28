@@ -139,3 +139,15 @@ footer {
     align-items: center;
     box-shadow: 0 4px 30px rgba(0,0,0,.05);
 }
+
+.movie_star {
+    margin-right: 5px;
+    margin-bottom: 0px;
+    margin-top: 5px;
+}
+.movie_star > path{
+    color: yellow;
+}
+.movie_star.rated > path{
+    color: yellow;
+}
