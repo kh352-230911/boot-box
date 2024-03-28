@@ -3,6 +3,7 @@ package com.sh.app.member.controller;
 
 import com.sh.app.auth.service.AuthService;
 import com.sh.app.auth.vo.MemberDetails;
+import com.sh.app.genre.entity.Genre;
 import com.sh.app.member.dto.MemberCreateDto;
 import com.sh.app.member.dto.MemberReservationDto;
 import com.sh.app.member.dto.MemberUpdateDto;
@@ -59,18 +60,26 @@ public class MemberController {
     public String CreateMember(
             @Valid MemberCreateDto memberCreateDto,
             BindingResult bindingResult,
-            RedirectAttributes redirectAttributes) {
+            RedirectAttributes redirectAttributes,
+            @RequestParam("genres") String genre) {
         if (bindingResult.hasErrors()) {
             String message = bindingResult.getAllErrors().get(0).getDefaultMessage();
             throw new RuntimeException(message);
         }
         log.debug("memberCreateDto = {}", memberCreateDto);
 
+
         Member member = memberCreateDto.toMember();
         String encodedPassword = passwordEncoder.encode(member.getMemberPwd());
         member.setMemberPwd(encodedPassword);
 
-        member = memberService.createMember(member);
+        // 단일 장르만을 받도록 수정
+        Genre selectedGenre = new Genre();
+        selectedGenre.setGenreName(genre);
+        log.debug("Selected genre = {}", selectedGenre);
+
+        member = memberService.createMember(member, selectedGenre);
+
 
         redirectAttributes.addFlashAttribute("msg", "반갑습니다." + member.getMemberName() + "님😀");
         return "redirect:/auth/login.do";

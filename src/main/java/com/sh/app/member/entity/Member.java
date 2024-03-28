@@ -2,7 +2,9 @@ package com.sh.app.member.entity;
 
 import com.sh.app.ask.entity.Ask;
 import com.sh.app.authority.entity.Authority;
+import com.sh.app.genre.entity.Genre;
 import com.sh.app.memberLikeCinema.entity.MemberLikeCinema;
+import com.sh.app.memberLikeGenre.entity.MemberLikeGenre;
 import com.sh.app.reservation.entity.Reservation;
 import com.sh.app.review.entity.Review;
 import jakarta.persistence.*;
@@ -78,5 +80,16 @@ public class Member implements Serializable{
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<MemberLikeCinema> memberLikeCinemas = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<MemberLikeGenre> memberLikeGenres;
+
+    // 멤버가 선호하는 장르를 추가하는 메서드
+    public void addGenre(Genre genre) {
+        MemberLikeGenre memberLikeGenre = new MemberLikeGenre();
+        memberLikeGenre.setMember(this);
+        memberLikeGenre.setGenre(genre);
+        memberLikeGenres.add(memberLikeGenre);
+    }
 
 }

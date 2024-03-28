@@ -18,11 +18,11 @@ body {
 
 .login-box {
     position: absolute;
-    top: 60%;
+    top: 55%;
     left: 50%;
-    width: 400px;
-    height: 680px;
-    padding: 40px;
+    width: 525px;
+    height: 790px;
+    padding: 45px;
     transform: translate(-50%, -50%);
     background: rgba(0,0,0,.5);
     box-sizing: border-box;
@@ -95,8 +95,8 @@ body {
     text-transform: uppercase;
     overflow: hidden;
     transition: .5s;
-    margin-top: 2px;
-    letter-spacing: 4px
+    margin-top: 30px;
+    letter-spacing: 5px
 }
 
 .login-box a:hover {
@@ -238,7 +238,10 @@ body {
 }
 
 .submit {
-    margin-left: -10px;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .wrap-container {
