@@ -5,11 +5,8 @@ import com.sh.app.authority.entity.Authority;
 import com.sh.app.authority.entity.RoleAuth;
 import com.sh.app.authority.service.AuthorityService;
 import com.sh.app.cinema.dto.CinemaInfoDto;
-<<<<<<< HEAD
 import com.sh.app.cinema.entity.Cinema;
-=======
 import com.sh.app.genre.entity.Genre;
->>>>>>> a7d76777fc58f91c3d16e2fea7e8f6f356fd521c
 import com.sh.app.location.dto.LocationInfoDto;
 import com.sh.app.member.dto.MemberReservationDto;
 import com.sh.app.member.entity.Member;

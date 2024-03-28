@@ -65,11 +65,6 @@ public class Reservation {
     @BatchSize(size = 50)
     private Schedule schedule;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "movie_id")
-    @BatchSize(size = 50)
-    private Movie movie;
-
     // 브릿지 테이블 : reservation_seat
 //    @ManyToMany
 //    @JoinTable(
