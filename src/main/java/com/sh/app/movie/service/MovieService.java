@@ -490,19 +490,22 @@ public class MovieService {
                                 String[] splitGenre = kmdbMovieInfoDto.getGenre().split(",");
                                 for (String genreName : splitGenre) {
                                     String normalizedGenreName = GenreNormalization.normalizeGenreName(genreName.trim());
-                                    Genre genre = genreRepository.findByGenreName(normalizedGenreName).orElseGet(() -> {
-                                        Genre newGenre = Genre.builder()
-                                                .genreId(null)
-                                                .genreName(normalizedGenreName)
+                                    boolean exists = genreRepository.existsByGenreName(normalizedGenreName);
+                                    if (!exists) {
+                                        Genre genre = genreRepository.findByGenreName(normalizedGenreName).orElseGet(() -> {
+                                            Genre newGenre = Genre.builder()
+                                                    .genreId(null)
+                                                    .genreName(normalizedGenreName)
+                                                    .build();
+                                            return genreRepository.save(newGenre);
+                                        });
+                                        MovieGenre movieGenre = MovieGenre.builder()
+                                                .movie(savedMovie)
+                                                .genre(genre)
                                                 .build();
-                                        return genreRepository.save(newGenre);
-                                    });
-                                    MovieGenre movieGenre = MovieGenre.builder()
-                                            .movie(savedMovie)
-                                            .genre(genre)
-                                            .build();
-                                    savedMovie.addMovieGenre(movieGenre);
-                                    movieGenreRepository.save(movieGenre);
+                                        savedMovie.addMovieGenre(movieGenre);
+                                        movieGenreRepository.save(movieGenre);
+                                    }
                                 }
                             }
 

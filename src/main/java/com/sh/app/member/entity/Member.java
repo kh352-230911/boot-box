@@ -75,6 +75,7 @@ public class Member implements Serializable{
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "member_id")
+    @BatchSize(size = 50)
     private List<Reservation> reservations = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)

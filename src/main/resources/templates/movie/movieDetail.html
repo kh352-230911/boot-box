@@ -98,11 +98,22 @@
                     <div class="movie_info-right">
                         <div class="movie_img">
 
-                            <th:block th:if="${#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">
-                                <img class="movie_img-item movie_img-first" th:src="${movie.posterUrl}">
+<!--                            <th:block th:if="${#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">-->
+<!--                                <img class="movie_img-item movie_img-first" th:src="${movie.posterUrl}">-->
+<!--                            </th:block>-->
+<!--                            <th:block th:if="${!#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">-->
+<!--                                <img class="movie_img-item movie_img-first" th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" >-->
+<!--                            </th:block>-->
+                            <th:block th:if="${movie.posterUrl == null}">
+<!--                                <img class="movie_img-item movie_img-first" src="https://t4.ftcdn.net/jpg/00/65/54/59/360_F_65545917_Dp8T5PUlRV4UvsOHQIGUeQpfXg5nZFyc.jpg">-->
+<!--                                <img class="movie_img-item movie_img-first" src="https://t4.ftcdn.net/jpg/05/81/84/71/360_F_581847176_eF540XqFGHDdGPZxyh5NtWHNzgs0XFk6.jpg">-->
+                                <img class="movie_img-item movie_img-first" src="https://t4.ftcdn.net/jpg/03/08/67/51/360_F_308675145_Ye70fJFVPntNVnmxjtVgMy5P8MDEmusB.jpg">
                             </th:block>
-                            <th:block th:if="${!#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">
-                                <img class="movie_img-item movie_img-first" th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" >
+                            <th:block th:if="|${movie.posterUrl != null and #strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
+                                <img class="movie_img-item movie_img-first" th:src="${movie.posterUrl}" th:alt="${movie.title}">
+                            </th:block>
+                            <th:block th:if="|${movie.posterUrl != null and !#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
+                                <img class="movie_img-item movie_img-first" th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" th:alt="${movie.title}">
                             </th:block>
 
                         </div>

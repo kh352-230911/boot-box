@@ -92,11 +92,14 @@
 						<th:block th:if="|${movie.filmRatings == '정보 없음'}|">
 							<span style="font-size: 0.2em" class="grade bg-gradient-to-r shadow-lg shadow-gray-100/50 bg-gray-100 text-gray-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-500">미정</span>
 						</th:block>
-						<th:block th:if="${#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">
-							<img th:src="${movie.posterUrl}" th:alt="${movie.title}">
+						<th:block th:if="${movie.posterUrl == null}">
+							<img loading="lazy" src="https://t4.ftcdn.net/jpg/03/08/67/51/360_F_308675145_Ye70fJFVPntNVnmxjtVgMy5P8MDEmusB.jpg">
 						</th:block>
-						<th:block th:if="${!#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">
-							<img th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" th:alt="${movie.title}">
+						<th:block th:if="|${movie.posterUrl != null and #strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
+							<img loading="lazy" th:src="${movie.posterUrl}" th:alt="${movie.title}">
+						</th:block>
+						<th:block th:if="|${movie.posterUrl != null and !#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
+							<img loading="lazy" th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" th:alt="${movie.title}">
 						</th:block>
 					</a>
 				</div>

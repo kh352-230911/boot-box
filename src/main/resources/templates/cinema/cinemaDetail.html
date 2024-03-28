@@ -12,7 +12,7 @@
 <style layout:fragment="style"></style>
 
 <div layout:fragment="content">
-    <div class="container mx-auto p-2">
+    <div class="container mx-auto p-2 mb-12">
         <nav class="navbar">
             <div class="navbar-container">
                 <div class="menu-container">
@@ -89,11 +89,20 @@
                             <div class="movie-list-wrapper">
                                 <div class="movie-list">
                                     <div th:each="movie : ${currentMovies}" class="movie-list-item">
-                                        <th:block th:if="${#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">
-                                            <img class="movie-list-item-img" th:src="${movie.posterUrl}" th:alt="${movie.title}">
+<!--                                        <th:block th:if="${#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">-->
+<!--                                            <img class="movie-list-item-img" th:src="${movie.posterUrl}" th:alt="${movie.title}">-->
+<!--                                        </th:block>-->
+<!--                                        <th:block th:if="${!#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">-->
+<!--                                            <img class="movie-list-item-img" th:src="|https://image.tmdb.org/t/p/original${movie.posterUrl}|" th:alt="${movie.title}">-->
+<!--                                        </th:block>-->
+                                        <th:block th:if="${movie.posterUrl == null}">
+                                            <img loading="lazy" class="movie-list-item-img" src="https://t4.ftcdn.net/jpg/03/08/67/51/360_F_308675145_Ye70fJFVPntNVnmxjtVgMy5P8MDEmusB.jpg">
                                         </th:block>
-                                        <th:block th:if="${!#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">
-                                            <img class="movie-list-item-img" th:src="|https://image.tmdb.org/t/p/original${movie.posterUrl}|" th:alt="${movie.title}">
+                                        <th:block th:if="|${movie.posterUrl != null and #strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
+                                            <img loading="lazy" class="movie-list-item-img" th:src="${movie.posterUrl}" th:alt="${movie.title}">
+                                        </th:block>
+                                        <th:block th:if="|${movie.posterUrl != null and !#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
+                                            <img loading="lazy" class="movie-list-item-img" th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" th:alt="${movie.title}">
                                         </th:block>
     <!--                                    <img th:src="|https://image.tmdb.org/t/p/original${movie.posterUrl}|" class="movie-list-item-img" alt="" th:alt="${movie.title}">-->
     <!--                                    <span class="movie-list-item-title" th:text="${movie.title}"></span>-->

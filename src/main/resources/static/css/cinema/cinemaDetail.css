@@ -469,3 +469,7 @@ footer.active {
 .today.clickable.back-color {
     background-color: #333;
 }
+
+.schedule-container {
+    margin-top: 1rem;
+}

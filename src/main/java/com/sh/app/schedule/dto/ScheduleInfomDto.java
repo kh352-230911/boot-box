@@ -18,7 +18,10 @@ import java.util.Set;
 @Builder
 public class ScheduleInfomDto {
     private LocalDate date;
+
     private LocalDateTime time;
+
     private TheaterInfoDto theaters;
+
     private MovieInfoDto movie;
 }

@@ -58,6 +58,18 @@
 // });
 
 $(document).ready(() => {
+    // 각 포스터의 너비를 계산합니다 (외부 여백 포함).
+    const posterWidth = $('.small-ul li').outerWidth(true);
+
+    // 가시적으로 보여줄 포스터의 수를 설정합니다.
+    const visiblePosters = 6;
+
+    // 컨테이너의 너비를 계산합니다 (가시적인 포스터 수에 따라).
+    const containerWidth = posterWidth * visiblePosters;
+
+    // 컨테이너의 너비를 설정합니다.
+    $('.small').css('width', containerWidth);
+
     const slideWidth = $('.small-ul li').outerWidth() + 10;
     let currentSlide = 0;
     const slideCount = $('.small-ul li').length;
@@ -70,7 +82,7 @@ $(document).ready(() => {
     let autoSlide = setInterval(() => {
         currentSlide = (currentSlide + 1) % slideCount;
         moveSlide(currentSlide);
-    }, 3000);
+    }, 4000);
 
     const stopAutoSlide = () => {
         console.log('Stop automatic slide');
@@ -82,7 +94,7 @@ $(document).ready(() => {
         autoSlide = setInterval(() => {
             currentSlide = (currentSlide + 1) % slideCount;
             moveSlide(currentSlide);
-        }, 3000);
+        }, 4000);
     };
 
     $('.left').click(() => {

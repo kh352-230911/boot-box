@@ -160,7 +160,7 @@ public class MemberController {
     @GetMapping("/memberWatchedMovie.do")
     public void memberWatchedMovie(Long id, Model model) {
         log.debug("id = {}", id);
-        MemberReservationDto member = memberService.findByReservation(id);
+        MemberReservationDto member = memberService.findPastReservationsById(id);
         log.debug("member = {}", member);
 
         model.addAttribute("member", member);

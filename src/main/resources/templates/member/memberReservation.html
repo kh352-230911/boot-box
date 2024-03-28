@@ -65,11 +65,14 @@
 
                         <div class="movie_info-right">
                             <div class="movie_img mr-4">
-                                <th:block th:if="${#strings.startsWith(schedule.movie.posterUrl, 'http://file.koreafilm.or.kr')}">
-                                    <img th:src="${schedule.movie.posterUrl}" th:alt="${schedule.movie.title}">
+                                <th:block th:if="${schedule.movie.posterUrl == null}">
+                                    <img loading="lazy" src="https://t4.ftcdn.net/jpg/03/08/67/51/360_F_308675145_Ye70fJFVPntNVnmxjtVgMy5P8MDEmusB.jpg">
                                 </th:block>
-                                <th:block th:if="${!#strings.startsWith(schedule.movie.posterUrl, 'http://file.koreafilm.or.kr')}">
-                                    <img th:src="|https://image.tmdb.org/t/p/w200${schedule.movie.posterUrl}|" th:alt="${schedule.movie.title}">
+                                <th:block th:if="|${schedule.movie.posterUrl != null and #strings.startsWith(schedule.movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
+                                    <img loading="lazy" th:src="${schedule.movie.posterUrl}" th:alt="${movie.title}">
+                                </th:block>
+                                <th:block th:if="|${schedule.movie.posterUrl != null and !#strings.startsWith(schedule.movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
+                                    <img loading="lazy" th:src="|https://image.tmdb.org/t/p/w200${schedule.movie.posterUrl}|" th:alt="${schedule.movie.title}">
                                 </th:block>
                             </div>
                         </div>
