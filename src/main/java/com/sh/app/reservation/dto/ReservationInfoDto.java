@@ -1,5 +1,6 @@
 package com.sh.app.reservation.dto;
 
+import com.sh.app.review.dto.ReviewInfoDto;
 import com.sh.app.schedule.dto.ScheduleInfomDto;
 import com.sh.app.seat.dto.SeatInfoDto;
 import com.sh.app.seat.entity.Seat;
@@ -17,6 +18,10 @@ import java.util.Set;
 @Builder
 public class ReservationInfoDto {
     private String id;
-    private Set<SeatInfoDto> sets;
+
+    private Set<SeatInfoDto> seats;
+
     private ScheduleInfomDto schedule;
+
+    private ReviewInfoDto review;
 }

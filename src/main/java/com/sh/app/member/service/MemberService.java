@@ -5,6 +5,7 @@ import com.sh.app.authority.entity.Authority;
 import com.sh.app.authority.entity.RoleAuth;
 import com.sh.app.authority.service.AuthorityService;
 import com.sh.app.cinema.dto.CinemaInfoDto;
+import com.sh.app.cinema.entity.Cinema;
 import com.sh.app.genre.entity.Genre;
 import com.sh.app.location.dto.LocationInfoDto;
 import com.sh.app.member.dto.MemberReservationDto;
@@ -16,10 +17,16 @@ import com.sh.app.movie.dto.MovieInfoDto;
 import com.sh.app.reservation.dto.ReservationInfoDto;
 import com.sh.app.reservation.entity.Reservation;
 import com.sh.app.reservation.repository.ReservationRepository;
+import com.sh.app.review.dto.ReviewInfoDto;
+import com.sh.app.review.entity.Review;
+import com.sh.app.review.repository.ReviewRepository;
 import com.sh.app.schedule.dto.ScheduleInfomDto;
 import com.sh.app.schedule.entity.Schedule;
 import com.sh.app.seat.dto.SeatInfoDto;
+import com.sh.app.seat.entity.Seat;
 import com.sh.app.theater.dto.TheaterInfoDto;
+import com.sh.app.theater.entity.Theater;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.modelmapper.ModelMapper;
@@ -57,6 +64,9 @@ public class MemberService {
 
     @Autowired
     private MemberLikeGenreRepository memberLikeGenreRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     public Member findByMemberLoginId(String username) {
         return memberRepository.findByMemberLoginId(username);
@@ -149,7 +159,7 @@ public class MemberService {
                         scheduleInfomDto.setMovie(movieInfoDto);
 
                         ReservationInfoDto reservationInfoDto = modelMapper.map(reservation, ReservationInfoDto.class);
-                        reservationInfoDto.setSets(seatInfoDtos);
+                        reservationInfoDto.setSeats(seatInfoDtos);
                         reservationInfoDto.setSchedule(scheduleInfomDto);
 
                         return reservationInfoDto;
@@ -166,6 +176,66 @@ public class MemberService {
 
     public Member findById(Long id) {
         return memberRepository.findById(id).orElse(null);
+    }
+
+    public MemberReservationDto findPastReservationsById(Long id) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Member not found with id: " + id));
+
+        List<Reservation> pastReservations = reservationRepository.findPastReservationsById(id);
+        
+        Set<ReservationInfoDto> reservationInfoDtos = pastReservations.stream()
+                .map(this::convertToReservationInfoDto)
+                .collect(Collectors.toSet());
+
+        return MemberReservationDto.builder()
+                .id(member.getId())
+                .name(member.getMemberName())
+                .reservations(reservationInfoDtos)
+                .build();
+    }
+
+    private ReservationInfoDto convertToReservationInfoDto(Reservation reservation) {
+        ReservationInfoDto reservationInfoDto = modelMapper.map(reservation, ReservationInfoDto.class);
+
+        ScheduleInfomDto scheduleInfoDto = convertToScheduleInfoDto(reservation.getSchedule());
+        Set<SeatInfoDto> seatInfoDtos = convertToSeatInfoDtos(reservation.getSeats());
+
+        Review review = reviewRepository.findByReservationId(reservation.getId()).orElse(null);
+        if (review != null) {
+            ReviewInfoDto reviewInfoDto = modelMapper.map(review, ReviewInfoDto.class);
+            reservationInfoDto.setReview(reviewInfoDto);
+        }
+
+        reservationInfoDto.setSchedule(scheduleInfoDto);
+        reservationInfoDto.setSeats(seatInfoDtos);
+        return reservationInfoDto;
+    }
+
+    private Set<SeatInfoDto> convertToSeatInfoDtos(Set<Seat> seats) {
+        return seats.stream()
+                .map(seat -> modelMapper.map(seat, SeatInfoDto.class))
+                .collect(Collectors.toSet());
+    }
+
+    private ScheduleInfomDto convertToScheduleInfoDto(Schedule schedule) {
+        ScheduleInfomDto scheduleInfomDto = modelMapper.map(schedule, ScheduleInfomDto.class);
+        TheaterInfoDto theaterInfoDto = convertToTheaterInfoDto(schedule.getTheater());
+        scheduleInfomDto.setTheaters(theaterInfoDto);
+        return scheduleInfomDto;
+    }
+
+    private TheaterInfoDto convertToTheaterInfoDto(Theater theater) {
+        TheaterInfoDto theaterInfoDto = modelMapper.map(theater, TheaterInfoDto.class);
+        CinemaInfoDto cinemaInfoDto = convertToCinemaInfoDto(theater.getCinema());
+        theaterInfoDto.setCinema(cinemaInfoDto);
+        return theaterInfoDto;
+    }
+
+    private CinemaInfoDto convertToCinemaInfoDto(Cinema cinema) {
+        CinemaInfoDto cinemaInfoDto = modelMapper.map(cinema, CinemaInfoDto.class);
+        cinemaInfoDto.setName(cinema.getRegion_cinema());
+        return cinemaInfoDto;
     }
 //    public Optional<Member> findById(Long memberId) {
 //        return memberRepository.findById(memberId);

@@ -6,6 +6,7 @@ import com.sh.app.movie.entity.Movie;
 import com.sh.app.theater.entity.Theater;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -39,6 +40,7 @@ public class Cinema implements Comparable<Cinema>{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
+    @BatchSize(size = 50)
     private Location location;
 
 //    @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY)
@@ -46,6 +48,7 @@ public class Cinema implements Comparable<Cinema>{
 //    private List<Theater> theaters = new ArrayList<>();
 //
     @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY)
+    @BatchSize(size = 50)
     private List<MemberLikeCinema> memberLikeCinemas = new ArrayList<>();
 
     public void setLocation(Location location) {
@@ -65,6 +68,7 @@ public class Cinema implements Comparable<Cinema>{
             joinColumns = @JoinColumn(name = "cinema_id"),
             inverseJoinColumns = @JoinColumn(name = "movie_id"))
     @Builder.Default
+    @BatchSize(size = 50)
     private Set<Movie> movies = new LinkedHashSet<>();
 
     @Override

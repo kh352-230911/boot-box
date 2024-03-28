@@ -83,7 +83,6 @@ public class Movie {
         movieDirector.setMovie(this);
     }
 
-
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "movie_id")
     private List<Review> reviews = new ArrayList<>();
