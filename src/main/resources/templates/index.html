@@ -77,11 +77,14 @@
 
                                     <p th:text="${status.count}"  class="movie-rank">1</p>
 
-                                    <th:block th:if="${#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">
-                                        <img class="movie-poster" th:src="${movie.posterUrl}">
+                                    <th:block th:if="${movie.posterUrl == null}">
+                                        <img loading="lazy" src="https://t4.ftcdn.net/jpg/03/08/67/51/360_F_308675145_Ye70fJFVPntNVnmxjtVgMy5P8MDEmusB.jpg">
                                     </th:block>
-                                    <th:block th:if="${!#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">
-                                        <img class="movie-poster" th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" >
+                                    <th:block th:if="|${movie.posterUrl != null and #strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
+                                        <img loading="lazy" th:src="${movie.posterUrl}" th:alt="${movie.title}">
+                                    </th:block>
+                                    <th:block th:if="|${movie.posterUrl != null and !#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
+                                        <img loading="lazy" th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" th:alt="${movie.title}">
                                     </th:block>
 
                                 </a>
@@ -178,11 +181,14 @@
                             <div class="movie-container">
                                 <div>
                                     <a href="#">
-                                        <th:block th:if="${#strings.startsWith(movies[0].posterUrl, 'http://file.koreafilm.or.kr')}">
-                                            <img th:src="${movies[0].posterUrl}" th:alt="${movies[0].title}">
+                                        <th:block th:if="${movies[0].posterUrl == null}">
+                                            <img loading="lazy" src="https://t4.ftcdn.net/jpg/03/08/67/51/360_F_308675145_Ye70fJFVPntNVnmxjtVgMy5P8MDEmusB.jpg">
                                         </th:block>
-                                        <th:block th:if="${!#strings.startsWith(movies[0].posterUrl, 'http://file.koreafilm.or.kr')}">
-                                            <img th:src="|https://image.tmdb.org/t/p/w200${movies[0].posterUrl}|" th:alt="${movies[0].title}">
+                                        <th:block th:if="|${movies[0].posterUrl != null and #strings.startsWith(movies[0].posterUrl, 'http://file.koreafilm.or.kr')}|">
+                                            <img loading="lazy" th:src="${movies[0].posterUrl}" th:alt="${movies[0].title}">
+                                        </th:block>
+                                        <th:block th:if="|${movies[0].posterUrl != null and !#strings.startsWith(movies[0].posterUrl, 'http://file.koreafilm.or.kr')}|">
+                                            <img loading="lazy" th:src="|https://image.tmdb.org/t/p/w200${movies[0].posterUrl}|" th:alt="${movies[0].title}">
                                         </th:block>
                                     </a>
                                     <div class="section-1-2-btn">
@@ -279,11 +285,14 @@
                                 <th:block th:each="movie, status : ${movies}" th:if="${status.index != 0}">
                                     <li class="section-2-1">
                                         <div class="section-2-2">
-                                            <th:block th:if="${#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">
-                                                <img th:src="${movie.posterUrl}" th:alt="${movie.title}">
+                                            <th:block th:if="${movie.posterUrl == null}">
+                                                <img loading="lazy" src="https://t4.ftcdn.net/jpg/03/08/67/51/360_F_308675145_Ye70fJFVPntNVnmxjtVgMy5P8MDEmusB.jpg">
                                             </th:block>
-                                            <th:block th:if="${!#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">
-                                                <img th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" th:alt="${movie.title}">
+                                            <th:block th:if="|${movie.posterUrl != null and #strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
+                                                <img loading="lazy" th:src="${movie.posterUrl}" th:alt="${movie.title}">
+                                            </th:block>
+                                            <th:block th:if="|${movie.posterUrl != null and !#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
+                                                <img loading="lazy" th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" th:alt="${movie.title}">
                                             </th:block>
                                             <div class="section-1-2-btn">
                                                 <div class="section-1-2-btn-bg"></div>

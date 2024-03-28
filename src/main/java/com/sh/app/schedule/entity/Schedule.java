@@ -5,6 +5,7 @@ import com.sh.app.reservation.entity.Reservation;
 import com.sh.app.theater.entity.Theater;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.time.LocalDateTime;
 
@@ -25,9 +26,11 @@ public class Schedule {
     private long id;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE) //0219 eager에서 수정
     @JoinColumn(name = "theater_id")
+    @BatchSize(size = 50)
     private Theater theater;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) //0219 eager에서 수정
     @JoinColumn(name = "movie_id")
+    @BatchSize(size = 50)
     private Movie movie;
     @Column(nullable = false)
     private LocalDate schDate;

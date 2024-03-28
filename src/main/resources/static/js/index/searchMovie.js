@@ -82,7 +82,7 @@ $(document).ready(() => {
     let autoSlide = setInterval(() => {
         currentSlide = (currentSlide + 1) % slideCount;
         moveSlide(currentSlide);
-    }, 3000);
+    }, 4000);
 
     const stopAutoSlide = () => {
         console.log('Stop automatic slide');
@@ -94,7 +94,7 @@ $(document).ready(() => {
         autoSlide = setInterval(() => {
             currentSlide = (currentSlide + 1) % slideCount;
             moveSlide(currentSlide);
-        }, 3000);
+        }, 4000);
     };
 
     $('.left').click(() => {
