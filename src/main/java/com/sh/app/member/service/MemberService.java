@@ -5,10 +5,13 @@ import com.sh.app.authority.entity.Authority;
 import com.sh.app.authority.entity.RoleAuth;
 import com.sh.app.authority.service.AuthorityService;
 import com.sh.app.cinema.dto.CinemaInfoDto;
+import com.sh.app.genre.entity.Genre;
 import com.sh.app.location.dto.LocationInfoDto;
 import com.sh.app.member.dto.MemberReservationDto;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.repository.MemberRepository;
+import com.sh.app.memberLikeGenre.entity.MemberLikeGenre;
+import com.sh.app.memberLikeGenre.repository.MemberLikeGenreRepository;
 import com.sh.app.movie.dto.MovieInfoDto;
 import com.sh.app.reservation.dto.ReservationInfoDto;
 import com.sh.app.reservation.entity.Reservation;
@@ -52,19 +55,45 @@ public class MemberService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private MemberLikeGenreRepository memberLikeGenreRepository;
+
     public Member findByMemberLoginId(String username) {
         return memberRepository.findByMemberLoginId(username);
     }
 
-    public Member createMember(Member member) {
-        memberRepository.save(member);
+//    public Member createMember(Member member) {
+//        memberRepository.save(member);
+//        Authority authority = Authority.builder()
+//                .memberId(member.getId())
+//                .name(RoleAuth.ROLE_USER)
+//                .build();
+//        authorityService.createAuthority(authority);
+//        return member;
+//    }
+    public Member createMember(Member member, Genre genre) {
+
+        Member savedMember = memberRepository.save(member);
+
+        if (genre != null) {
+            MemberLikeGenre memberLikeGenre = MemberLikeGenre.builder()
+                    .member(savedMember)
+                    .genre(genre)
+                    .build();
+            memberLikeGenreRepository.save(memberLikeGenre);
+        }
+
         Authority authority = Authority.builder()
-                .memberId(member.getId())
+                .memberId(savedMember.getId())
                 .name(RoleAuth.ROLE_USER)
                 .build();
         authorityService.createAuthority(authority);
-        return member;
+
+        return savedMember;
     }
+
+
+
 
     public Member updateMember(Member member) {
         return memberRepository.save(member);
