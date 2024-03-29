@@ -30,7 +30,7 @@ public class MemberCreateDto {
     @Email(message="이메일 형식으로 작성하세요.")
     private String memberEmail;
 
-    private Genre genre;
+    private List<String> genres;
 
     public Member toMember() {
         Member member = Member.builder()
@@ -42,10 +42,10 @@ public class MemberCreateDto {
                 .memberEmail(memberEmail)
                 .build();
 
-        // 멤버가 선택한 장르를 추가합니다
-        if (genre != null) {
-            member.addGenre(genre);
-        }
+//        // 멤버가 선택한 장르를 추가합니다
+//        if (genre != null) {
+//            member.addGenre(genre);
+//        }
 
         return member;
 

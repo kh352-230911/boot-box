@@ -7,7 +7,9 @@ import com.sh.app.authority.service.AuthorityService;
 import com.sh.app.cinema.dto.CinemaInfoDto;
 import com.sh.app.cinema.entity.Cinema;
 import com.sh.app.genre.entity.Genre;
+import com.sh.app.genre.repository.GenreRepository;
 import com.sh.app.location.dto.LocationInfoDto;
+import com.sh.app.member.dto.MemberCreateDto;
 import com.sh.app.member.dto.MemberReservationDto;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.repository.MemberRepository;
@@ -26,11 +28,13 @@ import com.sh.app.seat.dto.SeatInfoDto;
 import com.sh.app.seat.entity.Seat;
 import com.sh.app.theater.dto.TheaterInfoDto;
 import com.sh.app.theater.entity.Theater;
+import com.sh.app.util.GenreNormalization;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,6 +72,10 @@ public class MemberService {
     @Autowired
     private ReviewRepository reviewRepository;
 
+    @Autowired
+    private GenreRepository genreRepository;
+
+
     public Member findByMemberLoginId(String username) {
         return memberRepository.findByMemberLoginId(username);
     }
@@ -81,17 +89,9 @@ public class MemberService {
 //        authorityService.createAuthority(authority);
 //        return member;
 //    }
-    public Member createMember(Member member, Genre genre) {
+    public Member createMember(Member member) {
 
         Member savedMember = memberRepository.save(member);
-
-        if (genre != null) {
-            MemberLikeGenre memberLikeGenre = MemberLikeGenre.builder()
-                    .member(savedMember)
-                    .genre(genre)
-                    .build();
-            memberLikeGenreRepository.save(memberLikeGenre);
-        }
 
         Authority authority = Authority.builder()
                 .memberId(savedMember.getId())
@@ -237,6 +237,7 @@ public class MemberService {
         cinemaInfoDto.setName(cinema.getRegion_cinema());
         return cinemaInfoDto;
     }
+
 //    public Optional<Member> findById(Long memberId) {
 //        return memberRepository.findById(memberId);
 //    }
