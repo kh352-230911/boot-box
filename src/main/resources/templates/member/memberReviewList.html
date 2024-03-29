@@ -54,16 +54,25 @@
 
         <div class="text-box p-6 text-medium text-white rounded-lg w-full">
             <h3 class="text-lg font-bold text-white dark:text-white mb-5">나의 리뷰 내역</h3>
-            <th:block th:each="review, status : ${member.reviews}">
-                <div class="flex movie_info" >
-                    <div class="movie_info-right">
-                        <div class="movie_img mr-8">
-                            <img th:src="${review.movieData.poster}" alt="movie_image"
-                                 class="w-40 h-60 movie_img-item movie_img-first"/>
+            <th:block th:each="review, reviewStatus : ${member.reviews}">
+                <div class="flex movie_info">
+                    <th:block th:each="movie, movieStatus : ${review.movie}">
+                        <div class="movie_info-right">
+                            <div class="movie_img mr-8">
+                                <th:block th:if="${movie.posterUrl == null}">
+                                    <img loading="lazy" class="w-40 h-60 movie_img-item movie_img-first" src="https://t4.ftcdn.net/jpg/03/08/67/51/360_F_308675145_Ye70fJFVPntNVnmxjtVgMy5P8MDEmusB.jpg">
+                                </th:block>
+                                <th:block th:if="|${movie.posterUrl != null and #strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
+                                    <img loading="lazy" class="w-40 h-60 movie_img-item movie_img-first" th:src="${movie.posterUrl}" th:alt="${movie.title}">
+                                </th:block>
+                                <th:block th:if="|${movie.posterUrl != null and !#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
+                                    <img loading="lazy" class="w-40 h-60 movie_img-item movie_img-first" th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" th:alt="${movie.title}">
+                                </th:block>
+                            </div>
                         </div>
-                    </div>
+                    </th:block>
                     <div class="movie_info-left">
-                        <h1 class="movie_title mt-4" th:text="${review.movieData.title}">웡카</h1>
+                        <h1 class="movie_title mt-4" th:text="${review.movie.title}">웡카</h1>
                         <div class="mt-2" >
                             <div class="flex text-sm mb-4">
                                 <p class="text-gray-300" th:text="${#authentication.principal.member.memberLoginId}">아이디</p>
@@ -74,121 +83,138 @@
                                 <p class="text-gray-300" th:text="${review.reviewDetail}">내용</p>
                                 <br>
                                 <br>
-                                <th:block th:if="${#numbers.formatDecimal(review.reviewScore, 1, 1)} == 5.0">
-                                    <ul class="movie_stars">
-                                        <li class="movie_star rated">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star rated">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star rated">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star rated">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star rated">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                    </ul>
-                                </th:block>
-                                <th:block th:if="${#numbers.formatDecimal(review.reviewScore, 1, 1)} >= 4.0 and ${#numbers.formatDecimal(review.reviewScore, 1, 1)} < 5.0">
-                                    <ul class="movie_stars">
-                                        <li class="movie_star rated">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star rated">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star rated">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star rated">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                    </ul>
-                                </th:block>
-                                <th:block th:if="${#numbers.formatDecimal(review.reviewScore, 1, 1)} >= 3.0 and ${#numbers.formatDecimal(review.reviewScore, 1, 1)} < 4.0">
-                                    <ul class="movie_stars">
-                                        <li class="movie_star rated">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star rated">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star rated">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                    </ul>
-                                </th:block>
-                                <th:block th:if="${#numbers.formatDecimal(review.reviewScore, 1, 1)} >= 2.0 and ${#numbers.formatDecimal(review.reviewScore, 1, 1)} < 3.0">
-                                    <ul class="movie_stars">
-                                        <li class="movie_star rated">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star rated">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                    </ul>
-                                </th:block>
-                                <th:block th:if="${#numbers.formatDecimal(review.reviewScore, 1, 1)} >= 1.0 and ${#numbers.formatDecimal(review.reviewScore, 1, 1)} < 2.0">
-                                    <ul class="movie_stars">
-                                        <li class="movie_star rated">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                    </ul>
-                                </th:block>
-                                <th:block th:if="${#numbers.formatDecimal(review.reviewScore, 1, 1)} >= 0.0 and ${#numbers.formatDecimal(review.reviewScore, 1, 1)} < 1.0">
-                                    <ul class="movie_stars">
-                                        <li class="movie_star">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                        <li class="movie_star">
-                                            <i class="fa-solid fa-star"></i>
-                                        </li>
-                                    </ul>
-                                </th:block>
-                                <p th:text="${#numbers.formatDecimal(review.reviewScore, 1, 1)}">별점(평점)</p>
+                                <div class="flex" th:if="${review != null}">
+                                    <p class="mr-2" th:text="${#numbers.formatDecimal(review.reviewScore, 1, 1)}"></p>
+                                    <th:block th:each="star : ${#numbers.sequence(1, 5)}">
+                                        <th:block th:if="${review.reviewScore >= star}">
+                                            <!-- 채워진 별 표시 -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="movie_star rated w-4 h-4 ms-1 text-yellow-500" aria-hidden="true" fill="currentColor" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                            </svg>
+                                        </th:block>
+                                        <th:block th:if="${review.reviewScore < star}">
+                                            <!-- 빈 별 표시 -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="movie_star rated w-4 h-4 ms-1 text-yellow-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 16 16">
+                                                <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
+                                            </svg>
+                                        </th:block>
+                                    </th:block>
+                                </div>
+<!--                                <th:block th:if="${#numbers.formatDecimal(review.reviewScore, 1, 1)} == 5.0">-->
+<!--                                    <ul class="movie_stars">-->
+<!--                                        <li class="movie_star rated">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star rated">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star rated">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star rated">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star rated">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </th:block>-->
+<!--                                <th:block th:if="${#numbers.formatDecimal(review.reviewScore, 1, 1)} >= 4.0 and ${#numbers.formatDecimal(review.reviewScore, 1, 1)} < 5.0">-->
+<!--                                    <ul class="movie_stars">-->
+<!--                                        <li class="movie_star rated">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star rated">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star rated">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star rated">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </th:block>-->
+<!--                                <th:block th:if="${#numbers.formatDecimal(review.reviewScore, 1, 1)} >= 3.0 and ${#numbers.formatDecimal(review.reviewScore, 1, 1)} < 4.0">-->
+<!--                                    <ul class="movie_stars">-->
+<!--                                        <li class="movie_star rated">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star rated">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star rated">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </th:block>-->
+<!--                                <th:block th:if="${#numbers.formatDecimal(review.reviewScore, 1, 1)} >= 2.0 and ${#numbers.formatDecimal(review.reviewScore, 1, 1)} < 3.0">-->
+<!--                                    <ul class="movie_stars">-->
+<!--                                        <li class="movie_star rated">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star rated">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </th:block>-->
+<!--                                <th:block th:if="${#numbers.formatDecimal(review.reviewScore, 1, 1)} >= 1.0 and ${#numbers.formatDecimal(review.reviewScore, 1, 1)} < 2.0">-->
+<!--                                    <ul class="movie_stars">-->
+<!--                                        <li class="movie_star rated">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </th:block>-->
+<!--                                <th:block th:if="${#numbers.formatDecimal(review.reviewScore, 1, 1)} >= 0.0 and ${#numbers.formatDecimal(review.reviewScore, 1, 1)} < 1.0">-->
+<!--                                    <ul class="movie_stars">-->
+<!--                                        <li class="movie_star">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                        <li class="movie_star">-->
+<!--                                            <i class="fa-solid fa-star"></i>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </th:block>-->
+<!--                                <p th:text="${#numbers.formatDecimal(review.reviewScore, 1, 1)}">별점(평점)</p>-->
                             </div>
                         </div>
                     </div>

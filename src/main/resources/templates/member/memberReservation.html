@@ -87,9 +87,14 @@
                                     </div>
                                     <div class="text-sm">
                                         <p class="text-gray-300">관람 일시</p>
-                                        <span th:text="|${#temporals.format(schedule.time, 'yyyy-MM-dd HH:mm')}|">2024.02.03 (토) 15:30</span>
+                                        <span  th:if="${schedule.endTime.toLocalDate().isAfter(schedule.startTime.toLocalDate())}"
+                                               th:text="|${#temporals.format(schedule.startTime, 'yyyy-MM-dd')} ~ ${#temporals.format(schedule.endTime, 'MM-dd')}|">2024.02.03 (토) 15:30</span>
+                                        <span  th:unless="${schedule.endTime.toLocalDate().isAfter(schedule.startTime.toLocalDate())}"
+                                               th:text="|${#temporals.format(schedule.startTime, 'yyyy-MM-dd')}|">2024.02.03 (토) 15:30</span>
                                         <br>
-                                        <span th:text="|(${#temporals.dayOfWeekNameShort(schedule.time)})|"></span>
+                                        <span th:text="|${#temporals.format(schedule.startTime, 'HH:mm')} ~ ${#temporals.format(schedule.endTime, 'HH:mm')}|">2024.02.03 (토) 15:30</span>
+                                        <br>
+                                        <span th:text="|(${#temporals.dayOfWeekNameShort(schedule.startTime)})|"></span>
                                     </div>
                                 </div>
                             </th:block>

@@ -710,7 +710,7 @@ insert into NOTICE values (seq_notice_id.nextval, 1, 'ETC', '[BOOTBOX] 이태원
 -- schedule
 insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 838209, to_date('2024-03-26', 'YYYY-MM-DD'), to_date('2024-03-26 09:10', 'YYYY-MM-DD HH24:MI'));
 insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 792307, to_date('2024-03-26', 'YYYY-MM-DD'), to_date('2024-03-26 14:00', 'YYYY-MM-DD HH24:MI'));
---insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 16:30', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1063241, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 16:30', 'YYYY-MM-DD HH24:MI'));
 --
 --insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 09:00', 'YYYY-MM-DD HH24:MI'));
 --insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 11:25', 'YYYY-MM-DD HH24:MI'));
@@ -880,7 +880,7 @@ insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 792307, to_date('2
 -- reservation
 INSERT INTO RESERVATION VALUES ('box16443', 1, 1, 'CONFIRM');
 INSERT INTO RESERVATION VALUES ('box25822', 3, 21, 'CONFIRM');
---INSERT INTO RESERVATION VALUES ('box47220', 3, 3, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box47220', 3, 81, 'CONFIRM');
 --INSERT INTO RESERVATION VALUES ('box47211', 2, 3, 'CONFIRM');
 --INSERT INTO RESERVATION VALUES ('box42217', 4, 4, 'CONFIRM');
 --INSERT INTO RESERVATION VALUES ('box34332', 4, 6, 'CONFIRM');
@@ -938,7 +938,7 @@ INSERT INTO RESERVATION VALUES ('box24521', 3, 1, 'CONFIRM');
 -- reservation_seat
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box16443', 1);
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box25822', 1);
---insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box47220', 3);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box47220', 3);
 --insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box42217', 4);
 --insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box34332', 4);
 --insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box32582', 5);

@@ -11,15 +11,19 @@ import com.sh.app.genre.repository.GenreRepository;
 import com.sh.app.location.dto.LocationInfoDto;
 import com.sh.app.member.dto.MemberCreateDto;
 import com.sh.app.member.dto.MemberReservationDto;
+import com.sh.app.member.dto.MemberReviewDto;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.repository.MemberRepository;
 import com.sh.app.memberLikeGenre.entity.MemberLikeGenre;
 import com.sh.app.memberLikeGenre.repository.MemberLikeGenreRepository;
 import com.sh.app.movie.dto.MovieInfoDto;
+import com.sh.app.movie.entity.Movie;
+import com.sh.app.movie.repository.MovieRepository;
 import com.sh.app.reservation.dto.ReservationInfoDto;
 import com.sh.app.reservation.entity.Reservation;
 import com.sh.app.reservation.repository.ReservationRepository;
 import com.sh.app.review.dto.ReviewInfoDto;
+import com.sh.app.review.dto.ReviewMovieDto;
 import com.sh.app.review.entity.Review;
 import com.sh.app.review.repository.ReviewRepository;
 import com.sh.app.schedule.dto.ScheduleInfomDto;
@@ -73,8 +77,7 @@ public class MemberService {
     private ReviewRepository reviewRepository;
 
     @Autowired
-    private GenreRepository genreRepository;
-
+    private MovieRepository movieRepository;
 
     public Member findByMemberLoginId(String username) {
         return memberRepository.findByMemberLoginId(username);
@@ -137,10 +140,13 @@ public class MemberService {
 
                         // 예약 정보에서 ScheduleInfomDto로 변환
                         ScheduleInfomDto scheduleInfomDto = modelMapper.map(reservation.getSchedule(), ScheduleInfomDto.class);
+                        scheduleInfomDto.setStartTime(reservation.getSchedule().getTime());
 
                         // 예약 정보의 스케쥴의 상영관과 영화를 각각 dto로 변환
                         TheaterInfoDto theaterInfoDto = modelMapper.map(reservation.getSchedule().getTheater(), TheaterInfoDto.class);
                         MovieInfoDto movieInfoDto = modelMapper.map(reservation.getSchedule().getMovie(), MovieInfoDto.class);
+
+                        scheduleInfomDto.calculateEndTime();
 
                         // 예약 정보의 스케쥴의 상영관의 극장을 CinemaInfoDto 변환
                         CinemaInfoDto cinemaInfoDto = modelMapper.map(reservation.getSchedule().getTheater().getCinema(), CinemaInfoDto.class);
@@ -219,7 +225,12 @@ public class MemberService {
     }
 
     private ScheduleInfomDto convertToScheduleInfoDto(Schedule schedule) {
+        Movie movie = schedule.getMovie();
+        MovieInfoDto movieInfoDto = modelMapper.map(movie, MovieInfoDto.class);
         ScheduleInfomDto scheduleInfomDto = modelMapper.map(schedule, ScheduleInfomDto.class);
+        scheduleInfomDto.setStartTime(schedule.getTime());
+        scheduleInfomDto.setMovie(movieInfoDto);
+        scheduleInfomDto.calculateEndTime();
         TheaterInfoDto theaterInfoDto = convertToTheaterInfoDto(schedule.getTheater());
         scheduleInfomDto.setTheaters(theaterInfoDto);
         return scheduleInfomDto;
@@ -236,6 +247,36 @@ public class MemberService {
         CinemaInfoDto cinemaInfoDto = modelMapper.map(cinema, CinemaInfoDto.class);
         cinemaInfoDto.setName(cinema.getRegion_cinema());
         return cinemaInfoDto;
+    }
+
+    public MemberReviewDto getMemberWithReviews(Long id) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Member not found with id: " + id));
+
+        // Member 엔티티에서 직접 리뷰 목록을 가져옴
+        List<Review> reviews = member.getReviews();
+
+        List<ReviewMovieDto> reviewMovieDtos = reviews.stream()
+                .map(this::convertToReviewMovieDto)
+                .collect(Collectors.toList());
+
+        return MemberReviewDto.builder()
+                .reviews(reviewMovieDtos)
+                .build();
+    }
+
+    private ReviewMovieDto convertToReviewMovieDto(Review review) {
+        // 영화 정보를 조회
+        Movie movie = movieRepository.findById(review.getMovieId())
+                .orElseThrow(() -> new EntityNotFoundException("Movie not found with id: " + review.getMovieId()));
+
+        // DTO 변환
+        MovieInfoDto movieInfoDto = modelMapper.map(movie, MovieInfoDto.class);
+
+        ReviewMovieDto reviewMovieDto = modelMapper.map(review, ReviewMovieDto.class);
+        reviewMovieDto.setMovie(movieInfoDto);
+
+        return reviewMovieDto;
     }
 
 //    public Optional<Member> findById(Long memberId) {

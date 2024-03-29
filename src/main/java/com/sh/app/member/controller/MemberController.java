@@ -7,6 +7,7 @@ import com.sh.app.genre.entity.Genre;
 import com.sh.app.genre.repository.GenreRepository;
 import com.sh.app.member.dto.MemberCreateDto;
 import com.sh.app.member.dto.MemberReservationDto;
+import com.sh.app.member.dto.MemberReviewDto;
 import com.sh.app.member.dto.MemberUpdateDto;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
@@ -48,19 +49,24 @@ import java.util.stream.Collectors;
 public class MemberController {
     @Autowired
     private MemberService memberService;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Autowired
     private AuthService authService;
+
     @Autowired
     private ReviewService reviewService;
+
     @Autowired
     private MemberLikeCinemaService memberLikeCinemaService;
+
     @Autowired
     private GenreRepository genreRepository;
+
     @Autowired
     private MemberLikeGenreRepository memberLikeGenreRepository;
-
 
     @GetMapping("/createMember.do")
     public void createMember() {}
@@ -70,19 +76,16 @@ public class MemberController {
     public String CreateMember(
             @Valid MemberCreateDto memberCreateDto,
             BindingResult bindingResult,
-            RedirectAttributes redirectAttributes
-            ) {
+            RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             String message = bindingResult.getAllErrors().get(0).getDefaultMessage();
             throw new RuntimeException(message);
         }
         log.debug("memberCreateDto = {}", memberCreateDto);
 
-
         Member member = memberCreateDto.toMember();
         String encodedPassword = passwordEncoder.encode(member.getMemberPwd());
         member.setMemberPwd(encodedPassword);
-
 
         // Member와 Genre 연결
         member = memberService.createMember(member);
@@ -91,7 +94,6 @@ public class MemberController {
         for (String genreName : genres) {
             String GenreName = GenreNormalization.normalizeGenreName(genreName);
             Genre genre = genreRepository.findByGenreName(GenreName).orElseThrow();
-
 
             MemberLikeGenre memberLikeGenre = MemberLikeGenre.builder()
                     .member(member)
@@ -162,7 +164,7 @@ public class MemberController {
 
     @PostMapping("/deleteMember.do")
     public String deleteMember(Long id) {
-        log.debug("id = {}", id);
+//        log.debug("id = {}", id);
         memberService.deleteById(id);
         memberService.logoutAndInvalidateSession();
         return "redirect:/";
@@ -178,24 +180,24 @@ public class MemberController {
 
     @GetMapping("/memberWatchedMovie.do")
     public void memberWatchedMovie(Long id, Model model) {
-        log.debug("id = {}", id);
+//        log.debug("id = {}", id);
         MemberReservationDto member = memberService.findPastReservationsById(id);
         log.debug("member = {}", member);
 
         model.addAttribute("member", member);
     }
 
-//    @PostMapping("/memberWatchedMovie.do")
-//    public String createReview(@Valid CreateReviewDto createReviewDto,
-//            @AuthenticationPrincipal MemberDetails memberDetails,
-//                               RedirectAttributes redirectAttributes) {
-//        log.debug("createReviewDto = {}", createReviewDto);
-//
+    @PostMapping("/memberWatchedMovie.do")
+    public String  createReview(@Valid CreateReviewDto createReviewDto,
+            @AuthenticationPrincipal MemberDetails memberDetails,
+                               RedirectAttributes redirectAttributes) {
+        log.debug("createReviewDto = {}", createReviewDto);
+
 //        createReviewDto.setMemberId(memberDetails.getMember().getId());
 //        reviewService.createReview(createReviewDto);
-//
-//        return "redirect:/member/memberReviewList.do?id=" + memberDetails.getMember().getId();
-//    }
+
+        return "redirect:/member/memberWatchedMovie.do?id=" + memberDetails.getMember().getId();
+    }
 
     @GetMapping("/memberAskList.do")
     public void memberAskList(Long id, Model model) {
@@ -207,7 +209,7 @@ public class MemberController {
 
     @GetMapping("/memberReviewList.do")
     public void memberReviewList(Long id, Model model) {
-        Member member = memberService.findById(id);
+        MemberReviewDto member = memberService.getMemberWithReviews(id);
 
         log.debug("member = {}", member);
         model.addAttribute("member", member);
