@@ -85,14 +85,4 @@ public class Member implements Serializable{
     private List<MemberLikeGenre> memberLikeGenres;
 
 
-
-
-    // 멤버가 선호하는 장르를 추가하는 메서드
-    public void addGenre(Genre genre) {
-        MemberLikeGenre memberLikeGenre = new MemberLikeGenre();
-        memberLikeGenre.setMember(this);
-        memberLikeGenre.setGenre(genre);
-        memberLikeGenres.add(memberLikeGenre);
-    }
-
 }

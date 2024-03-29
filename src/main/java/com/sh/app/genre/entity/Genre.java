@@ -26,19 +26,10 @@ public class Genre {
     )
     private Long id;
 
-//    private Long genreId;
-//
-//    private String genreName;
-//
-//
-//    @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<MemberLikeGenre> memberLikeGenres;
-
-    @Column(nullable = false, unique = true)
     private Long genreId;
 
-    @Column(unique = true) // 유니크 제약 조건을 추가합니다.
     private String genreName;
+
 
     @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<MemberLikeGenre> memberLikeGenres;

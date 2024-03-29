@@ -70,8 +70,8 @@ public class MemberController {
     public String CreateMember(
             @Valid MemberCreateDto memberCreateDto,
             BindingResult bindingResult,
-            RedirectAttributes redirectAttributes
-            ) {
+            RedirectAttributes redirectAttributes) {
+
         if (bindingResult.hasErrors()) {
             String message = bindingResult.getAllErrors().get(0).getDefaultMessage();
             throw new RuntimeException(message);
@@ -83,7 +83,6 @@ public class MemberController {
         String encodedPassword = passwordEncoder.encode(member.getMemberPwd());
         member.setMemberPwd(encodedPassword);
 
-
         // Member와 Genre 연결
         member = memberService.createMember(member);
 
@@ -91,7 +90,6 @@ public class MemberController {
         for (String genreName : genres) {
             String GenreName = GenreNormalization.normalizeGenreName(genreName);
             Genre genre = genreRepository.findByGenreName(GenreName).orElseThrow();
-
 
             MemberLikeGenre memberLikeGenre = MemberLikeGenre.builder()
                     .member(member)
