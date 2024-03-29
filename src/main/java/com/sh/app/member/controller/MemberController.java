@@ -77,6 +77,7 @@ public class MemberController {
             @Valid MemberCreateDto memberCreateDto,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes) {
+
         if (bindingResult.hasErrors()) {
             String message = bindingResult.getAllErrors().get(0).getDefaultMessage();
             throw new RuntimeException(message);

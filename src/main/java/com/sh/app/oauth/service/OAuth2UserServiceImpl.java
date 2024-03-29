@@ -59,5 +59,4 @@ public class OAuth2UserServiceImpl extends DefaultOAuth2UserService {
         return memberDetails;
     }
 
-
 }
