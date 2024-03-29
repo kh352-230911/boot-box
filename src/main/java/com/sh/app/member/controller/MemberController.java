@@ -4,6 +4,7 @@ package com.sh.app.member.controller;
 import com.sh.app.auth.service.AuthService;
 import com.sh.app.auth.vo.MemberDetails;
 import com.sh.app.genre.entity.Genre;
+import com.sh.app.genre.repository.GenreRepository;
 import com.sh.app.member.dto.MemberCreateDto;
 import com.sh.app.member.dto.MemberReservationDto;
 import com.sh.app.member.dto.MemberUpdateDto;
@@ -11,8 +12,11 @@ import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
 import com.sh.app.memberLikeCinema.dto.MemberLikeCinemaListDto;
 import com.sh.app.memberLikeCinema.serviece.MemberLikeCinemaService;
+import com.sh.app.memberLikeGenre.entity.MemberLikeGenre;
+import com.sh.app.memberLikeGenre.repository.MemberLikeGenreRepository;
 import com.sh.app.review.dto.CreateReviewDto;
 import com.sh.app.review.service.ReviewService;
+import com.sh.app.util.GenreNormalization;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +34,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.awt.*;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 0206 hyejin
@@ -51,6 +56,11 @@ public class MemberController {
     private ReviewService reviewService;
     @Autowired
     private MemberLikeCinemaService memberLikeCinemaService;
+    @Autowired
+    private GenreRepository genreRepository;
+    @Autowired
+    private MemberLikeGenreRepository memberLikeGenreRepository;
+
 
     @GetMapping("/createMember.do")
     public void createMember() {}
@@ -60,8 +70,8 @@ public class MemberController {
     public String CreateMember(
             @Valid MemberCreateDto memberCreateDto,
             BindingResult bindingResult,
-            RedirectAttributes redirectAttributes,
-            @RequestParam("genres") String genre) {
+            RedirectAttributes redirectAttributes
+            ) {
         if (bindingResult.hasErrors()) {
             String message = bindingResult.getAllErrors().get(0).getDefaultMessage();
             throw new RuntimeException(message);
@@ -73,13 +83,22 @@ public class MemberController {
         String encodedPassword = passwordEncoder.encode(member.getMemberPwd());
         member.setMemberPwd(encodedPassword);
 
-        // 단일 장르만을 받도록 수정
-        Genre selectedGenre = new Genre();
-        selectedGenre.setGenreName(genre);
-        log.debug("Selected genre = {}", selectedGenre);
 
-        member = memberService.createMember(member, selectedGenre);
+        // Member와 Genre 연결
+        member = memberService.createMember(member);
 
+        List<String> genres = memberCreateDto.getGenres();
+        for (String genreName : genres) {
+            String GenreName = GenreNormalization.normalizeGenreName(genreName);
+            Genre genre = genreRepository.findByGenreName(GenreName).orElseThrow();
+
+
+            MemberLikeGenre memberLikeGenre = MemberLikeGenre.builder()
+                    .member(member)
+                    .genre(genre)
+                    .build();
+            memberLikeGenreRepository.save(memberLikeGenre);
+        }
 
         redirectAttributes.addFlashAttribute("msg", "반갑습니다." + member.getMemberName() + "님😀");
         return "redirect:/auth/login.do";

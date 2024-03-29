@@ -18,6 +18,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -52,31 +53,11 @@ public class OAuth2UserServiceImpl extends DefaultOAuth2UserService {
         } catch (UsernameNotFoundException e) {
             Member member = OAuth2UserUtils.of(oAuth2User, provider);
 
-            // 여기서 실제 사용자의 선호 장르를 가져와야 함
-            String userPreferredGenre = getUserPreferredGenreFromOAuth2UserAttributes(attributes);
-
-            Genre genre = new Genre();
-            genre.setGenreName(userPreferredGenre);
-            member.addGenre(genre);
-
-            memberService.createMember(member, genre);
+            memberService.createMember(member);
             memberDetails = (MemberDetails) authService.loadUserByUsername(username);
         }
         return memberDetails;
     }
 
-    private String getUserPreferredGenreFromOAuth2UserAttributes(Map<String, Object> attributes) {
-        String preferredGenre = null;
-
-        // 사용자가 선택한 장르를 가져오는 로직
-        // 여기서는 선택된 라디오 버튼의 값을 가져와 사용
-        Object selectedGenreObject = attributes.get("selectedGenre");
-
-        if (selectedGenreObject != null) {
-            preferredGenre = selectedGenreObject.toString();
-        }
-
-        return preferredGenre;
-    }
 
 }
