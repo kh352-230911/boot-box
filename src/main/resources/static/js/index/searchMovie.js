@@ -68,7 +68,7 @@ $(document).ready(() => {
     const containerWidth = posterWidth * visiblePosters;
 
     // 컨테이너의 너비를 설정합니다.
-    $('.small').css('width', containerWidth);
+    // $('.small').css('width', containerWidth);
 
     const slideWidth = $('.small-ul li').outerWidth() + 10;
     let currentSlide = 0;

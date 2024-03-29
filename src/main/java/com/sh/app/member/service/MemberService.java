@@ -144,10 +144,13 @@ public class MemberService {
 
                         // 예약 정보에서 ScheduleInfomDto로 변환
                         ScheduleInfomDto scheduleInfomDto = modelMapper.map(reservation.getSchedule(), ScheduleInfomDto.class);
+                        scheduleInfomDto.setStartTime(reservation.getSchedule().getTime());
 
                         // 예약 정보의 스케쥴의 상영관과 영화를 각각 dto로 변환
                         TheaterInfoDto theaterInfoDto = modelMapper.map(reservation.getSchedule().getTheater(), TheaterInfoDto.class);
                         MovieInfoDto movieInfoDto = modelMapper.map(reservation.getSchedule().getMovie(), MovieInfoDto.class);
+
+                        scheduleInfomDto.calculateEndTime();
 
                         // 예약 정보의 스케쥴의 상영관의 극장을 CinemaInfoDto 변환
                         CinemaInfoDto cinemaInfoDto = modelMapper.map(reservation.getSchedule().getTheater().getCinema(), CinemaInfoDto.class);
@@ -226,7 +229,12 @@ public class MemberService {
     }
 
     private ScheduleInfomDto convertToScheduleInfoDto(Schedule schedule) {
+        Movie movie = schedule.getMovie();
+        MovieInfoDto movieInfoDto = modelMapper.map(movie, MovieInfoDto.class);
         ScheduleInfomDto scheduleInfomDto = modelMapper.map(schedule, ScheduleInfomDto.class);
+        scheduleInfomDto.setStartTime(schedule.getTime());
+        scheduleInfomDto.setMovie(movieInfoDto);
+        scheduleInfomDto.calculateEndTime();
         TheaterInfoDto theaterInfoDto = convertToTheaterInfoDto(schedule.getTheater());
         scheduleInfomDto.setTheaters(theaterInfoDto);
         return scheduleInfomDto;

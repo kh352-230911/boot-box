@@ -4,6 +4,7 @@ package com.sh.app.member.controller;
 import com.sh.app.auth.service.AuthService;
 import com.sh.app.auth.vo.MemberDetails;
 import com.sh.app.genre.entity.Genre;
+import com.sh.app.genre.repository.GenreRepository;
 import com.sh.app.member.dto.MemberCreateDto;
 import com.sh.app.member.dto.MemberReservationDto;
 import com.sh.app.member.dto.MemberReviewDto;
@@ -12,8 +13,11 @@ import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
 import com.sh.app.memberLikeCinema.dto.MemberLikeCinemaListDto;
 import com.sh.app.memberLikeCinema.serviece.MemberLikeCinemaService;
+import com.sh.app.memberLikeGenre.entity.MemberLikeGenre;
+import com.sh.app.memberLikeGenre.repository.MemberLikeGenreRepository;
 import com.sh.app.review.dto.CreateReviewDto;
 import com.sh.app.review.service.ReviewService;
+import com.sh.app.util.GenreNormalization;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +56,10 @@ public class MemberController {
     private ReviewService reviewService;
     @Autowired
     private MemberLikeCinemaService memberLikeCinemaService;
+    @Autowired
+    private GenreRepository genreRepository;
+    @Autowired
+    private MemberLikeGenreRepository memberLikeGenreRepository;
 
     @GetMapping("/createMember.do")
     public void createMember() {}
@@ -61,8 +69,7 @@ public class MemberController {
     public String CreateMember(
             @Valid MemberCreateDto memberCreateDto,
             BindingResult bindingResult,
-            RedirectAttributes redirectAttributes,
-            @RequestParam("genres") String genre) {
+            RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             String message = bindingResult.getAllErrors().get(0).getDefaultMessage();
             throw new RuntimeException(message);
@@ -70,9 +77,23 @@ public class MemberController {
         log.debug("memberCreateDto = {}", memberCreateDto);
 
 
-//        Member member = memberCreateDto.toMember();
-//        String encodedPassword = passwordEncoder.encode(member.getMemberPwd());
-//        member.setMemberPwd(encodedPassword);
+        Member member = memberCreateDto.toMember();
+        String encodedPassword = passwordEncoder.encode(member.getMemberPwd());
+        member.setMemberPwd(encodedPassword);
+
+        List<String> genreNames = memberCreateDto.getGenres();
+        for (String genreName : genreNames) {
+            String normalizedGenreName = GenreNormalization.normalizeGenreName(genreName);
+            Genre genre = genreRepository.findByGenreName(normalizedGenreName).orElseThrow();
+
+            MemberLikeGenre memberLikeGenre = MemberLikeGenre.builder()
+                    .member(member)
+                    .genre(genre)
+                    .build();
+
+            memberLikeGenreRepository.save(memberLikeGenre);
+        }
+
 //
 //        // 단일 장르만을 받도록 수정
 //        Genre selectedGenre = new Genre();
@@ -153,7 +174,7 @@ public class MemberController {
     @GetMapping("/memberReservation.do")
     public void memberReservation(Long id, Model model) {
         MemberReservationDto member = memberService.findByReservation(id);
-//        log.debug("member = {}", member);
+        log.debug("member = {}", member);
 
         model.addAttribute("member", member);
     }
@@ -162,22 +183,22 @@ public class MemberController {
     public void memberWatchedMovie(Long id, Model model) {
 //        log.debug("id = {}", id);
         MemberReservationDto member = memberService.findPastReservationsById(id);
-//        log.debug("member = {}", member);
+        log.debug("member = {}", member);
 
         model.addAttribute("member", member);
     }
 
-//    @PostMapping("/memberWatchedMovie.do")
-//    public String createReview(@Valid CreateReviewDto createReviewDto,
-//            @AuthenticationPrincipal MemberDetails memberDetails,
-//                               RedirectAttributes redirectAttributes) {
-//        log.debug("createReviewDto = {}", createReviewDto);
-//
+    @PostMapping("/memberWatchedMovie.do")
+    public String  createReview(@Valid CreateReviewDto createReviewDto,
+            @AuthenticationPrincipal MemberDetails memberDetails,
+                               RedirectAttributes redirectAttributes) {
+        log.debug("createReviewDto = {}", createReviewDto);
+
 //        createReviewDto.setMemberId(memberDetails.getMember().getId());
 //        reviewService.createReview(createReviewDto);
-//
-//        return "redirect:/member/memberReviewList.do?id=" + memberDetails.getMember().getId();
-//    }
+
+        return "redirect:/member/memberWatchedMovie.do?id=" + memberDetails.getMember().getId();
+    }
 
     @GetMapping("/memberAskList.do")
     public void memberAskList(Long id, Model model) {

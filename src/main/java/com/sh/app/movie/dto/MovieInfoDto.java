@@ -17,4 +17,6 @@ public class MovieInfoDto {
     private String title;
 
     private String posterUrl;
+
+    private Integer runtime;
 }
