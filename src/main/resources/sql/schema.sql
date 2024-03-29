@@ -77,7 +77,7 @@ CREATE TABLE MEMBER(
     member_pwd	varchar2(100) NOT NULL, --비밀번호
     member_email varchar2(100) NOT NULL,	--이메일(uq)
     member_name varchar2(50) NOT NULL, --이름
-    member_phone varchar2(100) NOT NULL, --핸드폰번호
+    member_phone varchar2(100) NULL, --핸드폰번호
     birthyear varchar2(50) NOT NULL, -- 출생년도
     constraints pk_member_id primary key(id),
     constraints uq_member_member_login_id unique(member_login_id),

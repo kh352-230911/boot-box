@@ -42,7 +42,7 @@ body#container {
     background-color: #232323;
 }
 
-/********** header **********/
+/*!********** header **********!*/
 #header-container {
     background-color: #212121;
 }
@@ -61,6 +61,46 @@ header div#dropdownNavbar1{
 nav {
     background-color: #212121;
 }
+
+/********** header **********/
+/*#header-container {*/
+/*    background-color: #212121;*/
+/*    height: 100px; !* 헤더 높이 설정 *!*/
+/*    position: fixed; !* 헤더를 고정 위치로 설정 *!*/
+/*    top: 0; !* 상단에 고정 *!*/
+/*    left: 0; !* 왼쪽 끝에 고정 *!*/
+/*    right: 0; !* 오른쪽 끝에 고정 *!*/
+/*    z-index: 1000; !* 다른 요소들 위에 오도록 z-index 설정 *!*/
+/*    display: flex; !* Flexbox 레이아웃 적용 *!*/
+/*    justify-content: space-between; !* 양쪽 끝에 내용을 붙임 *!*/
+/*    align-items: center; !* 세로축 중앙 정렬 *!*/
+/*    padding: 0 20px; !* 좌우 패딩 설정 *!*/
+/*}*/
+
+/*!* 헤더 내부 브랜드 로고 및 내비게이션 메뉴 스타일링 *!*/
+/*.brand-logo {*/
+/*    !* 로고 스타일링 필요시 추가 *!*/
+/*}*/
+
+/*.navigation {*/
+/*    !* 내비게이션 메뉴 스타일링 필요시 추가 *!*/
+/*}*/
+
+/*!* 반응형 디자인을 위한 미디어 쿼리 *!*/
+/*@media (max-width: 768px) {*/
+/*    #header-container {*/
+/*        padding: 0 10px; !* 모바일 화면에서 좌우 패딩 줄임 *!*/
+/*    }*/
+/*}*/
+
+/*nav {*/
+/*    background-color: #212121;*/
+/*    display: flex; !* Flexbox 레이아웃 사용 *!*/
+/*    justify-content: space-between; !* 내용을 양쪽 끝에 정렬 *!*/
+/*    align-items: center; !* 세로축 중앙 정렬 *!*/
+/*    padding: 0 10px; !* 좌우 패딩 추가 *!*/
+/*    height: 100%; !* 헤더 높이와 같게 설정 *!*/
+/*}*/
 
 /********** content **********/
 section#content {
@@ -328,31 +368,45 @@ footer {
     width: 100%; /* 슬라이더의 너비를 부모 요소에 맞춤 */
 }
 
+/* 스타일을 기본 크기에 맞추고 */
 .small-ul {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     transition: transform 0.5s ease;
-    /* 아이템을 컨테이너의 왼쪽에서 시작하도록 조정 */
-    justify-content: flex-start; /* 수정된 부분 */
-    flex-wrap: nowrap; /* 아이템들이 줄바꿈 되지 않도록 설정 */
-    align-items: stretch; /* 아이템 높이를 컨테이너에 맞추기 */
+    justify-content: space-around; /* 아이템들 사이에 공간을 균등하게 분배 */
+    flex-wrap: nowrap;
+    align-items: stretch;
 }
 
 .small-ul li {
-    /* 첫 번째 아이템이 잘리지 않도록 오른쪽에만 마진을 적용 */
-    margin-right: 30px;
-    /* 상단 마진을 제거하거나 조정하여 첫 번째 아이템이 잘 보이게 함 */
-    margin-top: 0; /* 수정된 부분 */
-    flex: 0 0 195px; /* 아이템이 공간에 맞추어 축소되거나 확장되지 않음 */
+    margin-right: 30px; /* 아이템 사이 간격 */
+    flex: 0 0 auto; /* flex-basis를 auto로 설정하여 아이템의 원래 크기를 기준으로 함 */
+}
+
+/* 화면 크기에 따라 스타일을 조정 */
+@media (max-width: 768px) {
+    .small-ul li {
+        margin-right: 15px; /* 아이템 사이 간격 줄임 */
+        /* 필요하다면 아이템의 크기도 조절할 수 있습니다. 예: */
+        width: calc(50% - 15px); /* 각 아이템의 너비를 반응형으로 조정 */
+    }
+}
+
+@media (max-width: 480px) {
+    .small-ul li {
+        margin-right: 10px; /* 아이템 사이 간격 더 줄임 */
+        /* 아이템의 크기를 더 줄이거나 다른 방식으로 배치할 수 있습니다. */
+        width: calc(100% - 20px); /* 전체 너비의 아이템 */
+    }
 }
 
 .small-span {
     /* 상태 인디케이터 스타일 */
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 45%;
+    /*transform: translateY(-50%);*/
     cursor: pointer;
     color: #070707;
     background-color: rgba(255, 255, 255, 0.5);
@@ -367,7 +421,7 @@ footer {
 i.arrow {
     /* 화살표 버튼 스타일 */
     position: absolute;
-    top: 45%;
+    top: 50%;
     cursor: pointer;
     padding: 5px;
     border-radius: 50%;

@@ -4,9 +4,9 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <header th:fragment="header" id="header-container">
-    <nav class="border-gray-200 dark:bg-gray-900 dark:border-gray-700">
+    <nav class="navigation border-gray-200 dark:bg-gray-900 dark:border-gray-700">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-2 py-2.5">
-            <a th:href="@{/}" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <a th:href="@{/}" class="brand-logo flex items-center space-x-3 rtl:space-x-reverse">
                 <img th:src="@{/images/free-icon-play-button-260446.png}" class="h-8" />
                 <span class="self-center text-3xl text-red-500 font-semibold whitespace-nowrap">B</span>
                 <span id="white-color1" class="self-center text-3xl text-white font-semibold whitespace-nowrap dark:text-white">oot</span>

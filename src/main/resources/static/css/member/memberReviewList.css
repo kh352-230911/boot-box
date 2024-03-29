@@ -36,3 +36,15 @@ footer {
 .movie_star.rated i {
     color: yellow;
 }
+
+.movie_star {
+    margin-right: 5px;
+    margin-bottom: 0px;
+    margin-top: 5px;
+}
+.movie_star > path{
+    color: yellow;
+}
+.movie_star.rated > path{
+    color: yellow;
+}
