@@ -485,7 +485,7 @@ public class MovieService {
                                 }
                             }
 
-                            // 장르 정보 처리
+//                            // 장르 정보 처리
                             if (kmdbMovieInfoDto.getGenre() != null) {
                                 String[] splitGenre = kmdbMovieInfoDto.getGenre().split(",");
                                 for (String genreName : splitGenre) {

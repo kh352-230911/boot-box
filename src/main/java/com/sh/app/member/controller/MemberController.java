@@ -35,6 +35,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.awt.*;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 0206 hyejin
@@ -48,16 +49,22 @@ import java.util.Map;
 public class MemberController {
     @Autowired
     private MemberService memberService;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Autowired
     private AuthService authService;
+
     @Autowired
     private ReviewService reviewService;
+
     @Autowired
     private MemberLikeCinemaService memberLikeCinemaService;
+
     @Autowired
     private GenreRepository genreRepository;
+
     @Autowired
     private MemberLikeGenreRepository memberLikeGenreRepository;
 
@@ -76,34 +83,26 @@ public class MemberController {
         }
         log.debug("memberCreateDto = {}", memberCreateDto);
 
-
         Member member = memberCreateDto.toMember();
         String encodedPassword = passwordEncoder.encode(member.getMemberPwd());
         member.setMemberPwd(encodedPassword);
 
-        List<String> genreNames = memberCreateDto.getGenres();
-        for (String genreName : genreNames) {
-            String normalizedGenreName = GenreNormalization.normalizeGenreName(genreName);
-            Genre genre = genreRepository.findByGenreName(normalizedGenreName).orElseThrow();
+        // Member와 Genre 연결
+        member = memberService.createMember(member);
+
+        List<String> genres = memberCreateDto.getGenres();
+        for (String genreName : genres) {
+            String GenreName = GenreNormalization.normalizeGenreName(genreName);
+            Genre genre = genreRepository.findByGenreName(GenreName).orElseThrow();
 
             MemberLikeGenre memberLikeGenre = MemberLikeGenre.builder()
                     .member(member)
                     .genre(genre)
                     .build();
-
             memberLikeGenreRepository.save(memberLikeGenre);
         }
 
-//
-//        // 단일 장르만을 받도록 수정
-//        Genre selectedGenre = new Genre();
-//        selectedGenre.setGenreName(genre);
-//        log.debug("Selected genre = {}", selectedGenre);
-//
-//        member = memberService.createMember(member, selectedGenre);
-
-
-//        redirectAttributes.addFlashAttribute("msg", "반갑습니다." + member.getMemberName() + "님😀");
+        redirectAttributes.addFlashAttribute("msg", "반갑습니다." + member.getMemberName() + "님😀");
         return "redirect:/auth/login.do";
     }
 

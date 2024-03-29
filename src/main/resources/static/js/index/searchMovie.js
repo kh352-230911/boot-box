@@ -113,3 +113,28 @@ $(document).ready(() => {
 
     $('.small').mouseleave(startAutoSlide);
 });
+
+function changeTab(tabName) {
+    // 모든 탭 컨텐츠를 숨김
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tab-content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    // 모든 탭 링크에서 'active' 클래스 제거
+    tablinks = document.getElementsByClassName("tab");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    // 클릭된 탭과 관련된 컨텐츠를 표시
+    document.getElementById(tabName).style.display = "block";
+    document.getElementById(tabName).classList.add("active");
+    // 클릭된 탭에 'active' 클래스 추가
+    document.getElementById(tabName + "Btn").classList.add("active");
+}
+
+// 페이지 로딩 시 '무비 차트' 탭을 기본적으로 활성화
+document.addEventListener('DOMContentLoaded', (event) => {
+    changeTab('movieChart');
+});
+

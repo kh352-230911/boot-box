@@ -500,3 +500,54 @@ i.arrow:hover {
 .movie_star.rated > path{
     color: yellow;
 }
+
+
+
+.tab-content {
+    display: none;
+}
+
+/* 활성 탭의 컨텐츠를 보여줌 */
+.tab-content.active {
+    display: block;
+}
+
+/* 탭 기본 스타일 */
+.tab {
+    cursor: pointer;
+    padding: 10px 20px;
+    margin-right: -1px;
+    border-bottom: 3px solid transparent;
+    background-color: #232323;
+    color: white;
+    text-align: center;
+}
+
+/* 활성 탭 스타일 */
+.tab.active {
+    border-bottom: 3px solid #ff0000;
+    font-weight: bold;
+    color: #fff;
+}
+
+.section-1-1 {
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.recommended-wrapper {
+    margin-right: auto;
+}
+
+.divider {
+    height: 28px;
+    width: 3px;
+    background-color: #716a6a;
+    margin: 0px;
+}
+
+
+

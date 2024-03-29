@@ -42,11 +42,6 @@ public class MemberCreateDto {
                 .memberEmail(memberEmail)
                 .build();
 
-        // 멤버가 선택한 장르를 추가합니다
-//        if (genre != null) {
-//            member.addGenre(genre);
-//        }
-
         return member;
 
     }
