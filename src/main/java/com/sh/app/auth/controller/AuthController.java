@@ -20,8 +20,6 @@ public class AuthController {
 
     }
 
-
-
     @GetMapping("/adminLogin.do")
     public void adminLogin() {}
 }

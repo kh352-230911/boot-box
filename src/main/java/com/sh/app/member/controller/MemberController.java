@@ -16,6 +16,7 @@ import com.sh.app.memberLikeCinema.serviece.MemberLikeCinemaService;
 import com.sh.app.memberLikeGenre.entity.MemberLikeGenre;
 import com.sh.app.memberLikeGenre.repository.MemberLikeGenreRepository;
 import com.sh.app.review.dto.CreateReviewDto;
+import com.sh.app.review.entity.Review;
 import com.sh.app.review.service.ReviewService;
 import com.sh.app.util.GenreNormalization;
 import jakarta.validation.Valid;
@@ -190,14 +191,13 @@ public class MemberController {
 
     @PostMapping("/memberWatchedMovie.do")
     public String  createReview(@Valid CreateReviewDto createReviewDto,
-            @AuthenticationPrincipal MemberDetails memberDetails,
-                               RedirectAttributes redirectAttributes) {
+                                @AuthenticationPrincipal MemberDetails memberDetails,
+                                RedirectAttributes redirectAttributes) {
         log.debug("createReviewDto = {}", createReviewDto);
 
-//        createReviewDto.setMemberId(memberDetails.getMember().getId());
-//        reviewService.createReview(createReviewDto);
+        reviewService.createReview(createReviewDto, memberDetails.getMember());
 
-        return "redirect:/member/memberWatchedMovie.do?id=" + memberDetails.getMember().getId();
+        return "redirect:/member/memberReviewList.do?id=" + memberDetails.getMember().getId();
     }
 
     @GetMapping("/memberAskList.do")

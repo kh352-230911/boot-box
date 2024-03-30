@@ -145,24 +145,25 @@
                                 <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400" th:text="${schedule.movie.title}">영화 제목</h3>
                                 <form class="space-y-4" th:action="@{/member/memberWatchedMovie.do}" method="post">
                                     <div class="relative z-0 w-full mb-5 group">
-                                        <label for="reviewDetail" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"></label>
-                                        <input type="text" name="reviewDetail" id="reviewDetail" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" placeholder=" " required />
+                                        <label th:for="|reviewDetail${schedule.movie.id}|" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"></label>
+                                        <input type="text" name="reviewDetail" th:id="|reviewDetail${schedule.movie.id}|" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" placeholder=" " required />
                                         <input type="hidden" name="movieId" th:value="${schedule.movie.id}">
+                                        <input type="hidden" name="memberId" th:value="${#authentication.principal.member.id}">
                                         <input type="hidden" name="reservationId" th:value="${reservation.id}">
                                     </div>
                                     <div class="container">
                                         <div class="feedback">
                                             <div class="rating">
-                                                <input type="radio" name="reviewScore" id="rating-5" value="5">
-                                                <label for="rating-5"></label>
-                                                <input type="radio" name="reviewScore" id="rating-4" value="4">
-                                                <label for="rating-4"></label>
-                                                <input type="radio" name="reviewScore" id="rating-3" value="3">
-                                                <label for="rating-3"></label>
-                                                <input type="radio" name="reviewScore" id="rating-2" value="2">
-                                                <label for="rating-2"></label>
-                                                <input type="radio" name="reviewScore" id="rating-1" value="1">
-                                                <label for="rating-1"></label>
+                                                <input type="radio" name="reviewScore" th:id="|rating-5${schedule.movie.id}|" value="5">
+                                                <label th:for="|rating-5${schedule.movie.id}|"></label>
+                                                <input type="radio" name="reviewScore" th:id="|rating-4${schedule.movie.id}|" value="4">
+                                                <label th:for="|rating-4${schedule.movie.id}|"></label>
+                                                <input type="radio" name="reviewScore" th:id="|rating-3${schedule.movie.id}|" value="3">
+                                                <label th:for="|rating-3${schedule.movie.id}|"></label>
+                                                <input type="radio" name="reviewScore" th:id="|rating-2${schedule.movie.id}|" value="2">
+                                                <label th:for="|rating-2${schedule.movie.id}|"></label>
+                                                <input type="radio" name="reviewScore" th:id="|rating-1${schedule.movie.id}|" value="1">
+                                                <label th:for="|rating-1${schedule.movie.id}|"></label>
                                                 <div class="emoji-wrapper">
                                                     <div class="emoji">
                                                         <svg class="rating-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -267,5 +268,16 @@
     </div>
 </div>
 
-<script layout:fragment="script"></script>
+<script layout:fragment="script">
+    document.querySelectorAll('.rating > input').forEach(input => {
+        input.addEventListener('change', function() {
+            if(this.checked) {
+                // 현재 체크된 input에 연결된 이모지 래퍼의 위치를 변경
+                let emojiWrapper = this.closest('.feedback').querySelector('.emoji-wrapper > .emoji');
+                let translateYValue = -100 * this.value; // value는 1부터 5까지 있으므로
+                emojiWrapper.style.transform = `translateY(${translateYValue}px)`;
+            }
+        });
+    });
+</script>
 </html>

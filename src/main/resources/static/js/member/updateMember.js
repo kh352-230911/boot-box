@@ -42,4 +42,50 @@ document.memberCreateFrm.onsubmit = (e) => {
         email.select();
         return false;
     }
+
+    if (!selectedGenre) {
+        alert("영화 장르를 선택해주세요.");
+        return false;
+    }
+};
+
+/**
+ * 아이디 중복검사
+ */
+document.querySelector("#memberLoginId").onkeyup = (e) => {
+    const username = e.target;
+    const guideOk = document.querySelector(".guide.ok");
+    const guideError = document.querySelector(".guide.error");
+    const idDuplicateCheck = document.querySelector("#idDuplicateCheck");
+
+    if(!/^\w{4,}$/.test(username.value.trim())) {
+        guideError.style.display = "none";
+        guideOk.style.display = "none";
+        idDuplicateCheck.value = 0;
+        return;
+    }
+
+    $.ajax({
+        url : `${contextPath}member/checkIdDuplicate.do`,
+        method : 'post',
+        headers : {
+            [csrfHeaderName] : csrfToken
+        },
+        data : {
+            username : username.value.trim()
+        },
+        success(response){
+            const {available} = response;
+            if(available) {
+                guideError.style.display = "none";
+                guideOk.style.display = "inline";
+                idDuplicateCheck.value = 1;
+            }
+            else {
+                guideError.style.display = "inline";
+                guideOk.style.display = "none";
+                idDuplicateCheck.value = 0;
+            }
+        }
+    })
 };
