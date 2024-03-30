@@ -1,5 +1,6 @@
 package com.sh.app;
 
+import com.sh.app.memberLikeGenre.dto.MemberLikeGenreListDto;
 import com.sh.app.movie.dto.MovieDetailDto;
 import com.sh.app.movie.service.MovieService;
 import com.sh.app.review.service.ReviewService;
@@ -26,6 +27,7 @@ public class HomeController {
         if(search == null) {
             movieDetailDtos = movieService.findFirst6ByOrderByRankAsc();
             log.debug("movieDetailDtos = {}", movieDetailDtos);
+
         }
         else {
             movieDetailDtos = movieService.findByTitleContaining(search);

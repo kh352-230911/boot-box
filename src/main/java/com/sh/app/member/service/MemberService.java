@@ -265,6 +265,7 @@ public class MemberService {
                 .build();
     }
 
+
     private ReviewMovieDto convertToReviewMovieDto(Review review) {
         // 영화 정보를 조회
         Movie movie = movieRepository.findById(review.getMovieId())

@@ -2,10 +2,7 @@ package com.sh.app.genre.entity;
 
 import com.sh.app.memberLikeGenre.entity.MemberLikeGenre;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -15,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(exclude = "memberLikeGenres")
 public class Genre {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_genre_id_generator")
