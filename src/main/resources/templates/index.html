@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html
         xmlns:th="http://www.thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
         layout:decorate="~{layout/default}">
 <head>
     <title>movie</title>
@@ -9,7 +9,7 @@
 <style layout:fragment="style">
 </style>
 
-<div layout:fragment="content" class="wrap-container">
+<div layout:fragment="content" class="px-6 wrap-container">
     <div class="flex justify-end w-full h-auto home-container">
         <form>
             <div class="flex mb-3">
@@ -70,8 +70,19 @@
                         <!-- 세로선 -->
                         <div class="divider"></div>
 
+<!--                        <div class="recommended-wrapper">-->
+<!--                            <span id="recommendedBtn" onclick="changeTab('recommended')" class="tab font-semibold">선호장르 추천영화-->
+<!--                                <input class="memberId" type="hidden" th:data-member-id="${#authentication.principal.member.id}">-->
+<!--                            </span>-->
+<!--                        </div>-->
+
+
                         <div class="recommended-wrapper">
-                            <span id="recommendedBtn" onclick="changeTab('recommended')" class="tab font-semibold">선호장르 추천영화</span>
+                            <span id="recommendedBtn" onclick="checkAndChangeTab('recommended')" class="tab font-semibold">
+                                선호장르 추천영화
+                                <!-- 로그인 상태에 따라 data-member-id 값 설정 -->
+                                <input class="memberId" type="hidden" th:attr="data-member-id=${#authorization.expression('isAuthenticated()') ? #authentication.principal.member.id : ''}">
+                            </span>
                         </div>
 
                         <div class="full-view">
@@ -181,7 +192,9 @@
                     <!-- 선호장르 추천영화 영역에 id 추가 및 기본으로는 숨겨진 상태 -->
                     <div id="recommended" class="tab-content" style="display: none;">
                         <!-- 선호장르 추천영화 내용 -->
-                        <p >~~</p>
+<!--                        <p th:text="|${#authentication.principal.member.id}님의 선호장르는  입니다.|"></p>-->
+<!--                        ${memberLikeGenre.genreName}-->
+
                     </div>
                 </th:block>
 
