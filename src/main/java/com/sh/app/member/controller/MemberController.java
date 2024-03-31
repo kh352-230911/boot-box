@@ -213,4 +213,25 @@ public class MemberController {
         log.debug("member = {}", member);
         model.addAttribute("member", member);
     }
+
+    @PostMapping("/existingCheckIdDuplicate.do")
+    public ResponseEntity<?> existingCheckIdDuplicate(@RequestParam("username") String username,
+                                                      @RequestParam(value = "memberId", required = false) Long memberId) {
+        boolean isAvailable;
+        Member existingMember = memberService.findByMemberLoginId(username);
+
+        if (existingMember == null) {
+            // 사용자 이름이 사용되지 않았으므로 사용 가능
+            isAvailable = true;
+        } else if (memberId != null && existingMember.getId().equals(memberId)) {
+            // 사용자 이름이 현재 회원의 것이므로 사용 가능
+            isAvailable = true;
+        } else {
+            // 그 외의 경우는 사용 불가
+            isAvailable = false;
+        }
+
+        Map<String, Object> resultMap = Map.of("available", isAvailable);
+        return ResponseEntity.ok(resultMap);
+    }
 }

@@ -17,6 +17,11 @@
             <form name="memberCreateFrm" th:action="@{/member/updateMember.do}" method="POST">
                 <div id="user-box1" class="user-box">
                     <input type="text" class="form-control block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" name="memberLoginId" id="memberLoginId" pattern="^\w{4,}$" th:value="${#authentication.principal.username}" required>
+                    <!-- 아이디중복검사 코멘트추가 -->
+                    <span class="flex mb-3 guide ok text-sm">이 아이디는 사용 가능 합니다.</span>
+                    <span class="flex mb-3 guide error text-sm">이 아이디는 사용할 수 없습니다.</span>
+                    <input type="hidden" name="idDuplicateCheck" id="idDuplicateCheck" value="0"/>
+                    <input type="hidden" name="memberID" id="memberId" th:value="${#authentication.principal.member.id}">
                     <label for="memberLoginId" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username</label>
                 </div>
                 <div class="user-box">

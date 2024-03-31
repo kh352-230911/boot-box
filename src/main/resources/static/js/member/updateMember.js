@@ -57,6 +57,7 @@ document.querySelector("#memberLoginId").onkeyup = (e) => {
     const guideOk = document.querySelector(".guide.ok");
     const guideError = document.querySelector(".guide.error");
     const idDuplicateCheck = document.querySelector("#idDuplicateCheck");
+    const memberId = document.querySelector("#memberId").value; // 현재 회원의 ID를 가져옴
 
     if(!/^\w{4,}$/.test(username.value.trim())) {
         guideError.style.display = "none";
@@ -66,13 +67,14 @@ document.querySelector("#memberLoginId").onkeyup = (e) => {
     }
 
     $.ajax({
-        url : `${contextPath}member/checkIdDuplicate.do`,
+        url : `${contextPath}member/existingCheckIdDuplicate.do`,
         method : 'post',
         headers : {
             [csrfHeaderName] : csrfToken
         },
         data : {
-            username : username.value.trim()
+            username : username.value.trim(),
+            memberId : memberId // 현재 회원의 ID도 전송
         },
         success(response){
             const {available} = response;
@@ -80,8 +82,7 @@ document.querySelector("#memberLoginId").onkeyup = (e) => {
                 guideError.style.display = "none";
                 guideOk.style.display = "inline";
                 idDuplicateCheck.value = 1;
-            }
-            else {
+            } else {
                 guideError.style.display = "inline";
                 guideOk.style.display = "none";
                 idDuplicateCheck.value = 0;
