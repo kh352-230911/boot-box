@@ -5,10 +5,7 @@ import com.sh.app.auth.service.AuthService;
 import com.sh.app.auth.vo.MemberDetails;
 import com.sh.app.genre.entity.Genre;
 import com.sh.app.genre.repository.GenreRepository;
-import com.sh.app.member.dto.MemberCreateDto;
-import com.sh.app.member.dto.MemberReservationDto;
-import com.sh.app.member.dto.MemberReviewDto;
-import com.sh.app.member.dto.MemberUpdateDto;
+import com.sh.app.member.dto.*;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
 import com.sh.app.memberLikeCinema.dto.MemberLikeCinemaListDto;
@@ -197,12 +194,13 @@ public class MemberController {
 
         reviewService.createReview(createReviewDto, memberDetails.getMember());
 
+        redirectAttributes.addFlashAttribute("msg", memberDetails.getMember().getMemberName() + "님의 리뷰가 등록되었습니다.🤗");
         return "redirect:/member/memberReviewList.do?id=" + memberDetails.getMember().getId();
     }
 
     @GetMapping("/memberAskList.do")
     public void memberAskList(Long id, Model model) {
-        Member member = memberService.findById(id);
+        MemberAskDto member = memberService.findById(id);
 
         log.debug("member = {}", member);
         model.addAttribute("member", member);

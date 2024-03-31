@@ -1,6 +1,8 @@
 package com.sh.app.member.service;
 
 
+import com.sh.app.ask.dto.AskInfoDto;
+import com.sh.app.ask.entity.Ask;
 import com.sh.app.authority.entity.Authority;
 import com.sh.app.authority.entity.RoleAuth;
 import com.sh.app.authority.service.AuthorityService;
@@ -9,6 +11,7 @@ import com.sh.app.cinema.entity.Cinema;
 import com.sh.app.genre.entity.Genre;
 import com.sh.app.genre.repository.GenreRepository;
 import com.sh.app.location.dto.LocationInfoDto;
+import com.sh.app.member.dto.MemberAskDto;
 import com.sh.app.member.dto.MemberCreateDto;
 import com.sh.app.member.dto.MemberReservationDto;
 import com.sh.app.member.dto.MemberReviewDto;
@@ -180,8 +183,29 @@ public class MemberService {
     }
 
 
-    public Member findById(Long id) {
-        return memberRepository.findById(id).orElse(null);
+    public MemberAskDto findById(Long id) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Member not found with id: " + id));
+
+        MemberAskDto memberAskDto = convertToMemberAskDto(member);
+
+        List<Ask> asks = member.getAsks();
+
+        List<AskInfoDto> askInfoDtos = asks.stream()
+                .map(this::convertToAskInfoDto)
+                .collect(Collectors.toList());
+
+        memberAskDto.setAsks(askInfoDtos);
+
+        return memberAskDto;
+    }
+
+    private MemberAskDto convertToMemberAskDto(Member member) {
+        return modelMapper.map(member, MemberAskDto.class);
+    }
+
+    private AskInfoDto convertToAskInfoDto(Ask ask) {
+        return modelMapper.map(ask, AskInfoDto.class);
     }
 
     public MemberReservationDto findPastReservationsById(Long id) {
