@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 @Slf4j
@@ -21,5 +23,9 @@ public class GenreServiece {
         System.out.println(genre);
 
         return genre;
+    }
+
+    public List<Genre> findAll() {
+        return genreRepository.findAll();
     }
 }

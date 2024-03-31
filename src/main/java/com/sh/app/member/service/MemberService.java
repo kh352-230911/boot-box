@@ -39,6 +39,7 @@ import com.sh.app.util.GenreNormalization;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,14 +47,12 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional //기존 mvc패턴 처럼 rollback 처리. class 단에서 선언하면 하위 모든 메소드에도 모두 어노테이션 처리됨
+@Slf4j
 public class MemberService {
     @Autowired
     private HttpServletRequest request;
@@ -81,6 +80,9 @@ public class MemberService {
 
     @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private GenreRepository genreRepository;
 
     public Member findByMemberLoginId(String username) {
         return memberRepository.findByMemberLoginId(username);
@@ -304,7 +306,53 @@ public class MemberService {
         return reviewMovieDto;
     }
 
-//    public Optional<Member> findById(Long memberId) {
-//        return memberRepository.findById(memberId);
-//    }
+    public Member findByMemberId(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new EntityNotFoundException("Member not found with id: " + memberId));
+    }
+
+    public List<Genre> findMemberLikeGenresByMemberId(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid member ID: " + memberId));
+        return member.getMemberLikeGenres().stream()
+                .map(MemberLikeGenre::getGenre)
+                .collect(Collectors.toList());
+    }
+
+    public List<Genre> getMemberPreferredGenres(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid member ID: " + memberId));
+        return member.getMemberLikeGenres().stream()
+                .map(MemberLikeGenre::getGenre)
+                .collect(Collectors.toList());
+    }
+
+    public void updateMemberGenres(Member member, List<String> preferredGenreNames) {
+        // 이전 선호 장르 삭제
+        memberLikeGenreRepository.deleteByMember(member);
+
+        // 새로운 선호 장르 추가
+        if (preferredGenreNames != null) {
+            List<MemberLikeGenre> memberLikeGenres = preferredGenreNames.stream()
+                    .map(genreName -> {
+                        String GenreName = GenreNormalization.normalizeGenreName(genreName);
+                        Genre genre = genreRepository.findByGenreName(GenreName)
+                                .orElseThrow(() -> {
+                                    log.error("Genre not found: {}", genreName);
+                                    return new EntityNotFoundException("Genre not found: " + genreName);
+                                });
+                        return MemberLikeGenre.builder()
+                                .member(member)
+                                .genre(genre)
+                                .build();
+                    })
+                    .collect(Collectors.toList());
+
+            memberLikeGenreRepository.saveAll(memberLikeGenres); // 변경사항을 저장
+        } else {
+            member.setMemberLikeGenres(new ArrayList<>()); // 빈 리스트를 설정합니다.
+        }
+
+        memberRepository.save(member);
+    }
 }

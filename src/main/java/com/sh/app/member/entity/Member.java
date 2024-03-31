@@ -34,7 +34,6 @@ import java.util.Set;
 @ToString(exclude = {"memberLikeCinemas", "memberLikeGenres",
         "reviews", "asks", "reservations"})
 public class Member implements Serializable{
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_member_id_generator")
     @SequenceGenerator(
@@ -83,6 +82,4 @@ public class Member implements Serializable{
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<MemberLikeGenre> memberLikeGenres;
-
-
 }

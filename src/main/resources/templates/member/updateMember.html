@@ -16,7 +16,7 @@
             <h2>회원 정보</h2>
             <form name="memberCreateFrm" th:action="@{/member/updateMember.do}" method="POST">
                 <div id="user-box1" class="user-box">
-                    <input type="text" class="form-control block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" name="memberLoginId" id="memberLoginId" pattern="^\w{4,}$" th:value="${#authentication.principal.username}" required>
+                    <input type="text" class="form-control block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" name="memberLoginId" id="memberLoginId" pattern="^\w{4,}$" th:value="${#authentication.principal.username}" th:data-member-id="${#authentication.principal.username}">
                     <!-- 아이디중복검사 코멘트추가 -->
                     <span class="flex mb-3 guide ok text-sm">이 아이디는 사용 가능 합니다.</span>
                     <span class="flex mb-3 guide error text-sm">이 아이디는 사용할 수 없습니다.</span>
@@ -54,9 +54,13 @@
                 </div>
 
                 <div class="flex flex-wrap mt-14 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent required">
-
-                    <input type="hidden" id="selectedGenre" name="selectedGenre">
-
+<!--                    <div th:each="genre : ${allGenres}">-->
+<!--                        <div class="flex items-center me-4 mt-1 mb-1">-->
+<!--                            <input type="radio" th:value="${genre.genreId}" th:id="${'red-radio' + genre.id}" name="genres" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" required-->
+<!--                                   th:checked="${selectedGenres.contains(genre)}">-->
+<!--                            <label th:for="${'red-radio' + genre.id}" class="ms-2 text-sm font-medium text-white dark:text-gray-300" th:text="${genre.genreName}"></label>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <div class="flex items-center me-4 mt-1 mb-1">
                         <input id="red-radio1" type="radio" value="액션" name="genres" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" required>
                         <label for="red-radio1" class="ms-2 text-sm font-medium text-white dark:text-gray-300">액션</label>

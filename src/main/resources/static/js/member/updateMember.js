@@ -7,6 +7,8 @@ document.querySelector("#passwordConfirmation").onblur = (e) => {
     }
 };
 
+const existingUsername = $('.form-control').data('member-id');
+
 document.memberCreateFrm.onsubmit = (e) => {
     const frm = e.target;
     const username = frm.memberLoginId;
@@ -16,12 +18,12 @@ document.memberCreateFrm.onsubmit = (e) => {
     const email = frm.memberEmail;
     const name = frm.memberName;
 
-    if (!/^\w{4,}$/.test(username.value)) {
+    if (username.value !== existingUsername && !/^\w{4,}$/.test(username.value)) {
         alert("아이디는 영문자, 숫자, _ 4자리이상 입력하세요.");
         username.focus();
         return false;
     }
-    if(idDuplicateCheck.value == 0) {
+    if(username.value !== existingUsername && idDuplicateCheck.value == 0) {
         alert("사용 가능 한 아이디를 입력해주세요.")
         memberLoginId.select();
         return false;
@@ -90,3 +92,40 @@ document.querySelector("#memberLoginId").onkeyup = (e) => {
         }
     })
 };
+
+/**
+ * 기존 선호 장르 표시
+ */
+document.addEventListener('DOMContentLoaded', function() {
+
+    $.ajax({
+        url: `${contextPath}member/preferredGenres`,
+        type: 'get',
+        headers : {
+            [csrfHeaderName] : csrfToken
+        },
+        success: function(response) {
+            displaySelectedGenres(response);
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching preferred genres:', error);
+        }
+    });
+});
+
+// 선호 장르 표시 함수
+function displaySelectedGenres(preferredGenres) {
+    // 모든 장르 버튼을 숨깁니다.
+    // document.querySelectorAll('[name="genres"]').forEach(function(genreButton) {
+    //     genreButton.parentElement.style.display = 'none';
+    // });
+
+    // 서버로부터 받은 선호 장르로 라디오 버튼 표시
+    preferredGenres.forEach(function(genre) {
+        const genreButton = document.querySelector(`[value="${genre.genreName}"]`);
+        if (genreButton) {
+            genreButton.parentElement.style.display = 'flex';
+            genreButton.checked = true; // 해당 장르를 선택합니다.
+        }
+    });
+}

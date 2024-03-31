@@ -5,6 +5,7 @@ import com.sh.app.auth.service.AuthService;
 import com.sh.app.auth.vo.MemberDetails;
 import com.sh.app.genre.entity.Genre;
 import com.sh.app.genre.repository.GenreRepository;
+import com.sh.app.genre.serviece.GenreServiece;
 import com.sh.app.member.dto.*;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -65,6 +67,9 @@ public class MemberController {
 
     @Autowired
     private MemberLikeGenreRepository memberLikeGenreRepository;
+
+    @Autowired
+    private GenreServiece genreServiece;
 
     @GetMapping("/createMember.do")
     public void createMember() {}
@@ -123,7 +128,24 @@ public class MemberController {
     }
 
     @GetMapping("/updateMember.do")
-    public void updateMember() {}
+    public void updateMember(@AuthenticationPrincipal MemberDetails memberDetails, Model model) {
+        // 현재 로그인한 회원의 ID를 가져옵니다.
+        Long memberId = memberDetails.getMember().getId();
+
+        // 회원 정보 조회
+        Member member = memberService.findByMemberId(memberId);
+
+        // 회원의 선호하는 장르 목록 조회
+        List<Genre> selectedGenres = memberService.findMemberLikeGenresByMemberId(memberId);
+
+        // 모든 가능한 장르 목록 조회
+        List<Genre> allGenres = genreServiece.findAll();
+
+        // 모델에 데이터 추가
+        model.addAttribute("member", member);
+        model.addAttribute("selectedGenres", selectedGenres);
+        model.addAttribute("allGenres", allGenres);
+    }
 
     @PostMapping("/updateMember.do")
     public String updateMember(
@@ -151,7 +173,10 @@ public class MemberController {
         member.setBirthyear(memberUpdateDto.getBirthyear());
         member.setMemberPhone(memberUpdateDto.getMemberPhone());
 
-        memberService.updateMember(member);
+        // 사용자의 선호 장르 업데이트를 위한 로직 호출
+        memberService.updateMemberGenres(member, memberUpdateDto.getGenres());
+
+//        memberService.updateMember(member);
 
         // security Authentication 갱신
         authService.updateAuthentication(member.getMemberLoginId());
@@ -233,5 +258,20 @@ public class MemberController {
 
         Map<String, Object> resultMap = Map.of("available", isAvailable);
         return ResponseEntity.ok(resultMap);
+    }
+
+    @GetMapping("/preferredGenres")
+    public ResponseEntity<?> getPreferredGenres(@AuthenticationPrincipal MemberDetails memberDetails) {
+        Long memberId = memberDetails.getMember().getId();
+        List<Genre> preferredGenres = memberService.getMemberPreferredGenres(memberId);
+
+        List<Map<String, Object>> genresDto = preferredGenres.stream().map(genre -> {
+            Map<String, Object> genreMap = new HashMap<>();
+            genreMap.put("id", genre.getId());
+            genreMap.put("genreName", genre.getGenreName());
+            return genreMap;
+        }).collect(Collectors.toList());
+
+        return ResponseEntity.ok(genresDto);
     }
 }
