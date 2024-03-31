@@ -16,7 +16,11 @@ import java.util.Set;
  *     BOX + 랜덤숫자5개
  */
 public interface ReservationRepository extends JpaRepository<Reservation, String> {
-    @Query("select r from Reservation r join fetch r.schedule s where r.memberId = :id and s.time < current_timestamp")
+//    @Query("select r from Reservation r join fetch r.schedule s where r.memberId = :id and s.time < current_timestamp")
+// @Query("SELECT r FROM Reservation r JOIN FETCH r.schedule s JOIN FETCH s.movie JOIN FETCH r.seats JOIN FETCH s.theater t JOIN FETCH
+// t.cinema JOIN FETCH r.review WHERE r.memberId = :id AND s.time < CURRENT_TIMESTAMP")  // schema 에서 reservation 테이블에 review_id 컬럼 추가한 후 사용
+    @Query("select r from Reservation r join fetch r.schedule s join fetch s.movie join fetch r.seats join fetch s.theater t join fetch " +
+            "t.cinema where r.memberId = :id and s.time < current_timestamp")
     List<Reservation> findPastReservationsById(Long id);
     //Reservation findById(Long id);
     //@Query("from Reservation r join fetch r.orderPay where r.id = : id")
