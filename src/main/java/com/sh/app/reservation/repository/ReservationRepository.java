@@ -1,12 +1,10 @@
 package com.sh.app.reservation.repository;
 
-import com.sh.app.reservation.dto.ReservationInfoDto;
 import com.sh.app.reservation.entity.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  *  <Entity객체클래스,해당 객체클래스의 pk DataType>
@@ -22,6 +20,13 @@ public interface ReservationRepository extends JpaRepository<Reservation, String
     @Query("select r from Reservation r join fetch r.schedule s join fetch s.movie join fetch r.seats join fetch s.theater t join fetch " +
             "t.cinema where r.memberId = :id and s.time < current_timestamp")
     List<Reservation> findPastReservationsById(Long id);
+
+    @Query("SELECT COUNT(r) FROM Reservation r WHERE r.schedule.movie.id = :id")
+    long countByMovieId(Long id);
+
+    @Query("SELECT r.schedule.movie.id AS movieId, COUNT(r.id) AS reservationCount FROM Reservation r GROUP BY r.schedule.movie.id")
+    List<Object[]> findReservationCountByMovieId();
+
     //Reservation findById(Long id);
     //@Query("from Reservation r join fetch r.orderPay where r.id = : id")
     //Reservation findById(String id);
