@@ -51,6 +51,10 @@ import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -607,10 +611,131 @@ public class MovieService {
         return movieDetailDto;
     }
 
-    public List<MovieDetailDto> findAllByOrderByRankAsc() {
-        // 영화 목록을 먼저 가져옵니다.
-        List<Movie> movies = movieRepository.findAllByOrderByRankAsc();
-        List<MovieDetailDto> movieDetailDtos = new ArrayList<>();
+//    public List<MovieDetailDto> findAllByOrderByRankAsc() {
+//        // 영화 목록을 먼저 가져옵니다.
+//        List<Movie> movies = movieRepository.findAllByOrderByRankAsc();
+//        List<MovieDetailDto> movieDetailDtos = new ArrayList<>();
+//
+//        // 스케줄 수 조회 후 Map으로 변환
+//        List<Object[]> scheduleCounts = scheduleRepository.findScheduleCountByMovieId();
+//        Map<Long, Long> scheduleCountMap = scheduleCounts.stream()
+//                .collect(Collectors.toMap(
+//                        entry -> ((Number) entry[0]).longValue(),
+//                        entry -> ((Number) entry[1]).longValue()
+//                ));
+//
+//        // 예약 수 조회 후 Map으로 변환
+//        List<Object[]> reservationCounts = reservationRepository.findReservationCountByMovieId();
+//        Map<Long, Long> reservationCountMap = reservationCounts.stream()
+//                .collect(Collectors.toMap(
+//                        entry -> ((Number) entry[0]).longValue(),
+//                        entry -> ((Number) entry[1]).longValue()
+//                ));
+//
+////        // 모든 영화에 대한 배우 ID를 한 번에 수집하기
+////        Set<Long> allActorIds = new HashSet<>();
+////        movies.forEach(movie -> allActorIds.addAll(
+////                movie.getMovieActors().stream()
+////                        .map(movieActor -> movieActor.getActor().getId())
+////                        .collect(Collectors.toSet())
+////        ));
+////
+////        // 배우 ID 목록을 사용하여 배우 정보를 한 번의 쿼리로 가져오기
+////        List<Actor> allActors = actorRepository.findByIdIn(new ArrayList<>(allActorIds));
+////        Map<Long, ActorDetailDto> actorInfoMap = allActors.stream()
+////                .map(actor -> modelMapper.map(actor, ActorDetailDto.class))
+////                .collect(Collectors.toMap(ActorDetailDto::getId, Function.identity()));
+////
+////        // 모든 영화에 대한 감독 ID를 한 번에 수집하기
+////        Set<Long> allDirectorIds = new HashSet<>();
+////        movies.forEach(movie -> allDirectorIds.addAll(
+////                movie.getMovieDirectors().stream()
+////                        .map(movieDirector -> movieDirector.getDirector().getId())
+////                        .collect(Collectors.toSet())
+////        ));
+////
+////        // 감독 ID 목록을 사용하여 감독 정보를 한 번의 쿼리로 가져오기
+////        List<Director> allDirectors = directorRepository.findByIdIn(new ArrayList<>(allDirectorIds));
+////        Map<Long, DirectorDetailDto> directorInfoMap = allDirectors.stream()
+////                .map(director -> modelMapper.map(director, DirectorDetailDto.class))
+////                .collect(Collectors.toMap(DirectorDetailDto::getId, Function.identity()));
+//
+//        // 모든 영화에 대한 장르 ID를 한 번에 수집하기
+//        Set<Long> allGenreIds = new HashSet<>();
+//        movies.forEach(movie -> allGenreIds.addAll(
+//                movie.getMovieGenres().stream()
+//                        .map(movieGenre -> movieGenre.getGenre().getId())
+//                        .collect(Collectors.toSet())
+//        ));
+//
+//        // 장르 ID 목록을 사용하여 장르 정보를 한 번의 쿼리로 가져오기
+//        List<Genre> allGenres = genreRepository.findByIdIn(new ArrayList<>(allGenreIds));
+//        Map<Long, GenreDetailDto> genreInfoMap = allGenres.stream()
+//                .map(genre -> modelMapper.map(genre, GenreDetailDto.class))
+//                .collect(Collectors.toMap(GenreDetailDto::getId, Function.identity()));
+//
+////        // 영화 목록을 반복하면서 DTO를 생성합니다.
+//        for (Movie movie : movies) {
+////            // BoxVideoInfoDto 변환
+////            List<VodDetailDto> vodDetailDtos = movie.getVods().stream()
+////                    .map(vod -> modelMapper.map(vod, VodDetailDto.class))
+////                    .collect(Collectors.toList());
+//
+//            // 영화별로 연관된 장르 정보를 매핑
+//            List<GenreDetailDto> genreDetailDtos = movie.getMovieGenres().stream()
+//                    .map(MovieGenre::getGenre)
+//                    .map(genre -> genreInfoMap.get(genre.getId()))
+//                    .collect(Collectors.toList());
+//
+////            // 영화별로 연관된 배우 정보를 매핑
+////            List<ActorDetailDto> actorDetailDtos = movie.getMovieActors().stream()
+////                    .map(MovieActor::getActor)
+////                    .map(actor -> actorInfoMap.get(actor.getId()))
+////                    .collect(Collectors.toList());
+////
+////            // 영화별로 연관된 감독 정보를 매핑
+////            List<DirectorDetailDto> directorDetailDtos = movie.getMovieDirectors().stream()
+////                    .map(MovieDirector::getDirector)
+////                    .map(director -> directorInfoMap.get(director.getId()))
+////                    .collect(Collectors.toList());
+//
+//            // DTO 빌더를 사용하여 BoxMovieInfoDto를 생성합니다.
+//            MovieDetailDto movieDetailDto = convertToMovieList(movie);
+////            MovieDetailDto movieDetailDto = MovieDetailDto.builder()
+////                    .rank(movie.getRank())
+////                    .title(movie.getTitle())
+////                    .releaseDate(movie.getReleaseDate())
+////                    .filmRatings(movie.getFilmRatings())
+////                    .runtime(movie.getRuntime())
+////                    .overview(movie.getOverview())
+////                    .voteAverage(movie.getVoteAverage())
+////                    .posterUrl(movie.getPosterUrl())
+////                    .build();
+//            movieDetailDto.setGenreDetailDtos(genreDetailDtos);
+//
+////            // 총 좌석 수 계산
+////            Long totalSeats = calculateTotalSeatsForMovie(movie.getId());
+////
+////            // 예매율 계산 로직...
+////            Long totalReservationsForMovie = reservationRepository.countByMovieId(movie.getId());
+////            Double bookingRate = totalSeats > 0 ? (totalReservationsForMovie / (double) totalSeats) * 100 : 0;
+//
+//            // 스케줄 수와 예약 수를 기반으로 예매율 계산
+//            Long totalSeats = scheduleCountMap.getOrDefault(movie.getId(), 0L) * 60; // 60은 모든 상영관의 좌석 수를 60개로 고정한 수를 의미
+//            Long totalReservations = reservationCountMap.getOrDefault(movie.getId(), 0L);
+//            double bookingRate = totalSeats > 0 ? (double) totalReservations / totalSeats * 100 : 0;
+//            movieDetailDto.setCumulativeBookingRate(bookingRate);
+//
+//            movieDetailDto.setCumulativeBookingRate(bookingRate);
+//
+//            movieDetailDtos.add(movieDetailDto);
+//        }
+//        return movieDetailDtos;
+//    }
+
+    public Page<MovieDetailDto> findAllByOrderByRankAsc(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Movie> moviePage = movieRepository.findAllByOrderByRankAsc(pageable);
 
         // 스케줄 수 조회 후 Map으로 변환
         List<Object[]> scheduleCounts = scheduleRepository.findScheduleCountByMovieId();
@@ -628,37 +753,9 @@ public class MovieService {
                         entry -> ((Number) entry[1]).longValue()
                 ));
 
-//        // 모든 영화에 대한 배우 ID를 한 번에 수집하기
-//        Set<Long> allActorIds = new HashSet<>();
-//        movies.forEach(movie -> allActorIds.addAll(
-//                movie.getMovieActors().stream()
-//                        .map(movieActor -> movieActor.getActor().getId())
-//                        .collect(Collectors.toSet())
-//        ));
-//
-//        // 배우 ID 목록을 사용하여 배우 정보를 한 번의 쿼리로 가져오기
-//        List<Actor> allActors = actorRepository.findByIdIn(new ArrayList<>(allActorIds));
-//        Map<Long, ActorDetailDto> actorInfoMap = allActors.stream()
-//                .map(actor -> modelMapper.map(actor, ActorDetailDto.class))
-//                .collect(Collectors.toMap(ActorDetailDto::getId, Function.identity()));
-//
-//        // 모든 영화에 대한 감독 ID를 한 번에 수집하기
-//        Set<Long> allDirectorIds = new HashSet<>();
-//        movies.forEach(movie -> allDirectorIds.addAll(
-//                movie.getMovieDirectors().stream()
-//                        .map(movieDirector -> movieDirector.getDirector().getId())
-//                        .collect(Collectors.toSet())
-//        ));
-//
-//        // 감독 ID 목록을 사용하여 감독 정보를 한 번의 쿼리로 가져오기
-//        List<Director> allDirectors = directorRepository.findByIdIn(new ArrayList<>(allDirectorIds));
-//        Map<Long, DirectorDetailDto> directorInfoMap = allDirectors.stream()
-//                .map(director -> modelMapper.map(director, DirectorDetailDto.class))
-//                .collect(Collectors.toMap(DirectorDetailDto::getId, Function.identity()));
-
         // 모든 영화에 대한 장르 ID를 한 번에 수집하기
         Set<Long> allGenreIds = new HashSet<>();
-        movies.forEach(movie -> allGenreIds.addAll(
+        moviePage.forEach(movie -> allGenreIds.addAll(
                 movie.getMovieGenres().stream()
                         .map(movieGenre -> movieGenre.getGenre().getId())
                         .collect(Collectors.toSet())
@@ -670,12 +767,8 @@ public class MovieService {
                 .map(genre -> modelMapper.map(genre, GenreDetailDto.class))
                 .collect(Collectors.toMap(GenreDetailDto::getId, Function.identity()));
 
-//        // 영화 목록을 반복하면서 DTO를 생성합니다.
-        for (Movie movie : movies) {
-//            // BoxVideoInfoDto 변환
-//            List<VodDetailDto> vodDetailDtos = movie.getVods().stream()
-//                    .map(vod -> modelMapper.map(vod, VodDetailDto.class))
-//                    .collect(Collectors.toList());
+        List<MovieDetailDto> movieDetailDtos = moviePage.getContent().stream().map(movie -> {
+                MovieDetailDto dto = convertToMovieList(movie);
 
             // 영화별로 연관된 장르 정보를 매핑
             List<GenreDetailDto> genreDetailDtos = movie.getMovieGenres().stream()
@@ -683,50 +776,18 @@ public class MovieService {
                     .map(genre -> genreInfoMap.get(genre.getId()))
                     .collect(Collectors.toList());
 
-//            // 영화별로 연관된 배우 정보를 매핑
-//            List<ActorDetailDto> actorDetailDtos = movie.getMovieActors().stream()
-//                    .map(MovieActor::getActor)
-//                    .map(actor -> actorInfoMap.get(actor.getId()))
-//                    .collect(Collectors.toList());
-//
-//            // 영화별로 연관된 감독 정보를 매핑
-//            List<DirectorDetailDto> directorDetailDtos = movie.getMovieDirectors().stream()
-//                    .map(MovieDirector::getDirector)
-//                    .map(director -> directorInfoMap.get(director.getId()))
-//                    .collect(Collectors.toList());
-
-            // DTO 빌더를 사용하여 BoxMovieInfoDto를 생성합니다.
-            MovieDetailDto movieDetailDto = convertToMovieList(movie);
-//            MovieDetailDto movieDetailDto = MovieDetailDto.builder()
-//                    .rank(movie.getRank())
-//                    .title(movie.getTitle())
-//                    .releaseDate(movie.getReleaseDate())
-//                    .filmRatings(movie.getFilmRatings())
-//                    .runtime(movie.getRuntime())
-//                    .overview(movie.getOverview())
-//                    .voteAverage(movie.getVoteAverage())
-//                    .posterUrl(movie.getPosterUrl())
-//                    .build();
-            movieDetailDto.setGenreDetailDtos(genreDetailDtos);
-
-//            // 총 좌석 수 계산
-//            Long totalSeats = calculateTotalSeatsForMovie(movie.getId());
-//
-//            // 예매율 계산 로직...
-//            Long totalReservationsForMovie = reservationRepository.countByMovieId(movie.getId());
-//            Double bookingRate = totalSeats > 0 ? (totalReservationsForMovie / (double) totalSeats) * 100 : 0;
+            dto.setGenreDetailDtos(genreDetailDtos);
 
             // 스케줄 수와 예약 수를 기반으로 예매율 계산
             Long totalSeats = scheduleCountMap.getOrDefault(movie.getId(), 0L) * 60; // 60은 모든 상영관의 좌석 수를 60개로 고정한 수를 의미
             Long totalReservations = reservationCountMap.getOrDefault(movie.getId(), 0L);
             double bookingRate = totalSeats > 0 ? (double) totalReservations / totalSeats * 100 : 0;
-            movieDetailDto.setCumulativeBookingRate(bookingRate);
+            dto.setCumulativeBookingRate(bookingRate);
 
-            movieDetailDto.setCumulativeBookingRate(bookingRate);
+            return dto;
+        }).collect(Collectors.toList());
 
-            movieDetailDtos.add(movieDetailDto);
-        }
-        return movieDetailDtos;
+        return new PageImpl<>(movieDetailDtos, pageable, moviePage.getTotalElements());
     }
 
     // 각 영화별 총 좌석 수 계산
@@ -754,9 +815,46 @@ public class MovieService {
         }
     }
 
-    public List<MovieDetailDto> findByGenreName(String genre) {
-        List<Movie> movies = movieRepository.findByGenreName(genre);
-        List<MovieDetailDto> movieDetailDtos = new ArrayList<>();
+//    public List<MovieDetailDto> findByGenreName(String genre) {
+//        List<Movie> movies = movieRepository.findByGenreName(genre);
+//        List<MovieDetailDto> movieDetailDtos = new ArrayList<>();
+//
+//        // 스케줄 수 조회 후 Map으로 변환
+//        List<Object[]> scheduleCounts = scheduleRepository.findScheduleCountByMovieId();
+//        Map<Long, Long> scheduleCountMap = scheduleCounts.stream()
+//                .collect(Collectors.toMap(
+//                        entry -> ((Number) entry[0]).longValue(),
+//                        entry -> ((Number) entry[1]).longValue()
+//                ));
+//
+//        // 예약 수 조회 후 Map으로 변환
+//        List<Object[]> reservationCounts = reservationRepository.findReservationCountByMovieId();
+//        Map<Long, Long> reservationCountMap = reservationCounts.stream()
+//                .collect(Collectors.toMap(
+//                        entry -> ((Number) entry[0]).longValue(),
+//                        entry -> ((Number) entry[1]).longValue()
+//                ));
+//
+//        for (Movie movie : movies) {
+//            MovieDetailDto movieDetailDto = convertToMovieList(movie);
+//
+//            // 스케줄 수와 예약 수를 기반으로 예매율 계산
+//            Long totalSeats = scheduleCountMap.getOrDefault(movie.getId(), 0L) * 60; // 60은 모든 상영관의 좌석 수를 60개로 고정한 수를 의미
+//            Long totalReservations = reservationCountMap.getOrDefault(movie.getId(), 0L);
+//            double bookingRate = totalSeats > 0 ? (double) totalReservations / totalSeats * 100 : 0;
+//            movieDetailDto.setCumulativeBookingRate(bookingRate);
+//
+//            movieDetailDto.setCumulativeBookingRate(bookingRate);
+//
+//            movieDetailDtos.add(movieDetailDto);
+//        }
+//
+//        return movieDetailDtos;
+//    }
+
+    public Page<MovieDetailDto> findByGenreName(String genre, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Movie> moviePage = movieRepository.findByGenreName(genre, pageable);
 
         // 스케줄 수 조회 후 Map으로 변환
         List<Object[]> scheduleCounts = scheduleRepository.findScheduleCountByMovieId();
@@ -774,21 +872,19 @@ public class MovieService {
                         entry -> ((Number) entry[1]).longValue()
                 ));
 
-        for (Movie movie : movies) {
-            MovieDetailDto movieDetailDto = convertToMovieList(movie);
+        List<MovieDetailDto> movieDetailDtos = moviePage.getContent().stream().map(movie -> {
+            MovieDetailDto dto = convertToMovieList(movie);
 
             // 스케줄 수와 예약 수를 기반으로 예매율 계산
             Long totalSeats = scheduleCountMap.getOrDefault(movie.getId(), 0L) * 60; // 60은 모든 상영관의 좌석 수를 60개로 고정한 수를 의미
             Long totalReservations = reservationCountMap.getOrDefault(movie.getId(), 0L);
             double bookingRate = totalSeats > 0 ? (double) totalReservations / totalSeats * 100 : 0;
-            movieDetailDto.setCumulativeBookingRate(bookingRate);
+            dto.setCumulativeBookingRate(bookingRate);
 
-            movieDetailDto.setCumulativeBookingRate(bookingRate);
+            return dto;
+        }).collect(Collectors.toList());
 
-            movieDetailDtos.add(movieDetailDto);
-        }
-
-        return movieDetailDtos;
+        return new PageImpl<>(movieDetailDtos, pageable, moviePage.getTotalElements());
     }
 
 //    public List<MovieListDto> getCurrentMovies() {
@@ -1016,10 +1112,106 @@ public class MovieService {
 
     }
 
-    public List<MovieDetailDto> findAllByReleaseDateAfterOrderByRankAsc() {
+//    public List<MovieDetailDto> findAllByReleaseDateAfterOrderByRankAsc() {
+//        LocalDate today = LocalDate.now();
+//        List<Movie> movies = movieRepository.findAllByReleaseDateAfterOrderByRankAsc(today);
+//        List<MovieDetailDto> movieDetailDtos = new ArrayList<>();
+//
+//        // 스케줄 수 조회 후 Map으로 변환
+//        List<Object[]> scheduleCounts = scheduleRepository.findScheduleCountByMovieId();
+//        Map<Long, Long> scheduleCountMap = scheduleCounts.stream()
+//                .collect(Collectors.toMap(
+//                        entry -> ((Number) entry[0]).longValue(),
+//                        entry -> ((Number) entry[1]).longValue()
+//                ));
+//
+//        // 예약 수 조회 후 Map으로 변환
+//        List<Object[]> reservationCounts = reservationRepository.findReservationCountByMovieId();
+//        Map<Long, Long> reservationCountMap = reservationCounts.stream()
+//                .collect(Collectors.toMap(
+//                        entry -> ((Number) entry[0]).longValue(),
+//                        entry -> ((Number) entry[1]).longValue()
+//                ));
+//
+//        // 모든 영화에 대한 장르 ID를 한 번에 수집하기
+//        Set<Long> allGenreIds = new HashSet<>();
+//        movies.forEach(movie -> allGenreIds.addAll(
+//                movie.getMovieGenres().stream()
+//                        .map(movieGenre -> movieGenre.getGenre().getId())
+//                        .collect(Collectors.toSet())
+//        ));
+//
+//        // 장르 ID 목록을 사용하여 장르 정보를 한 번의 쿼리로 가져오기
+//        List<Genre> allGenres = genreRepository.findByIdIn(new ArrayList<>(allGenreIds));
+//        Map<Long, GenreDetailDto> genreInfoMap = allGenres.stream()
+//                .map(genre -> modelMapper.map(genre, GenreDetailDto.class))
+//                .collect(Collectors.toMap(GenreDetailDto::getId, Function.identity()));
+//
+//        for (Movie movie : movies) {
+//            // 영화별로 연관된 장르 정보를 매핑
+//            List<GenreDetailDto> genreDetailDtos = movie.getMovieGenres().stream()
+//                    .map(MovieGenre::getGenre)
+//                    .map(genre -> genreInfoMap.get(genre.getId()))
+//                    .collect(Collectors.toList());
+//
+//            // DTO 빌더를 사용하여 BoxMovieInfoDto를 생성합니다.
+//            MovieDetailDto movieDetailDto = convertToMovieList(movie);
+//            movieDetailDto.setGenreDetailDtos(genreDetailDtos);
+//
+//            // 스케줄 수와 예약 수를 기반으로 예매율 계산
+//            Long totalSeats = scheduleCountMap.getOrDefault(movie.getId(), 0L) * 60;
+//            Long totalReservations = reservationCountMap.getOrDefault(movie.getId(), 0L);
+//            double bookingRate = totalSeats > 0 ? (double) totalReservations / totalSeats * 100 : 0;
+//            movieDetailDto.setCumulativeBookingRate(bookingRate);
+//
+//            movieDetailDtos.add(movieDetailDto);
+//        }
+//        return movieDetailDtos;
+//    }
+//
+//    public List<MovieDetailDto> findByGenresNameAndReleaseDateAfter(String genre) {
+//        LocalDate today = LocalDate.now();
+//        List<Movie> movies = movieRepository.findByGenresNameAndReleaseDateAfter(genre, today);
+//
+//        List<MovieDetailDto> movieDetailDtos = new ArrayList<>();
+//
+//        // 스케줄 수 조회 후 Map으로 변환
+//        List<Object[]> scheduleCounts = scheduleRepository.findScheduleCountByMovieId();
+//        Map<Long, Long> scheduleCountMap = scheduleCounts.stream()
+//                .collect(Collectors.toMap(
+//                        entry -> ((Number) entry[0]).longValue(),
+//                        entry -> ((Number) entry[1]).longValue()
+//                ));
+//
+//        // 예약 수 조회 후 Map으로 변환
+//        List<Object[]> reservationCounts = reservationRepository.findReservationCountByMovieId();
+//        Map<Long, Long> reservationCountMap = reservationCounts.stream()
+//                .collect(Collectors.toMap(
+//                        entry -> ((Number) entry[0]).longValue(),
+//                        entry -> ((Number) entry[1]).longValue()
+//                ));
+//
+//        for (Movie movie : movies) {
+//            MovieDetailDto movieDetailDto = convertToMovieList(movie);
+//
+//            // 스케줄 수와 예약 수를 기반으로 예매율 계산
+//            Long totalSeats = scheduleCountMap.getOrDefault(movie.getId(), 0L) * 60; // 60은 모든 상영관의 좌석 수를 60개로 고정한 수를 의미
+//            Long totalReservations = reservationCountMap.getOrDefault(movie.getId(), 0L);
+//            double bookingRate = totalSeats > 0 ? (double) totalReservations / totalSeats * 100 : 0;
+//            movieDetailDto.setCumulativeBookingRate(bookingRate);
+//
+//            movieDetailDto.setCumulativeBookingRate(bookingRate);
+//
+//            movieDetailDtos.add(movieDetailDto);
+//        }
+//
+//        return movieDetailDtos;
+//    }
+
+    public Page<MovieDetailDto> findAllByReleaseDateAfterOrderByRankAsc(int page, int size) {
         LocalDate today = LocalDate.now();
-        List<Movie> movies = movieRepository.findAllByReleaseDateAfterOrderByRankAsc(today);
-        List<MovieDetailDto> movieDetailDtos = new ArrayList<>();
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Movie> moviePage = movieRepository.findAllByReleaseDateAfterOrderByRankAsc(today, pageable);
 
         // 스케줄 수 조회 후 Map으로 변환
         List<Object[]> scheduleCounts = scheduleRepository.findScheduleCountByMovieId();
@@ -1039,7 +1231,7 @@ public class MovieService {
 
         // 모든 영화에 대한 장르 ID를 한 번에 수집하기
         Set<Long> allGenreIds = new HashSet<>();
-        movies.forEach(movie -> allGenreIds.addAll(
+        moviePage.forEach(movie -> allGenreIds.addAll(
                 movie.getMovieGenres().stream()
                         .map(movieGenre -> movieGenre.getGenre().getId())
                         .collect(Collectors.toSet())
@@ -1051,33 +1243,33 @@ public class MovieService {
                 .map(genre -> modelMapper.map(genre, GenreDetailDto.class))
                 .collect(Collectors.toMap(GenreDetailDto::getId, Function.identity()));
 
-        for (Movie movie : movies) {
+        List<MovieDetailDto> movieDetailDtos = moviePage.getContent().stream().map(movie -> {
+                MovieDetailDto dto = convertToMovieList(movie);
+
             // 영화별로 연관된 장르 정보를 매핑
             List<GenreDetailDto> genreDetailDtos = movie.getMovieGenres().stream()
                     .map(MovieGenre::getGenre)
                     .map(genre -> genreInfoMap.get(genre.getId()))
                     .collect(Collectors.toList());
 
-            // DTO 빌더를 사용하여 BoxMovieInfoDto를 생성합니다.
-            MovieDetailDto movieDetailDto = convertToMovieList(movie);
-            movieDetailDto.setGenreDetailDtos(genreDetailDtos);
+            dto.setGenreDetailDtos(genreDetailDtos);
 
             // 스케줄 수와 예약 수를 기반으로 예매율 계산
-            Long totalSeats = scheduleCountMap.getOrDefault(movie.getId(), 0L) * 60;
+            Long totalSeats = scheduleCountMap.getOrDefault(movie.getId(), 0L) * 60; // 60은 모든 상영관의 좌석 수를 60개로 고정한 수를 의미
             Long totalReservations = reservationCountMap.getOrDefault(movie.getId(), 0L);
             double bookingRate = totalSeats > 0 ? (double) totalReservations / totalSeats * 100 : 0;
-            movieDetailDto.setCumulativeBookingRate(bookingRate);
+            dto.setCumulativeBookingRate(bookingRate);
 
-            movieDetailDtos.add(movieDetailDto);
-        }
-        return movieDetailDtos;
+            return dto;
+        }).collect(Collectors.toList());
+
+        return new PageImpl<>(movieDetailDtos, pageable, moviePage.getTotalElements());
     }
 
-    public List<MovieDetailDto> findByGenresNameAndReleaseDateAfter(String genre) {
+    public Page<MovieDetailDto> findByGenresNameAndReleaseDateAfter(String genre, int page, int size) {
         LocalDate today = LocalDate.now();
-        List<Movie> movies = movieRepository.findByGenresNameAndReleaseDateAfter(genre, today);
-
-        List<MovieDetailDto> movieDetailDtos = new ArrayList<>();
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Movie> moviePage = movieRepository.findByGenresNameAndReleaseDateAfter(genre, today, pageable);
 
         // 스케줄 수 조회 후 Map으로 변환
         List<Object[]> scheduleCounts = scheduleRepository.findScheduleCountByMovieId();
@@ -1095,21 +1287,19 @@ public class MovieService {
                         entry -> ((Number) entry[1]).longValue()
                 ));
 
-        for (Movie movie : movies) {
-            MovieDetailDto movieDetailDto = convertToMovieList(movie);
+        List<MovieDetailDto> movieDetailDtos = moviePage.getContent().stream().map(movie -> {
+            MovieDetailDto dto = convertToMovieList(movie);
 
             // 스케줄 수와 예약 수를 기반으로 예매율 계산
             Long totalSeats = scheduleCountMap.getOrDefault(movie.getId(), 0L) * 60; // 60은 모든 상영관의 좌석 수를 60개로 고정한 수를 의미
             Long totalReservations = reservationCountMap.getOrDefault(movie.getId(), 0L);
             double bookingRate = totalSeats > 0 ? (double) totalReservations / totalSeats * 100 : 0;
-            movieDetailDto.setCumulativeBookingRate(bookingRate);
+            dto.setCumulativeBookingRate(bookingRate);
 
-            movieDetailDto.setCumulativeBookingRate(bookingRate);
+            return dto;
+        }).collect(Collectors.toList());
 
-            movieDetailDtos.add(movieDetailDto);
-        }
-
-        return movieDetailDtos;
+        return new PageImpl<>(movieDetailDtos, pageable, moviePage.getTotalElements());
     }
 
     public void updateMovieRatings() {

@@ -20,7 +20,9 @@
 
                     <div class="movie_info-left">
                         <h1 class="movie_title" th:text="${movie.title}">윙카</h1>
-                        <em class="text-2xl text-red-500 ml-2" th:if="|${movie.dDay != ''}|" th:text="${movie.dDay}"></em>
+                        <div class="p-0 mt-4 ml-1">
+                            <em class="text-2xl text-red-500" th:if="|${movie.dDay != ''}|" th:text="${movie.dDay}"></em>
+                        </div>
                         <div class="movie_rate">
 
                             <div class="star flex items-center justify-center">

@@ -1,7 +1,6 @@
 $(document).ready(function() {
     let page = 0; // 현재 페이지 번호
-    const size = 10; // 페이지당 영화 수
-
+    const size = 4; // 페이지당 영화 수
     // 페이지 로드와 동시에 첫 페이지의 영화 목록 로드
     loadMovies(page, size, '');
 
@@ -66,13 +65,10 @@ $(document).ready(function() {
         let posterSrc = movie.posterUrl ? (movie.posterUrl.startsWith('http://file.koreafilm.or.kr') ? movie.posterUrl : `https://image.tmdb.org/t/p/w200${movie.posterUrl}`) : 'https://t4.ftcdn.net/jpg/03/08/67/51/360_F_308675145_Ye70fJFVPntNVnmxjtVgMy5P8MDEmusB.jpg';
         let ratingSpan = getRatingSpan(movie);
         let title = getMovieDetailLink(movie);
-        let rankDisplay = movie.rank ? `<strong class="rank text-red-500 mr-2 top-0 right-0">No.${movie.rank}</strong>` : '';
 
         return `
         <div class="movie-card">
             <div>
-                ${rankDisplay}
-                
                 <a href="${contextPath}movie/movieDetail.do?id=${movie.id}">
                     ${ratingSpan}
                     <img loading="lazy" src="${posterSrc}" alt="${movie.title}">
@@ -106,7 +102,7 @@ $(document).ready(function() {
 
     function loadMovies(currentPage, pageSize, genre) {
         $.ajax({
-            url: `${contextPath}movie/moviePageList.do`,
+            url: `${contextPath}movie/preMoviePageList.do`,
             type: 'GET',
             data: {
                 page: currentPage,
