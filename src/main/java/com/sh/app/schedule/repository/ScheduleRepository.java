@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
@@ -75,4 +76,9 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
         JOIN movie m ON m.id = ml.movie_id AND m.id = s.movie_id
         WHERE (m.id= :movieId AND c.id = :cinemaId AND s.sch_date = :schDate) AND s.time > CURRENT_TIMESTAMP """, nativeQuery = true)
     List<IScheduleInfoDto> findScheduleDetailsByDateAndCinemaId_2(Long movieId, Long cinemaId, LocalDate schDate);
+
+    Long countByMovieId(Long movieId);
+
+    @Query("SELECT s.movie.id AS movieId, COUNT(s.id) AS scheduleCount FROM Schedule s GROUP BY s.movie.id")
+    List<Object[]> findScheduleCountByMovieId();
 }

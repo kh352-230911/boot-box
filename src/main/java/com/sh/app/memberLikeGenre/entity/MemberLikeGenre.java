@@ -33,5 +33,4 @@ public class MemberLikeGenre {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "genre_id") // genre.genre_id 컬럼지정
     private Genre genre;
-
 }
