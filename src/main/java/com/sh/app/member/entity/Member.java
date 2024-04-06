@@ -31,6 +31,7 @@ import java.util.Set;
 @Builder
 @DynamicInsert //null이 아닌 필드값만 insert한다.
 @DynamicUpdate //영속성 컨텍스트의 엔티티와 달라진 필드만 update한다.
+//@ToString(exclude = {"reviews", "memberLikeCinemas", "memberLikeGenres", "authorities", "asks", "reservations"})
 @ToString(exclude = {"memberLikeCinemas", "memberLikeGenres",
         "reviews", "asks", "reservations"})
 public class Member implements Serializable{

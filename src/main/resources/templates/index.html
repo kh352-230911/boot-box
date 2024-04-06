@@ -70,13 +70,6 @@
                         <!-- 세로선 -->
                         <div class="divider"></div>
 
-<!--                        <div class="recommended-wrapper">-->
-<!--                            <span id="recommendedBtn" onclick="changeTab('recommended')" class="tab font-semibold">선호장르 추천영화-->
-<!--                                <input class="memberId" type="hidden" th:data-member-id="${#authentication.principal.member.id}">-->
-<!--                            </span>-->
-<!--                        </div>-->
-
-
                         <div class="recommended-wrapper">
                             <span id="recommendedBtn" onclick="checkAndChangeTab('recommended')" class="tab font-semibold">
                                 선호장르 추천영화
@@ -110,7 +103,6 @@
                                         <th:block th:if="|${movie.posterUrl != null and !#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
                                             <img loading="lazy" th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" th:alt="${movie.title}">
                                         </th:block>
-
                                     </a>
                                     <div class="section-1-2-btn">
                                         <div class="section-1-2-btn-bg"></div>
@@ -140,16 +132,6 @@
                                     <a class="movie-title mb-1" th:text="${#strings.abbreviate(movie.title, 10)}" href="#"></a>
                                 </div>
 
-    <!--                            <a th:href="@{#}">-->
-    <!--                                <div class="flex items-center justify-center">-->
-    <!--                                    <p th:text="${#numbers.formatDecimal(movie.voteAverage, 1, 1)}"></p>-->
-    <!--                                    <th:block th:each="star : ${#numbers.sequence(1, 5)}">-->
-    <!--                                        <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" th:classappend="${movie.voteAverage / 2.0 > star} ? 'text-yellow-300' : 'text-gray-300'" viewBox="0 0 22 20">-->
-    <!--                                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>-->
-    <!--                                        </svg>-->
-    <!--                                    </th:block>-->
-    <!--                                </div>-->
-    <!--                            </a>-->
 
                                 <a th:href="@{#}">
                                     <div class="flex items-center justify-center">
@@ -189,12 +171,21 @@
                         </div>
                     </div>
 
-                    <!-- 선호장르 추천영화 영역에 id 추가 및 기본으로는 숨겨진 상태 -->
-                    <div id="recommended" class="tab-content" style="display: none;">
-                        <!-- 선호장르 추천영화 내용 -->
-<!--                        <p th:text="|${#authentication.principal.member.id}님의 선호장르는  입니다.|"></p>-->
-<!--                        ${memberLikeGenre.genreName}-->
+                    <!-- 선호장르 추천영화 영역에 -->
+<!--                    <div id="recommended" class="tab-content" style="display: none;">-->
+<!--                        <div id="genreMessage"></div> &lt;!&ndash; 메시지를 위한 새 div &ndash;&gt;-->
+<!--                        <div id="movies" class="movies-container"></div>-->
+<!--                    </div>-->
 
+                    <div id="recommended" class="tab-content" style="display: none;">
+                        <div id="genreMessage"></div>
+                        <!-- 영화 목록을 표시할 컨테이너 (슬라이더) -->
+                        <div class="small">
+                            <ul id="movies" class="small-ul"></ul>
+                            <!-- 좌우 이동 버튼 -->
+                            <i class="left fas fa-chevron-left arrow" onclick="moveSlide('left')"></i>
+                            <i class="right fas fa-chevron-right arrow" onclick="moveSlide('right')"></i>
+                        </div>
                     </div>
                 </th:block>
 
@@ -252,16 +243,6 @@
                                     <a class="movie-title mb-1" th:text="${#strings.abbreviate(movies[0].title, 10)}" href="#"></a>
                                 </div>
 
-    <!--                            <a th:href="@{#}">-->
-    <!--                                <div class="flex items-center justify-center">-->
-    <!--                                    <p th:text="${#numbers.formatDecimal(movies[0].voteAverage, 1, 1)}"></p>-->
-    <!--                                    <th:block th:each="star : ${#numbers.sequence(1, 5)}">-->
-    <!--                                        <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" th:classappend="${movies[0].voteAverage / 2.0 >= star} ? 'text-yellow-300' : 'text-gray-300 dark:text-gray-500'" viewBox="0 0 22 20">-->
-    <!--                                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>-->
-    <!--                                        </svg>-->
-    <!--                                    </th:block>-->
-    <!--                                </div>-->
-    <!--                            </a>-->
 
                                 <a th:href="@{#}">
                                     <div class="flex items-center justify-center">

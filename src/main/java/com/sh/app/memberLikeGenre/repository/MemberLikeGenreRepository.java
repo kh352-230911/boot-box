@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface MemberLikeGenreRepository extends JpaRepository<MemberLikeGenre, Long> {
     List<MemberLikeGenre> findByMember(Member member);
 
-    @Query("SELECT new com.sh.app.memberLikeGenre.dto.MemberLikeGenreListDto(m.id, m.memberName, g.genreName) " +
+    @Query("SELECT new com.sh.app.memberLikeGenre.dto.MemberLikeGenreListDto(m.id, m.memberName, g.genreName, g.id) " +
             "FROM MemberLikeGenre mg " +
             "JOIN mg.member m " +
             "JOIN mg.genre g " +
