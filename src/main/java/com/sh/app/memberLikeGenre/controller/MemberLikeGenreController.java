@@ -48,7 +48,6 @@ public class MemberLikeGenreController {
             List<MovieDto> movieDtos = movies.stream().map(movie -> MovieDto.builder()
                     .id(movie.getId())
                     .title(movie.getTitle())
-                    .runtime(movie.getRuntime())
                     .posterUrl(movie.getPosterUrl())
                     .filmRatings(movie.getFilmRatings())
                     .voteAverage(movie.getVoteAverage())

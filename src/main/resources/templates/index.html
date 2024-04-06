@@ -103,7 +103,6 @@
                                         <th:block th:if="|${movie.posterUrl != null and !#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
                                             <img loading="lazy" th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" th:alt="${movie.title}">
                                         </th:block>
-
                                     </a>
                                     <div class="section-1-2-btn">
                                         <div class="section-1-2-btn-bg"></div>
@@ -173,12 +172,21 @@
                     </div>
 
                     <!-- 선호장르 추천영화 영역에 -->
+<!--                    <div id="recommended" class="tab-content" style="display: none;">-->
+<!--                        <div id="genreMessage"></div> &lt;!&ndash; 메시지를 위한 새 div &ndash;&gt;-->
+<!--                        <div id="movies" class="movies-container"></div>-->
+<!--                    </div>-->
+
                     <div id="recommended" class="tab-content" style="display: none;">
-                        <div id="genreMessage"></div> <!-- 메시지를 위한 새 div -->
-                        <div id="movies" class="movies-container"></div>
+                        <div id="genreMessage"></div>
+                        <!-- 영화 목록을 표시할 컨테이너 (슬라이더) -->
+                        <div class="small">
+                            <ul id="movies" class="small-ul"></ul>
+                            <!-- 좌우 이동 버튼 -->
+                            <i class="left fas fa-chevron-left arrow" onclick="moveSlide('left')"></i>
+                            <i class="right fas fa-chevron-right arrow" onclick="moveSlide('right')"></i>
+                        </div>
                     </div>
-
-
                 </th:block>
 
                 <div>

@@ -13,7 +13,6 @@ import java.time.LocalDate;
 public class MovieDto {
     private Long id;
     private String title;
-    private Integer runtime;
     private String posterUrl;
     private String filmRatings;
     private Double voteAverage;

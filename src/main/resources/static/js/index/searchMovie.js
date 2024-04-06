@@ -56,7 +56,7 @@
 //         }
 //     });
 // });
-
+let currentSlide = 0; // 변수를 올바르게 초기화
 $(document).ready(() => {
     // 각 포스터의 너비를 계산합니다 (외부 여백 포함).
     const posterWidth = $('.small-ul li').outerWidth(true);
@@ -70,8 +70,8 @@ $(document).ready(() => {
     // 컨테이너의 너비를 설정합니다.
     // $('.small').css('width', containerWidth);
 
+
     const slideWidth = $('.small-ul li').outerWidth() + 10;
-    let currentSlide = 0;
     const slideCount = $('.small-ul li').length;
 
     const moveSlide = (index) => {
@@ -148,6 +148,13 @@ function checkAuthentication() {
     return true;
 }
 
+function abbreviateTitle(title, maxLength) {
+    if (title.length <= maxLength) {
+        return title;
+    } else {
+        return title.substring(0, maxLength) + '...';
+    }
+}
 function updateUIWithGenerLikeData(data) {
 
     const message = `<span style="color: white; margin-left: 10px">"${data.memberLikeGenre.memberName}" </span>
@@ -157,30 +164,40 @@ function updateUIWithGenerLikeData(data) {
                             <br><span style="color: white; margin-left: 141px; margin-top: 10px;"> 장르에 맞는 추천영화 입니다.</span>`;
     document.getElementById('genreMessage').innerHTML = message; // 변경된 부분
 
-    let moviesHtml = '<div style="display:flex; flex-wrap:wrap;">'; // 영화 목록을 표시할 컨테이너
+    let moviesHtml = '<div style="display:flex;">'; // 영화 목록을 표시할 컨테이너
     data.movies.forEach(movie => {
-        let posterSrc;
         if (movie.posterUrl === null) {
-            posterSrc = 'https://t4.ftcdn.net/jpg/03/08/67/51/360_F_308675145_Ye70fJFVPntNVnmxjtVgMy5P8MDEmusB.jpg';
-        } else if (movie.posterUrl.startsWith('http://file.koreafilm.or.kr')) {
+            // 포스터 URL이 null이면 이 영화는 목록에 추가되지 않음
+            return; // 다음 영화
+        }
+        let posterSrc;
+        if (movie.posterUrl.startsWith('http://file.koreafilm.or.kr')) {
             posterSrc = movie.posterUrl;
         } else {
             posterSrc = `https://image.tmdb.org/t/p/w200${movie.posterUrl}`;
         }
 
-        let displayTitle = movie.title.length > 10 ? movie.title.substring(0, 10) + '...' : movie.title;
+        let displayTitle = abbreviateTitle(movie.title, 10);
 
         const ratingIcon = RatingIcon(movie.filmRatings);
 
         moviesHtml += `
-            <div class="movie" style="margin: 30px; width: 100%; max-width: 150px;">
-                <img src="${posterSrc}" alt="${displayTitle}" loading="lazy" style="height: auto; max-height: 380px;">
+          <div class="movie-container">
+                <div class="movie-box">
+                    <a href="/bootbox/movie/movieDetail.do?id=${movie.id}">
+                        <img src="${posterSrc}" alt="${displayTitle}" loading="lazy" style="border-radius: 10px;">
+                        <div class="section-1-2-btn">
+                            <div class="section-1-2-btn-bg"></div>
+                            <div class="section-1-2-btn-de">상세보기</div>
+                        </div>
+                    </a>
+                </div>
+            
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 5px">
                     <div style="display: flex; align-items: center; justify-content: center; gap: 5px; width: 100%; margin-bottom: 5px">
                         <div style="flex-shrink: 0;">${ratingIcon}</div>
                         <h3 style="margin: 0; text-align: center;">${displayTitle}</h3>
                     </div>
-                    <p style="text-align: center;">상영 시간: ${movie.runtime}분</p>
                     <div style="display: flex; text-align: center;">${movie.voteAverage} ${Stars(movie.voteAverage)}</div>
                 </div>
             </div>`;
@@ -247,6 +264,24 @@ function RatingIcon(filmRatings) {
 
     return `<span style="font-size: 0.4em" class="${baseClass} ${ratingClass}">${ratingText}</span>`;
 }
+
+// 슬라이더를 이동하는 함수
+let slideIndex = 0;
+function moveSlide(direction) {
+    const moviesList = document.getElementById('movies');
+    const slideWidth = moviesList.getElementsByClassName('movie-container')[0].offsetWidth;
+    const maxSlides = moviesList.getElementsByClassName('movie-container').length;
+    const sliderVisibleWidth = moviesList.offsetWidth;
+
+    const maxIndex = Math.ceil(maxSlides - sliderVisibleWidth / slideWidth);
+    if (direction === 'right' && slideIndex < maxIndex) {
+        slideIndex++;
+    } else if (direction === 'left' && slideIndex > 0) {
+        slideIndex--;
+    }
+
+    moviesList.style.transform = `translateX(${-slideWidth * slideIndex}px)`;
+}
 function checkAndChangeTab(tabName) {
     if (checkAuthentication()) { // 먼저 로그인 상태를 확인
         changeTab(tabName); // 로그인 상태가 확인되면 탭을 변경
@@ -254,6 +289,7 @@ function checkAndChangeTab(tabName) {
 }
 
 $(document).ready(function() {
+    $('#movies').css('flex-wrap', 'nowrap');
     $('#recommendedBtn').click(function() {
         if (!checkAuthentication()) {
             return; // 사용자가 로그인하지 않았으면 여기서 중단
@@ -271,6 +307,7 @@ $(document).ready(function() {
                 console.log('Data received:', data);
                 if (document.getElementById('recommended').style.display === 'block') {
                     updateUIWithGenerLikeData(data);
+                    resetSlidePosition(); // 슬라이드 위치 초기화
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -278,10 +315,18 @@ $(document).ready(function() {
             }
         });
     }
+    function resetSlidePosition() {
+        currentSlide = 0;
+        moveSlide(currentSlide);
+    }
+    // $('#recommendedBtn').click(function() {
+    //     // ... 기존 코드 ...
+    //     slideIndex = 0; // 슬라이더 위치 초기화
+    //     $('#movies').css('transform', 'translateX(0)'); // 슬라이더 위치 리셋
+    // });
 
     // 페이지 로드 시 기본적으로 '무비 차트' 탭 활성화
     changeTab('movieChart');
 });
-
 
 
