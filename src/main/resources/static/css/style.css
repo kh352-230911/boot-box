@@ -421,7 +421,7 @@ footer {
 i.arrow {
     /* 화살표 버튼 스타일 */
     position: absolute;
-    top: 50%;
+    top: 35%;
     cursor: pointer;
     padding: 5px;
     border-radius: 50%;
@@ -457,8 +457,15 @@ i.arrow:hover {
 
 .movie-box {
     position: relative;
-    width: auto;
-    height: auto;
+    width: 200px;
+    height: 300px;
+    border-radius: 10px;
+}
+
+.movie-box img{
+    position: relative;
+    width: 200px;
+    height: 300px;
     border-radius: 10px;
 }
 

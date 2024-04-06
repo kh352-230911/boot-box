@@ -177,7 +177,7 @@ function updateUIWithGenerLikeData(data) {
             posterSrc = `https://image.tmdb.org/t/p/w200${movie.posterUrl}`;
         }
 
-        let displayTitle = abbreviateTitle(movie.title, 10);
+        let displayTitle = abbreviateTitle(movie.title, 9);
 
         const ratingIcon = RatingIcon(movie.filmRatings);
 
@@ -198,7 +198,7 @@ function updateUIWithGenerLikeData(data) {
                         <div style="flex-shrink: 0;">${ratingIcon}</div>
                         <h3 style="margin: 0; text-align: center;">${displayTitle}</h3>
                     </div>
-                    <div style="display: flex; text-align: center;">${movie.voteAverage} ${Stars(movie.voteAverage)}</div>
+                    <div style="display: flex; align-items: center;">${movie.voteAverage} ${Stars(movie.voteAverage)}</div>
                 </div>
             </div>`;
     });
@@ -274,7 +274,7 @@ function moveSlide(direction) {
     const sliderVisibleWidth = moviesList.offsetWidth;
 
     const maxIndex = Math.ceil(maxSlides - sliderVisibleWidth / slideWidth);
-    if (direction === 'right' && slideIndex < maxIndex) {
+    if (direction === 'right' && slideIndex < maxIndex + 1) {
         slideIndex++;
     } else if (direction === 'left' && slideIndex > 0) {
         slideIndex--;
