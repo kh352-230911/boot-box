@@ -5,6 +5,7 @@ import com.sh.app.movie.dto.MovieListDto;
 import com.sh.app.movie.entity.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -75,7 +76,7 @@ ORDER BY CASE WHEN m.title LIKE %:title% THEN 0 ELSE 1 END ASC, -- 'title'를 �
                                FROM movie m3 
                                WHERE m3.title LIKE %:title%)) ASC, -- 'title' 평점과 가까운 순
          m.vote_average DESC -- 동일 평점 내에서는 높은 평점 우선
-FETCH FIRST 10 ROWS ONLY""", nativeQuery = true)
+FETCH FIRST 13 ROWS ONLY""", nativeQuery = true)
     List<Movie> findByTitleContaining(String title);
 
     // 현재 날짜 이후의 개봉일을 가진 영화 조회
@@ -86,4 +87,9 @@ FETCH FIRST 10 ROWS ONLY""", nativeQuery = true)
     List<Movie> findByGenresNameAndReleaseDateAfter(String genre, LocalDate today);
 
     Optional<Movie> findByNormalizedTitleAndReleaseDate(String normalizedTitle, LocalDate releaseDate);
+
+    @Query("SELECT m FROM Movie m JOIN m.movieGenres mg WHERE mg.genre.id = :genreId")
+    List<Movie> findMoviesByGenreId(@Param("genreId") Long genreId);
+
+
 }

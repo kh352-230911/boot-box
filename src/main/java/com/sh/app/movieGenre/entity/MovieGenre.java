@@ -1,5 +1,7 @@
 package com.sh.app.movieGenre.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sh.app.genre.entity.Genre;
 import com.sh.app.movie.entity.Movie;
 import jakarta.persistence.*;
@@ -26,6 +28,7 @@ public class MovieGenre {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
+    @JsonBackReference
     private Movie movie;
 
     @ManyToOne(fetch = FetchType.LAZY)

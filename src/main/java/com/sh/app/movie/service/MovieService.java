@@ -945,5 +945,9 @@ public class MovieService {
             }
         });
     }
+
+    public List<Movie> getMoviesByGenre(Long genreId) {
+        return movieRepository.findMoviesByGenreId(genreId);
+    }
 }
 
