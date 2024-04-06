@@ -8,9 +8,9 @@
     <link rel="stylesheet" th:href="@{/css/ask/askDetail.css}" />
 </head>
 <style layout:fragment="style"></style>
-<div layout:fragment="content" >
-    <div class="container flex justify-center mt-4">
-        <table class="mt-30">
+<div layout:fragment="content" class="flex justify-center">
+    <div class="container">
+        <table>
             <thead>
             <tr>
                 <th th:text="${ask.id}">번호</th>
@@ -54,11 +54,11 @@
                     </tr>
                 </tbody>
         </table>
-            <input type="hidden" name="id" th:value="${ask.id}" />
-            <th:block th:if="${showAnswer == null}">
-                <span><input type="submit" value="답변저장" id="save"></span>
-            </th:block>
             <div class="button-container">
+                <input type="hidden" name="id" th:value="${ask.id}" />
+                <th:block th:if="${showAnswer == null}">
+                    <span id="answer-margin"><input type="submit" value="답변저장" id="save"></span>
+                </th:block>
                 <a th:onclick="|location.href = '@{/ask/askList.do}';|" class="back-to-list-btn">목록으로</a>
             </div>
         </form>
