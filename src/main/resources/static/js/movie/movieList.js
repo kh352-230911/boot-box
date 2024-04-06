@@ -96,7 +96,7 @@ $(document).ready(function() {
             <span class="text-xs text-zinc-400">
                 <strong>${new Date(movie.releaseDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' })} 개봉</strong>
             </span>
-            ${movie.dDay ? `<em class="text-base text-red-500 ml-2">${movie.dDay}</em>` : ''}
+            ${movie.dday !== null && movie.dday !== undefined ? `<em class="text-base text-red-500 ml-2">${movie.dday}</em>` : ''}
             <div class="movie_action">
                 <button class="movie_button text-sm mb-3" onclick="location.href='/reservation/reservationBooking.do'">예매하기</button>
             </div>
