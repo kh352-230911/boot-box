@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,10 +46,10 @@ public class MemberLikeCinemaService {
     }
 
     public List<MemberLikeCinemaListDto> findByMemberId(Long memberId) {
-             return memberLikeCinemaRepository.findByMemberId(memberId)
-                .stream()
-                .map((memberLikeCinema) -> convertToMemberLikeCinemaDto(memberLikeCinema))
-                .collect(Collectors.toList());
+         return memberLikeCinemaRepository.findByMemberIdWithCinema(memberId)
+                 .stream()
+                 .map(this::convertToMemberLikeCinemaDto)
+                 .collect(Collectors.toList());
     }
 
     private MemberLikeCinemaListDto convertToMemberLikeCinemaDto(MemberLikeCinema memberLikeCinema) {

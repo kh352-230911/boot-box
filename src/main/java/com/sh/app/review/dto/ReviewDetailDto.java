@@ -26,6 +26,4 @@ public class ReviewDetailDto {
     private Long movieId;
 
     private Member member;
-
-
 }

@@ -57,4 +57,6 @@ public class MovieDetailDto {
     private List<ReviewDetailDto> reviewDetailDtos;
 
     private String dDay;
+
+    private Double cumulativeBookingRate;
 }

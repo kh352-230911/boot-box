@@ -5,10 +5,8 @@ import com.sh.app.auth.service.AuthService;
 import com.sh.app.auth.vo.MemberDetails;
 import com.sh.app.genre.entity.Genre;
 import com.sh.app.genre.repository.GenreRepository;
-import com.sh.app.member.dto.MemberCreateDto;
-import com.sh.app.member.dto.MemberReservationDto;
-import com.sh.app.member.dto.MemberReviewDto;
-import com.sh.app.member.dto.MemberUpdateDto;
+import com.sh.app.genre.serviece.GenreServiece;
+import com.sh.app.member.dto.*;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
 import com.sh.app.memberLikeCinema.dto.MemberLikeCinemaListDto;
@@ -16,6 +14,7 @@ import com.sh.app.memberLikeCinema.serviece.MemberLikeCinemaService;
 import com.sh.app.memberLikeGenre.entity.MemberLikeGenre;
 import com.sh.app.memberLikeGenre.repository.MemberLikeGenreRepository;
 import com.sh.app.review.dto.CreateReviewDto;
+import com.sh.app.review.entity.Review;
 import com.sh.app.review.service.ReviewService;
 import com.sh.app.util.GenreNormalization;
 import jakarta.validation.Valid;
@@ -33,6 +32,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -67,6 +67,9 @@ public class MemberController {
 
     @Autowired
     private MemberLikeGenreRepository memberLikeGenreRepository;
+
+    @Autowired
+    private GenreServiece genreServiece;
 
     @GetMapping("/createMember.do")
     public void createMember() {}
@@ -125,7 +128,24 @@ public class MemberController {
     }
 
     @GetMapping("/updateMember.do")
-    public void updateMember() {}
+    public void updateMember(@AuthenticationPrincipal MemberDetails memberDetails, Model model) {
+        // 현재 로그인한 회원의 ID를 가져옵니다.
+        Long memberId = memberDetails.getMember().getId();
+
+        // 회원 정보 조회
+        Member member = memberService.findByMemberId(memberId);
+
+        // 회원의 선호하는 장르 목록 조회
+        List<Genre> selectedGenres = memberService.findMemberLikeGenresByMemberId(memberId);
+
+        // 모든 가능한 장르 목록 조회
+        List<Genre> allGenres = genreServiece.findAll();
+
+        // 모델에 데이터 추가
+        model.addAttribute("member", member);
+        model.addAttribute("selectedGenres", selectedGenres);
+        model.addAttribute("allGenres", allGenres);
+    }
 
     @PostMapping("/updateMember.do")
     public String updateMember(
@@ -153,7 +173,10 @@ public class MemberController {
         member.setBirthyear(memberUpdateDto.getBirthyear());
         member.setMemberPhone(memberUpdateDto.getMemberPhone());
 
-        memberService.updateMember(member);
+        // 사용자의 선호 장르 업데이트를 위한 로직 호출
+        memberService.updateMemberGenres(member, memberUpdateDto.getGenres());
+
+//        memberService.updateMember(member);
 
         // security Authentication 갱신
         authService.updateAuthentication(member.getMemberLoginId());
@@ -190,19 +213,19 @@ public class MemberController {
 
     @PostMapping("/memberWatchedMovie.do")
     public String  createReview(@Valid CreateReviewDto createReviewDto,
-            @AuthenticationPrincipal MemberDetails memberDetails,
-                               RedirectAttributes redirectAttributes) {
+                                @AuthenticationPrincipal MemberDetails memberDetails,
+                                RedirectAttributes redirectAttributes) {
         log.debug("createReviewDto = {}", createReviewDto);
 
-//        createReviewDto.setMemberId(memberDetails.getMember().getId());
-//        reviewService.createReview(createReviewDto);
+        reviewService.createReview(createReviewDto, memberDetails.getMember());
 
-        return "redirect:/member/memberWatchedMovie.do?id=" + memberDetails.getMember().getId();
+        redirectAttributes.addFlashAttribute("msg", memberDetails.getMember().getMemberName() + "님의 리뷰가 등록되었습니다.🤗");
+        return "redirect:/member/memberReviewList.do?id=" + memberDetails.getMember().getId();
     }
 
     @GetMapping("/memberAskList.do")
     public void memberAskList(Long id, Model model) {
-        Member member = memberService.findById(id);
+        MemberAskDto member = memberService.findById(id);
 
         log.debug("member = {}", member);
         model.addAttribute("member", member);
@@ -214,5 +237,41 @@ public class MemberController {
 
         log.debug("member = {}", member);
         model.addAttribute("member", member);
+    }
+
+    @PostMapping("/existingCheckIdDuplicate.do")
+    public ResponseEntity<?> existingCheckIdDuplicate(@RequestParam("username") String username,
+                                                      @RequestParam(value = "memberId", required = false) Long memberId) {
+        boolean isAvailable;
+        Member existingMember = memberService.findByMemberLoginId(username);
+
+        if (existingMember == null) {
+            // 사용자 이름이 사용되지 않았으므로 사용 가능
+            isAvailable = true;
+        } else if (memberId != null && existingMember.getId().equals(memberId)) {
+            // 사용자 이름이 현재 회원의 것이므로 사용 가능
+            isAvailable = true;
+        } else {
+            // 그 외의 경우는 사용 불가
+            isAvailable = false;
+        }
+
+        Map<String, Object> resultMap = Map.of("available", isAvailable);
+        return ResponseEntity.ok(resultMap);
+    }
+
+    @GetMapping("/preferredGenres")
+    public ResponseEntity<?> getPreferredGenres(@AuthenticationPrincipal MemberDetails memberDetails) {
+        Long memberId = memberDetails.getMember().getId();
+        List<Genre> preferredGenres = memberService.getMemberPreferredGenres(memberId);
+
+        List<Map<String, Object>> genresDto = preferredGenres.stream().map(genre -> {
+            Map<String, Object> genreMap = new HashMap<>();
+            genreMap.put("id", genre.getId());
+            genreMap.put("genreName", genre.getGenreName());
+            return genreMap;
+        }).collect(Collectors.toList());
+
+        return ResponseEntity.ok(genresDto);
     }
 }

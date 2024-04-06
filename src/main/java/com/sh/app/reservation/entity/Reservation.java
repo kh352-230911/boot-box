@@ -2,6 +2,7 @@ package com.sh.app.reservation.entity;
 import com.sh.app.common.Status;
 import com.sh.app.member.entity.Member;
 import com.sh.app.movie.entity.Movie;
+import com.sh.app.review.entity.Review;
 import com.sh.app.schedule.entity.Schedule;
 import com.sh.app.seat.entity.Seat;
 import jakarta.persistence.*;
@@ -64,6 +65,10 @@ public class Reservation {
     @JoinColumn(name = "schedule_id")
     @BatchSize(size = 50)
     private Schedule schedule;
+
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "review_id")
+//    private Review review;
 
     // 브릿지 테이블 : reservation_seat
 //    @ManyToMany

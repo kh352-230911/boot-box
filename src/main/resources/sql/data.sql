@@ -881,7 +881,7 @@ insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1063241, to_date('
 INSERT INTO RESERVATION VALUES ('box16443', 1, 1, 'CONFIRM');
 INSERT INTO RESERVATION VALUES ('box25822', 3, 21, 'CONFIRM');
 INSERT INTO RESERVATION VALUES ('box47220', 3, 81, 'CONFIRM');
---INSERT INTO RESERVATION VALUES ('box47211', 2, 3, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box47211', 87, 1, 'CONFIRM');
 --INSERT INTO RESERVATION VALUES ('box42217', 4, 4, 'CONFIRM');
 --INSERT INTO RESERVATION VALUES ('box34332', 4, 6, 'CONFIRM');
 --INSERT INTO RESERVATION VALUES ('box34331', 5, 6, 'CONFIRM');
@@ -939,7 +939,7 @@ INSERT INTO RESERVATION VALUES ('box24521', 3, 1, 'CONFIRM');
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box16443', 1);
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box25822', 1);
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box47220', 3);
---insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box42217', 4);
+--insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box42217', 1);
 --insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box34332', 4);
 --insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box32582', 5);
 --insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box27006', 5);

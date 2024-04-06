@@ -38,7 +38,8 @@
 			<!--            </div>-->
 			<form class="flex justify-end mt-1">
 				<label for="underline_select" class="sr-only">Underline select</label>
-				<select id="underline_select" name="genre" th:onchange="this.form.submit()"
+<!--				<select id="underline_select" name="genre" th:onchange="this.form.submit()"-->
+				<select id="underline_select" name="genre"
 						class="block mr-7 mb-2 text-sm text-gray-500 bg-transparent border-0 border-b-2 border-red-600 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-red-600 peer"
 						style="width: 250px; font-size: 1.0rem;">
 					<option value="" th:selected="${genre == null or genre == ''}">Select genre</option>
@@ -71,68 +72,78 @@
 		<br>
 		<br>
 		<div class="section-1-2 flex flex-wrap w-full h-auto">
-			<div th:each="movie, status : ${movies}">
-				<div>
-					<a th:href="@{/movie/movieDetail.do(id=${movie.id})}">
-						<th:block th:if="|${movie.filmRatings == '전체관람가'}|">
-							<span style="font-size: 0.2em" class="grade bg-gradient-to-r bg-green-100 text-green-800 text-m font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">ALL</span>
-						</th:block>
-						<th:block th:if="|${movie.filmRatings == '12세관람가'}|">
-							<span style="font-size: 0.2em" class="grade bg-gradient-to-r bg-yellow-100 text-yellow-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">12</span>
-						</th:block>
-						<th:block th:if="|${movie.filmRatings == '15세관람가'}|">
-							<span style="font-size: 0.2em" class="grade bg-gradient-to-r bg-purple-100 text-purple-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-purple-400 border border-purple-400">15</span>
-						</th:block>
-						<th:block th:if="|${movie.filmRatings == '18세관람가(청소년관람불가)'}|">
-							<span style="font-size: 0.2em" class="grade bg-gradient-to-r bg-red-100 text-red-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">18</span>
-						</th:block>
-						<th:block th:if="|${movie.filmRatings == '18세관람가(청소년관람불가)'}|">
-							<span style="font-size: 0.2em" class="grade bg-gradient-to-r bg-red-100 text-red-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">18</span>
-						</th:block>
-						<th:block th:if="|${movie.filmRatings == '정보 없음'}|">
-							<span style="font-size: 0.2em" class="grade bg-gradient-to-r shadow-lg shadow-gray-100/50 bg-gray-100 text-gray-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-500">미정</span>
-						</th:block>
-						<th:block th:if="${movie.posterUrl == null}">
-							<img loading="lazy" src="https://t4.ftcdn.net/jpg/03/08/67/51/360_F_308675145_Ye70fJFVPntNVnmxjtVgMy5P8MDEmusB.jpg">
-						</th:block>
-						<th:block th:if="|${movie.posterUrl != null and #strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
-							<img loading="lazy" th:src="${movie.posterUrl}" th:alt="${movie.title}">
-						</th:block>
-						<th:block th:if="|${movie.posterUrl != null and !#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
-							<img loading="lazy" th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" th:alt="${movie.title}">
-						</th:block>
-					</a>
-				</div>
-				<a class="movie-title mb-1" th:href="@{/movie/movieDetail.do(id=${movie.id})}" th:text="${#strings.abbreviate(movie.title, 20)}"></a>
-				<a th:href="@{/movie/movieDetail.do(id=${movie.id})}">
-				</a>
-				<!--                <a class="movie-content" th:href="@{/movie/movieDetail.do(id=${movie.id})}">-->
-				<!--                    <img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">-->
-				<!--                </a>-->
-				<!--                <a class="movie-content" th:href="@{/movie/movieDetail.do(id=${movie.id})}"></a>-->
-				<div class="m-0 p-0">
-					<strong class="text-xs text-zinc-400">
-						평점
-						<span class="text-xs text-zinc-400 mx-1" th:text="${movie.voteAverage}"></span>
-						|
-					</strong>
+<!--			<div th:each="movie, status : ${movies}">-->
+<!--				<div>-->
+<!--					<a th:href="@{/movie/movieDetail.do(id=${movie.id})}">-->
+<!--						<th:block th:if="|${movie.filmRatings == '전체관람가'}|">-->
+<!--							<span style="font-size: 0.2em" class="grade bg-gradient-to-r bg-green-100 text-green-800 text-m font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">ALL</span>-->
+<!--						</th:block>-->
+<!--						<th:block th:if="|${movie.filmRatings == '12세관람가'}|">-->
+<!--							<span style="font-size: 0.2em" class="grade bg-gradient-to-r bg-yellow-100 text-yellow-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">12</span>-->
+<!--						</th:block>-->
+<!--						<th:block th:if="|${movie.filmRatings == '15세관람가'}|">-->
+<!--							<span style="font-size: 0.2em" class="grade bg-gradient-to-r bg-purple-100 text-purple-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-purple-400 border border-purple-400">15</span>-->
+<!--						</th:block>-->
+<!--						<th:block th:if="|${movie.filmRatings == '18세관람가(청소년관람불가)'}|">-->
+<!--							<span style="font-size: 0.2em" class="grade bg-gradient-to-r bg-red-100 text-red-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">18</span>-->
+<!--						</th:block>-->
+<!--						<th:block th:if="|${movie.filmRatings == '18세관람가(청소년관람불가)'}|">-->
+<!--							<span style="font-size: 0.2em" class="grade bg-gradient-to-r bg-red-100 text-red-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">18</span>-->
+<!--						</th:block>-->
+<!--						<th:block th:if="|${movie.filmRatings == '정보 없음'}|">-->
+<!--							<span style="font-size: 0.2em" class="grade bg-gradient-to-r shadow-lg shadow-gray-100/50 bg-gray-100 text-gray-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-500">미정</span>-->
+<!--						</th:block>-->
+<!--						<th:block th:if="${movie.posterUrl == null}">-->
+<!--							<img loading="lazy" src="https://t4.ftcdn.net/jpg/03/08/67/51/360_F_308675145_Ye70fJFVPntNVnmxjtVgMy5P8MDEmusB.jpg">-->
+<!--						</th:block>-->
+<!--						<th:block th:if="|${movie.posterUrl != null and #strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">-->
+<!--							<img loading="lazy" th:src="${movie.posterUrl}" th:alt="${movie.title}">-->
+<!--						</th:block>-->
+<!--						<th:block th:if="|${movie.posterUrl != null and !#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">-->
+<!--							<img loading="lazy" th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" th:alt="${movie.title}">-->
+<!--						</th:block>-->
+<!--					</a>-->
+<!--				</div>-->
+<!--				<a class="movie-title mb-1" th:href="@{/movie/movieDetail.do(id=${movie.id})}"-->
+<!--				   th:text="${#strings.abbreviate(movie.title, 20)}"></a>-->
+<!--				<a th:href="@{/movie/movieDetail.do(id=${movie.id})}"></a>-->
+<!--				&lt;!&ndash;                <a class="movie-content" th:href="@{/movie/movieDetail.do(id=${movie.id})}">&ndash;&gt;-->
+<!--				&lt;!&ndash;                    <img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">&ndash;&gt;-->
+<!--				&lt;!&ndash;                </a>&ndash;&gt;-->
+<!--				&lt;!&ndash;                <a class="movie-content" th:href="@{/movie/movieDetail.do(id=${movie.id})}"></a>&ndash;&gt;-->
+<!--				<div class="m-0 p-0">-->
+<!--					<strong class="text-xs text-zinc-400">-->
+<!--						평점-->
+<!--						<span class="text-xs text-zinc-400 mx-1" th:text="${movie.voteAverage}"></span>-->
+<!--						|-->
+<!--					</strong>-->
 
-					<strong class="text-xs text-zinc-400 mx-1">
-						예매율
-						<span class="text-xs text-zinc-400">29.1 %</span>
-					</strong>
-				</div>
-				<span class="text-xs text-zinc-400">
-                    <strong th:text="|${#temporals.format(movie.releaseDate, 'yyyy.MM.dd')} 개봉|"></strong>
-                </span>
-				<em class="text-base text-red-500 ml-2" th:if="|${movie.dDay != ''}|" th:text="${movie.dDay}"></em>
-				<div class="movie_action">
-					<button class="movie_button text-sm mb-3" th:onclick="|location.href = '@{/reservation/reservationBooking.do}'|">예매하기</button>
-				</div>
-			</div>
+<!--					<strong class="text-xs text-zinc-400 mx-1">-->
+<!--						예매율-->
+<!--						<span class="text-xs text-zinc-400" th:text="|${#numbers.formatDecimal(movie.cumulativeBookingRate, 1, 1)}%|">29.1 %</span>-->
+<!--					</strong>-->
+<!--				</div>-->
+<!--				<span class="text-xs text-zinc-400">-->
+<!--                    <strong th:text="|${#temporals.format(movie.releaseDate, 'yyyy.MM.dd')} 개봉|"></strong>-->
+<!--                </span>-->
+<!--				<em class="text-base text-red-500 ml-2" th:if="|${movie.dDay != ''}|" th:text="${movie.dDay}"></em>-->
+<!--				<div class="movie_action">-->
+<!--					<button class="movie_button text-sm mb-3" th:onclick="|location.href = '@{/reservation/reservationBooking.do}'|">예매하기</button>-->
+<!--				</div>-->
+<!--			</div>-->
+		</div>
+
+		<!-- 더보기 버튼 -->
+		<div class="flex justify-center mt-4">
+<!--			<button type="button" id="btn-page" class="m-4 py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-sky-200 hover:bg-sky-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-sky-200">-->
+<!--				더보기 <span id="page"></span>/<span id="totalPage"></span>-->
+<!--			</button>-->
+			<button type="button" id="btn-page" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+				더보기 <span id="page"></span>/<span id="totalPage"></span>
+			</button>
 		</div>
 	</div>
 </div>
 
-<script layout:fragment="script"></script>
+<script layout:fragment="script" th:src="@{/js/movie/preMovieList.js}"></script>
 </html>

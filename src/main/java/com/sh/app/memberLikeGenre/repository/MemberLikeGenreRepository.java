@@ -20,4 +20,6 @@ public interface MemberLikeGenreRepository extends JpaRepository<MemberLikeGenre
             "JOIN mg.genre g " +
             "WHERE m.id = :memberId")
     Optional<MemberLikeGenreListDto> findMemberLikeGenreListByMemberId(@Param("memberId") Long memberId);
+
+    void deleteByMember(Member member);
 }

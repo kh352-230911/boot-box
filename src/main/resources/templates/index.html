@@ -166,7 +166,7 @@
                                 <a class="movie-content" href="#">
                                     <img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">
     <!--                                <span th:text="|평점 ${movie.voteAverage}|">예매율29.1%</span>-->
-                                    <span>29.1%</span>
+                                    <span th:text="|${#numbers.formatDecimal(movie.cumulativeBookingRate, 1, 1)}%|">29.1%</span>
                                 </a>
                             </div>
                         </div>
@@ -268,7 +268,7 @@
                                 <a class="movie-content" href="#">
                                     <img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">
     <!--                                <span th:text="|평점 ${movies[0].voteAverage}|">예매율29.1%</span>-->
-                                    <span>29.1%</span>
+                                    <span th:text="|${#numbers.formatDecimal(movies[0].cumulativeBookingRate, 1, 1)}%|">29.1%</span>
                                 </a>
                             </div>
                         </div>
@@ -360,7 +360,7 @@
 
                                         <a class="movie-content" href="#">
                                             <img src="https://img.cgv.co.kr/R2014/images/common/egg/eggGoldenegggreat.png" alt="egg">
-                                            <span>29.1%</span>
+                                            <span th:text="|${#numbers.formatDecimal(movie.cumulativeBookingRate, 1, 1)}%|">29.1%</span>
                                         </a>
                                     </li>
                                 </th:block>
