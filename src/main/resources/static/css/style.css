@@ -376,7 +376,7 @@ footer {
     display: flex;
     transition: transform 0.5s ease;
     justify-content: space-around; /* 아이템들 사이에 공간을 균등하게 분배 */
-    flex-wrap: nowrap;
+    /*flex-wrap: nowrap;*/
     align-items: stretch;
 }
 
@@ -457,8 +457,8 @@ i.arrow:hover {
 
 .movie-box {
     position: relative;
-    width: 210px;
-    height: 301px;
+    width: auto;
+    height: auto;
     border-radius: 10px;
 }
 
@@ -548,6 +548,4 @@ i.arrow:hover {
     background-color: #716a6a;
     margin: 0px;
 }
-
-
 

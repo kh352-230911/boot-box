@@ -17,9 +17,6 @@ public class MemberLikeGenreServiece {
     @Autowired
     private MemberLikeGenreRepository memberLikeGenreRepository;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
     public MemberLikeGenreListDto findMemberLikeGenreInfoByMemberId(Long memberId) {
         return memberLikeGenreRepository.findMemberLikeGenreListByMemberId(memberId)
                 .orElseThrow(() -> new NoSuchElementException("선호 장르 정보를 찾을 수 없습니다."));

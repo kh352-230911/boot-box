@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -77,7 +78,7 @@ ORDER BY CASE WHEN m.title LIKE %:title% THEN 0 ELSE 1 END ASC, -- 'title'를 �
                                FROM movie m3 
                                WHERE m3.title LIKE %:title%)) ASC, -- 'title' 평점과 가까운 순
          m.vote_average DESC -- 동일 평점 내에서는 높은 평점 우선
-FETCH FIRST 10 ROWS ONLY""", nativeQuery = true)
+FETCH FIRST 13 ROWS ONLY""", nativeQuery = true)
     List<Movie> findByTitleContaining(String title);
 
     @Query("SELECT m FROM Movie m where m.releaseDate > :today ORDER BY CASE WHEN m.rank IS NULL THEN 1 ELSE 0 END, m.rank ASC, m.releaseDate DESC, m.id ASC")
@@ -91,4 +92,9 @@ FETCH FIRST 10 ROWS ONLY""", nativeQuery = true)
     Page<Movie> findByGenresNameAndReleaseDateAfter(String genre, LocalDate today, Pageable pageable);
 
     Optional<Movie> findByNormalizedTitleAndReleaseDate(String normalizedTitle, LocalDate releaseDate);
+
+    @Query("SELECT m FROM Movie m JOIN m.movieGenres mg WHERE mg.genre.id = :genreId")
+    List<Movie> findMoviesByGenreId(@Param("genreId") Long genreId);
+
+
 }
