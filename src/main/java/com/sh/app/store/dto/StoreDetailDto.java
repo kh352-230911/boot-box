@@ -24,5 +24,5 @@ public class StoreDetailDto {
 
     private String description;
 
-    private LocalDate expirationPeriod;
+    private Integer expirationPeriod;
 }

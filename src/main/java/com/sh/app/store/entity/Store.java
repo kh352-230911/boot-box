@@ -39,5 +39,5 @@ public class Store {
 
     private String description;
 
-    private LocalDate expirationPeriod;
+    private Integer expirationPeriod;
 }

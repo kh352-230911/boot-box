@@ -23,5 +23,7 @@ public class StoreController {
         List<StoreDetailDto> storeDetailDtos = storeService.findAll();
 
         log.debug("store = {}", storeDetailDtos);
+
+        model.addAttribute("stores", storeDetailDtos);
     }
 }
