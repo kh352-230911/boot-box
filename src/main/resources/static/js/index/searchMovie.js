@@ -157,11 +157,11 @@ function abbreviateTitle(title, maxLength) {
 }
 function updateUIWithGenerLikeData(data) {
 
-    const message = `<span style="color: white; margin-left: 10px">"${data.memberLikeGenre.memberName}" </span>
+    const message = `<span style="color: white; margin-left: 30px">"${data.memberLikeGenre.memberName}" </span>
                             <span style="color: grey;">님의 선호 장르는</span>
                             <span style="color: white;">"${data.memberLikeGenre.genreName}" </span>
                             <span style="color: grey;">입니다.</span>
-                            <br><span style="color: white; margin-left: 141px; margin-top: 10px;"> 장르에 맞는 추천영화 입니다.</span>`;
+                            <br><span style="color: white; margin-left: 230px;"> 장르에 맞는 추천영화 입니다.</span>`;
     document.getElementById('genreMessage').innerHTML = message; // 변경된 부분
 
     let moviesHtml = '<div style="display:flex;">'; // 영화 목록을 표시할 컨테이너
@@ -319,11 +319,6 @@ $(document).ready(function() {
         currentSlide = 0;
         moveSlide(currentSlide);
     }
-    // $('#recommendedBtn').click(function() {
-    //     // ... 기존 코드 ...
-    //     slideIndex = 0; // 슬라이더 위치 초기화
-    //     $('#movies').css('transform', 'translateX(0)'); // 슬라이더 위치 리셋
-    // });
 
     // 페이지 로드 시 기본적으로 '무비 차트' 탭 활성화
     changeTab('movieChart');
