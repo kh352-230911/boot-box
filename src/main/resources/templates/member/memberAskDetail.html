@@ -4,10 +4,11 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{layout/default}">
 <head>
-    <title>문의사항 자세히</title>
-    <link rel="stylesheet" th:href="@{/css/ask/askDetail.css}" />
+    <title>문의 세부 내용</title>
+    <link rel="stylesheet" th:href="@{/css/member/memberAskDetail.css}" />
 </head>
 <style layout:fragment="style"></style>
+
 <div layout:fragment="content" class="flex justify-center">
     <div class="container">
         <table>
@@ -31,39 +32,30 @@
             </tbody>
         </table>
         <br>
-        <form id="answerForm"
-              th:action="@{/ask/createAnswer.do}"
-              method="post"
-              enctype="application/x-www-form-urlencoded">
         <table>
             <thead>
-                <tr>
-                    <th>답변</th>
-                </tr>
+            <tr>
+                <th>답변</th>
+            </tr>
             </thead>
-                <tbody>
-                    <tr>
-                        <th:block th:if="${showAnswer == null}">
-                            <td>
-                                <textarea id="answerContent" name="answerContent"></textarea>
-                            </td>
-                        </th:block>
-                        <th:block th:unless="${showAnswer == null}">
-                            <td th:text="${showAnswer}"></td>
-                        </th:block>
-                    </tr>
-                </tbody>
-        </table>
-            <div class="button-container">
-                <input type="hidden" name="id" th:value="${ask.id}" />
+            <tbody>
+            <tr>
                 <th:block th:if="${showAnswer == null}">
-                    <span id="answer-margin"><input type="submit" value="답변저장" id="save"></span>
+                    <td>
+                        <textarea id="answerContent" name="answerContent"></textarea>
+                    </td>
                 </th:block>
-                <a th:onclick="|location.href = '@{/ask/askList.do}';|" class="back-to-list-btn">목록으로</a>
-            </div>
-        </form>
+                <th:block th:unless="${showAnswer == null}">
+                    <td th:text="${showAnswer}"></td>
+                </th:block>
+            </tr>
+            </tbody>
+        </table>
+        <div class="button-container">
+            <a th:onclick="|location.href = '@{/member/memberAskList.do(id=${#authentication.principal.member.id})}';|" class="back-to-list-btn">목록으로</a>
+        </div>
     </div>
 </div>
 
-<script layout:fragment="script" th:src="@{/js/answer/createAnswer.js}"></script>
+<script layout:fragment="script"></script>
 </html>

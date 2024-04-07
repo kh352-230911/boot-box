@@ -1,6 +1,10 @@
 package com.sh.app.member.controller;
 
 
+import com.sh.app.answer.dto.AnswerDetailDto;
+import com.sh.app.answer.service.AnswerService;
+import com.sh.app.ask.dto.AskDetailDto;
+import com.sh.app.ask.service.AskService;
 import com.sh.app.auth.service.AuthService;
 import com.sh.app.auth.vo.MemberDetails;
 import com.sh.app.genre.entity.Genre;
@@ -71,6 +75,12 @@ public class MemberController {
     @Autowired
     private GenreServiece genreServiece;
 
+    @Autowired
+    private AskService askService;
+
+    @Autowired
+    private AnswerService answerService;
+
     @GetMapping("/createMember.do")
     public void createMember() {}
 
@@ -85,7 +95,7 @@ public class MemberController {
             String message = bindingResult.getAllErrors().get(0).getDefaultMessage();
             throw new RuntimeException(message);
         }
-        log.debug("memberCreateDto = {}", memberCreateDto);
+//        log.debug("memberCreateDto = {}", memberCreateDto);
 
         Member member = memberCreateDto.toMember();
         String encodedPassword = passwordEncoder.encode(member.getMemberPwd());
@@ -153,7 +163,7 @@ public class MemberController {
             BindingResult bindingResult,
             @AuthenticationPrincipal MemberDetails memberDetails,
             RedirectAttributes redirectAttributes) {
-        log.debug("memberUpdateDto = {}", memberUpdateDto);
+//        log.debug("memberUpdateDto = {}", memberUpdateDto);
 
         if(bindingResult.hasErrors()){
             StringBuilder message = new StringBuilder();
@@ -197,7 +207,7 @@ public class MemberController {
     @GetMapping("/memberReservation.do")
     public void memberReservation(Long id, Model model) {
         MemberReservationDto member = memberService.findByReservation(id);
-        log.debug("member = {}", member);
+//        log.debug("member = {}", member);
 
         model.addAttribute("member", member);
     }
@@ -206,7 +216,7 @@ public class MemberController {
     public void memberWatchedMovie(Long id, Model model) {
 //        log.debug("id = {}", id);
         MemberReservationDto member = memberService.findPastReservationsById(id);
-        log.debug("member = {}", member);
+//        log.debug("member = {}", member);
 
         model.addAttribute("member", member);
     }
@@ -215,7 +225,7 @@ public class MemberController {
     public String  createReview(@Valid CreateReviewDto createReviewDto,
                                 @AuthenticationPrincipal MemberDetails memberDetails,
                                 RedirectAttributes redirectAttributes) {
-        log.debug("createReviewDto = {}", createReviewDto);
+//        log.debug("createReviewDto = {}", createReviewDto);
 
         reviewService.createReview(createReviewDto, memberDetails.getMember());
 
@@ -227,7 +237,7 @@ public class MemberController {
     public void memberAskList(Long id, Model model) {
         MemberAskDto member = memberService.findById(id);
 
-        log.debug("member = {}", member);
+//        log.debug("member = {}", member);
         model.addAttribute("member", member);
     }
 
@@ -235,7 +245,7 @@ public class MemberController {
     public void memberReviewList(Long id, Model model) {
         MemberReviewDto member = memberService.getMemberWithReviews(id);
 
-        log.debug("member = {}", member);
+//        log.debug("member = {}", member);
         model.addAttribute("member", member);
     }
 
@@ -273,5 +283,27 @@ public class MemberController {
         }).collect(Collectors.toList());
 
         return ResponseEntity.ok(genresDto);
+    }
+
+    @GetMapping("/memberAskDetail.do")
+    public void memberAskDetail(Long id, Model model) {
+        AskDetailDto askDetailDto = askService.findById(id);
+
+        Long askId = askDetailDto.getId();
+        AnswerDetailDto answerDetailDto;
+
+        try {
+            answerDetailDto = answerService.findById(askId);
+        } catch (Exception e) {
+            answerDetailDto = null;
+        }
+        if (answerDetailDto == null) {
+            model.addAttribute("answerForm", true);
+        } else {
+            model.addAttribute("showAnswer", answerDetailDto.getContent());
+            model.addAttribute("answerForm", false);
+        }
+
+        model.addAttribute("ask", askDetailDto);
     }
 }

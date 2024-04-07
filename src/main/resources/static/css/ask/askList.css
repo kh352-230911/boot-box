@@ -9,6 +9,11 @@ body {
     font-weight: 500;
     font-size: 1.2em;
 }
+header {
+    font-family: "Agency FB";
+    font-weight: 500;
+    font-size: 1.2em;
+}
 th,
 td {
     padding: 15px;
@@ -93,14 +98,19 @@ button#askDetail:active {
     /* 버튼클릭하면 색 바뀜 */
     background-color: #d20707;
 }
+section#content {
+    min-height: calc(100vh - 195px); /* 섹션의 최소 높이를 화면 높이에서 헤더와 푸터의 높이를 뺀 값으로 설정 */
+    position: relative; /* 섹션을 상대 위치로 설정 */
+    padding: 0;
+}
 footer {
-    height: 60px;
-    /*position: relative;*/
-    transform: translateY(0%);
-    /* 페이지의 아래쪽에 고정 */
-    width: 99%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    background-color: #212121;
+    background-clip: content-box;
+    height: 95px;
+    bottom: 0; /* 바디 하단에 배치 */
+    width: 100%; /* 너비를 바디와 일치시킴 */
+    font-family: "Agency FB";
+}
+.content-box {
+    margin-bottom: 40px;
 }

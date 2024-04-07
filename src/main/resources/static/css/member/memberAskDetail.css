@@ -94,9 +94,9 @@ tbody > tr
     font-weight: bold;
     text-align: center;
     text-decoration: none;
-    /*display: inline-block;*/
+    display: inline-block;
     cursor: pointer;
-    /*position: fixed;*/
+    position: fixed;
     bottom: 7px;
     right: 130px;
 }
@@ -146,11 +146,8 @@ tbody > tr
 }
 #answerContent
 {
-    width: 100%;
-    height: 100%;
+    width: 950px;
+    height: 280px;
     background-color: rgba(255,255,255,-0.1);
     border: none;
-}
-#answer-margin {
-    margin-right: 20px;
 }

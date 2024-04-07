@@ -1,6 +1,6 @@
 $(document).ready(function() {
     let page = 0; // 현재 페이지 번호
-    const size = 4; // 페이지당 영화 수
+    const size = 6; // 페이지당 영화 수
     // 페이지 로드와 동시에 첫 페이지의 영화 목록 로드
     loadMovies(page, size, '');
 
@@ -92,7 +92,7 @@ $(document).ready(function() {
             <span class="text-xs text-zinc-400">
                 <strong>${new Date(movie.releaseDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' })} 개봉</strong>
             </span>
-            ${movie.dDay ? `<em class="text-base text-red-500 ml-2">${movie.dDay}</em>` : ''}
+            ${movie.dday !== null && movie.dday !== undefined ? `<em class="text-base text-red-500 ml-2">${movie.dday}</em>` : ''}
             <div class="movie_action">
                 <button class="movie_button text-sm mb-3" onclick="location.href='/reservation/reservationBooking.do'">예매하기</button>
             </div>
@@ -110,6 +110,7 @@ $(document).ready(function() {
                 genre: genre
             },
             success: function(response) {
+                console.log(response);
                 if(currentPage === 0) $('.section-1-2').empty(); // 영화 목록 비우기
                 // 서버로부터 받은 데이터로 HTML 컨텐츠 생성 및 추가
                 response.content.forEach(function(movie) {

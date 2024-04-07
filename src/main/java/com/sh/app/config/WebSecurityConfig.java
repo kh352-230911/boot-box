@@ -37,6 +37,7 @@ public class WebSecurityConfig {
                     .requestMatchers("/notice/**").permitAll()
                     .requestMatchers("/ask/**").authenticated() // 인증된 사용자만 접근가능
                     .requestMatchers("/member/**").permitAll()
+                    .requestMatchers("/store/**").permitAll()
                     .requestMatchers("/member/createMember.do", "/member/checkIdDuplicate.do").anonymous()
 //                    .requestMatchers("/board/**").authenticated()
 //                    .requestMatchers("/admin/**").hasRole("ADMIN")
