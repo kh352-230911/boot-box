@@ -1,7 +1,6 @@
 //package com.sh.app;
 
-import com.sh.app.api.service.CurrentMovieService;
-import com.sh.app.api.service.GenreService;
+
 import com.sh.app.movie.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;

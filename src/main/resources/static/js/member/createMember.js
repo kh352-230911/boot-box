@@ -15,6 +15,14 @@ document.memberCreateFrm.onsubmit = (e) => {
     const passwordConfirmation = frm.passwordConfirmation;
     const email = frm.memberEmail;
     const name = frm.memberName;
+    const selectedGenreInput = document.querySelector('#selectedGenre');
+    const selectedGenre = document.querySelector('input[name="genres"]:checked');
+    const radioButtons = document.querySelectorAll('input[name="genres"]');
+
+    console.log("Selected Genre Input:", selectedGenreInput.value);
+    console.log("Selected Genre:", selectedGenre ? selectedGenre.value : null);
+    console.log("Radio Buttons:", radioButtons);
+
 
     if (!/^\w{4,}$/.test(username.value)) {
         alert("아이디는 영문자, 숫자, _ 4자리이상 입력하세요.");
@@ -42,6 +50,17 @@ document.memberCreateFrm.onsubmit = (e) => {
         email.select();
         return false;
     }
+
+
+    if (!selectedGenre) {
+        alert("영화 장르를 선택해주세요.");
+        return false;
+    }
+
+    // 선택된 장르를 hidden input에 할당
+    selectedGenreInput.value = selectedGenre.value;
+
+    return true;
 };
 
 /**

@@ -2,6 +2,8 @@ package com.sh.app.oauth.service;
 
 import com.sh.app.auth.service.AuthService;
 import com.sh.app.auth.vo.MemberDetails;
+import com.sh.app.genre.entity.Genre;
+import com.sh.app.member.dto.MemberCreateDto;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
 import com.sh.app.oauth.utils.OAuth2UserUtils;
@@ -16,6 +18,8 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -43,13 +47,16 @@ public class OAuth2UserServiceImpl extends DefaultOAuth2UserService {
         String provider = clientRegistration.getRegistrationId();
 
         String username = OAuth2UserUtils.getUsername(oAuth2User, provider);
+
         try {
             memberDetails = (MemberDetails) authService.loadUserByUsername(username);
         } catch (UsernameNotFoundException e) {
             Member member = OAuth2UserUtils.of(oAuth2User, provider);
+
             memberService.createMember(member);
             memberDetails = (MemberDetails) authService.loadUserByUsername(username);
         }
         return memberDetails;
     }
+
 }

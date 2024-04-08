@@ -1,41 +1,75 @@
 // 현재 영화 상영작
-const arrows = document.querySelectorAll("i.arrow");
-const movieList = document.querySelectorAll(".movie-list");
+// const arrows = document.querySelectorAll("i.arrow");
+// const movieList = document.querySelectorAll(".movie-list");
+//
+// arrows.forEach((arrow, i) => {
+//     const movieItemsLength = movieList[i].querySelectorAll("img").length;
+//     let clickCounter = 0;
+//     arrow.addEventListener("click", () => {
+//         clickCounter++;
+//         let ratio = window.innerWidth / 270;
+//         if (window.innerWidth <= 765) {
+//             let valueOfX = movieList[i].computedStyleMap().get("transform")[0].x
+//                 .value;
+//             if (movieItemsLength - (5 + clickCounter) + (5 - ratio) >= 0) {
+//                 movieList[i].style.transform = `translateX(${valueOfX - 290}px)`;
+//             } else {
+//                 movieList[i].style.transform = "translateX(0)";
+//                 clickCounter = 0;
+//             }
+//         } else {
+//             let valueOfX = movieList[i].computedStyleMap().get("transform")[0].x
+//                 .value;
+//             if (movieItemsLength - (5 + clickCounter) >= 0) {
+//                 movieList[i].style.transform = `translateX(${valueOfX - 290}px)`;
+//             } else {
+//                 movieList[i].style.transform = "translateX(0)";
+//                 clickCounter = 0;
+//             }
+//         }
+//         // let valueOfX = movieList[i].computedStyleMap().get("transform")[0].x.value;
+//         // if (movieItemsLength - (5 + clickCounter) >= 0) {
+//         //   movieList[i].style.transform = `translateX(${valueOfX - 290}px)`;
+//         // } else {
+//         //   movieList[i].style.transform = "translateX(0)";
+//         //   clickCounter = 0;
+//         // }
+//     });
+// });
 
-arrows.forEach((arrow, i) => {
-    const movieItemsLength = movieList[i].querySelectorAll("img").length;
-    let clickCounter = 0;
-    arrow.addEventListener("click", () => {
-        clickCounter++;
-        let ratio = window.innerWidth / 270;
-        if (window.innerWidth <= 765) {
-            let valueOfX = movieList[i].computedStyleMap().get("transform")[0].x
-                .value;
-            if (movieItemsLength - (5 + clickCounter) + (5 - ratio) >= 0) {
-                movieList[i].style.transform = `translateX(${valueOfX - 290}px)`;
-            } else {
-                movieList[i].style.transform = "translateX(0)";
-                clickCounter = 0;
-            }
-        } else {
-            let valueOfX = movieList[i].computedStyleMap().get("transform")[0].x
-                .value;
-            if (movieItemsLength - (5 + clickCounter) >= 0) {
-                movieList[i].style.transform = `translateX(${valueOfX - 290}px)`;
-            } else {
-                movieList[i].style.transform = "translateX(0)";
-                clickCounter = 0;
-            }
-        }
-        // let valueOfX = movieList[i].computedStyleMap().get("transform")[0].x.value;
-        // if (movieItemsLength - (5 + clickCounter) >= 0) {
-        //   movieList[i].style.transform = `translateX(${valueOfX - 290}px)`;
-        // } else {
-        //   movieList[i].style.transform = "translateX(0)";
-        //   clickCounter = 0;
-        // }
-    });
-});
+// 마지막에서 한 번에 움직임...
+// const leftArrow = document.querySelector(".left");
+// const rightArrow = document.querySelector(".right");
+// const movieList = document.querySelector(".movie-list");
+// const movieItems = document.querySelectorAll(".movie-list-item");
+// const itemWidth = movieItems[0].clientWidth; // 영화 포스터 하나의 너비
+// const gap = parseInt(window.getComputedStyle(movieItems[0]).marginRight); // CSS에서 설정한 margin-right 값
+// const step = itemWidth + gap; // 이동할 단계 길이
+// const maxVisibleItems = 6; // 화면에 보여줄 영화의 최대 개수
+// const maxIndex = movieItems.length - maxVisibleItems; // 최대 인덱스 계산
+//
+// let index = 0; // 현재 위치
+//
+// rightArrow.addEventListener("click", () => {
+//     if (index < maxIndex) {
+//         index++;
+//         movieList.style.transform = `translateX(${-step * index}px)`;
+//     } else if (index === maxIndex) {
+//         // 마지막 슬라이드의 경우, 남은 영화 포스터 수에 따라 이동 거리를 조정합니다.
+//         const remainingItems = movieItems.length % maxVisibleItems;
+//         const lastStep = remainingItems * (itemWidth + gap); // 남은 아이템에 대한 이동 거리
+//         movieList.style.transform = `translateX(${-step * index - lastStep}px)`;
+//         index++; // 마지막 슬라이드 이후에는 더 이상 이동하지 않도록 index를 증가시킵니다.
+//     }
+// });
+//
+// leftArrow.addEventListener("click", () => {
+//     // 왼쪽 화살표 클릭: index 감소
+//     if (index > 0) {
+//         index--;
+//         movieList.style.transform = `translateX(${-step * index}px)`;
+//     }
+// });
 
 // arrows.forEach((arrow, i) => {
 //     const movieListContainer = document.querySelector('.movie-list-wrapper'); // 포스터 목록 컨테이너
@@ -62,6 +96,48 @@ arrows.forEach((arrow, i) => {
 //     });
 // });
 
+// 포스터 화살표 동작
+const leftArrow = document.querySelector(".left");
+const rightArrow = document.querySelector(".right");
+const movieList = document.querySelector(".movie-list");
+const movieItems = document.querySelectorAll(".movie-list-item");
+
+// gap을 기본값으로 미리 선언합니다.
+let gap = 0;
+
+// movieItems 배열이 존재하고, 적어도 하나의 요소가 있는지 확인합니다.
+if (movieItems.length > 0) {
+    gap = parseInt(window.getComputedStyle(movieItems[0]).marginRight);
+}
+
+// 여기에서 'itemWidth'와 'maxIndex'를 사용하기 전에 'gap'이 정의되었는지 확인합니다.
+const itemWidth = movieItems[0] ? movieItems[0].clientWidth + gap : 0; // 영화 포스터 하나의 너비 + gap
+const maxIndex = movieItems.length - 1; // 슬라이드를 넘길 수 있는 마지막 아이템 인덱스
+
+let index = 0; // 현재 위치
+
+if (rightArrow) {
+    rightArrow.addEventListener("click", () => {
+        if (index < maxIndex) {
+            index++; // 다음 아이템으로 이동
+        } else {
+            index = 0; // 처음으로 되돌아감
+        }
+        movieList.style.transform = `translateX(${-itemWidth * index}px)`; // 슬라이드 이동
+    });
+}
+
+if (leftArrow) {
+    leftArrow.addEventListener("click", () => {
+        if (index > 0) {
+            index--; // 이전 아이템으로 이동
+        } else {
+            index = maxIndex; // 마지막으로 이동
+        }
+        movieList.style.transform = `translateX(${-itemWidth * index}px)`; // 슬라이드 이동
+    });
+}
+
 // 한 줄 달력
 const monthElement = document.getElementById('month');
 const calendarContainer = document.getElementById('calendar');
@@ -74,6 +150,8 @@ const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', 
 let currentDate = new Date();
 const today = new Date();
 const twoWeeksFromNow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 14);
+// 이전에 선택된 날짜를 추적하기 위한 변수
+let selectedDate;
 
 function zeroPad(num, places) {
     return String(num).padStart(places, '0');
@@ -100,8 +178,50 @@ function renderCalendar(date) {
         const dayElement = document.createElement('li');
         dayElement.textContent = weekDays[day.getDay()] + ' ' + zeroPad(day.getDate(), 2);
 
-        if (isDateInRange(day)) {
+        if (day.toDateString() === today.toDateString()) {
+            dayElement.classList.add('today');
+            dayElement.classList.add('clickable');
             dayElement.addEventListener('click', function() {
+                if (selectedDate) {
+                    selectedDate.classList.remove('selected');
+                }
+
+                const todayElement = calendarContainer.querySelector('.today');
+                if (todayElement) {
+                    todayElement.classList.remove('back-color');
+                    todayElement.classList.add('selected');
+                }
+
+                dayElement.classList.add('selected');
+
+                selectedDate = dayElement;
+
+                selectedDateElement.textContent = formatDate(day);
+                updateMonthElement(day);
+                scheduleManager();
+            });
+        }
+
+        if (isDateInRange(day)) {
+            dayElement.classList.add('clickable');
+            dayElement.addEventListener('click', function() {
+                // 이전에 선택한 날짜의 스타일을 제거합니다.
+                if (selectedDate) {
+                    selectedDate.classList.remove('selected');
+                }
+
+                // 오늘 날짜의 스타일을 기본 상태로 되돌립니다.
+                const todayElement = calendarContainer.querySelector('.today');
+                if (todayElement) {
+                    todayElement.classList.add('back-color');
+                }
+
+                // 클릭한 요소에 'selected' 클래스를 추가합니다.
+                dayElement.classList.add('selected');
+
+                // 선택된 날짜를 업데이트합니다.
+                selectedDate = dayElement;
+
                 selectedDateElement.textContent = formatDate(day);
                 updateMonthElement(day); // Update the month display
                 scheduleManager();
@@ -137,8 +257,16 @@ todayButton.addEventListener('click', () => {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-        renderCalendar(currentDate);
-        selectedDateElement.textContent = formatDate(new Date()); // 페이지 로드 시 오늘 날짜를 선택하도록 설정
+    renderCalendar(currentDate);
+    selectedDateElement.textContent = formatDate(today); // 페이지 로드 시 오늘 날짜를 선택하도록 설정
+    scheduleManager();
+    // 오늘 날짜 요소를 찾아 'selected' 클래스를 추가합니다.
+    const todayElement = calendarContainer.querySelector('.today');
+    todayElement.classList.remove('disabled');
+    if (todayElement) {
+        todayElement.classList.add('selected');
+        selectedDate = todayElement;
+    }
 });
 
 // 위도, 경도로 네이버 지도에서 극장 실시간 위치 찾기
@@ -190,19 +318,19 @@ function renderSchedule(scheduleData) {
         const ratingSpan = $('<span>').css('font-size', '0.8em').addClass('grade me-2 px-2.5 py-0.5 rounded font-bold');
         // console.log(movie.filmRatings);
         switch(movie.filmRatings) {
-            case 'ALL':
+            case '전체관람가':
                 ratingSpan.addClass('bg-green-100 text-green-800 dark:bg-gray-700 dark:text-green-400 border border-green-400').text('ALL');
                 break;
-            case 'TWELVE':
+            case '12세관람가':
                 ratingSpan.addClass('bg-yellow-100 text-yellow-800 dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300').text('12');
                 break;
-            case 'FIFTEEN':
+            case '15세관람가':
                 ratingSpan.addClass('bg-purple-100 text-purple-800 dark:bg-gray-700 dark:text-purple-400 border border-purple-400').text('15');
                 break;
-            case 'EIGHTEEN':
+            case '18세관람가(청소년관람불가)':
                 ratingSpan.addClass('bg-red-100 text-red-800 dark:bg-gray-700 dark:text-red-400 border border-red-400').text('18');
                 break;
-            case 'NONE':
+            case '정보 없음':
                 ratingSpan.addClass('bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-400 border border-gray-500').text('미정');
                 break;
             // default:

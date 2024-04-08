@@ -1,10 +1,10 @@
 package com.sh.app.genre.entity;
 
+import com.sh.app.memberLikeGenre.entity.MemberLikeGenre;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "genre")
@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(exclude = "memberLikeGenres")
 public class Genre {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_genre_id_generator")
@@ -26,4 +27,7 @@ public class Genre {
     private Long genreId;
 
     private String genreName;
+
+    @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<MemberLikeGenre> memberLikeGenres;
 }

@@ -18,6 +18,8 @@ import java.util.Set;
 @Builder
 public class MemberReservationDto {
     private Long id;
+
     private String name;
+
     private Set<ReservationInfoDto> reservations;
 }

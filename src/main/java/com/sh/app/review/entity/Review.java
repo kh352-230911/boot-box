@@ -3,6 +3,7 @@ package com.sh.app.review.entity;
 import com.sh.app.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = {"member"})
 public class Review {
     @Id
     @GeneratedValue(generator = "seq_review_id_generator")

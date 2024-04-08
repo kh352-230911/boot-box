@@ -4,9 +4,9 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <header th:fragment="header" id="header-container">
-    <nav class="border-gray-200 dark:bg-gray-900 dark:border-gray-700">
+    <nav class="navigation border-gray-200 dark:bg-gray-900 dark:border-gray-700">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-2 py-2.5">
-            <a th:href="@{/}" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <a th:href="@{/}" class="brand-logo flex items-center space-x-3 rtl:space-x-reverse">
                 <img th:src="@{/images/free-icon-play-button-260446.png}" class="h-8" />
                 <span class="self-center text-3xl text-red-500 font-semibold whitespace-nowrap">B</span>
                 <span id="white-color1" class="self-center text-3xl text-white font-semibold whitespace-nowrap dark:text-white">oot</span>
@@ -29,6 +29,9 @@
                     </li>
                     <li>
                         <a th:href="@{/cinema/cinemaList.do}" class="block text-xl font-semibold py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">극장</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/store/storeList.do}" class="block text-xl font-semibold py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-red-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">스토어</a>
                     </li>
                     <!-- 0208 임시 링크 - 예매 진행중 / 기능 9할정도 구현시 정식 메뉴명으로 정정-->
                     <li>
