@@ -483,6 +483,10 @@ table{
 }
 
 
+
+
+
+
 /* info-movies 하위의 모든 테이블들의 높이 고정 , 스크롤 추가 */
 .info-movies table not #scheduleTable{
     height: 400px;
@@ -511,7 +515,7 @@ table{
 }
 /* 수직 스크롤바 */
 ::-webkit-scrollbar {
-    width: 10px;  /* 스크롤바의 폭 변경 */
+    width: 7px;  /* 스크롤바의 폭 변경 */
 }
 ::-webkit-scrollbar-thumb {
     background: linear-gradient(coral, firebrick);  /* 스크롤바의 색상 변경 */

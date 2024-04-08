@@ -65,19 +65,21 @@ const Status = {
 var movieId;
 $(document).ready(function()
 {
-    $(".select-movie").click(function()
+    //select-movie에서 select-movieData 수정해봄.0327
+    $(".select-movieData").click(function()
     {
         console.log("영화 선택");
         // 모든 행의 선택을 취소하고 선택된 행에만 'selected' 클래스를 추가
-        $(this).css('background', 'linear-gradient(to right, black, black)');
+        $(this).css('background', 'linear-gradient(to right, grey, grey)');
         // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
-        $(".select-movie").not(this).css('background', '');
+        $(".select-movieData").not(this).css('background', '');
 
         //선택한 영화의 고유 id (pk)값 가져오기.
         // 선택된 버튼의 ID(영화관 ID) 출력
-        movieId = $(this).data("movie-id");
+        //0328 무비쪽 수정되면서 이쪽도 변수명을 바꿔야할 것 같기도.data-movieData-id
+        // movieId = $(this).data("movie-id");
+        movieId = $(this).attr("data-movieData-id");
         console.log("선택된 영화 고유 ID:", movieId);
-        
     });
 });
 function showPoster(posterUrl,movieTitle) {
@@ -92,7 +94,8 @@ function showPoster(posterUrl,movieTitle) {
     let textElement = document.querySelector(".seat-container1-title");
     // 이전에 표시된 이미지가 있다면 제거합니다.
     posterContainer.innerHTML = "";
-    imgElement.src = posterUrl;
+    imgElement.src = 'https://image.tmdb.org/t/p/w200'+posterUrl;
+    console.log("출력할 포스터 test ^^:"+posterUrl);
     //movieTitle을 전체 출력하되, 제목이 길면 자른다.
 
     if(movieTitle.length>=10)
@@ -116,7 +119,7 @@ $(document).ready(function(){
         //수정한 거
         console.log("지역선택");
 
-        $(this).css('background', 'linear-gradient(to right, black, black)');
+        $(this).css('background', 'linear-gradient(to right, red, red)');
         // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
         $(".select_location").not(this).css('background', '');
         console.log("지역선택2");
@@ -137,7 +140,7 @@ $(document).ready(function(){
     $(".select_location2").click(function()
     {
         //수정한 거
-        $(this).css('background', 'linear-gradient(to right, black, black)');
+        $(this).css('background', 'linear-gradient(to right, grey, grey)');
         // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
         $(".select_location2").not(this).css('background', '');
         console.log("지점선택2");
@@ -161,7 +164,7 @@ $(document).ready(function(){
     {
         //수정한 거
         console.log("날짜 선택");
-        $(this).css('background', 'linear-gradient(to right, black 0%, black 100%)');
+        $(this).css('background', 'linear-gradient(to right, grey, grey)');
         // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
         $(".select_date").not(this).css('background', '');
 
