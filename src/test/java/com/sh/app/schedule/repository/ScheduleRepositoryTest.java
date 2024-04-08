@@ -2,9 +2,6 @@ package com.sh.app.schedule.repository;
 
 import com.sh.app.cinema.entity.Cinema;
 import com.sh.app.cinema.repository.CinemaRepository;
-import com.sh.app.movieData.entity.MovieData;
-import com.sh.app.movieData.entity.Rating;
-import com.sh.app.movieData.repository.MovieDataRepository;
 import com.sh.app.schedule.entity.Schedule;
 import com.sh.app.theater.entity.Theater;
 import com.sh.app.theater.repository.TheaterRepository;

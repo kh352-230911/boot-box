@@ -9,33 +9,44 @@ body {
     font-weight: 500;
     font-size: 1.2em;
 }
-.wrap-container {
-    height: auto;
-    min-height: 100%;
-    padding-bottom: 60px;
+header {
+    font-family: "Agency FB";
+    font-weight: 500;
+    font-size: 1.2em;
 }
+section#content {
+    min-height: calc(100vh - 195px); /* 섹션의 최소 높이를 화면 높이에서 헤더와 푸터의 높이를 뺀 값으로 설정 */
+    position: relative; /* 섹션을 상대 위치로 설정 */
+    padding: 0;
+}
+/*.wrap-container {*/
+/*    height: auto;*/
+/*    min-height: 100%;*/
+/*    padding-bottom: 60px;*/
+/*}*/
 .home-container {
     min-height: 600px;
     margin: 0 50px 0 0;
 }
 footer {
-    height: 60px;
-    /*position: relative;*/
-    transform: translateY(0%);
-    /* 페이지의 아래쪽에 고정 */
-    width: 99%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    background-color: #212121;
+    background-clip: content-box;
+    position: relative;
+    height: 113px;
+    bottom: 0; /* 바디 하단에 배치 */
+    width: 100%; /* 너비를 바디와 일치시킴 */
+    font-family: "Agency FB";
 }
 .centered-container {
-    width: 80%; /* 또는 원하는 너비 */
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    padding: 40px 0; /* 내부 여백은 선택적 */
-    transform: translate(-12%, -127%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* 또는 원하는 너비 */
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+    /*display: block;*/
+    /*padding: 40px 0; !* 내부 여백은 선택적 *!*/
+    /*transform: translate(-12%, -127%);*/
 }
 .container {
     position: absolute;
@@ -45,10 +56,10 @@ footer {
 }
 .notice-List
 {
-    margin-left: -340px;
+    /*margin-left: -340px;*/
 }
 table {
-    width: 1100px;
+    width: 100%;
     border-collapse: collapse;
     overflow: hidden;
     box-shadow: 0 0 20px rgba(0,0,0,0.1);
@@ -79,12 +90,12 @@ tbody > tr{
 }
 
 tbody {
-    tr {
+    & tr {
         &:hover {background-color: rgba(255,255,255,0.3);
 
         }
     }
-    td {
+    & td {
         position: relative;
         &:hover {
             &:before {

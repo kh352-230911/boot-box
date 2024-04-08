@@ -87,7 +87,7 @@ CREATE TABLE MEMBER(
     member_pwd	varchar2(100) NOT NULL, --비밀번호
     member_email varchar2(100) NOT NULL,	--이메일(uq)
     member_name varchar2(50) NOT NULL, --이름
-    member_phone varchar2(100) NOT NULL, --핸드폰번호
+    member_phone varchar2(100) NULL, --핸드폰번호
     birthyear varchar2(50) NOT NULL, -- 출생년도
     constraints pk_member_id primary key(id),
     constraints uq_member_member_login_id unique(member_login_id),
@@ -385,3 +385,42 @@ CREATE TABLE REVIEW(
     constraints fk_review_movie_id foreign key(movie_id) references movie(id) on delete set null
 );
 create sequence seq_review_id;
+--
+-- 스토어
+create table store (
+    id number not null, -- pk
+    type varchar2(100) not null, -- 상품 카테고리
+    image_url varchar2(2000) not null, -- 상품 이미지
+    name varchar2(500) not null, -- 상품명
+    price number not null, -- 상품 가격
+    description varchar2(4000) not null, -- 상품 설명
+    expiration_period number not null, -- 유효기간
+    constraints pk_store_id primary key(id)
+);
+create sequence seq_store_id;
+--
+-- 상품 주문결제
+create table product_order_pay (
+    id varchar2(100) not null, -- pk 문자 + 시간 조합
+    member_id number not null, -- 회원 아이디(pk)
+    amount varchar2(100) not null, -- 결제방식
+    price number not null, -- 총 금액
+    count number not null, -- 총 수량
+    pay_time date not null, -- 결제 시간
+    cancel_pay_time date null, -- 결제 취소 시간
+    pay_status varchar2(50) not null, -- 구매 완료/취소 상태
+    constraints pk_product_order_pay_id primary key(id),
+    constraints fk_product_order_pay_member_id foreign key(member_id) references member(id) on delete set null,
+    constraints ck_product_order_pay_pay_status check(pay_status in ('confirm', 'cancel'))
+);
+--
+-- 구매 상품 (브릿지)
+create table product_buy (
+    id number not null, -- pk
+    product_order_id varchar2(100) not null, -- fk
+    store_id number not null, -- fk
+    constraints pk_product_buy primary key(id),
+    constraints fk_product_buy_product_order_id foreign key(product_order_id) references product_order_pay(id) on delete set null,
+    constraints fk_product_buy_store_id foreign key(store_id) references store(id) on delete set null
+);
+create sequence seq_product_buy_id;

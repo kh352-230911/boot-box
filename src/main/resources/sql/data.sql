@@ -710,7 +710,7 @@ insert into NOTICE values (seq_notice_id.nextval, 1, 'ETC', '[BOOTBOX] 이태원
 -- schedule
 insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 838209, to_date('2024-03-26', 'YYYY-MM-DD'), to_date('2024-03-26 09:10', 'YYYY-MM-DD HH24:MI'));
 insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 792307, to_date('2024-03-26', 'YYYY-MM-DD'), to_date('2024-03-26 14:00', 'YYYY-MM-DD HH24:MI'));
---insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 16:30', 'YYYY-MM-DD HH24:MI'));
+insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1063241, to_date('2024-02-26', 'YYYY-MM-DD'), to_date('2024-02-26 16:30', 'YYYY-MM-DD HH24:MI'));
 --
 --insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 09:00', 'YYYY-MM-DD HH24:MI'));
 --insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 1, to_date('2024-02-27', 'YYYY-MM-DD'), to_date('2024-02-27 11:25', 'YYYY-MM-DD HH24:MI'));
@@ -880,8 +880,8 @@ insert into SCHEDULE values (seq_schedule_id.nextval, 020101, 792307, to_date('2
 -- reservation
 INSERT INTO RESERVATION VALUES ('box16443', 1, 1, 'CONFIRM');
 INSERT INTO RESERVATION VALUES ('box25822', 3, 21, 'CONFIRM');
---INSERT INTO RESERVATION VALUES ('box47220', 3, 3, 'CONFIRM');
---INSERT INTO RESERVATION VALUES ('box47211', 2, 3, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box47220', 3, 81, 'CONFIRM');
+INSERT INTO RESERVATION VALUES ('box47211', 87, 1, 'CONFIRM');
 --INSERT INTO RESERVATION VALUES ('box42217', 4, 4, 'CONFIRM');
 --INSERT INTO RESERVATION VALUES ('box34332', 4, 6, 'CONFIRM');
 --INSERT INTO RESERVATION VALUES ('box34331', 5, 6, 'CONFIRM');
@@ -938,8 +938,8 @@ INSERT INTO RESERVATION VALUES ('box24521', 3, 1, 'CONFIRM');
 -- reservation_seat
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box16443', 1);
 insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box25822', 1);
---insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box47220', 3);
---insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box42217', 4);
+insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box47220', 3);
+--insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box42217', 1);
 --insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box34332', 4);
 --insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box32582', 5);
 --insert into reservation_seat values (seq_reservation_seat_id.nextval, 'box27006', 5);
@@ -1034,10 +1034,16 @@ insert into MOVIE_LIST values (seq_movie_list_id.nextval, 792307, 0201);
 --insert into MOVIE_LIST values (seq_movie_list_id.nextval, 2, 0201);
 --insert into MOVIE_LIST values (seq_movie_list_id.nextval, 15, 0201);
 --insert into MOVIE_LIST values (seq_movie_list_id.nextval, 16, 0201);
---insert into MOVIE_LIST values (seq_movie_list_id.nextval, 17, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 1063241, 0201);
 ---- 강남점 영화 추가
---insert into MOVIE_LIST values (seq_movie_list_id.nextval, 5, 0201);
---insert into MOVIE_LIST values (seq_movie_list_id.nextval, 6, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 693134, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 1062807, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 666277, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 20236180, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 969492, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 1208997, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 1256544, 0201);
+insert into MOVIE_LIST values (seq_movie_list_id.nextval, 844417, 0201);
 
 -- review
 insert into REVIEW values (seq_review_id.nextval, 'box16443', 1, 838209, 2, '너무 지루해요', default);
@@ -1090,3 +1096,15 @@ insert into REVIEW values (seq_review_id.nextval, 'box25822', 3, 792307, 4, '최
 --INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box07662', 5, 19, 1, '재미없어요', DEFAULT);
 --INSERT INTO REVIEW VALUES (seq_review_id.nextval, 'box17935', 5, 20, 5, '강추합니다!', DEFAULT);
 insert into REVIEW values (seq_review_id.nextval, 'box24521', 3, 838209, 3, '괜찮았어요', default);
+
+-- store
+insert into store values (seq_store_id.nextval, '팝콘', 'http://img.cgv.co.kr/GiftStore/Product/Pc/List/16932099667220.jpg', '고소 팝콘', 5000, '옥수수 본연의 맛을 즐길 수 있는 짭짜름한 클래식 고소팝콘!', 6);
+insert into store values (seq_store_id.nextval, '팝콘', 'http://img.cgv.co.kr/GiftStore/Product/Pc/List/16932100342110.jpg', '달콤 팝콘', 6000, '달콤한 카라멜 향이 가득한 달콤팝콘을 즐겨보세요!', 6);
+insert into store values (seq_store_id.nextval, '팝콘', 'http://img.cgv.co.kr/GiftStore/Product/Pc/List/16932101553020.jpg', '더블 치즈 팝콘', 6000, '치즈매니아들이라면 놓칠 수 없는 바로 그 팝콘!', 6);
+insert into store values (seq_store_id.nextval, '팝콘', 'http://img.cgv.co.kr/GiftStore/Product/Pc/List/16932100871140.jpg', '바질 어니언 팝콘', 6000, '수많은 매니아를 보유한 바로 그 팝콘! 중독성 200%', 6);
+insert into store values (seq_store_id.nextval, '음료', 'http://img.cgv.co.kr/GiftStore/Product/Pc/List/16988126319950.jpg', '탄산 음료', 3000, '콜라,콜라제로,환타오렌지,환타포도,스프라이트,스프라이트 제로 中 원하는 맛으로 교환하세요!', 6);
+insert into store values (seq_store_id.nextval, '음료', 'http://img.cgv.co.kr/GiftStore/Product/Pc/List/16989249369640.jpg', '에이드', 5500, '오렌지에이드, 자몽에이드 중 원하는 맛으로 교환하세요!', 6);
+insert into store values (seq_store_id.nextval, '음료', 'http://img.cgv.co.kr/GiftStore/Product/Pc/List/16989242998130.jpg', '아메리카노', 4500, '현대인의 필수품, 아메리카노 한잔하세요~', 6);
+insert into store values (seq_store_id.nextval, '영화관람권', 'http://img.cgv.co.kr/GiftStore/Product/Pc/List/16777513183750.jpg', '고소 팝콘', 13000, '영화관람권으로 즐거운 영화관람하세요!', 24);
+
+

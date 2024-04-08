@@ -16,11 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AuthController {
 
     @GetMapping("/login.do")
-    public void login() {
-
-    }
-
-
+    public void login() {}
 
     @GetMapping("/adminLogin.do")
     public void adminLogin() {}

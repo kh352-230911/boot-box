@@ -1,12 +1,14 @@
 package com.sh.app.member.dto;
 
 
+import com.sh.app.genre.entity.Genre;
 import com.sh.app.member.entity.Member;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class MemberCreateDto {
@@ -28,8 +30,10 @@ public class MemberCreateDto {
     @Email(message="이메일 형식으로 작성하세요.")
     private String memberEmail;
 
+    private List<String> genres;
+
     public Member toMember() {
-        return Member.builder()
+        Member member = Member.builder()
                 .memberLoginId(memberLoginId)
                 .memberPwd(memberPwd)
                 .memberName(memberName)
@@ -37,7 +41,9 @@ public class MemberCreateDto {
                 .birthyear(birthyear)
                 .memberEmail(memberEmail)
                 .build();
-    }
 
+        return member;
+
+    }
 
 }

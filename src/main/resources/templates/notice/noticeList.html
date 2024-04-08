@@ -9,26 +9,28 @@
 </head>
 <style layout:fragment="style"></style>
 
-<div layout:fragment="content" class="wrap-container">
+<div layout:fragment="content">
 
 
 
-    <div class="flex items-center justify-start pl-60">
-        <div class="home-container">
+    <div class="flex items-center justify-start">
+<!--        <div class="home-container">-->
 
-        </div>
+<!--        </div>-->
 
-            <div class="centered-container">
+            <div class="centered-container flex justify-center">
                 <!--  menu박스  -->
-                <div class="title-box flex justify-center">
+                <div class="title-box">
                  <span class="border-b-2 border-red-600 font-semibold pb-2 mt-10 text-xl">
                      공지/뉴스
                  </span>
                 </div>
-                <p class="text-sm pt-2 flex justify-center">BootBox의 주요한 이슈 및 여러가지 소식들을 확인하실 수 있습니다.</p>
+                <div>
+                    <p class="text-sm pt-6 flex justify-center">BootBox의 주요한 이슈 및 여러가지 소식들을 확인하실 수 있습니다.</p>
+                </div>
             </div>
         <!-- table박스 -->
-        <div class="container flex justify-center" style="width: 1550px">
+        <div class="container flex justify-center mt-10">
 
             <th:block sec:authorize="hasAuthority('ROLE_USER') or isAnonymous()">
             <div class="notice-List mr-10">

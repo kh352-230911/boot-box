@@ -68,7 +68,9 @@ public class CinemaController {
     @GetMapping("/cinemaDetail.do")
     public String cinemaDetail(@RequestParam("id") Long id, Model model) {
         CinemaDto cinemaDto = cinemaService.getCinemaDetails(id);
-        List<MovieListDto> currentMovies = movieService.getCurrentMovies(); // 현재 상영 중인 영화 목록 가져오기
+//        List<MovieListDto> currentMovies = movieService.getCurrentMovies(); // 현재 상영 중인 영화 목록 가져오기
+        List<MovieListDto> currentMovies = cinemaService.getMoviesByCinemaId(id); // 현재 상영 중인 영화 목록 가져오기
+        log.debug("id = {}", id);
         model.addAttribute("cinema", cinemaDto);
         model.addAttribute("currentMovies", currentMovies); // 모델에 추가
         log.debug("cinemaDto = {}", cinemaDto);

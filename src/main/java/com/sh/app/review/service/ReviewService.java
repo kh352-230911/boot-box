@@ -1,5 +1,6 @@
 package com.sh.app.review.service;
 
+import com.sh.app.member.entity.Member;
 import com.sh.app.review.dto.CreateReviewDto;
 import com.sh.app.review.repository.ReviewRepository;
 import org.modelmapper.ModelMapper;
@@ -19,11 +20,15 @@ public class ReviewService {
     @Autowired
     private ModelMapper modelMapper;
 
-//    public void createReview(CreateReviewDto createReviewDto) {
-//        Review review = reviewRepository.save(convertToReview(createReviewDto));
-//    }
+    public Review createReview(CreateReviewDto createReviewDto, Member member) {
+        Review review = Review.builder()
+                .reservationId(createReviewDto.getReservationId())
+                .reviewScore((int) Math.round(createReviewDto.getReviewScore()))
+                .reviewDetail(createReviewDto.getReviewDetail())
+                .movieId(createReviewDto.getMovieId())
+                .memberId(member.getId())
+                .build();
 
-    private Review convertToReview(CreateReviewDto createReviewDto) {
-        return modelMapper.map(createReviewDto, Review.class);
+        return reviewRepository.save(review);
     }
 }

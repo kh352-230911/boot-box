@@ -20,7 +20,7 @@
                     <span class="flex mb-3 guide ok text-sm">이 아이디는 사용 가능 합니다.</span>
                     <span class="flex mb-3 guide error text-sm">이 아이디는 사용할 수 없습니다.</span>
                     <input type="hidden" name="idDuplicateCheck" id="idDuplicateCheck" value="0"/>
-                    <label for="memberLoginId" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username</label>
+                    <label for="memberLoginId" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">ID</label>
                 </div>
                 <div class="user-box">
                     <input type="password" id="memberPwd" name="memberPwd" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" required>
@@ -28,24 +28,80 @@
                 </div>
                 <div class="user-box">
                     <input type="password" id="passwordConfirmation" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" required>
-                    <label for="passwordConfirmation" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">PasswordConfirm</label>
+                    <label for="passwordConfirmation" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password Confirm</label>
                 </div>
                 <div class="user-box">
                     <input type="text" id="memberName" name="memberName" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" required>
-                    <label for="memberName" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">name</label>
+                    <label for="memberName" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Name</label>
                 </div>
                 <div class="user-box">
                     <input type="text" id="birthyear" name="birthyear" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" required>
-                    <label for="birthyear" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">birthyear</label>
+                    <label for="birthyear" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Birthyear</label>
                 </div>
                 <div class="user-box">
                     <input type="email" id="memberEmail" name="memberEmail" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" required>
-                    <label for="memberEmail" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">email</label>
+                    <label for="memberEmail" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email</label>
                 </div>
                 <div class="user-box">
                     <input type="text" id="memberPhone" name="memberPhone" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" required>
-                    <label for="memberPhone" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">phone</label>
+                    <label for="memberPhone" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone</label>
                 </div>
+
+
+                <div class="user-box mt-10">
+                    <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Like Genre (선호 영화 장르)</label>
+                </div>
+
+                <div class="flex flex-wrap mt-14 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent required">
+
+                    <input type="hidden" id="selectedGenre" name="selectedGenre">
+
+                    <div class="flex items-center me-4 mt-1 mb-1">
+                        <input id="red-radio1" type="radio" value="액션" name="genres" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" required>
+                        <label for="red-radio1" class="ms-2 text-sm font-medium text-white dark:text-gray-300">액션</label>
+                    </div>
+                    <div class="flex items-center me-4 mt-1 mb-1">
+                        <input id="red-radio2" type="radio" value="애니메이션" name="genres" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" required>
+                        <label for="red-radio2" class="ms-2 text-sm font-medium text-white dark:text-gray-300">애니메이션</label>
+                    </div>
+                    <div class="flex items-center me-4 mt-1 mb-1">
+                        <input id="red-radio3" type="radio" value="코미디" name="genres" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" required>
+                        <label for="red-radio3" class="ms-2 text-sm font-medium text-white dark:text-gray-300">코미디</label>
+                    </div>
+                    <div class="flex items-center me-4 mt-1 mb-1">
+                        <input id="red-radio4" type="radio" value="범죄" name="genres" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" required>
+                        <label for="red-radio4" class="ms-2 text-sm font-medium text-white dark:text-gray-300">범죄</label>
+                    </div>
+                    <div class="flex items-center me-4 mt-1 mb-1">
+                        <input id="red-radio5" type="radio" value="드라마" name="genres" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" required>
+                        <label for="red-radio5" class="ms-2 text-sm font-medium text-white dark:text-gray-300">드라마</label>
+                    </div>
+                    <div class="flex items-center me-4 mt-1 mb-1">
+                        <input id="red-radio9" type="radio" value="판타지" name="genres" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" required>
+                        <label for="red-radio9" class="ms-2 text-sm font-medium text-white dark:text-gray-300">판타지</label>
+                    </div>
+                    <div class="flex items-center me-4 mt-1 mb-1">
+                        <input id="red-radio11" type="radio" value="공포" name="genres" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" required>
+                        <label for="red-radio11" class="ms-2 text-sm font-medium text-white dark:text-gray-300">공포</label>
+                    </div>
+                    <div class="flex items-center me-4 mt-1 mb-1">
+                        <input id="red-radio12" type="radio" value="음악" name="genres" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" required>
+                        <label for="red-radio12" class="ms-2 text-sm font-medium text-white dark:text-gray-300">음악</label>
+                    </div>
+                    <div class="flex items-center me-4 mt-1 mb-1">
+                        <input id="red-radio14" type="radio" value="로맨스" name="genres" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" required>
+                        <label for="red-radio14" class="ms-2 text-sm font-medium text-white dark:text-gray-300">로맨스</label>
+                    </div>
+                    <div class="flex items-center me-4 mt-1 mb-1">
+                        <input id="red-radio15" type="radio" value="SF" name="genres" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" required>
+                        <label for="red-radio15" class="ms-2 text-sm font-medium text-white dark:text-gray-300">SF</label>
+                    </div>
+                    <div class="flex items-center me-4 mt-1 mb-2">
+                        <input id="red-radio17" type="radio" value="스릴러" name="genres" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" required>
+                        <label for="red-radio17" class="ms-2 text-sm font-medium text-white dark:text-gray-300">스릴러</label>
+                    </div>
+                </div>
+
 
                 <button type="submit" class="submit">
                     <span></span>
@@ -58,7 +114,7 @@
         </div>
     </div>
 </div>
-
+S
 
 <script layout:fragment="script" th:src="@{/js/member/createMember.js}"></script>
 </html>

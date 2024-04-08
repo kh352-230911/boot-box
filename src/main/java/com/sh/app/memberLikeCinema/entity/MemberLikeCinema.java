@@ -4,6 +4,7 @@ import com.sh.app.cinema.entity.Cinema;
 import com.sh.app.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 @Entity
 @Data
@@ -11,7 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Table(name = "memberLikeCinema")
-//@ToString(exclude = {"member", "cinema"})
+@ToString(exclude = {"member", "cinema"})
 public class MemberLikeCinema {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_member_like_cinema_id_generator")

@@ -58,7 +58,5 @@ public class MovieDetailDto {
 
     private String dDay;
 
-    private Integer reviewCount; // 리뷰의 수
-
-    private Integer ratingSum; // 리뷰 점수의 합계
+    private Double cumulativeBookingRate;
 }
