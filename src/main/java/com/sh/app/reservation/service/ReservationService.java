@@ -94,4 +94,18 @@ public class ReservationService {
     public OrderPayDto insertOrderPay(OrderPayDto orderPayDto) {
         return convertEntityToDto(orderPayRepository.save(convertDtoToEntity(orderPayDto)));
     }
+
+
+    //예매를 취소하는 메소드
+    public boolean cancelReservation(String reservationId) {
+        try {
+            orderPayRepository.deleteByReservationId(reservationId);
+            reservationSeatRepository.deleteByReservationId(reservationId);
+            reservationRepository.deleteById(reservationId);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

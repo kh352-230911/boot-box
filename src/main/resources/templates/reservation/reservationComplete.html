@@ -19,6 +19,8 @@
         </div>
 
         <a th:href="@{/}" id="goHome" class="block text-xl font-semibold py-2 px-3 text-white rounded md:bg-transparent md:text-white md:p-0 md:dark:text-white md:hover:text-red-600 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">메인으로</a>
+        <!-- 메인으로 가기 외에 현재 로그인한 회원의 예매 내역 페이지로 이동하는 버튼을 추가해보았다.   -->
+        <a th:href="@{/member/memberReservation.do(id=${#authentication.principal.member.id})}" id="goMyReservation" class="block text-xl font-semibold py-2 px-3 text-white rounded md:bg-transparent md:text-white md:p-0 md:dark:text-white md:hover:text-red-600 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">예매내역</a>
     </div>
 
 </div>

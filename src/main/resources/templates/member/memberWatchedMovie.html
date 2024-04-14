@@ -74,15 +74,18 @@
                             <br><br><br>
                             <th:block th:each="theater, status3 : ${reservation.schedule.theaters}">
                                 <div>
-                                    <div class="text-sm" th:each="seat, seatStatus : ${reservation.seats}">
+                                    <!--  예매한 인원수 만큼 반복처리 하는 것 같은데 마지막 꺼만 출력해도 좋을 것 같습니다! by jin -->
+                                    <div class="text-sm" th:each="seat, seatStatus : ${reservation.seats}" th:if="${seatStatus.last}">
 <!--                                        <th:block th:if="${#lists.isEmpty(seat)}">-->
 <!--                                            <p class="text-gray-300">관람 극장</p>-->
 <!--                                            <span th:text="|${theater.cinema.region_cinema} ${theater.name}|">강남</span>-->
 <!--                                        </th:block>-->
                                         <p class="text-gray-300">관람 극장</p>
-                                        <th:block th:each="theater, theaterStatus : ${schedule.theaters}">
-                                            <span th:text="|${theater.cinema.name} ${theater.name} / ${seatStatus.count}명|">강남</span>
-                                        </th:block>
+                                        <span th:text="|${theater.cinema.name} ${theater.name} / ${seatStatus.count}명|">강남</span>
+<!--                                        <th:block th:each="theater, theaterStatus : ${schedule.theaters}">-->
+<!--                                            <span th:text="|${theater.cinema.name} ${theater.name} / ${seatStatus.count}명|">강남</span>-->
+<!--                                        </th:block>-->
+
                                     </div>
                                     <div class="text-sm">
                                         <p class="text-gray-300">관람 일시</p>
@@ -117,8 +120,16 @@
 
                         </div>
                         <th:block th:if="${reservation.review == null}">
-                            <button th:data-modal-target="|popup-modal${schedule.movie.id}|" th:data-modal-toggle="|popup-modal${schedule.movie.id}|" class="relative inline-flex items-center justify-center p-0.5 mt-52 ml-2 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-red-600 group-hover:from-pink-500 group-hover:to-red-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
-                                <span class="review relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                            <button th:data-modal-target="|popup-modal${schedule.movie.id}|"
+                                    th:data-modal-toggle="|popup-modal${schedule.movie.id}|"
+                                    class="relative inline-flex items-center justify-center p-0.5 mt-52 ml-2 mb-2 me-2 overflow-hidden
+                                    text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-red-600
+                                    group-hover:from-pink-500 group-hover:to-red-600 hover:text-white dark:text-white focus:ring-4
+                                    focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
+                                    style="width: 250px; height: 40px;">
+                                <span class="review relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900
+                                rounded-md group-hover:bg-opacity-0"
+                                      style="width: 250px; height: 40px;">
                                 이 영화를 평가해 주세요
                                 </span>
                             </button>

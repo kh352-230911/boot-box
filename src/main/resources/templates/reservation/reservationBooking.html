@@ -5,7 +5,7 @@
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
         layout:decorate="~{layout/default}">
 <head>
-    <title>Booking Test</title>
+    <title>예매</title>
     <link th:href="@{/css/reservation/reservation.css}" rel="stylesheet">
 </head>
 <style layout:fragment="style"></style>
@@ -21,7 +21,7 @@
         <table class="movieData-area">
             <thead>
             <tr>
-                <th colspan="2">영화 리스트</th>
+                <th colspan="2">영화</th>
             </tr>
             </thead>
             <tbody>
@@ -70,58 +70,10 @@
             </tbody>
         </table>
 
-
-        <!--        <table class="location-area">-->
-        <!--            <thead>-->
-        <!--            <tr>-->
-        <!--                <th>지역</th>-->
-        <!--            </tr>-->
-        <!--            </thead>-->
-        <!--            <tbody>-->
-        <!--            &lt;!&ndash; 지역 외 선호극장 추가&ndash;&gt;-->
-        <!--            <th:block sec:authorize="isAuthenticated()">-->
-        <!--            <tr>-->
-        <!--                <td onClick="select_member_like_cinema()">선호극장</td>-->
-        <!--            </tr>-->
-        <!--            </th:block>-->
-        <!--            <tr class="mytr" th:each="location : ${dataMap.locations}">-->
-        <!--                <td>-->
-        <!--                    <button type="button" class="select_location" th:text="${location.location_name}">-->
-        <!--&lt;!&ndash;                            th:attr="data-local-id=${local.id}">&ndash;&gt;-->
-        <!--                    </button>-->
-        <!--                </td>-->
-        <!--            </tr>-->
-        <!--            </tbody>-->
-        <!--        </table>-->
-
-
-
-        <!--        <table class="cinema-area">-->
-        <!--            <thead>-->
-        <!--            <tr>-->
-        <!--                <th>지점</th>-->
-        <!--            </tr>-->
-        <!--            </thead>-->
-        <!--            <tbody>-->
-        <!--            <tr class="mytr" th:each="location, status : ${dataMap.locations}">-->
-        <!--            &lt;!&ndash;  첫번째 지역에 대한 지점만 출력하는 경우 &ndash;&gt;-->
-        <!--                <td th:if="${status.index == 1}">-->
-        <!--                    <div class="cinema-list">-->
-        <!--                        <ul>-->
-        <!--                            <li th:each="cinema : ${location.cinemas}">-->
-        <!--                                <a th:text="${cinema.region_cinema}"></a>-->
-        <!--                            </li>-->
-        <!--                        </ul>-->
-        <!--                    </div>-->
-        <!--                </td>-->
-        <!--            </tr>-->
-        <!--            </tbody>-->
-        <!--        </table>-->
-
         <table class="cinema-area">
             <thead>
             <tr>
-                <th>지역</th>
+                <th>지점</th>
             </tr>
             </thead>
             <tbody>
@@ -148,7 +100,7 @@
         <table>
             <thead>
             <tr>
-                <th colspan="2">날짜 리스트</th>
+                <th colspan="2">날짜</th>
             </tr>
             </thead>
             <tbody>
@@ -158,8 +110,6 @@
                     <button type="button" class="select_date"
                             th:text="${date + ' ' + dataMap.dayOfWeekList[index.index]}" th:attr="data-date-id=${date}"></button>
                 </td>
-                <!--                    onclick="showAlert(this)"/>-->
-                <!--                <td th:text="${dataMap.dayOfWeekList[__${index.index}__]}" onclick="showAlert(this)"></td>-->
             </tr>
             </tbody>
         </table>
@@ -167,16 +117,11 @@
         <table id="scheduleTable">
             <thead>
             <tr>
-                <th colspan="4">상영 시간표</th>
+                <th colspan="4">상영 일정</th>
             </tr>
             </thead>
-            <tbody class="tbody_schedule">
-<!--            <tr>-->
-<!--                <td ></td>-->
-<!--                <td ></td>-->
-<!--                <td ></td>-->
-<!--                <td ></td>-->
-<!--            </tr>-->
+            <tbody id="tbody_schedule">
+
             </tbody>
         </table>
     </div>
@@ -190,19 +135,13 @@
             <button id="btn-clear" type="button"
                     th:onclick="myFunction()">
                 초기화</button>
-
         </div>
 
         <div class = "select-people-content">
             <span>일반 </span>
-            <input id="minus" type='button'
-                   onclick='count("minus")'
-                   value='-'/>
+            <button id="minus" type="button" onclick="count('minus')">-</button>
             <div id='peopleResult'>0</div>
-            <input id="plus" type='button'
-                   onclick='count("plus")'
-                   value='+'/>
-
+            <button id="plus" type="button" onclick="count('plus')">+</button>
         </div>
         <!-- 2.좌석 정보 및 선택 div -->
         <div class="all-seats" >
@@ -259,7 +198,25 @@
             </div>
         </div>
         <button class="select-seats-next-button">다음</button>
-        <button class="select-requestPay-button" onclick="requestPay()">결제</button>
+        <th:block sec:authorize="isAuthenticated()">
+        <button
+                class="select-requestPay-button"
+                th:data-memberId="${#authentication.principal.member.id}"
+                th:data-username="${#authentication.principal.username}"
+                th:data-memberPhone="${#authentication.principal.member.memberPhone}"
+                onclick="requestPay(this.getAttribute('data-memberId'),this.getAttribute('data-username'),this.getAttribute('data-memberPhone'))"
+                >
+            결제
+        </button>
+        </th:block>
+        <th:block sec:authorize="!isAuthenticated()">
+            <button
+                    class="select-requestPay-button"
+                    onclick="requestPay_notworking()"
+            >
+                결제
+            </button>
+        </th:block>
 <!--        <button class="select-requestPay-button" onclick="dtoTest()">dtoTest</button>-->
     </div>
 

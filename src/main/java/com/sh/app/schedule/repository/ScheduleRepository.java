@@ -26,6 +26,9 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
      * - (주의사항) 프로젝션시 underscore to camelcase 자동변환이 지원되지 않으므로 별칭사용 필수
      * <pre>
      */
+    
+    
+    //1.특정 영화관지점(강남점,왕십리점..)의 모든 영화와 스케쥴을 갖고오는 경우 (원하는 날짜에 맞춰서)
     @Query(value = """
         SELECT
             m.id AS movieId,
@@ -52,7 +55,10 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     List<IScheduleInfoDto> findScheduleDetailsByDateAndCinemaId(@Param("id") Long id,
                                                                 @Param("schDate") LocalDate schDate);
 
+    //  WHERE (c.id = :id AND s.sch_date = :schDate) AND s.time > CURRENT_TIMESTAMP """, nativeQuery = true)
 
+
+    //2.영화 예매페이지에서 원하는 영화를 선택해서 스케쥴을 확인할 경우(1에서 where 조건에 영화 id가 한개 더 추가됨)
     @Query(value = """
         SELECT
             m.id AS movieId,

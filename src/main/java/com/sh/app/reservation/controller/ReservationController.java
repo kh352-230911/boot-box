@@ -1,10 +1,17 @@
 package com.sh.app.reservation.controller;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.sh.app.auth.vo.MemberDetails;
 import com.sh.app.location.dto.LocationDto;
 import com.sh.app.location.service.LocationService;
 import com.sh.app.movie.dto.MovieShortDto;
 import com.sh.app.movie.service.MovieService;
 import com.sh.app.pay.dto.OrderPayDto;
+import com.sh.app.pay.entity.OrderPay;
+import com.sh.app.pay.service.OrderPayService;
 import com.sh.app.reservation.dto.CombinedDataDto;
 import com.sh.app.reservation.dto.ReservationDto;
 import com.sh.app.reservation.entity.Reservation;
@@ -20,6 +27,7 @@ import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.siot.IamportRestClient.IamportClient;
@@ -35,12 +43,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
+import javax.net.ssl.HttpsURLConnection;
+import java.io.*;
+import java.net.URL;
+import java.text.ParseException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 0206
@@ -61,6 +73,9 @@ public class ReservationController {
 
 
     // 의존 주입 영역
+    @Autowired
+    private OrderPayService orderPayService;
+
     @Autowired
     private MovieService movieService;
 
@@ -385,7 +400,8 @@ public class ReservationController {
 //    }
 
 
-    //2개이상의 dto에 할당해줘야 하는 test..
+    //2개이상의 dto에 할당해줘야 하는 test.
+    //총 3개의 dto를 작업해야 하므로 CombineDataDto 1개를 만들어 그 안에 3개의 dto를 필드값처럼 처리했다.
     @PostMapping("/reservationStart")
     public ResponseEntity<?> reservationStart(@AuthenticationPrincipal MemberDetails memberDetails,
                                               @RequestBody CombinedDataDto combinedDataDto ) throws IOException {
@@ -434,10 +450,6 @@ public class ReservationController {
             orderPayDto = reservationService.insertOrderPay(orderPayDto);
 
 
-
-
-
-
             // 모든 저장이 성공한 경우 성공 응답을 보냄
             return ResponseEntity.ok().body("All entities saved successfully :)");
         } catch (Exception e) {
@@ -450,6 +462,149 @@ public class ReservationController {
         //return ResponseEntity.ok().body(reservation);
 
     }
+
+
+    //jin - 예매 취소 작업 아임포트 환불 연동 전 예매취소 예 선택 시 db삭제 작업이 되나 체크.
+//    @PostMapping("/cancelReservation")
+//    public ResponseEntity<String> cancelReservation(@RequestParam("reservationId") String reservationId) {
+//        // 예매 취소 작업을 수행합니다.
 //
+//        System.out.println("~~~~~예매취소하기 위해 테이블 삭제 작업하는 메소드~~~~~~");
+//        boolean result = reservationService.cancelReservation(reservationId);
+//        if (result) {
+//            return ResponseEntity.ok("예매가 성공적으로 취소되었습니다.");
+//        } else {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("예매 취소에 실패했습니다.");
+//        }
+//    }
+
+    @PostMapping("/cancelReservation")
+    public ResponseEntity<?> cancelReservation(@RequestParam(value = "reservationId") String reservationId) throws IOException {
+        System.out.println("jin/예매취소하는 메소드,취소하고자 하는 예매 reservationId:"+reservationId);
+        getToken(); //액세스 토큰을 발급받는 메소드
+        System.out.println("발급받은 토큰값:"+getToken()); //발급받은 토큰값을 확인하는 sout
+        //이 토큰과 내가 선택한 reservationId로 조회한 imp_를 찾아서 아임포트에 취소요청을 해야한다.
+        //reservationId로 imp조회하기
+        OrderPay orderPay = orderPayService.findByReservationId(reservationId);
+        if (orderPay != null)
+        {
+            System.out.println("orderPay 조회 결과:"+orderPay);
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("예매 취소에 실패했습니다.존재하지 않는 예매내역 입니다.");
+        }
+        //응답값이 0이면 즉,정상적으로 환불이 되었다면..db 삭제도 진행한다.
+        int returnCode = payMentCancle(getToken(),orderPay.getImp());
+        if(returnCode==0)
+        {
+            boolean result = reservationService.cancelReservation(reservationId);
+            if (result) {
+                return ResponseEntity.ok("예매가 성공적으로 취소되었습니다.");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("예매 취소에 실패했습니다.");
+            }
+        }
+        //0이 아닐 경우..
+        else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("예매 취소에 실패했습니다. 환불 code:"+returnCode);
+        }
+
+    }
+
+    public String getToken() throws IOException {
+
+        HttpsURLConnection conn = null;
+
+        URL url = new URL("https://api.iamport.kr/users/getToken");
+        conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-type", "application/json");
+        conn.setRequestProperty("Accept", "application/json");
+        conn.setDoOutput(true);
+        JSONObject json = new JSONObject();
+
+        json.put("imp_key", apiKey);
+        json.put("imp_secret", secretKey);
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+        bw.write(json.toString());
+        bw.flush();
+        bw.close();
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+        Gson gson = new Gson();
+        String response = gson.fromJson(br.readLine(), Map.class).get("response").toString();
+        System.out.println(response);
+        String token = gson.fromJson(response, Map.class).get("access_token").toString();
+        br.close();
+        conn.disconnect();
+
+        return token;
+    }
+
+    ////
+    public int payMentCancle(String access_token, String imp_uid) throws IOException{
+        System.out.println("imp_uid = " + imp_uid);
+        HttpsURLConnection conn = null;
+        URL url = new URL("https://api.iamport.kr/payments/cancel");
+
+        conn = (HttpsURLConnection) url.openConnection();
+
+        conn.setRequestMethod("POST");
+
+        conn.setRequestProperty("Content-type", "application/json");
+        conn.setRequestProperty("Accept", "application/json");
+        conn.setRequestProperty("Authorization", access_token);
+
+        conn.setDoOutput(true);
+
+        JsonObject json = new JsonObject();
+
+//        json.addProperty("reason", reason);
+        json.addProperty("imp_uid", imp_uid);
+//        json.addProperty("amount", amount);
+//        json.addProperty("checksum", amount);
+
+        // 출력 스트림으로 해당 conn에 요청
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+        bw.write(json.toString());
+        //System.out.println("환불sout:"+json.toString());
+        bw.flush();
+        bw.close();
+
+        String responseJson = new BufferedReader(new InputStreamReader(conn.getInputStream()))
+                .lines()
+                .collect(Collectors.joining("\n"));
+
+        System.out.println("응답 본문: " + responseJson);
+
+        int code=0;
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(responseJson);
+
+            code = jsonNode.get("code").asInt();
+            System.out.println("응답 중 Code 추출: " + code);
+            //응답값이 0이면 정상 / 0 외 , 혹은 1이면 비정상 (확인 결과 1은 이미 취소된 건을 의미하는것 같음)
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+//        JsonObject jsonResponse = JsonParser.parseString(responseJson).getAsJsonObject();
+//        String resultCode = jsonResponse.get("code").getAsString();
+//        String resultMessage = jsonResponse.get("message").getAsString();
+//        System.out.println("결과 코드 = " + resultCode);
+//        System.out.println("결과 메시지 = " + resultMessage);
+
+        // 입력 스트림으로 conn 요청에 대한 응답 반환
+        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+        System.out.println("환불sout:"+br.toString());
+        br.close();
+        conn.disconnect();
+
+        return code;
+
+    }
+
 
 }

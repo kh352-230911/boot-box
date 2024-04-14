@@ -24,22 +24,15 @@ public class OrderPay {
     @Id
     @Column
     private String id; //pk , order+getTime조합
-
 //    @Column(nullable = false,name="reservation_id")
 //    private String reservationId; //참조할 예약id
-
     @Column(nullable = false,name="member_id")
     private Long memberId; //참조할 user id
-
     private String imp; //가맹점 식별코드
-
     private String inicis; //지원 pg사
-
     //@Column(nullable = false,name="reservation_amount")
     private String reservationAmount; //결제 방식
-
     private int price; //총 결제 금액
- 
     private String phone; //핸드폰 번호
 
     @Column(nullable = false)

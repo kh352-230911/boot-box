@@ -37,6 +37,9 @@
 //=====================================================
 //https://api.iamport.kr/
 
+let currentPage = 1; //jin 초기 페이지 설정
+
+
 //th 영화 제목 클릭시 하단 div에 해당 영화 포스터 이름, 포스터 동적으로 출력
 //예매 페이지 첫 진입시 info-seats none 처리
 const infoMoviesNone = document.querySelector(".info-movies");
@@ -70,7 +73,7 @@ $(document).ready(function()
     {
         console.log("영화 선택");
         // 모든 행의 선택을 취소하고 선택된 행에만 'selected' 클래스를 추가
-        $(this).css('background', 'linear-gradient(to right, grey, grey)');
+        $(this).css('background', 'linear-gradient(to right, darkred, darkred)');
         // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
         $(".select-movieData").not(this).css('background', '');
 
@@ -82,6 +85,9 @@ $(document).ready(function()
         console.log("선택된 영화 고유 ID:", movieId);
     });
 });
+
+
+//리스트에서 선택한 영화 포스터를 보여주는 함수
 function showPoster(posterUrl,movieTitle) {
     console.log("출력할 포스터:"+posterUrl);
     console.log("출력할 영화명:"+movieTitle);
@@ -96,8 +102,8 @@ function showPoster(posterUrl,movieTitle) {
     posterContainer.innerHTML = "";
     imgElement.src = 'https://image.tmdb.org/t/p/w200'+posterUrl;
     console.log("출력할 포스터 test ^^:"+posterUrl);
+    
     //movieTitle을 전체 출력하되, 제목이 길면 자른다.
-
     if(movieTitle.length>=10)
     {
         textElement.innerHTML = addLineBreaks(movieTitle,10);
@@ -106,7 +112,6 @@ function showPoster(posterUrl,movieTitle) {
     {
         textElement.innerHTML = movieTitle;
     }
-
     posterContainer.appendChild(imgElement);
     posterContainer.appendChild(textElement);
 }
@@ -233,21 +238,21 @@ function makeNewSchedule(able,organizedSchedules)
     const scheduleTable = document.getElementById('scheduleTable');
     const initialTableHeight = scheduleTable.offsetHeight; // 테이블의 초기 높이 저장
 
+    //다른 테이블들 높이도 체크..
+    const cinemaTable = document.querySelector('.cinema-area');
+    const initialTableHeight2 = cinemaTable.offsetHeight; // 테이블의 초기 높이 저장
+    console.log("테이블 초기 높이:",initialTableHeight);
+    console.log("테이블 초기 높이2:",initialTableHeight2);
 // 기존의 행 삭제
     while (scheduleTable.rows.length > 1) {
         scheduleTable.deleteRow(1); // 헤더를 제외한 행을 삭제합니다.
     }
-
-// 추가할 행의 높이를 계산하여 테이블의 높이를 조정
-   // const addedRowsHeight = scheduleTable.offsetHeight - initialTableHeight;
-    //scheduleTable.style.height = initialTableHeight + addedRowsHeight + 'px';
-
 // 새로운 데이터 추가
     const [{ totalDuration, schedules, title }] = organizedSchedules;
     console.log("총 상영 시간:", totalDuration);
     console.log("제목:", title);
 
-    const tbody = scheduleTable.querySelector('.tbody_schedule');
+    const tbody = document.getElementById('tbody_schedule');
     tbody.innerHTML = ''; // tbody 내용을 비움
 
 // 선택된 행 추적을 위한 변수
@@ -256,12 +261,12 @@ function makeNewSchedule(able,organizedSchedules)
     schedules.forEach(({ times, theater }) => {
         times.forEach(({ schId, time, seatsAvailable }) => {
             const row = scheduleTable.insertRow();
-            const schIdCell = row.insertCell();
+            //const schIdCell = row.insertCell();
             const timeCell = row.insertCell();
             const theaterCell = row.insertCell();
             const seatsAvailableCell = row.insertCell();
             //상영일정id도 추가
-            schIdCell.textContent = schId;
+            //schIdCell.textContent = schId;
             timeCell.textContent = time;
             theaterCell.textContent = theater;
             seatsAvailableCell.textContent = seatsAvailable + '석';
@@ -274,10 +279,10 @@ function makeNewSchedule(able,organizedSchedules)
                 }
                 // 선택된 행을 현재 클릭한 행으로 설정하고 배경색을 검은색으로 변경
                 selectedRow = row;
-                selectedRow.style.backgroundColor = 'black';
+                selectedRow.style.backgroundColor = 'darkred';
                 // 클릭된 행에 대한 동작을 여기에 추가
-                console.log('클릭된 행:', schId,time, theater, seatsAvailable);
-                selectedSheduleId = schId;
+                console.log('클릭된 행:',time, theater, seatsAvailable);
+                //selectedSheduleId = schId;
                 theaterDiv.innerHTML=theater;
             });
         });
@@ -287,6 +292,8 @@ function makeNewSchedule(able,organizedSchedules)
     scheduleTable.appendChild(tbody);
 
     // 추가된 tbody의 높이에 따라 테이블의 높이를 조정
+    const widght = scheduleTable.offsetWidth;
+    console.log("new widght:",widght);
     const newHeight = scheduleTable.offsetHeight;
     console.log("newHeight:",newHeight);
     const addedHeight = newHeight - initialTableHeight; // 새로운 tbody가 추가된 후에 높아진 높이 계산
@@ -294,8 +301,15 @@ function makeNewSchedule(able,organizedSchedules)
 // 테이블의 스타일을 변경하여 높이를 조정
     scheduleTable.style.height = initialTableHeight + addedHeight + 'px';
     console.log("initialTableHeight + addedHeight :",initialTableHeight + addedHeight );
-    scheduleTable.style.height = "500px";
+    scheduleTable.style.height = "100px";
+    tbody.style.maxHeight = "400px";
+
 }
+
+
+
+
+
 
 //10글자씩 잘라서 br 처리 (장문의 영화 타이틀 처리)
 function addLineBreaks(str, charsPerLine) {
@@ -349,23 +363,42 @@ function setSelectedOptions() {
 
 // 페이지가 로드될 때 자동으로 선택하는 로직을 실행합니다.
 document.addEventListener('DOMContentLoaded', setSelectedOptions);
+document.addEventListener('DOMContentLoaded', updateButtonVisibility);
+function updateButtonVisibility() {
+    console.log("이전/다음 버튼 표시 함수,현재 currentPage:"+currentPage);
+    const prevButton = document.querySelector('.select-seats-prev-button');
+    const nextButton = document.querySelector('.select-seats-next-button');
+    //.select-requestPay-button
+    const payButton = document.querySelector('.select-requestPay-button');
+
+    // 현재 페이지가 1인 경우 이전 버튼,결제버튼을 숨김 , 다음 버튼은 보여줌
+    if (currentPage === 1) {
+        prevButton.style.visibility = "hidden";
+        nextButton.style.visibility = "visible";
+        payButton.style.display = "none"; // display 속성을 변경합니다.
+    }
+// 다음 페이지(좌석 선택)
+    else {
+        prevButton.style.visibility = "visible";
+        nextButton.style.visibility = "hidden";
+        payButton.style.display = "block"; // display 속성을 변경합니다.
+    }
+    // 현재 페이지가 2 인 경우 이전 버튼 보이고, 다음 버튼 숨김.
+    // if (currentPage >= 2) {
+    //     nextButton.style.display = "inline"; // 또는 "block"
+    // } else {
+    //     // nextButton.style.display = "none";
+    // }
+}
 
 
 //======================================================================================
 document.querySelector(".select-seats-prev-button").addEventListener('click',function ()
 {
+    currentPage--;
+    updateButtonVisibility();
     //alert('이전버튼');
     console.log("...이전 버튼...");
-
-
-
-    const nextButton = document.querySelector('.select-seats-next-button');
-    const requestPayButton = document.querySelector('.select-requestPay-button');
-
-    if (requestPayButton.style.display === 'block') {
-        requestPayButton.style.display = 'none'; // 보이게 설정
-        nextButton.style.display='block';
-    }
 
 
     var cookieValue = getCookie("myCookie");
@@ -391,11 +424,16 @@ document.querySelector(".select-seats-prev-button").addEventListener('click',fun
     }
 });
 
-let selectedSheduleId;
 
+
+
+
+let selectedSheduleId;
 //0219 다음 버튼을 눌렀을 때, 영화-극장-시간-상영시간 모두 선택되어야 한다. 한개라도 선택 안되어있다면 넘어가지 못함.
 document.querySelector(".select-seats-next-button").addEventListener('click',function ()
 {
+    currentPage++;
+    updateButtonVisibility();
     console.log("...다음 버튼 클릭...");
     //0219 영화,극장,날짜,상영시간표를 모두 선택하지 않으면 다음으로 넘어갈 수 없음.
     // if(!checkButtonAllSelect()) {
@@ -424,7 +462,6 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
         success(response){
             console.log("success : 선택한 상영일정의 예약된 좌석 값 가져오기",response);
             makeSeat(response);
-
         },
         //requests:  요청 객체입니다. 보통 HTTP 요청 정보를 포함하며, 요청한 클라이언트의 정보와 요청된 리소스에 대한 정보 등을 포함합니다.
         // status: HTTP 상태 코드입니다. 실패한 요청의 상태 코드를 나타냅니다.
@@ -447,7 +484,7 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
             else if(request.status==400)//잘못된 클라이언트 요청
             {
                 alert(`에러로 인해 메인페이지로 이동합니다. 이용에 불편을 끼쳐드려 죄송합니다.`+request.status)
-                window.location.href = `${contextPath}bootbox/`; // 리다이렉트할 URL을 지정합니다.
+                //window.location.href = `${contextPath}bootbox/`; // 리다이렉트할 URL을 지정합니다.
             }
 
         }
@@ -758,23 +795,32 @@ function check_before_requestPay()
     }
 }
 IMP.init("imp32105587"); // 가맹점코드 - 고정값
-function requestPay()
-{
 
+function requestPay_notworking()
+{
+    concole.log("비로그인자 거름용");
+}
+
+
+//jin 0413 test용으로 rhgPwls,1,핸드폰번호를 고정했었음. 이제 로그인한 회원의 id,phone등을 변수로 지정해야 함!
+function requestPay(id,name,phone)
+{
     console.log("결제 버튼을 클릭");
+    console.log("0413 멤버 정보 테스트:",id+"/"+name+"/"+phone);
     //0224 테스트 하다가 중요한 것을 잊었다. 인원수=체크박스갯수 확인해야함! ex)인원은 2명인데 1개만 선택한 경우를 발견함.
     if(!check_before_requestPay())
         return;
     console.log("pass check_before_requestPay");
     let pay_uid = new Date().getTime().toString();
+    let boxId = "box"+new Date().getTime().toString().substring(8);
     IMP.request_pay({
         pg: "html5_inicis", // PG사코드 - 고정값
         pay_method: "card", // 결제방식 - 고정값
         merchant_uid: "order" + pay_uid, // UTC , 결제 API 주문번호 고유값
-        name: "Boot-Box", // 고정값[상품명]
+        name: "Boot-Box 영화 예매", // 고정값[상품명]
         amount: totalPay, // 결제 금액
-        buyer_name: "rhgPwls",//회원명
-        buyer_tel: "01089405318", // 회원연락처
+        buyer_name: name,//회원명
+        buyer_tel: phone, // 회원연락처
     },
 
         function(res) //결제창 띄우고 닫았을 때 여기까지 뜨고
@@ -791,12 +837,10 @@ function requestPay()
             //결제응답정보를 db에 저장하기 위해 비동기를 사용하는 구간
             if (res.success) //실제로 결제가 성공되면 이 구간으로 넘어오게 된다.
             {
-
                 console.log("결제가 성공적으로 요청되었습니다!",res.success);
-
                 let sendData01 = {
                     id: boxId,//예매id (랜덤조합)
-                    memberId: 1,//회원 아이디 long
+                    memberId: id,//회원 아이디 long
                     scheduleId: selectedSheduleId, //상영스케쥴 번호
                     status : Status.CONFIRM //enum 화
                 };
@@ -815,11 +859,10 @@ function requestPay()
                     inicis  : "html5_inicis",
                     reservationAmount : res.pay_method, //결제 방식
                     price : totalPay,
-                    phone : "01012345678",
+                    phone : phone,
                     status : Status.CONFIRM
 
                 };
-
 
                 //0224 객체 합치기
                 let combinedData = {
@@ -860,6 +903,11 @@ function requestPay()
 
 }
 
+
+
+
+
+//0413 - test용이라 무시해도됨. 사용되지 않습니다. 추후 삭제예정.
 function dtoTest()
 {
     console.log("dtoTest");
