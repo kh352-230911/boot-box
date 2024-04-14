@@ -57,8 +57,8 @@
         <div class="text-box p-6 text-medium text-white rounded-lg w-full">
             <h4 class="text-lg font-bold text-white dark:text-white mb-5">나의 예매 내역</h4>
             <!-- 예매내역이 없으면 나의 예매내역 페이지 들어갈 때 오류발생합니다. if not null 조건을 붙였어요. -->
-            <div th:if="${reservation != null}">
-            <th:block th:each="reservation, reservationStatus : ${member.reservations}">
+            <th:block th:if="${member != null}">
+            <th:block th:each="reservation, reservationStatus : ${member.reservations}" >
                 <div class="flex movie_info">
                     <div class="reservation-info mr-4">
                         <p>예매 번호</p>
@@ -124,11 +124,13 @@
                 <br>
                 <hr style="height: 1px">
                 <br>
+<!--                   -->
             </th:block>
-                </div>
+            </th:block>
+            <th:block th:if="${member == null}">
 <!--            <div class="flex movie_info" th:if="${member.reservations[0] == null}">-->
-<!--                <p>예매하신 내역이 없습니다.</p>-->
-<!--            </div>-->
+                <p>예매하신 내역이 없습니다.</p>
+            </th:block>
         </div>
     </div>
 </div>
