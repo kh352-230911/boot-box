@@ -282,7 +282,7 @@ function makeNewSchedule(able,organizedSchedules)
                 selectedRow.style.backgroundColor = 'darkred';
                 // 클릭된 행에 대한 동작을 여기에 추가
                 console.log('클릭된 행:',time, theater, seatsAvailable);
-                //selectedSheduleId = schId;
+                selectedSheduleId = schId;
                 theaterDiv.innerHTML=theater;
             });
         });
@@ -459,7 +459,8 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
         data:{
             scheduleId:selectedSheduleId
         },
-        success(response){
+        success(response)
+        {
             console.log("success : 선택한 상영일정의 예약된 좌석 값 가져오기",response);
             makeSeat(response);
         },
