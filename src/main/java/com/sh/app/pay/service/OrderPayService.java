@@ -1,6 +1,7 @@
 package com.sh.app.pay.service;
 
 
+import com.sh.app.pay.entity.OrderPay;
 import com.sh.app.pay.repository.OrderPayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,5 +15,7 @@ public class OrderPayService {
     OrderPayRepository orderPayRepository;
 
 
-
+    public OrderPay findByReservationId(String reservationId)
+    {
+        return orderPayRepository.findByReservationId(reservationId);}
 }

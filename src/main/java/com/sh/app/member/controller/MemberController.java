@@ -208,7 +208,7 @@ public class MemberController {
     public void memberReservation(Long id, Model model) {
         MemberReservationDto member = memberService.findByReservation(id);
 //        log.debug("member = {}", member);
-
+        System.out.println("member:"+member);
         model.addAttribute("member", member);
     }
 

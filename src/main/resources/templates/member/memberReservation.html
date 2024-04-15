@@ -13,6 +13,7 @@
 <div layout:fragment="content" class="wrap-container">
     <div class="home-container md:flex">
         <ul class="title-box flex-column space-y space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0">
+
             <li>
                 <a th:href="@{/member/memberReservation.do(id=${#authentication.principal.member.id})}" class="inline-flex items-center px-4 py-3 text-white bg-red-600 rounded-lg active w-full dark:bg-blue-600" aria-current="page">
                     <svg class="w-4 h-4 me-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -54,12 +55,14 @@
         </ul>
 
         <div class="text-box p-6 text-medium text-white rounded-lg w-full">
-            <h3 class="text-lg font-bold text-white dark:text-white mb-5">나의 예매 내역</h3>
-            <th:block th:each="reservation, reservationStatus : ${member.reservations}">
+            <h4 class="text-lg font-bold text-white dark:text-white mb-5">나의 예매 내역</h4>
+            <!-- 예매내역이 없으면 나의 예매내역 페이지 들어갈 때 오류발생합니다. if not null 조건을 붙였어요. -->
+            <th:block th:if="${member != null}">
+            <th:block th:each="reservation, reservationStatus : ${member.reservations}" >
                 <div class="flex movie_info">
                     <div class="reservation-info mr-4">
                         <p>예매 번호</p>
-                        <p th:text="${reservation.id}">box163342</p>
+                        <p id="reservationNo" th:text="${reservation.id}">box163342</p>
                     </div>
                     <th:block th:each="schedule, scheduleStatus : ${reservation.schedule}">
 
@@ -78,7 +81,7 @@
                         </div>
                         <div class="movie_info-left">
                             <h1 class="movie_title mt-4" th:text="${schedule.movie.title}" >웡카</h1>
-                            <br><br><br>
+                            <br>
                             <th:block th:each="theater, theaterStatus : ${schedule.theaters}">
                                 <div class="mt-4">
                                     <div class="text-sm">
@@ -95,8 +98,25 @@
                                         <span th:text="|${#temporals.format(schedule.startTime, 'HH:mm')} ~ ${#temporals.format(schedule.endTime, 'HH:mm')}|">2024.02.03 (토) 15:30</span>
                                         <br>
                                         <span th:text="|(${#temporals.dayOfWeekNameShort(schedule.startTime)})|"></span>
+                                        <br>
+                                        <span th:text="|${schedule.startTime}|"></span>
                                     </div>
                                 </div>
+                                <br>
+
+<!--                                <span th:text="|${#authentication.principal.member.id}멤버|"></span>-->
+                                <th:block th:if="${#temporals.createNow().isBefore(schedule.startTime)}">
+
+                                    <a
+                                       th:data-reservationId="${reservation.id}"
+                                       onclick="reservationCancel(this.getAttribute('data-reservationId'))"
+                                       class="inline-flex items-center px-4 py-3 text-white bg-red-600 rounded-lg active w-full dark:bg-blue-600"
+                                       aria-current="page" style="width:120px; text-align:center;">
+                                        예매 취소
+                                    </a>
+
+                                </th:block>
+
                             </th:block>
                         </div>
                     </th:block>
@@ -104,13 +124,17 @@
                 <br>
                 <hr style="height: 1px">
                 <br>
+<!--                   -->
             </th:block>
+            </th:block>
+            <th:block th:if="${member == null}">
 <!--            <div class="flex movie_info" th:if="${member.reservations[0] == null}">-->
-<!--                <p>예매하신 내역이 없습니다.</p>-->
-<!--            </div>-->
+                <p>예매하신 내역이 없습니다.</p>
+            </th:block>
         </div>
     </div>
 </div>
-
-<script layout:fragment="script"></script>
+<script th:inline="javascript" layout:fragment="script" th:src="@{/js/member/memberReservationCancel.js}">
+</script>
+<!--<script layout:fragment="script"></script>-->
 </html>
