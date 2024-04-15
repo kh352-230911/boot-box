@@ -26,9 +26,9 @@
                     <li th:each="memberLikeCinema, status : ${memberLikeCinemas}">
                         <a th:href="@{'/cinema/cinemaDetail.do'(id=${memberLikeCinema.cinema.id})}" th:text="${memberLikeCinema.cinema.region_cinema}">강남점</a>
                     </li>
-                    <li class="like">
-                        <p class="like-1">자주가는 영화관</p>
-                    </li>
+<!--                    <li class="like">-->
+<!--                        <p class="like-1">자주가는 영화관</p>-->
+<!--                    </li>-->
                 </ul>
                 <div class="mini flex justify-center">
                     <p class="text-xs mt-5 w-200">자주가는 극장은 북마크로 체크해주세요.</p>

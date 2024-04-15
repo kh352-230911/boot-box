@@ -36,9 +36,38 @@
 // });
 //=====================================================
 //https://api.iamport.kr/
-
 let currentPage = 1; //jin 초기 페이지 설정
 
+window.onload = function()
+{
+    var movieIdCookie = getCookie('movieIdCookie');
+    console.log("쿠키에 저장된 무비 아이디는?:",movieIdCookie);
+    //테이블에 출력한 후 , 쿠키를 삭제한다.
+    if (movieIdCookie) {
+        // 해당 영화 아이디를 가진 행에 CSS를 직접 적용하여 하이라이트 표시
+        $(".select-movieData[data-movieData-id='" + movieIdCookie + "']").css('background', 'linear-gradient(to right, darkred, darkred)');
+    }
+    deleteCookie('movieIdCookie');
+}
+
+function deleteCookie(name) {
+    console.log("movieIdCookie 쿠키를삭제합니다.");
+    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
+
+}
+
+function getCookie(cookieName) {
+    var name = cookieName + '=';
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var cookieArray = decodedCookie.split(';');
+    for (var i = 0; i < cookieArray.length; i++) {
+        var cookie = cookieArray[i].trim();
+        if (cookie.indexOf(name) == 0) {
+            return cookie.substring(name.length, cookie.length);
+        }
+    }
+    return '';
+}
 
 //th 영화 제목 클릭시 하단 div에 해당 영화 포스터 이름, 포스터 동적으로 출력
 //예매 페이지 첫 진입시 info-seats none 처리
@@ -85,6 +114,9 @@ $(document).ready(function()
         console.log("선택된 영화 고유 ID:", movieId);
     });
 });
+
+
+
 
 
 //리스트에서 선택한 영화 포스터를 보여주는 함수

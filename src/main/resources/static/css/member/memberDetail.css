@@ -579,6 +579,7 @@ body:before {
 .profile-options p {
     margin: 0;
     font-size: 0.8em;
+    letter-spacing: -1px; /* 원하는 만큼 조절 */
 }
 .profile-options a {
     display: block;
