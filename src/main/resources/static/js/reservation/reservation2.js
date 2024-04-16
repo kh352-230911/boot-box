@@ -37,6 +37,8 @@
 //=====================================================
 //https://api.iamport.kr/
 let currentPage = 1; //jin 초기 페이지 설정
+const now = new Date();
+console.log("현재 날짜와 시간",now);
 
 window.onload = function()
 {
@@ -48,6 +50,12 @@ window.onload = function()
         $(".select-movieData[data-movieData-id='" + movieIdCookie + "']").css('background', 'linear-gradient(to right, darkred, darkred)');
     }
     deleteCookie('movieIdCookie');
+    addPlaceholderTextToTable();
+}
+function addPlaceholderTextToTable() {
+    var placeholderText = "영화, 지점, 시간을 선택해주세요";
+    var placeholderRow = document.getElementById("placeholder_row");
+    placeholderRow.innerHTML = "<td colspan='3'>" + placeholderText + "</td>";
 }
 
 function deleteCookie(name) {
@@ -290,9 +298,15 @@ function makeNewSchedule(able,organizedSchedules)
 // 선택된 행 추적을 위한 변수
     let selectedRow = null;
 
+
+
+    if(able)
+    {
+    //insertRow(long):섹션 내에서 지정된 위치 앞에 새로운 <tr> 요소를 추가한다
+    //추가할  요소가 위치할 기준이 될 인덱스를 지정하며 지정된 인덱스 바로 앞에 추가된다. 생략하거나 -1을 지정한 경우에는 섹션내 끝에 추가한다.
     schedules.forEach(({ times, theater }) => {
         times.forEach(({ schId, time, seatsAvailable }) => {
-            const row = scheduleTable.insertRow();
+            const row = tbody.insertRow();
             //const schIdCell = row.insertCell();
             const timeCell = row.insertCell();
             const theaterCell = row.insertCell();
@@ -320,22 +334,21 @@ function makeNewSchedule(able,organizedSchedules)
         });
     });
 
+    //insertRow(long):섹션 내에서 지정된 위치 앞에 새로운 <tr> 요소를 추가한다
+    //추가할  요소가 위치할 기준이 될 인덱스를 지정하며 지정된 인덱스 바로 앞에 추가된다. 생략하거나 -1을 지정한 경우에는 섹션내 끝에 추가한다.
+
     // 새로운 tbody를 추가
-    scheduleTable.appendChild(tbody);
-
-    // 추가된 tbody의 높이에 따라 테이블의 높이를 조정
-    const widght = scheduleTable.offsetWidth;
-    console.log("new widght:",widght);
-    const newHeight = scheduleTable.offsetHeight;
-    console.log("newHeight:",newHeight);
-    const addedHeight = newHeight - initialTableHeight; // 새로운 tbody가 추가된 후에 높아진 높이 계산
-    console.log("addedHeight:",addedHeight);
-// 테이블의 스타일을 변경하여 높이를 조정
-    scheduleTable.style.height = initialTableHeight + addedHeight + 'px';
-    console.log("initialTableHeight + addedHeight :",initialTableHeight + addedHeight );
-    scheduleTable.style.height = "100px";
-    tbody.style.maxHeight = "400px";
-
+    //scheduleTable.appendChild(tbody);
+    }
+    else
+    {
+        console.log("해당 영화,지점,날짜에 맞는 상영 일정이 없다..");
+        const row = tbody.insertRow();
+        const noSch = row.insertCell();
+        //상영일정id도 추가
+        //schIdCell.textContent = schId;
+        noSch.textContent = '해당하는 상영 일정이 없습니다.';
+    }
 }
 
 
@@ -846,6 +859,7 @@ function requestPay(id,name,phone)
     console.log("pass check_before_requestPay");
     let pay_uid = new Date().getTime().toString();
     let boxId = "box"+new Date().getTime().toString().substring(8);
+
     IMP.request_pay({
         pg: "html5_inicis", // PG사코드 - 고정값
         pay_method: "card", // 결제방식 - 고정값
@@ -871,11 +885,14 @@ function requestPay(id,name,phone)
             if (res.success) //실제로 결제가 성공되면 이 구간으로 넘어오게 된다.
             {
                 console.log("결제가 성공적으로 요청되었습니다!",res.success);
+                const now = new Date();
+                console.log("결제 완료 날짜 시간 :) ",now);
                 let sendData01 = {
                     id: boxId,//예매id (랜덤조합)
                     memberId: id,//회원 아이디 long
                     scheduleId: selectedSheduleId, //상영스케쥴 번호
-                    status : Status.CONFIRM //enum 화
+                    status : Status.CONFIRM, //enum 화
+                    reservationTime : now
                 };
                 //0224 seat_id는 A01 이 아니라 1 이런식으로 넘겨줘야함! checkedNumbers는 내가 선택 좌석의 순수 숫자값을 저장한 배열이다.
                 let sendData02 = {
