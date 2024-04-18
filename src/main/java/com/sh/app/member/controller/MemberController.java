@@ -210,7 +210,7 @@ public class MemberController {
     public void memberReservation(Long id, Model model) {
         MemberReservationDto member = memberService.findByReservation(id);
 //        log.debug("member = {}", member);
-        System.out.println("member:"+member);
+        System.out.println("예약 내역 확인 member:"+member);
         model.addAttribute("member", member);
     }
 

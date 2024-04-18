@@ -55,19 +55,22 @@
         </ul>
 
         <div class="text-box p-6 text-medium text-white rounded-lg w-full">
-            <h4 class="text-lg font-bold text-white dark:text-white mb-5">나의 예매 내역</h4>
+                <h4 class="text-lg font-bold text-white dark:text-white mb-5">나의 예매 내역</h4>
+            <br>
             <!-- 예매내역이 없으면 나의 예매내역 페이지 들어갈 때 오류발생합니다. if not null 조건을 붙였어요. -->
             <th:block th:if="${member != null}">
             <th:block th:each="reservation, reservationStatus : ${member.reservations}" >
                 <div class="flex movie_info">
-                    <div class="reservation-info mr-4">
-                        <p>예매 번호</p>
-                        <p id="reservationNo" th:text="${reservation.id}">box163342</p>
-                    </div>
+<!--                    <div class="reservation-info mr-4">-->
+<!--                        <p>예매 번호</p>-->
+<!--                        <p id="reservationNo" th:text="${reservation.id}">box163342</p>-->
+<!--                    </div>-->
                     <th:block th:each="schedule, scheduleStatus : ${reservation.schedule}">
+
 
                         <div class="movie_info-right">
                             <div class="movie_img mr-4">
+
                                 <th:block th:if="${schedule.movie.posterUrl == null}">
                                     <img loading="lazy" src="https://t4.ftcdn.net/jpg/03/08/67/51/360_F_308675145_Ye70fJFVPntNVnmxjtVgMy5P8MDEmusB.jpg">
                                 </th:block>
@@ -75,18 +78,39 @@
                                     <img loading="lazy" th:src="${schedule.movie.posterUrl}" th:alt="${movie.title}">
                                 </th:block>
                                 <th:block th:if="|${schedule.movie.posterUrl != null and !#strings.startsWith(schedule.movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
+                                    <a th:href="@{/movie/movieDetail.do(id=${schedule.movie.id})}">
                                     <img loading="lazy" th:src="|https://image.tmdb.org/t/p/w200${schedule.movie.posterUrl}|" th:alt="${schedule.movie.title}">
+                                    </a>
                                 </th:block>
                             </div>
                         </div>
                         <div class="movie_info-left">
-                            <h1 class="movie_title mt-4" th:text="${schedule.movie.title}" >웡카</h1>
+                            <div style="display: inline-block;">
+                                <p class="text-gray-300" style="display: inline;">예매번호</p>
+                                <span class="movie_title mt-4" th:text="${reservation.id}" style="display: inline; font-weight: bold;">box~</span>
+
+                                <th:block th:if="${#temporals.createNow().isBefore(schedule.startTime)}">
+                                    <button
+                                            id="reservationCancelButton"
+                                            th:data-reservationId="${reservation.id}"
+                                            onclick="reservationCancel(this.getAttribute('data-reservationId'))"
+                                            class="inline-flex items-center justify-center px-3 py-3 text-white rounded-lg active dark:bg-blue-600"
+                                            aria-current="page" style="width:100px; text-align:center; font-size: 14px; background-color:#ef4444; "
+                                            onmouseover="this.style.backgroundColor='darkred';"
+                                            onmouseout="this.style.backgroundColor='#ef4444';">
+                                        <span style="display: inline-block; vertical-align: middle;">예매 취소</span>
+                                    </button>
+                                </th:block>
+
+                            </div>
+                            <h4 class="movie_title mt-4" th:text="${schedule.movie.title}" style="font-weight: bold;" >웡카</h4>
                             <br>
                             <th:block th:each="theater, theaterStatus : ${schedule.theaters}">
                                 <div class="mt-4">
                                     <div class="text-sm">
                                         <p class="text-gray-300">관람 극장</p>
                                         <span th:text="${theater.cinema.name}">강남</span>
+                                        <span th:text="${theater.name}">몇관</span>
                                     </div>
                                     <div class="text-sm">
                                         <p class="text-gray-300">관람 일시</p>
@@ -94,28 +118,35 @@
                                                th:text="|${#temporals.format(schedule.startTime, 'yyyy-MM-dd')} ~ ${#temporals.format(schedule.endTime, 'MM-dd')}|">2024.02.03 (토) 15:30</span>
                                         <span  th:unless="${schedule.endTime.toLocalDate().isAfter(schedule.startTime.toLocalDate())}"
                                                th:text="|${#temporals.format(schedule.startTime, 'yyyy-MM-dd')}|">2024.02.03 (토) 15:30</span>
-                                        <br>
+                                        <span th:text="|(${#temporals.dayOfWeekNameShort(schedule.startTime)})|"></span>
                                         <span th:text="|${#temporals.format(schedule.startTime, 'HH:mm')} ~ ${#temporals.format(schedule.endTime, 'HH:mm')}|">2024.02.03 (토) 15:30</span>
                                         <br>
-                                        <span th:text="|(${#temporals.dayOfWeekNameShort(schedule.startTime)})|"></span>
+                                        <p class="text-gray-300">관람 좌석</p>
+<!--                                        <th:block th:each="seatInfos, seatStatus : ${reservation.seats}">-->
+<!--                                        <span th:text="|${seatInfos.name}|">box163342</span>-->
+<!--                                        </th:block>-->
+                                        <span th:inline="text">
+                                        <th:block th:each="seatInfos, seatStatus : ${reservation.seats}">
+                                        [[${seatInfos.name}]]
+                                             <th:block th:if="${!seatStatus.last}">,</th:block>
+                                        </th:block>
+                                        </span>
                                         <br>
-                                        <span th:text="|예매날짜 : ${reservation.reservationTime}|">box163342</span>
+<!--                                        <span th:text="|예매날짜 : ${reservation.reservationTime}|">box163342</span>-->
                                     </div>
                                 </div>
                                 <br>
 
 <!--                                <span th:text="|${#authentication.principal.member.id}멤버|"></span>-->
-                                <th:block th:if="${#temporals.createNow().isBefore(schedule.startTime)}">
-
-                                    <a
-                                       th:data-reservationId="${reservation.id}"
-                                       onclick="reservationCancel(this.getAttribute('data-reservationId'))"
-                                       class="inline-flex items-center px-4 py-3 text-white bg-red-600 rounded-lg active w-full dark:bg-blue-600"
-                                       aria-current="page" style="width:120px; text-align:center;">
-                                        예매 취소
-                                    </a>
-
-                                </th:block>
+<!--                                <th:block th:if="${#temporals.createNow().isBefore(schedule.startTime)}">-->
+<!--                                    <a-->
+<!--                                       th:data-reservationId="${reservation.id}"-->
+<!--                                       onclick="reservationCancel(this.getAttribute('data-reservationId'))"-->
+<!--                                       class="inline-flex items-center px-3 py-3 text-white bg-red-600 rounded-lg active w-full dark:bg-blue-600"-->
+<!--                                       aria-current="page" style="width:120px; text-align:center;">-->
+<!--                                        예매 취소-->
+<!--                                    </a>-->
+<!--                                </th:block>-->
 
                             </th:block>
                         </div>

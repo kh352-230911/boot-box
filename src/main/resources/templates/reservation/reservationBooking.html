@@ -26,19 +26,7 @@
             </thead>
             <tbody>
 <!--         0326 - movieData를 movie로 수정하기.   -->
-            <tr th:each="movie, status : ${dataMap.movies}">
-<!--                0326 기존은 movie.poster였는데 에러가 발생함. posterUrl로 변경해보자..-->
-
-<!--                <th:block th:if="${#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">-->
-<!--                    <img th:src="${movie.posterUrl}" th:alt="${movie.title}">-->
-<!--                </th:block>-->
-
-<!--                <th:block th:if="${!#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">-->
-                <!-- 사이트에서 포스터 이미지를 가져오는 방법. 주소+movie.posterUrl -->
-<!--                    <img th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" th:alt="${movie.title}">-->
-
-
-                </th:block>
+            <tr class = "select-movieDataTr" th:each="movie, status : ${dataMap.movies}">
                 <td class="select-movieData"
                     th:data-poster="${movie.posterUrl}"
                     th:data-title="${movie.title}"
@@ -46,23 +34,31 @@
                     onclick="showPoster(this.getAttribute('data-poster'), this.getAttribute('data-title'))">
 
                     <th:block th:if="|${movie.filmRatings == '전체관람가'}|">
-                        <span style="font-size: 0.4em" class="grade bg-gradient-to-r bg-green-100 text-green-800 text-m font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">ALL</span>
+                        <span style="font-size: 0.4em; width:45px; justify-content: center; align-items:center; display:flex; "
+                              class="grade bg-gradient-to-r bg-green-100 text-green-800 text-m font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">ALL</span>
                     </th:block>
                     <th:block th:if="|${movie.filmRatings == '12세관람가'}|">
-                        <span style="font-size: 0.4em" class="grade bg-gradient-to-r bg-yellow-100 text-yellow-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">12</span>
+                        <span style="font-size: 0.4em; width:45px; justify-content: center; align-items:center; display:flex; "
+                              class="grade bg-gradient-to-r bg-yellow-100 text-yellow-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">12</span>
                     </th:block>
                     <th:block th:if="|${movie.filmRatings == '15세관람가'}|">
-                        <span style="font-size: 0.4em" class="grade bg-gradient-to-r bg-purple-100 text-purple-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-purple-400 border border-purple-400">15</span>
+                        <span style="font-size: 0.4em; width:45px; justify-content: center; align-items:center; display:flex; "
+                              class="grade bg-gradient-to-r bg-purple-100 text-purple-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-purple-400 border border-purple-400">15</span>
                     </th:block>
                     <th:block th:if="|${movie.filmRatings == '18세관람가(청소년관람불가)'}|">
-                        <span style="font-size: 0.4em" class="grade bg-gradient-to-r bg-red-100 text-red-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">18</span>
+                        <span style="font-size: 0.4em; width:45px; justify-content: center; align-items:center; display:flex; "
+                              class="grade bg-gradient-to-r bg-red-100 text-red-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">18</span>
                     </th:block>
                     <th:block th:if="|${movie.filmRatings == '정보 없음'}|">
-                        <span style="font-size: 0.2em" class="grade bg-gradient-to-r shadow-lg shadow-gray-100/50 bg-gray-100 text-gray-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-500">미정</span>
+                        <span style="font-size: 0.4em; width:45px; justify-content: center; align-items:center; display:flex; "
+                              class="grade bg-gradient-to-r shadow-lg shadow-gray-100/50 bg-gray-100 text-gray-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-500">미정</span>
                     </th:block>
-                    <button
-                            th:text="${#strings.abbreviate(movie.title, 12)}">
-                    </button>
+                    <p th:text="${#strings.abbreviate(movie.title, 15)}" style="font-size: 0.9em;"></p>
+<!--                    <button th:text="${#strings.abbreviate(movie.title, 15)}">-->
+<!--&lt;!&ndash;                    <button th:text="${movie.title}">&ndash;&gt;-->
+
+<!--                    </button>-->
+
                 </td>
 
 
@@ -79,13 +75,13 @@
             <tbody>
             <tr th:each="location, status : ${dataMap.locations}">
                 <td th:text="${location.location_name}"></td>
-                <td>
+                <td class="select-cinemaData">
                     <div class="cinema-list">
                         <ul>
-                            <hr th:if="${status.index != 0}" style="height: 1px">
+                            <hr class="cinemaLine" th:if="${status.index != 0}" style="height: 1px;">
                             <li th:each="cinema : ${location.cinemas}">
 
-                                <button type="button" class="select_location2" th:text="${cinema.region_cinema}"
+                                <button type="button" class="select_location2" th:text="${cinema.region_cinema}" style="font-size: 0.9em;"
                                         th:attr="data-cinema-id=${cinema.id}"></button>
                             </li>
                         </ul>
@@ -106,9 +102,9 @@
             <tbody>
 
             <tr th:each="date, index : ${dataMap.dateList}">
-                <td>
-                    <button type="button" class="select_date"
-                            th:text="${date + ' ' + dataMap.dayOfWeekList[index.index]}" th:attr="data-date-id=${date}"></button>
+                <td class="select-dateData">
+                    <button type="button" class="select_date" style="font-size: 0.9em;"
+                            th:text="${date + ' ' + dataMap.dayOfWeekList[index.index]}" th:attr="data-date-id=${date}" ></button>
                 </td>
             </tr>
             </tbody>
