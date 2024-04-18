@@ -74,7 +74,14 @@
                             <span id="recommendedBtn" onclick="checkAndChangeTab('recommended')" class="tab font-semibold">
                                 선호장르 추천영화
                                 <!-- 로그인 상태에 따라 data-member-id 값 설정 -->
-                                <input class="memberId" type="hidden" th:attr="data-member-id=${#authorization.expression('isAuthenticated()') ? #authentication.principal.member.id : ''}">
+
+                                <input class="memberId"
+                                       type="hidden"
+                                       th:attr="data-member-id=${#authorization.expression('isAuthenticated()')
+                                                and #authorization.expression('hasAuthority(''ROLE_USER'')')
+                                                and #authentication.principal.member != null ? #authentication.principal.member.id : ''}">
+<!--                                      th:attr="data-member-id=${#authorization.expression('isAuthenticated()') ? #authentication.principal.member.id : ''}">-->
+
                             </span>
                         </div>
 

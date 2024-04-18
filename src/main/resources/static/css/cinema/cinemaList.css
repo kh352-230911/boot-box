@@ -50,6 +50,7 @@
     padding: 2px;
     border: 2px solid #6e6c6d;
     text-align: center;
+
 }
 .favorite-list>ul p {
     float: left;
@@ -61,17 +62,19 @@
 
 .favorite-list>ul>li>a{
     display: block;
-    width: 100px;
+    width: auto;
     height: 39px;
     line-height: 39px;
     border: 1px solid #6e6c6d;
+    padding: 0 10px; /* 텍스트와 박스 사이의 간격을 10px로 조정 */
 }
 .favorite-list>ul>li>p{
     display: block;
-    width: 190px;
+    width: auto;
     height: 39px;
     line-height: 36px;
     border: 1px solid #6e6c6d;
+    padding: 0 10px;
 }
 
 
@@ -99,7 +102,8 @@
 }
 
 .location-area>ul>li.on {
-    outline: 3px solid #bb0808;
+    /*outline: 3px solid #bb0808;*/
+    background-color: #bb0808;
 }
 
 .theater-box .location-area>ul>li>button {

@@ -170,6 +170,7 @@ public class MemberService {
                         scheduleInfomDto.setMovie(movieInfoDto);
 
                         ReservationInfoDto reservationInfoDto = modelMapper.map(reservation, ReservationInfoDto.class);
+                        reservationInfoDto.setReservationTime(reservation.getReservationTime());
                         reservationInfoDto.setSeats(seatInfoDtos);
                         reservationInfoDto.setSchedule(scheduleInfomDto);
 
@@ -354,5 +355,7 @@ public class MemberService {
         }
 
         memberRepository.save(member);
+
     }
+
 }

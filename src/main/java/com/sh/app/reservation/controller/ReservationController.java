@@ -416,6 +416,7 @@ public class ReservationController {
             System.out.println("memberId: " + reservationDto.getMemberId()); //회원아이디
             System.out.println("scheduleId: " + reservationDto.getScheduleId());//상영아이디
             System.out.println("status: " + reservationDto.getStatus());//스테이트[상태값]
+            System.out.println("LocalDateTime: " + reservationDto.getReservationTime());//예약날짜시간
 
             //예약건 추가하러가기
             Reservation reservation = reservationService.insertReservation(reservationDto);
@@ -436,7 +437,6 @@ public class ReservationController {
                 reservationSeatDto2.setSeatId(reservationSeatDto.getSeatId().get(i));
                 //값을 넘겨받은 dto2를 확인한다. ->정상적으로 n개 생성 확인완료
                 System.out.println("dto2정보:"+reservationSeatDto2);
-
                 reservationSeatDto2 =  reservationService.insertReservationSeat(reservationSeatDto2);
 
             }
