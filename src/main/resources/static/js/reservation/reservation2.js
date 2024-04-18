@@ -36,9 +36,46 @@
 // });
 //=====================================================
 //https://api.iamport.kr/
-
 let currentPage = 1; //jin 초기 페이지 설정
+const now = new Date();
+console.log("현재 날짜와 시간",now);
 
+window.onload = function()
+{
+    var movieIdCookie = getCookie('movieIdCookie');
+    console.log("쿠키에 저장된 무비 아이디는?:",movieIdCookie);
+    //테이블에 출력한 후 , 쿠키를 삭제한다.
+    if (movieIdCookie) {
+        // 해당 영화 아이디를 가진 행에 CSS를 직접 적용하여 하이라이트 표시
+        $(".select-movieData[data-movieData-id='" + movieIdCookie + "']").css('background', 'linear-gradient(to right, darkred, darkred)');
+    }
+    deleteCookie('movieIdCookie');
+    addPlaceholderTextToTable();
+}
+function addPlaceholderTextToTable() {
+    var placeholderText = "영화, 지점, 시간을 선택해주세요";
+    var placeholderRow = document.getElementById("placeholder_row");
+    placeholderRow.innerHTML = "<td colspan='3'>" + placeholderText + "</td>";
+}
+
+function deleteCookie(name) {
+    console.log("movieIdCookie 쿠키를삭제합니다.");
+    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
+
+}
+
+function getCookie(cookieName) {
+    var name = cookieName + '=';
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var cookieArray = decodedCookie.split(';');
+    for (var i = 0; i < cookieArray.length; i++) {
+        var cookie = cookieArray[i].trim();
+        if (cookie.indexOf(name) == 0) {
+            return cookie.substring(name.length, cookie.length);
+        }
+    }
+    return '';
+}
 
 //th 영화 제목 클릭시 하단 div에 해당 영화 포스터 이름, 포스터 동적으로 출력
 //예매 페이지 첫 진입시 info-seats none 처리
@@ -85,6 +122,9 @@ $(document).ready(function()
         console.log("선택된 영화 고유 ID:", movieId);
     });
 });
+
+
+
 
 
 //리스트에서 선택한 영화 포스터를 보여주는 함수
@@ -258,9 +298,15 @@ function makeNewSchedule(able,organizedSchedules)
 // 선택된 행 추적을 위한 변수
     let selectedRow = null;
 
+
+
+    if(able)
+    {
+    //insertRow(long):섹션 내에서 지정된 위치 앞에 새로운 <tr> 요소를 추가한다
+    //추가할  요소가 위치할 기준이 될 인덱스를 지정하며 지정된 인덱스 바로 앞에 추가된다. 생략하거나 -1을 지정한 경우에는 섹션내 끝에 추가한다.
     schedules.forEach(({ times, theater }) => {
         times.forEach(({ schId, time, seatsAvailable }) => {
-            const row = scheduleTable.insertRow();
+            const row = tbody.insertRow();
             //const schIdCell = row.insertCell();
             const timeCell = row.insertCell();
             const theaterCell = row.insertCell();
@@ -288,22 +334,21 @@ function makeNewSchedule(able,organizedSchedules)
         });
     });
 
+    //insertRow(long):섹션 내에서 지정된 위치 앞에 새로운 <tr> 요소를 추가한다
+    //추가할  요소가 위치할 기준이 될 인덱스를 지정하며 지정된 인덱스 바로 앞에 추가된다. 생략하거나 -1을 지정한 경우에는 섹션내 끝에 추가한다.
+
     // 새로운 tbody를 추가
-    scheduleTable.appendChild(tbody);
-
-    // 추가된 tbody의 높이에 따라 테이블의 높이를 조정
-    const widght = scheduleTable.offsetWidth;
-    console.log("new widght:",widght);
-    const newHeight = scheduleTable.offsetHeight;
-    console.log("newHeight:",newHeight);
-    const addedHeight = newHeight - initialTableHeight; // 새로운 tbody가 추가된 후에 높아진 높이 계산
-    console.log("addedHeight:",addedHeight);
-// 테이블의 스타일을 변경하여 높이를 조정
-    scheduleTable.style.height = initialTableHeight + addedHeight + 'px';
-    console.log("initialTableHeight + addedHeight :",initialTableHeight + addedHeight );
-    scheduleTable.style.height = "100px";
-    tbody.style.maxHeight = "400px";
-
+    //scheduleTable.appendChild(tbody);
+    }
+    else
+    {
+        console.log("해당 영화,지점,날짜에 맞는 상영 일정이 없다..");
+        const row = tbody.insertRow();
+        const noSch = row.insertCell();
+        //상영일정id도 추가
+        //schIdCell.textContent = schId;
+        noSch.textContent = '해당하는 상영 일정이 없습니다.';
+    }
 }
 
 
@@ -814,6 +859,7 @@ function requestPay(id,name,phone)
     console.log("pass check_before_requestPay");
     let pay_uid = new Date().getTime().toString();
     let boxId = "box"+new Date().getTime().toString().substring(8);
+
     IMP.request_pay({
         pg: "html5_inicis", // PG사코드 - 고정값
         pay_method: "card", // 결제방식 - 고정값
@@ -839,11 +885,14 @@ function requestPay(id,name,phone)
             if (res.success) //실제로 결제가 성공되면 이 구간으로 넘어오게 된다.
             {
                 console.log("결제가 성공적으로 요청되었습니다!",res.success);
+                const now = new Date();
+                console.log("결제 완료 날짜 시간 :) ",now);
                 let sendData01 = {
                     id: boxId,//예매id (랜덤조합)
                     memberId: id,//회원 아이디 long
                     scheduleId: selectedSheduleId, //상영스케쥴 번호
-                    status : Status.CONFIRM //enum 화
+                    status : Status.CONFIRM, //enum 화
+                    reservationTime : now
                 };
                 //0224 seat_id는 A01 이 아니라 1 이런식으로 넘겨줘야함! checkedNumbers는 내가 선택 좌석의 순수 숫자값을 저장한 배열이다.
                 let sendData02 = {

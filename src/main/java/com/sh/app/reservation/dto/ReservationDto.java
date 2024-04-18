@@ -4,6 +4,8 @@ package com.sh.app.reservation.dto;
 import com.sh.app.common.Status;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 /**
  * 0223 Reservation dto
  * 1.예약 아이디  box12345
@@ -17,4 +19,5 @@ public class ReservationDto {
     private Long memberId;
     private Long scheduleId;
     private Status status; //enum
+    private LocalDateTime reservationTime;
 }

@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 
 import java.util.Set;
@@ -43,6 +44,8 @@ public class Reservation {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status; //상태값, enum class
+    //0416 dateTime추가
+    private LocalDateTime reservationTime;
 
     //예약 내역 - 결제 내역 1:1 oneTo one
     //한개의 예약내역엔 한개의 결제내역이 존재함

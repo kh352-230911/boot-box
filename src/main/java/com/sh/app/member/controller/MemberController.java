@@ -17,6 +17,7 @@ import com.sh.app.memberLikeCinema.dto.MemberLikeCinemaListDto;
 import com.sh.app.memberLikeCinema.serviece.MemberLikeCinemaService;
 import com.sh.app.memberLikeGenre.entity.MemberLikeGenre;
 import com.sh.app.memberLikeGenre.repository.MemberLikeGenreRepository;
+import com.sh.app.reservation.dto.ReservationInfoDto;
 import com.sh.app.review.dto.CreateReviewDto;
 import com.sh.app.review.entity.Review;
 import com.sh.app.review.service.ReviewService;
@@ -36,6 +37,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.awt.*;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -216,8 +218,6 @@ public class MemberController {
     public void memberWatchedMovie(Long id, Model model) {
 //        log.debug("id = {}", id);
         MemberReservationDto member = memberService.findPastReservationsById(id);
-//        log.debug("member = {}", member);
-
         model.addAttribute("member", member);
     }
 

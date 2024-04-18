@@ -1,3 +1,10 @@
+//0414
+function setMovieCookieAndRedirect(cookieName, movieId, destination) {
+    // 쿠키 저장
+    document.cookie = cookieName + '=' + movieId + '; path=/';
+    // 페이지 이동
+    window.location.href = destination;
+}
 $(document).ready(function() {
     let page = 0; // 현재 페이지 번호
     const size = 10; // 페이지당 영화 수
@@ -62,6 +69,7 @@ $(document).ready(function() {
         return `<a class="movie-title mb-1" href="${contextPath}movie/movieDetail.do?id=${movie.id}">${abbreviatedTitle}</a>`;
     }
 
+
     function getMovieHtml(movie) {
         let posterSrc = movie.posterUrl ? (movie.posterUrl.startsWith('http://file.koreafilm.or.kr') ? movie.posterUrl : `https://image.tmdb.org/t/p/w200${movie.posterUrl}`) : 'https://t4.ftcdn.net/jpg/03/08/67/51/360_F_308675145_Ye70fJFVPntNVnmxjtVgMy5P8MDEmusB.jpg';
         let ratingSpan = getRatingSpan(movie);
@@ -98,7 +106,9 @@ $(document).ready(function() {
             </span>
             ${movie.dday !== null && movie.dday !== undefined ? `<em class="text-base text-red-500 ml-2">${movie.dday}</em>` : ''}
             <div class="movie_action">
-                <button class="movie_button text-sm mb-3" onclick="location.href='/reservation/reservationBooking.do'">예매하기</button>
+                <button class="movie_button text-sm mb-3" 
+                onclick="setMovieCookieAndRedirect('movieIdCookie', ${movie.id}, '${contextPath}reservation/reservationBooking.do')">
+                예매하기</button>
             </div>
         </div>
     `;
