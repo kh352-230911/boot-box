@@ -406,7 +406,7 @@ create table product_order_pay (
     amount varchar2(100) not null, -- 결제방식
     price number not null, -- 총 금액
     count number not null, -- 총 수량
-    pay_time date not null, -- 결제 시간
+    pay_time date default sysdate not null, -- 결제 시간
     cancel_pay_time date null, -- 결제 취소 시간
     pay_status varchar2(50) not null, -- 구매 완료/취소 상태
     constraints pk_product_order_pay_id primary key(id),
