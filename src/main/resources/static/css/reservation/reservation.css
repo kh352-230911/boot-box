@@ -269,11 +269,9 @@ th
 
 table{
     /*border-collapse: collapse; !* 테이블 셀 테두리를 합칩니다. *!*/
-    border: 1px solid red;
+    border: 0.2px solid red;
 }
-table {
-    border: 1px solid red;
-}
+
 
 .highlighted {
     background-color: black;
@@ -304,6 +302,28 @@ table {
     background-color: #716a6a;
 
 }
+.select-movieData {
+    display: flex; /* 요소들을 플렉스 박스로 설정하여 자식 요소들을 가로로 배치합니다. */
+    align-items: center; /* 요소들을 세로로 가운데 정렬합니다. */
+    width: 290px; /* 테이블 행의 너비에 맞추기 위해 100%로 설정합니다. */
+}
+
+.select_location2 {
+    display: flex; /* 요소들을 플렉스 박스로 설정하여 자식 요소들을 가로로 배치합니다. */
+    align-items: center; /* 요소들을 세로로 가운데 정렬합니다. */
+    width: 190px; /* 테이블 행의 너비에 맞추기 위해 100%로 설정합니다. */
+}
+
+.select_date{
+    display: flex; /* 요소들을 플렉스 박스로 설정하여 자식 요소들을 가로로 배치합니다. */
+    align-items: center; /* 요소들을 세로로 가운데 정렬합니다. */
+    width: 290px; /* 테이블 행의 너비에 맞추기 위해 100%로 설정합니다. */
+}
+
+.cinemaLine
+{
+    width: 180px;
+}
 
 #scheduleTable {
     background-color : transparent;
@@ -312,6 +332,10 @@ table {
     max-width: 300px;
     max-height: 400px;
     overflow-y: auto;
+}
+
+.select-movieData
+{
 
 }
 #tbody_schedule

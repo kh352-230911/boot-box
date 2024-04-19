@@ -55,6 +55,7 @@ buttons.forEach(function (currentButton) {
 });
 
 const requestPay_notworking = () => {
+    alert("로그인 후 구입해주세요.");
     console.log("로그인을 하세용");
 };
 

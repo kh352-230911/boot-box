@@ -110,9 +110,13 @@ $(document).ready(function()
     {
         console.log("영화 선택");
         // 모든 행의 선택을 취소하고 선택된 행에만 'selected' 클래스를 추가
-        $(this).css('background', 'linear-gradient(to right, darkred, darkred)');
+        //$(this).css('background', 'linear-gradient(to right, darkred, darkred)');
         // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
-        $(".select-movieData").not(this).css('background', '');
+        //$(".select-movieData").not(this).css('background', '');
+
+        $(this).css('background-color', 'darkred');
+        $(".select-movieData").not(this).css('background-color', '');
+
 
         //선택한 영화의 고유 id (pk)값 가져오기.
         // 선택된 버튼의 ID(영화관 ID) 출력
@@ -157,7 +161,6 @@ function showPoster(posterUrl,movieTitle) {
 }
 
 
-//지역 선택시 .. 2
 $(document).ready(function(){
     $(".select_location").click(function()
     {
@@ -179,15 +182,18 @@ $(document).ready(function(){
 
 
 
-
+//지점 선택시
 var cinemaId;
 $(document).ready(function(){
     $(".select_location2").click(function()
     {
+        //0419
+        $(this).css('background-color', 'darkred');
+        $(".select_location2").not(this).css('background-color', '');
         //수정한 거
-        $(this).css('background', 'linear-gradient(to right, grey, grey)');
-        // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
-        $(".select_location2").not(this).css('background', '');
+        // $(this).css('background', 'linear-gradient(to right, grey, grey)');
+        // // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
+        // $(".select_location2").not(this).css('background', '');
         console.log("지점선택2");
         var cinemaName = $(this).text();
         console.log("선택된 영화관:", cinemaName);
@@ -209,9 +215,12 @@ $(document).ready(function(){
     {
         //수정한 거
         console.log("날짜 선택");
-        $(this).css('background', 'linear-gradient(to right, grey, grey)');
-        // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
-        $(".select_date").not(this).css('background', '');
+        // $(this).css('background', 'linear-gradient(to right, grey, grey)');
+        // // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
+        // $(".select_date").not(this).css('background', '');
+
+        $(this).css('background-color', 'darkred');
+        $(".select_date").not(this).css('background-color', '');
 
         dateDiv.innerText = $(this).text();
 
@@ -768,19 +777,19 @@ function count(type)  {
 //체크된 체크박수 갯수 확인하는 메소드
 var checkedCount = 0;
 
-function highlightCell(cell)
-{
-    // 클릭된 td의 클래스에 "highlighted" 클래스가 있는지 확인
-    console.log(cell.classList);
-    var isHighlighted = cell.classList.contains("highlighted");
-
-    // 클래스가 있으면 제거하고, 없으면 추가하여 배경색 변경(on,off)
-    if (isHighlighted) {
-        cell.classList.remove("highlighted");
-    } else {
-        cell.classList.add("highlighted");
-    }
-}
+// function highlightCell(cell)
+// {
+//     // 클릭된 td의 클래스에 "highlighted" 클래스가 있는지 확인
+//     console.log(cell.classList);
+//     var isHighlighted = cell.classList.contains("highlighted");
+//
+//     // 클래스가 있으면 제거하고, 없으면 추가하여 배경색 변경(on,off)
+//     if (isHighlighted) {
+//         cell.classList.remove("highlighted");
+//     } else {
+//         cell.classList.add("highlighted");
+//     }
+// }
 
 
 

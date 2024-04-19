@@ -54,6 +54,7 @@
 
         <div class="text-box p-6 text-medium text-white rounded-lg w-full">
             <h3 class="text-lg font-bold text-white dark:text-white mb-5">나의 리뷰 내역</h3>
+            <br>
             <th:block th:each="review, reviewStatus : ${member.reviews}">
                 <div class="flex movie_info">
                     <th:block th:each="movie, movieStatus : ${review.movie}">
