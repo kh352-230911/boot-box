@@ -66,7 +66,8 @@ public class CinemaController {
     }
 
     @GetMapping("/cinemaDetail.do")
-    public String cinemaDetail(@RequestParam("id") Long id, Model model) {
+    public String cinemaDetail(@RequestParam("id") Long id, Model model,
+                               @AuthenticationPrincipal MemberDetails memberDetails) {
         CinemaDto cinemaDto = cinemaService.getCinemaDetails(id);
 //        List<MovieListDto> currentMovies = movieService.getCurrentMovies(); // 현재 상영 중인 영화 목록 가져오기
         List<MovieListDto> currentMovies = cinemaService.getMoviesByCinemaId(id); // 현재 상영 중인 영화 목록 가져오기
@@ -75,6 +76,12 @@ public class CinemaController {
         model.addAttribute("currentMovies", currentMovies); // 모델에 추가
         log.debug("cinemaDto = {}", cinemaDto);
         log.debug("currentMovies = {}", currentMovies);
+
+        boolean userLikedCinema = cinemaDto.getMemberLikeCinemas().stream()
+                .anyMatch(like -> like.getMemberId().equals(memberDetails.getMember().getId()));
+
+        model.addAttribute("userLikedCinema", userLikedCinema);
+
         return "cinema/cinemaDetail";
     }
 
