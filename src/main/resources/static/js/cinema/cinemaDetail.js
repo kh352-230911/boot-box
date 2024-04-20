@@ -444,7 +444,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         xhr.setRequestHeader(csrfHeaderName, csrfToken);
                     },
                     success:function (data) {
-                        console.log(data);
+                        console.log('어떤 데이터?', data);
                         // 북마크 최대 3개 이상으로 등록시
                         if(data >= 3) {
                             alert('최대 3개의 극장만 추가 가능합니다.😓');
