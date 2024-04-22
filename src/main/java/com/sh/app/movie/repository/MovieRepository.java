@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     Optional<Movie> findByNormalizedTitle(String normalizedTitle);
 
-    @Query("SELECT m FROM Movie m JOIN m.movieGenres g WHERE g.genre.genreName = :genre")
+    @Query("SELECT m FROM Movie m JOIN m.movieGenres g WHERE g.genre.genreName = :genre order by m.releaseDate DESC, m.id ASC")
 //    List<Movie> findByGenreName(String genre);
     Page<Movie> findByGenreName(String genre, Pageable pageable);
 
