@@ -9,6 +9,7 @@ import com.sh.app.schedule.dto.ScheduleListDto;
 import com.sh.app.schedule.entity.Schedule;
 import com.sh.app.schedule.repository.ScheduleRepository;
 import com.sh.app.theater.dto.TheaterDto;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -28,6 +26,7 @@ import java.util.stream.Collectors;
  * schedule이 단독으로 쓰일일은 거의 없지만 현재 db에 저장한 시험데이터를 가져오기 위해 만들음.
  */
 @Service
+@Slf4j
 @Transactional //기존 rollback처리 class단에서 선언하면 하위 모든 메소드에도 모두 어노테이션 처리됨
 
 public class ScheduleService {
@@ -115,16 +114,22 @@ public class ScheduleService {
 
     }
 
-    public List<Map<String, Object>> organizeSchedules(List<IScheduleInfoDto> scheduleDetails) {
+    //0422
+    //정렬된 데이터가 이 메소드에서 가공되면서 정렬이 흐트러진거같음(추측)
+    public List<Map<String, Object>> organizeSchedules(List<IScheduleInfoDto> scheduleDetails)
+    {
+
         // 영화별, 상영관별, 스케줄별 그룹화하기위한 맵
-        Map<String, Map<String, List<Map<String, Object>>>> organized = new HashMap<>();
+        Map<String, Map<String, List<Map<String, Object>>>> organized = new LinkedHashMap<>(); //LinkedHashMap으로변경
         // 각 영화별 상영 시간을 저장하기 위한 맵
         Map<String, String> movieDurations = new HashMap<>();
         // 각 영화별 관람 등급을 저장하기 위한 맵
         Map<String, String> movieFilmRatings = new HashMap<>();
 
         // 데이터 각 행마다 반복
-        for (IScheduleInfoDto dto : scheduleDetails) {
+        for (IScheduleInfoDto dto : scheduleDetails)
+        {
+            log.debug("==================데이터 각 행마다 반복========================");
             Long movieId = dto.getMovieId();
             Long cinemaId = dto.getCinemaId();
             Long schId = dto.getSchId();
@@ -153,12 +158,14 @@ public class ScheduleService {
             timeMap.put("bookingUrl", bookingUrl); // 예약 페이지로 이동할 URL 추가
 
             // 영화 제목별, 상영관별, 스케줄별에 따라 그룹화
-            organized.computeIfAbsent(title, k -> new HashMap<>())
+            organized.computeIfAbsent(title, k -> new LinkedHashMap<>())
                     .computeIfAbsent(theater, k -> new ArrayList<>())
                     .add(timeMap);
+
+
         }
 
-        // 데이터 가공하여 최종적으로 필요한 상영일정 구조로 변환
+        // 데이터 가공하여 최종적으로 필요한 상영일정 구조로 변환 finalStructure가 리턴할 값임.
         List<Map<String, Object>> finalStructure = new ArrayList<>();
         organized.forEach((movieTitle, theaters) -> {
             // 영화 제목별 그룹화
@@ -175,11 +182,81 @@ public class ScheduleService {
                 theaterMap.put("times", timesList);
                 theaterList.add(theaterMap);
             });
-
             movieMap.put("schedules", theaterList);
             finalStructure.add(movieMap);
+
         });
 
         return finalStructure;
     }
+
+//    public List<Map<String, Object>> organizeSchedules(List<IScheduleInfoDto> scheduleDetails) {
+//        Map<String, Map<String, List<Map<String, Object>>>> organized = new HashMap<>();
+//        Map<String, String> movieDurations = new HashMap<>();
+//        Map<String, String> movieFilmRatings = new HashMap<>();
+//
+//
+//                for (IScheduleInfoDto dto : scheduleDetails)
+//        {
+//            log.debug("==================데이터 각 행마다 반복========================");
+//            Long movieId = dto.getMovieId();
+//            Long cinemaId = dto.getCinemaId();
+//            Long schId = dto.getSchId();
+//            LocalDateTime _schDate = dto.getSchDate();
+//
+//            // LocalDateTime을 yyyy/MM/dd 형식의 문자열로 변환
+//            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+//            String schDate = _schDate.format(dateFormatter);
+//
+//            // 예약 페이지 URL 생성 - 파라미터로 전달
+//            String bookingUrl = String.format("/bootbox/reservation/reservationBooking.do?movieId=%d&cinemaId=%d&schId=%d&schDate=%s",
+//                    movieId, cinemaId, schId, schDate);
+//
+//            String filmRatings = dto.getFilmRatings();
+//            String title = dto.getMovieTitle();
+//            String theater = dto.getTheaterName();
+//            String runningTime = dto.getRunningTime();
+//
+//            movieDurations.putIfAbsent(title, runningTime); // 영화 제목에 해당하는 상영 시간을 맵에 저장
+//            movieFilmRatings.putIfAbsent(title, filmRatings); // 영화 제목에 해당하는 관람등급을 맵에 저장
+//
+//            // 영화 시간, 남은 좌석 그룹화 및 예약 페이지 링크 추가
+//            Map<String, Object> timeMap = new HashMap<>();
+//            timeMap.put("time", dto.getStartTime().format(DateTimeFormatter.ofPattern("HH:mm")));
+//            timeMap.put("seatsAvailable", dto.getRemainingSeats());
+//            timeMap.put("bookingUrl", bookingUrl); // 예약 페이지로 이동할 URL 추가
+//
+//            // 영화 제목별, 상영관별, 스케줄별에 따라 그룹화
+//            organized.computeIfAbsent(title, k -> new HashMap<>())
+//                    .computeIfAbsent(theater, k -> new ArrayList<>())
+//                    .add(timeMap);
+//
+//
+//        }
+//
+//        // 데이터 가공하여 최종적으로 필요한 상영일정 구조로 변환 finalStructure가 리턴할 값임.
+//        List<Map<String, Object>> finalStructure = new ArrayList<>();
+//        organized.forEach((movieTitle, theaters) -> {
+//            // 상영관 이름으로 오름차순 정렬
+//            List<Map<String, Object>> theaterList = new ArrayList<>();
+//            theaters.entrySet().stream()
+//                    .sorted(Comparator.comparing(Map.Entry::getKey))
+//                    .forEach(entry -> {
+//                        Map<String, Object> theaterMap = new HashMap<>();
+//                        theaterMap.put("theater", entry.getKey());
+//                        theaterMap.put("times", entry.getValue());
+//                        theaterList.add(theaterMap);
+//                    });
+//
+//            // 영화 제목별 그룹화
+//            Map<String, Object> movieMap = new HashMap<>();
+//            movieMap.put("title", movieTitle);
+//            movieMap.put("filmRatings", movieFilmRatings.get(movieTitle));
+//            movieMap.put("totalDuration", movieDurations.get(movieTitle));
+//            movieMap.put("schedules", theaterList);
+//            finalStructure.add(movieMap);
+//        });
+//
+//        return finalStructure;
+//    }
 }

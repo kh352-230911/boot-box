@@ -26,12 +26,14 @@ header {
     top: 50%;
     left: 50%;
     width: 430px;
+    height:500px;
     padding: 40px;
     transform: translate(-50%, -50%);
     background: rgba(0,0,0,.5);
     box-sizing: border-box;
     box-shadow: 0 15px 25px rgba(0,0,0,.6);
     border-radius: 10px;
+    /*position: relative; !* 자식 요소의 position: absolute;를 사용하기 위해 부모 요소를 relative로 설정 *!*/
 }
 
 .login-box h2 {

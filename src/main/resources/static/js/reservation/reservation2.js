@@ -39,7 +39,7 @@
 let currentPage = 1; //jin 초기 페이지 설정
 const now = new Date();
 console.log("현재 날짜와 시간",now);
-
+let abledNextButton = false;
 window.onload = function()
 {
     var movieIdCookie = getCookie('movieIdCookie');
@@ -47,7 +47,7 @@ window.onload = function()
     //테이블에 출력한 후 , 쿠키를 삭제한다.
     if (movieIdCookie) {
         // 해당 영화 아이디를 가진 행에 CSS를 직접 적용하여 하이라이트 표시
-        $(".select-movieData[data-movieData-id='" + movieIdCookie + "']").css('background', 'linear-gradient(to right, darkred, darkred)');
+        $(".select-movieData[data-movieData-id='" + movieIdCookie + "']").css('background', 'linear-gradient(to right, dimgray, dimgray)');
     }
     deleteCookie('movieIdCookie');
     addPlaceholderTextToTable();
@@ -109,21 +109,15 @@ $(document).ready(function()
     $(".select-movieData").click(function()
     {
         console.log("영화 선택");
-        // 모든 행의 선택을 취소하고 선택된 행에만 'selected' 클래스를 추가
-        //$(this).css('background', 'linear-gradient(to right, darkred, darkred)');
-        // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
-        //$(".select-movieData").not(this).css('background', '');
-
-        $(this).css('background-color', 'darkred');
+        $(this).css('background-color', 'dimgray');
         $(".select-movieData").not(this).css('background-color', '');
-
-
         //선택한 영화의 고유 id (pk)값 가져오기.
         // 선택된 버튼의 ID(영화관 ID) 출력
         //0328 무비쪽 수정되면서 이쪽도 변수명을 바꿔야할 것 같기도.data-movieData-id
         // movieId = $(this).data("movie-id");
         movieId = $(this).attr("data-movieData-id");
         console.log("선택된 영화 고유 ID:", movieId);
+        loadMovieSch(movieId,cinemaId,dateId);
     });
 });
 
@@ -188,7 +182,7 @@ $(document).ready(function(){
     $(".select_location2").click(function()
     {
         //0419
-        $(this).css('background-color', 'darkred');
+        $(this).css('background-color', 'dimgray');
         $(".select_location2").not(this).css('background-color', '');
         //수정한 거
         // $(this).css('background', 'linear-gradient(to right, grey, grey)');
@@ -205,10 +199,11 @@ $(document).ready(function(){
         // 선택된 버튼의 ID(영화관 ID) 출력
         cinemaId = $(this).data("cinema-id");
         console.log("선택된 영화관 ID:", cinemaId);
+        loadMovieSch(movieId,cinemaId,dateId);
     });
 });
 
-
+var dateId;
 //0220 임시 - 날짜를 선택해야 비동기로 상영 스케줄을 가져오도록 함.
 $(document).ready(function(){
     $(".select_date").click(function()
@@ -219,67 +214,69 @@ $(document).ready(function(){
         // // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
         // $(".select_date").not(this).css('background', '');
 
-        $(this).css('background-color', 'darkred');
+        $(this).css('background-color', 'dimgray');
         $(".select_date").not(this).css('background-color', '');
 
         dateDiv.innerText = $(this).text();
 
         // 선택된 버튼의 ID(영화관 ID) 출력
-        let dateId = $(this).data("date-id");
+        dateId = $(this).data("date-id");
         console.log("선택된 date ID:",dateId);
 
         //현재 선택된 극장,상영관,날짜 한 번 더 체크하기.
         console.log("현재 선택한 영화,상영관,날짜");
         console.log(movieId,cinemaId,dateId);
-
-        /*
-        * test1.날짜선택시 스케쥴 출력
-        *
-        *
-        * */
-
-        $.ajax({
-            url: `${contextPath}reservation/findSchedules`,
-            type: 'get',
-            data:{
-                movieId, //영화
-                cinemaId, //샹영관
-                dateId //날짜
-            },
-            success(organizedSchedules){
-
-                makeNewSchedule(true,organizedSchedules);
-
-            },
-            //requests:  요청 객체입니다. 보통 HTTP 요청 정보를 포함하며, 요청한 클라이언트의 정보와 요청된 리소스에 대한 정보 등을 포함합니다.
-            // status: HTTP 상태 코드입니다. 실패한 요청의 상태 코드를 나타냅니다.
-            // error: 서버에서 반환된 오류 메시지입니다.
-            error(request, status, error) {
-                //console.error('~~~~Ajax request failed~~~~:', error);
-                console.log('~~~~Error response responseText~~~~:', request.responseText);
-                console.log('~~~~Error response status~~~~:', request.status);
-                if(request.status==500)
-                {
-                    alert(`에러로 인해 메인페이지로 이동합니다. 이용에 불편을 끼쳐드려 죄송합니다.`)
-                    window.location.href = `${contextPath}bootbox/`; // 리다이렉트할 URL을 지정합니다.
-                }
-                else if(request.status==401) //인증 관련 에러 잠시 주석처리..
-                {
-                    alert(`예매는 로그인 후 이용하실 수 있습니다.`)
-                    window.location.href = `${contextPath}`+request.responseText; // 리다이렉트할 URL을 지정합니다.
-                }
-                else if(request.status==404)
-                {
-                    //204는 delete 했을 때 경우라, select 조회 결과가 없는 경우 404로 처리
-                    makeNewSchedule(false,"해당 상영스케쥴이 존재하지 않습니다");
-                }
-
-            },
-
-        });
+        loadMovieSch(movieId,cinemaId,dateId);
 
     });
 });
+
+//0421 날짜 선택 click event에 속해있던 상영일정 불러오기 ajax를 함수로 따로 빼냄.
+//매개변수를 영화,상영관(지점),날짜로 받아서 처리.
+function loadMovieSch(movieId,cinemaId,dateId)
+{
+    $.ajax({
+        url: `${contextPath}reservation/findSchedules`,
+        type: 'get',
+        data:{
+            movieId, //영화
+            cinemaId, //샹영관
+            dateId //날짜
+        },
+        success(organizedSchedules){
+
+            makeNewSchedule(true,organizedSchedules);
+
+        },
+        //requests:  요청 객체입니다. 보통 HTTP 요청 정보를 포함하며, 요청한 클라이언트의 정보와 요청된 리소스에 대한 정보 등을 포함합니다.
+        // status: HTTP 상태 코드입니다. 실패한 요청의 상태 코드를 나타냅니다.
+        // error: 서버에서 반환된 오류 메시지입니다.
+        error(request, status, error) {
+            //console.error('~~~~Ajax request failed~~~~:', error);
+            console.log('~~~~Error response responseText~~~~:', request.responseText);
+            console.log('~~~~Error response status~~~~:', request.status);
+            if(request.status==500)
+            {
+                alert(`에러로 인해 메인페이지로 이동합니다. 이용에 불편을 끼쳐드려 죄송합니다.`)
+                window.location.href = `${contextPath}bootbox/`; // 리다이렉트할 URL을 지정합니다.
+            }
+            else if(request.status==401) //인증 관련 에러 잠시 주석처리..
+            {
+                alert(`예매는 로그인 후 이용하실 수 있습니다.`)
+                window.location.href = `${contextPath}`+request.responseText; // 리다이렉트할 URL을 지정합니다.
+            }
+            else if(request.status==404)
+            {
+                //204는 delete 했을 때 경우라, select 조회 결과가 없는 경우 404로 처리
+                makeNewSchedule(false,"해당 상영스케쥴이 존재하지 않습니다");
+            }
+
+        },
+
+    });
+}
+
+
 
 //0221 영화-극장-원하는날짜로 새 상영스케쥴을 받아온 후 가공하는 함수
 function makeNewSchedule(able,organizedSchedules)
@@ -317,14 +314,17 @@ function makeNewSchedule(able,organizedSchedules)
         times.forEach(({ schId, time, seatsAvailable }) => {
             const row = tbody.insertRow();
             //const schIdCell = row.insertCell();
-            const timeCell = row.insertCell();
             const theaterCell = row.insertCell();
+            const timeCell = row.insertCell();
             const seatsAvailableCell = row.insertCell();
             //상영일정id도 추가
             //schIdCell.textContent = schId;
-            timeCell.textContent = time;
-            theaterCell.textContent = theater;
-            seatsAvailableCell.textContent = seatsAvailable + '석';
+            theaterCell.innerHTML = '<div class="icon-box"><i class="fas fa-film"></i>' + theater + '</div>';
+            theaterCell.style.color = 'black';
+            timeCell.textContent = time + `~       `;
+            // seatsAvailableCell에 새로운 div를 추가하여 내용을 배치
+            seatsAvailableCell.textContent = '               ' + seatsAvailable + '/60석';
+
 
             // 행에 클릭 이벤트 리스너 추가
             row.addEventListener('click', () => {
@@ -334,20 +334,20 @@ function makeNewSchedule(able,organizedSchedules)
                 }
                 // 선택된 행을 현재 클릭한 행으로 설정하고 배경색을 검은색으로 변경
                 selectedRow = row;
-                selectedRow.style.backgroundColor = 'darkred';
+                selectedRow.style.backgroundColor = 'dimgray';
+                selectedRow.style.width='300px';
+                selectedRow.style.height='52px';
+                selectedRow.style.display = "block"; // 또는 inline-block 등을 사용할 수 있습니다.
                 // 클릭된 행에 대한 동작을 여기에 추가
                 console.log('클릭된 행:',time, theater, seatsAvailable);
                 selectedSheduleId = schId;
                 theaterDiv.innerHTML=theater;
+                //0421 스케쥴 상영일정을 클릭해야 다음버튼 활성화를 할 수있는 조건을 걸자.
+                funcNextButton(true);
+
             });
         });
     });
-
-    //insertRow(long):섹션 내에서 지정된 위치 앞에 새로운 <tr> 요소를 추가한다
-    //추가할  요소가 위치할 기준이 될 인덱스를 지정하며 지정된 인덱스 바로 앞에 추가된다. 생략하거나 -1을 지정한 경우에는 섹션내 끝에 추가한다.
-
-    // 새로운 tbody를 추가
-    //scheduleTable.appendChild(tbody);
     }
     else
     {
@@ -357,9 +357,26 @@ function makeNewSchedule(able,organizedSchedules)
         //상영일정id도 추가
         //schIdCell.textContent = schId;
         noSch.textContent = '해당하는 상영 일정이 없습니다.';
+        funcNextButton(false);
     }
 }
 
+//0421 다음버튼 관련
+function funcNextButton(abled)
+{
+    console.log("다음버튼을 비활성화/활성화 시켜주는 funcNextButton함수로 진입.");
+    if(abled)
+    {
+        document.querySelector(".select-seats-next-button").disabled=false;
+        document.querySelector(".select-seats-next-button").style.backgroundColor='dimgray';
+    }
+    else
+    {
+        document.querySelector(".select-seats-next-button").disabled=true;
+        document.querySelector(".select-seats-next-button").style.backgroundColor='lightgray';
+    }
+
+}
 
 
 
@@ -483,28 +500,13 @@ document.querySelector(".select-seats-prev-button").addEventListener('click',fun
 
 
 let selectedSheduleId;
-//0219 다음 버튼을 눌렀을 때, 영화-극장-시간-상영시간 모두 선택되어야 한다. 한개라도 선택 안되어있다면 넘어가지 못함.
+//0421 영화, 지점, 날짜 , 최종엔 상영일정까지 눌러야 다음버튼을 활성화.
 document.querySelector(".select-seats-next-button").addEventListener('click',function ()
 {
-    currentPage++;
-    updateButtonVisibility();
     console.log("...다음 버튼 클릭...");
-    //0219 영화,극장,날짜,상영시간표를 모두 선택하지 않으면 다음으로 넘어갈 수 없음.
-    // if(!checkButtonAllSelect()) {
-    //     alert('모든 버튼을 누르셔야 다음으로 이동하실 수 있습니다.');
-    //     return;
-    // }
-
-//     const nextButton = document.querySelector('.select-seats-next-button');
-//     const requestPayButton = document.querySelector('.select-requestPay-button');
-// // nextButton의 display 속성을 조작하여 보이거나 숨깁니다.
-//     if (requestPayButton.style.display === 'none') {
-//         requestPayButton.style.display = 'block'; // 보이게 설정
-//         nextButton.style.display='none';
-//     } else {
-//         requestPayButton.style.display = 'none'; // 숨김 설정
-//     }
-
+    //0421 기존위치
+    // currentPage++;
+    // updateButtonVisibility();
 
     //비동기 test
     $.ajax({
@@ -516,6 +518,9 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
         success(response)
         {
             console.log("success : 선택한 상영일정의 예약된 좌석 값 가져오기",response);
+            //0421 성공했을 때 실행되도록 옮김.
+            currentPage++;
+            updateButtonVisibility();
             makeSeat(response);
         },
         //requests:  요청 객체입니다. 보통 HTTP 요청 정보를 포함하며, 요청한 클라이언트의 정보와 요청된 리소스에 대한 정보 등을 포함합니다.
@@ -853,7 +858,7 @@ IMP.init("imp32105587"); // 가맹점코드 - 고정값
 
 function requestPay_notworking()
 {
-    concole.log("비로그인자 거름용");
+    concole.log("관리인/비로그인자 거름용");
 }
 
 

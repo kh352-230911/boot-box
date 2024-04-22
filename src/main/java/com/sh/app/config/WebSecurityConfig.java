@@ -1,5 +1,6 @@
 package com.sh.app.config;
 
+import com.sh.app.auth.handler.CustomFailureHandler;
 import com.sh.app.auth.handler.CustomSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +20,7 @@ public class WebSecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/favicon.ico","/css/**", "/images/**", "/js/**");
+        return (web) -> web.ignoring().requestMatchers("/favicon.ico","/css/**", "/images/**", "/js/**","/error");
     }
 
     @Bean
@@ -54,6 +55,7 @@ public class WebSecurityConfig {
                     .loginPage("/auth/login.do") // 로그인 폼페이지(GET) (작업필요)
                     .loginProcessingUrl("/auth/login.do") // 로그인 처리 (POST)
                     .successHandler(new CustomSuccessHandler()) //성공시 수행할 핸들러
+                    .failureHandler(new CustomFailureHandler()) //실패시 수행할 핸들러 0420
                     .permitAll();
         }));
         http.logout(logoutConfigurer -> {

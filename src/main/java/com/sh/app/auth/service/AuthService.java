@@ -8,6 +8,7 @@ import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -30,11 +31,15 @@ public class AuthService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Admin admin = adminService.findByUsername(username);
         log.debug("admin = {}", admin);
-        if (admin == null) {
+        if (admin == null)
+        {
             Member member = memberService.findByMemberLoginId(username);
             log.debug("member = {}", member);
             if (member == null)
-                throw new UsernameNotFoundException(username);
+            {
+                System.out.println("member가 null 이다.");
+                throw new BadCredentialsException("");
+            }
             return new MemberDetails(member);
         }
         return new AdminDetails(admin);
