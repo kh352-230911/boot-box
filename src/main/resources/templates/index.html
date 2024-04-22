@@ -71,19 +71,17 @@
                         <div class="divider"></div>
 
                         <div class="recommended-wrapper">
-                            <span id="recommendedBtn" onclick="checkAndChangeTab('recommended')" class="tab font-semibold">
+                            <span id="recommendedBtn" onclick="checkAndChangeTab('recommended')" class="tab font-semibold"
+                                  th:if="${!#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'', ''ROLE_MANAGER'')')}">
                                 선호장르 추천영화
-                                <!-- 로그인 상태에 따라 data-member-id 값 설정 -->
-
                                 <input class="memberId"
                                        type="hidden"
                                        th:attr="data-member-id=${#authorization.expression('isAuthenticated()')
                                                 and #authorization.expression('hasAuthority(''ROLE_USER'')')
                                                 and #authentication.principal.member != null ? #authentication.principal.member.id : ''}">
-<!--                                      th:attr="data-member-id=${#authorization.expression('isAuthenticated()') ? #authentication.principal.member.id : ''}">-->
-
                             </span>
                         </div>
+
 
                         <div class="full-view">
                             <div class="flex-shrink-0 flex justify-center">

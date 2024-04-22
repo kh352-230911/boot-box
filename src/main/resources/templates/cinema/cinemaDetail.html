@@ -31,9 +31,9 @@
             </div>
         </nav>
 
-<!--  비회원일때  -->
+        <!--  비회원일때  -->
         <th:block sec:authorize="isAnonymous() or hasAnyAuthority('ROLE_MANAGER', 'ROLE_ADMIN')">
-    <!-- sidebar -->
+            <!-- sidebar -->
             <div class="sidebar">
                 <i class="fas fa-home"></i>
                 <i class="fas fa-search" ></i>
@@ -41,19 +41,25 @@
             </div>
         </th:block>
 
-<!-- 회원일때 -->
+        <!-- 회원일때 -->
         <th:block sec:authorize="isAuthenticated() and (not hasAnyAuthority('ROLE_MANAGER', 'ROLE_ADMIN'))">
-<!-- sidebar -->
+            <!-- sidebar -->
             <div class="sidebar">
                 <i class="fas fa-home"></i>
                 <i class="fas fa-search" ></i>
-            <!-- 비어있지 않으면  -->
-                <th:block th:if="${not #lists.isEmpty(cinema.memberLikeCinemas)}">
+                <!-- 비어있지 않으면서 로그인 한 회원이 즐겨찾기 한 극장인 경우 -->
+                <th:block th:if="${not #lists.isEmpty(cinema.memberLikeCinemas)} and ${userLikedCinema}">
                     <i class="bookmark fa-solid fa-bookmark" style="color: #FFD43B;" th:data-cinema-id="${cinema.id}">
                         <input class="memberId" type="hidden" th:data-member-id="${#authentication.principal.member.id}">
                     </i>
                 </th:block>
-            <!-- 비어있으면  -->
+                <!-- 비어있지 않으면서 로그인 한 회원이 즐겨찾기 하지 않은 극장인 경우 -->
+                <th:block th:if="${not #lists.isEmpty(cinema.memberLikeCinemas)} and ${!userLikedCinema}">
+                    <i class="bookmark fa-regular fa-bookmark fa-beat-fade" style="color: #FFD43B;" th:data-cinema-id="${cinema.id}">
+                        <input class="memberId" type="hidden" th:data-member-id="${#authentication.principal.member.id}">
+                    </i>
+                </th:block>
+                <!-- 비어있으면  -->
                 <th:block th:if="${#lists.isEmpty(cinema.memberLikeCinemas)}">
                     <i class="bookmark fa-regular fa-bookmark fa-beat-fade" style="color: #FFD43B;" th:data-cinema-id="${cinema.id}">
                         <input class="memberId" type="hidden" th:data-member-id="${#authentication.principal.member.id}">

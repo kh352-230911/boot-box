@@ -3,6 +3,8 @@ package com.sh.app.cinema.service;
 import com.sh.app.cinema.entity.Cinema;
 import com.sh.app.cinema.repository.CinemaRepository;
 import com.sh.app.cinema.dto.CinemaDto;
+import com.sh.app.memberLikeCinema.d.MemberLikeCinemaDto;
+import com.sh.app.memberLikeCinema.entity.MemberLikeCinema;
 import com.sh.app.movie.dto.MovieListDto;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -51,7 +54,18 @@ public class CinemaService {
     public CinemaDto getCinemaDetails(Long id) {
         Cinema cinema = cinemaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Cinema not found with id: " + id));
-        return convertToCinemaDto(cinema);
+        CinemaDto cinemaDto = convertToCinemaDto(cinema);
+
+        List<MemberLikeCinemaDto> memberLikes = new ArrayList<>();
+        for (MemberLikeCinema memberLike : cinema.getMemberLikeCinemas()) {
+            MemberLikeCinemaDto dto = MemberLikeCinemaDto.builder()
+                    .memberId(memberLike.getMember().getId())
+                    .build();
+            memberLikes.add(dto);
+        }
+        cinemaDto.setMemberLikeCinemas(memberLikes);
+
+        return cinemaDto;
     }
 
 
