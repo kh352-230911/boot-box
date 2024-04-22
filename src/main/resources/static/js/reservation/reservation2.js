@@ -40,6 +40,7 @@ let currentPage = 1; //jin 초기 페이지 설정
 const now = new Date();
 console.log("현재 날짜와 시간",now);
 let abledNextButton = false;
+let selectedSheduleId;
 window.onload = function()
 {
     var movieIdCookie = getCookie('movieIdCookie');
@@ -318,7 +319,7 @@ function makeNewSchedule(able,organizedSchedules)
             const timeCell = row.insertCell();
             const seatsAvailableCell = row.insertCell();
             //상영일정id도 추가
-            //schIdCell.textContent = schId;
+            // schIdCell.textContent = schId;
             theaterCell.innerHTML = '<div class="icon-box"><i class="fas fa-film"></i>' + theater + '</div>';
             theaterCell.style.color = 'black';
             timeCell.textContent = time + `~       `;
@@ -339,10 +340,11 @@ function makeNewSchedule(able,organizedSchedules)
                 selectedRow.style.height='52px';
                 selectedRow.style.display = "block"; // 또는 inline-block 등을 사용할 수 있습니다.
                 // 클릭된 행에 대한 동작을 여기에 추가
-                console.log('클릭된 행:',time, theater, seatsAvailable);
+                console.log('클릭된 행:',schId, time, theater, seatsAvailable);
                 selectedSheduleId = schId;
                 theaterDiv.innerHTML=theater;
                 //0421 스케쥴 상영일정을 클릭해야 다음버튼 활성화를 할 수있는 조건을 걸자.
+                console.log('클릭된 상영스케쥴 아이디:',selectedSheduleId);
                 funcNextButton(true);
 
             });
@@ -368,7 +370,7 @@ function funcNextButton(abled)
     if(abled)
     {
         document.querySelector(".select-seats-next-button").disabled=false;
-        document.querySelector(".select-seats-next-button").style.backgroundColor='dimgray';
+        document.querySelector(".select-seats-next-button").style.backgroundColor='darkred';
     }
     else
     {
@@ -499,7 +501,7 @@ document.querySelector(".select-seats-prev-button").addEventListener('click',fun
 
 
 
-let selectedSheduleId;
+
 //0421 영화, 지점, 날짜 , 최종엔 상영일정까지 눌러야 다음버튼을 활성화.
 document.querySelector(".select-seats-next-button").addEventListener('click',function ()
 {
