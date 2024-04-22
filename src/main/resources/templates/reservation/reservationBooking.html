@@ -7,6 +7,7 @@
 <head>
     <title>예매</title>
     <link th:href="@{/css/reservation/reservation.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-Z4BHVjEXFJsPeIAhKj7mz0i2UOOjC0r0q7imyBOB2ZoDI4mNz0rVsQiP2KOpTpdz" crossorigin="anonymous">
 </head>
 <style layout:fragment="style"></style>
 <div layout:fragment="content" class="px-10">
@@ -93,7 +94,7 @@
 
 
 
-        <table>
+        <table class="date-area">
             <thead>
             <tr>
                 <th colspan="2">날짜</th>
@@ -104,9 +105,11 @@
             <tr th:each="date, index : ${dataMap.dateList}">
                 <td class="select-dateData">
                     <button type="button" class="select_date" style="font-size: 0.9em;"
-                            th:text="${date + ' ' + dataMap.dayOfWeekList[index.index]}" th:attr="data-date-id=${date}" ></button>
+                            th:text="${#strings.substring(date, 5).replace('/', '') + ' ' + dataMap.dayOfWeekList[index.index]}"
+                            th:attr="data-date-id=${date}"></button>
                 </td>
             </tr>
+
             </tbody>
         </table>
 
@@ -120,6 +123,7 @@
 
             </tbody>
         </table>
+
     </div>
 
     <!-- 좌석 관련 정보를 모두 감싸는 부모 div -->
@@ -193,9 +197,11 @@
                 <div class="seat-container3-4">-</div>
             </div>
         </div>
-        <button class="select-seats-next-button">다음</button>
+        <button class="select-seats-next-button" disabled>다음</button>
+        <!-- 관리자로 로그인 한 경우 아래의 인증된 if문을 통과하지만 member가 null이라 오류가 발생함.       -->
         <th:block sec:authorize="isAuthenticated()">
-        <button
+            <th:block sec:authorize="hasRole('ROLE_USER')">
+            <button
                 class="select-requestPay-button"
                 th:data-memberId="${#authentication.principal.member.id}"
                 th:data-username="${#authentication.principal.username}"
@@ -203,7 +209,15 @@
                 onclick="requestPay(this.getAttribute('data-memberId'),this.getAttribute('data-username'),this.getAttribute('data-memberPhone'))"
                 >
             결제
-        </button>
+            </button>
+            </th:block>
+            <!-- 인증은 되었지만 권한이 관리자일 경우..     -->
+            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                <button
+                        class="select-requestPay-button"
+                        onclick="requestPay_notworking()"
+                >
+            </th:block>
         </th:block>
         <th:block sec:authorize="!isAuthenticated()">
             <button
