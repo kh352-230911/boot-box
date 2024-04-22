@@ -229,7 +229,8 @@ label_row
     width: 100px;
     height: 100px;
     margin-right: 10px;
-    background-color: darkred;
+    background-color: lightgray;
+    /*background-color: darkred;*/
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -277,11 +278,11 @@ table{
     background-color: black;
 }
 
-.theater-list
-{
-    width:200px;
-    /*display: none;*/
-}
+/*.theater-list*/
+/*{*/
+/*    width:200px;*/
+/*    !*display: none;*!*/
+/*}*/
 
 
 /* info-movies 하위의 모든 테이블들의 높이 고정 , 스크롤 추가 */
@@ -292,16 +293,48 @@ table{
     overflow: auto;
 }
 
-.info-movies tbody{
+.info-movies tbody
+{
 /*:not(#scheduleTable) {*/
     /* 각 테이블의 스타일 */
+    /*width: 300px;*/
+    /*display: block;*/
+    /*overflow-y: auto;*/
+    /*height: 400px;*/
+    /*background-color: #716a6a;*/
+}
+
+/* 영화 정보 테이블의 티바디 */
+.movieData-area tbody
+{
     width: 300px;
     display: block;
     overflow-y: auto;
     height: 400px;
-    background-color: #716a6a;
-
+    background-color: #c7c7c7;
+    color: black;
 }
+/*날짜 정보 테이블의 티 바디*/
+.date-area tbody
+{
+    width: 100px; /* 테이블 너비를 자동으로 설정하거나, 충분한 너비를 지정하세요 */
+    display: block;
+    overflow-y: auto;
+    height: 400px;
+    background-color: #c7c7c7;
+    color: black;
+}
+/* 지점 정보 테이블의 티바디*/
+.cinema-area tbody
+{
+    width: 300px;
+    display: block;
+    overflow-y: auto;
+    height: 400px;
+    background-color: #c7c7c7;
+    color: black;
+}
+
 .select-movieData {
     display: flex; /* 요소들을 플렉스 박스로 설정하여 자식 요소들을 가로로 배치합니다. */
     align-items: center; /* 요소들을 세로로 가운데 정렬합니다. */
@@ -314,10 +347,12 @@ table{
     width: 190px; /* 테이블 행의 너비에 맞추기 위해 100%로 설정합니다. */
 }
 
+/*날짜 선택 button class */
 .select_date{
     display: flex; /* 요소들을 플렉스 박스로 설정하여 자식 요소들을 가로로 배치합니다. */
     align-items: center; /* 요소들을 세로로 가운데 정렬합니다. */
-    width: 290px; /* 테이블 행의 너비에 맞추기 위해 100%로 설정합니다. */
+    justify-content: center; /* 요소들을 가로 방향으로 가운데 정렬합니다. */
+    width: 90px; /* 테이블 행의 너비에 맞추기 위해 100%로 설정합니다. */
 }
 
 .cinemaLine
@@ -340,7 +375,8 @@ table{
 }
 #tbody_schedule
 {
-    background-color:#716a6a;
+    background-color:#c7c7c7;
+    color: black;
     width: 300px;
     display: block;
     overflow-y: auto;
@@ -402,3 +438,18 @@ table{
     border-radius: 7px;
 }
 
+.icon-box {
+    display: inline-block;
+    width: 60px; /* 네모박스의 너비 */
+    height: 50px; /* 네모박스의 높이 */
+    background-color: darkgrey ; /* 네모박스의 배경색 */
+    border: 2px solid black; /* 네모박스의 테두리 스타일 및 색상 */
+    border-radius: 5px; /* 네모박스의 모서리 둥글기 */
+    text-align: center; /* 내부 텍스트를 중앙 정렬 */
+    line-height: 50px; /* 내부 텍스트의 수직 정렬 */
+}
+
+.icon-box i {
+    color: black; /* 아이콘의 색상 */
+    font-size: 24px; /* 아이콘의 크기 */
+}

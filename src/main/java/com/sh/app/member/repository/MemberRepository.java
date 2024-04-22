@@ -40,7 +40,7 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
 //    Member findByReservation(Long id);
 
 //    @Query("select m from Member m join fetch m.reservations where m.id = :id")
-    @Query("SELECT m FROM Member m JOIN FETCH m.reservations r JOIN FETCH r.seats JOIN FETCH r.schedule s JOIN FETCH s.movie JOIN FETCH s.theater t JOIN FETCH t.cinema c JOIN FETCH c.location WHERE m.id = :id")
+    @Query("SELECT m FROM Member m JOIN FETCH m.reservations r JOIN FETCH r.seats JOIN FETCH r.schedule s JOIN FETCH s.movie JOIN FETCH s.theater t JOIN FETCH t.cinema c JOIN FETCH c.location WHERE m.id = :id order by r.reservationTime desc")
     Optional<Member> findByReservation(Long id);
 
     Optional<Member> findById(Long memberId);
