@@ -31,5 +31,4 @@ public class CreateAskDto {
     private AskType askType; // 문의유형
     private LocalDateTime createdAt;
 
-
 }
