@@ -1,27 +1,27 @@
-package com.sh.app.schedule.entity;
+package com.sh.app.admin.entity;
+
 
 import com.sh.app.common.Approve;
 import com.sh.app.movie.entity.Movie;
-import com.sh.app.reservation.entity.Reservation;
 import com.sh.app.theater.entity.Theater;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.BatchSize;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
-
+//0423 지점관리자 - 상영스케쥴 추가
 @Entity
 @Table(name = "schedule")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-//@ToString(exclude = {"movie", "reservations"})
-public class Schedule {
+public class AdminSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -37,29 +37,8 @@ public class Schedule {
     private LocalDate schDate;
     @Column(nullable = false)
     private LocalDateTime time;
-
+    //approve 컬럼 신규추가(승인 된 경우 y , 보류인 경우 n 기본값은 n으로 지정할 예정)
+    @Column
     private Approve approve;
-//    @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY)
-//    @Builder.Default
-//    private Set<Reservation> reservations = new HashSet<>();
-
-
-//    public void setTheater(Theater theater) {
-//        this.theater = theater;
-//
-//        if(theater != null) {
-//            if(theater.getSchedules().contains(this))
-//                theater.getSchedules().add(this);
-//        }
-//    }
-
-//    public void setMovieData(Movie movie) {
-//        this.movie = movie;
-//
-//        if(movie != null) {
-//            if(movie.getSchedules().contains(this))
-//                movie.getSchedules().add(this);
-//        }
-//    }
 
 }

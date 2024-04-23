@@ -67,6 +67,39 @@
             </div>
         </div>
 
+        <div id="listText2">
+            <p>상영 일정 등록하기</p>
+        </div>
+
+        <div id="scheduleCrud-wrap">
+            <div>
+                <button type="button" id="createScheule">상영 일정 추가</button>
+            </div>
+        </div>
+        <div class="createScheduleModal">
+            <div class="modal-content">
+                <h3>스케쥴 추가</h3>
+                <label for="sch_theaterId"></label>
+                <input type="text" id="sch_theaterId" placeholder="상영관ID ex)20102" required>
+
+                <label for="sch_movieId"></label>
+                <input type="text" id="sch_movieId" placeholder="영화 id ex)792307" required>
+
+                <label for="sch_date"></label>
+                <input type="text" id="sch_date" placeholder="상영날짜 ex)2024-04-23" required>
+
+                <label for="sch_startTime"></label>
+                <input type="text" id="sch_startTime" placeholder="상영 시작 시간 ex)2024-04-23 22:10" required>
+
+                <button type="button" id="sch_insert">신청하기</button>
+                <button type="button" class="back">취소</button>
+            </div>
+        </div>
+
+
+
+
+
     </div>
 </div>
 
