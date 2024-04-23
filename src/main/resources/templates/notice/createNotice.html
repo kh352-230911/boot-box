@@ -15,35 +15,78 @@
              공지사항 작성
          </span>
     </div>
-    <div id="createNotice">
-        <form name="noticeFrm"
-        th:action="@{/notice/createNotice.do}"
-        method="post"
-        enctype="application/x-www-form-urlencoded">
-            <!-- 시퀀스id, adminId, noticeType, title, content, createAt -->
-            <!-- 있는데 값을 못가져온다면 찍어보자..배열속의 배열속의 배열가져오기 -->
-            <input type="hidden" name="adminId" th:value="${#authentication.principal.admin.authorities.get(0).adminId}" />
-            <div>
-                <textarea placeholder="제목을 작성하세요." name="title" id="title" required></textarea>
-            </div>
-            <div>
-                <textarea placeholder="내용을 작성하세요." name="content" id="content" required></textarea>
-            </div>
-            <div class="dropdown">
-                <div>공지유형을 선택해주세요.</div>
 
-                <div class="dropdown-content">
-                    <select name="noticeType" id="noticeType" onchange="updateSelectedType()">
-                        <option value="SYSTEM">SYSTEM</option>
-                        <option value="CINEMA">CINEMA</option>
-                        <option value="EVENT">EVENT</option>
-                        <option value="ETC">ETC</option>
-                    </select>
+    <div id="createNotice" class="flex justify-center">
+<!--        <form name="noticeFrm"-->
+<!--        th:action="@{/notice/createNotice.do}"-->
+<!--        method="post"-->
+<!--        enctype="application/x-www-form-urlencoded">-->
+<!--            &lt;!&ndash; 시퀀스id, adminId, noticeType, title, content, createAt &ndash;&gt;-->
+<!--            &lt;!&ndash; 있는데 값을 못가져온다면 찍어보자..배열속의 배열속의 배열가져오기 &ndash;&gt;-->
+<!--            <input type="hidden" name="adminId" th:value="${#authentication.principal.admin.authorities.get(0).adminId}" />-->
+<!--            <div>-->
+<!--                <textarea placeholder="제목을 작성하세요." name="title" id="title" required></textarea>-->
+<!--            </div>-->
+
+<!--            <div>-->
+<!--                <textarea placeholder="내용을 작성하세요." name="content" id="content" required></textarea>-->
+<!--            </div>-->
+<!--            <div class="dropdown">-->
+<!--                <div>공지유형을 선택해주세요.</div>-->
+
+<!--                <div class="dropdown-content">-->
+<!--                    <select name="noticeType" id="noticeType" onchange="updateSelectedType()">-->
+<!--                        <option value="SYSTEM">SYSTEM</option>-->
+<!--                        <option value="CINEMA">CINEMA</option>-->
+<!--                        <option value="EVENT">EVENT</option>-->
+<!--                        <option value="ETC">ETC</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <span id="selectedTypeDisplay"></span>-->
+<!--                <span><input type="submit" value="저장" id="save"></span>-->
+<!--            </div>-->
+<!--        </form>-->
+
+        <div class="bg-zinc-950 bg-opacity-40 p-10 rounded-lg shadow-lg text-white w-full max-w-4xl">
+            <form th:action="@{/notice/createNotice.do}"  method="POST">
+                <input type="hidden" name="adminId" th:value="${#authentication.principal.admin.authorities.get(0).adminId}"/>
+
+                <div class="relative z-0 w-full mt-7 group mb-2">
+                    <label for="Title" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-2 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">제목
+                    <span class="text-red-600">*</span></label>
+                    <input type="text" name="Title" id="Title" class="input-box block w-full text-sm text-white bg-transparent border-0 border-b-2 border-red-500 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" placeholder=" " required />
                 </div>
-                <span id="selectedTypeDisplay"></span>
-                <span><input type="submit" value="저장" id="save"></span>
-            </div>
-        </form>
+
+                <div class="mb-2">
+                    <span class="text-xs font-medium text-gray-500 mb-2">유형 <span class="text-red-600">*</span></span>
+                    <div class="flex gap-4 mb-2">
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="noticeType" value="SYSTEM" class="text-red-600" required>
+                            <span class="ml-2 text-xs font-medium text-gray-400">SYSTEM</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="noticeType" value="CINEMA" class="text-red-600">
+                            <span class="ml-2 text-xs font-medium text-gray-400">CINEMA</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="noticeType" value="EVENT" class="text-red-600">
+                            <span class="ml-2 text-xs font-medium text-gray-400">EVENT</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="noticeType" value="ETC" class="text-red-600">
+                            <span class="ml-2 text-xs font-medium text-gray-400">ETC</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="content" class="block text-xs font-medium text-gray-500 mb-1 mt-4">내용 <span class="text-red-600">*</span></label>
+                    <textarea id="content" name="content" rows="4" class="text-sm focus:border-red-500 focus:ring-0 bg-zinc-950 border border-red-600 rounded-lg block w-full p-2.5" placeholder="" required></textarea>
+                </div>
+
+                <button type="submit" class="bg-red-600 hover:bg-red-700 rounded-lg px-4 py-3 text-sm font-medium w-64 mx-auto block">저장</button>
+            </form>
+        </div>
     </div>
 
 </div>

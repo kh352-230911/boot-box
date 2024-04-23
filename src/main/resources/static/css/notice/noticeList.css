@@ -48,12 +48,12 @@ footer {
     /*padding: 40px 0; !* 내부 여백은 선택적 *!*/
     /*transform: translate(-12%, -127%);*/
 }
-.container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
+/*.container {*/
+/*    position: absolute;*/
+/*    top: 50%;*/
+/*    left: 50%;*/
+/*    transform: translate(-50%, -50%);*/
+/*}*/
 .notice-List
 {
     /*margin-left: -340px;*/
@@ -125,13 +125,14 @@ tbody {
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
-    position: fixed;
+    /*position: fixed;*/
     bottom: 160px;
     right: 410px;
     font-size: medium;
 }
 #createNotice:hover {
-    background-color: forestgreen;
+    background-color: #bb0808;
     color: black;
     border-color: navajowhite;
 }
+

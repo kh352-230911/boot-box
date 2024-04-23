@@ -38,4 +38,5 @@ public class Ask implements Serializable {
     @JoinColumn(name = "member_id") // member_id 컬럼지정
     private Member member;
 
+
 }
