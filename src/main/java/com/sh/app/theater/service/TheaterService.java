@@ -5,6 +5,7 @@ import com.sh.app.theater.entity.Theater;
 import com.sh.app.theater.repository.TheaterRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,8 @@ public class TheaterService {
 
 
     public List<TheaterDto> findAllTheatersWithCinemaId(Long cinemaId) {
-        List<Theater> theaters = theaterRepository.findByCinemaId(cinemaId);
+        System.out.println("========== 상영관 리스트 조회 ==========");
+        List<Theater> theaters = theaterRepository.findByCinemaId(cinemaId, Sort.by(Sort.Direction.ASC, "id"));
         return theaters.stream()
                 .map(theater -> modelMapper.map(theater, TheaterDto.class))
                 .collect(Collectors.toList());

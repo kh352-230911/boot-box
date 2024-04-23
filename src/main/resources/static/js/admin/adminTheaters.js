@@ -81,3 +81,41 @@ $(".theaters").click(function () {
         }
     });
 });
+
+
+//0423 상영스케쥴 추가
+$("#createScheule").click(function () {
+    $(".createScheduleModal").css("display","block");
+});
+
+$(".back").click(function (){
+    $(".createModal").css("display", "none");
+    $(".deleteModal").css("display", "none");
+    $(".createScheduleModal").css("display", "none");
+});
+
+$("#sch_insert").click(function () {
+    const sch_theaterId = $("#sch_theaterId").val();
+    const sch_movieId = $("#sch_movieId").val();
+    const sch_date = $("#sch_date").val();
+    const sch_startTime = $("#sch_startTime").val();
+    const redirectUrl = $("#adminRegionUrl").attr("href");
+
+    $.ajax({
+        url: "createSchedule",
+        method: "POST",
+        headers: {
+            [csrfHeaderName] : csrfToken
+        },
+        data: {
+            sch_theaterId, sch_movieId, sch_date, sch_startTime
+        },
+        success() {
+            alert("상영스케쥴 신청이 완료되었습니다.");
+            location.href = redirectUrl;
+        },
+        error() {
+            alert("상영스케쥴 신청에 실패했습니다.");
+        }
+    });
+});

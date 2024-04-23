@@ -22,5 +22,6 @@ public class CreateAskDto {
     private String askDetail; // 문의내용
     @NotNull(message = "문의유형 필수 선택 사항입니다.")
     private AskType askType; // 문의유형
+    private LocalDateTime createdAt;
 
 }

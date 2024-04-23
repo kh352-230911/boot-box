@@ -2,7 +2,9 @@ package com.sh.app.schedule.service;
 
 
 
+import com.sh.app.common.Approve;
 import com.sh.app.movie.entity.Movie;
+import com.sh.app.schedule.dto.CreateScheduleDto;
 import com.sh.app.schedule.dto.IScheduleInfoDto;
 import com.sh.app.schedule.dto.ScheduleDto;
 import com.sh.app.schedule.dto.ScheduleListDto;
@@ -188,6 +190,30 @@ public class ScheduleService {
         });
 
         return finalStructure;
+    }
+
+
+
+    public void createSchedule(Long sch_theaterId, Long sch_movieId, LocalDate sch_date, String sch_startTimeStr)
+    {
+        System.out.println("상영일정 추가하기!!11111");
+        // 문자열을 LocalDateTime으로 변환
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime sch_startTime = LocalDateTime.parse(sch_startTimeStr, formatter);
+
+        CreateScheduleDto createScheduleDto = new CreateScheduleDto();
+
+        createScheduleDto.setTheaterId(sch_theaterId);
+        createScheduleDto.setMovieId(sch_movieId);
+        createScheduleDto.setSchDate(sch_date);
+        createScheduleDto.setTime(sch_startTime);
+        createScheduleDto.setApprove(Approve.N);
+        System.out.println("상영일정 추가하기!!222222");
+        Schedule schedule = modelMapper.map(createScheduleDto,Schedule.class);
+        System.out.println("상영일정 추가하기!!2333333");
+
+        scheduleRepository.save(schedule);
+
     }
 
 //    public List<Map<String, Object>> organizeSchedules(List<IScheduleInfoDto> scheduleDetails) {
