@@ -35,27 +35,28 @@
               th:action="@{/ask/createAnswer.do}"
               method="post"
               enctype="application/x-www-form-urlencoded">
-        <table>
-            <thead>
-                <tr>
-                    <th>답변</th>
-                </tr>
-            </thead>
-                <tbody>
+            <table>
+                <thead>
                     <tr>
-                        <th:block th:if="${showAnswer == null}">
-                            <td>
-                                <textarea id="answerContent" name="answerContent"></textarea>
-                            </td>
-                        </th:block>
-                        <th:block th:unless="${showAnswer == null}">
-                            <td th:text="${showAnswer}"></td>
-                        </th:block>
+                        <th>답변</th>
                     </tr>
-                </tbody>
-        </table>
+                </thead>
+                    <tbody>
+                        <tr>
+                            <th:block th:if="${showAnswer == null}">
+                                <td>
+                                    <textarea id="answerContent" name="content"></textarea>
+                                </td>
+                            </th:block>
+                            <th:block th:unless="${showAnswer == null}">
+                                <td th:text="${showAnswer}"></td>
+                            </th:block>
+                        </tr>
+                    </tbody>
+              </table>
             <div class="button-container">
-                <input type="hidden" name="id" th:value="${ask.id}" />
+                <input type="hidden" name="askId" th:value="${ask.id}" />
+                <input type="hidden" name="adminId" th:value="${#authentication.principal.admin.id}" />
                 <th:block th:if="${showAnswer == null}">
                     <span id="answer-margin"><input type="submit" value="답변저장" id="save"></span>
                 </th:block>

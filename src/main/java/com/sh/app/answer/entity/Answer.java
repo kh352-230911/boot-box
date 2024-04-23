@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CurrentTimestamp;
 
 import java.time.LocalDate;
 
@@ -28,5 +29,6 @@ public class Answer {
     private Long askId;
     private Long adminId;
     private String content; // 내용
+    @CurrentTimestamp
     private LocalDate createdAt; // 날짜
 }

@@ -29,12 +29,12 @@ footer {
     display: block;
     padding: 20px; /* 내부 여백은 선택적 */
 }
-.container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
+/*.container {*/
+/*    position: absolute;*/
+/*    top: 50%;*/
+/*    left: 50%;*/
+/*    transform: translate(-50%, -50%);*/
+/*}*/
 
 table {
     width: 1300px;
@@ -91,7 +91,7 @@ tbody {
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
-    position: fixed;
+    /*position: fixed;*/
     bottom: 200px;
     right: 120px;
     width: 112px;
@@ -107,7 +107,7 @@ tbody {
     display: flex;
     justify-content: flex-end;
     margin: 20px;
-    position: fixed;
+    /*position: fixed;*/
     bottom: 200px;
     right: 130px;
 }
@@ -123,7 +123,7 @@ tbody {
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
-    position: fixed;
+    /*position: fixed;*/
     bottom: 200px;
     right: 250px;
     width: 112px;
@@ -139,7 +139,7 @@ tbody {
     display: flex;
     justify-content: flex-end;
     margin: 20px;
-    position: fixed;
+    /*position: fixed;*/
     bottom: 200px;
     right: 250px;
 }

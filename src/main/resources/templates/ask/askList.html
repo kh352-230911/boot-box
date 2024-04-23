@@ -42,7 +42,13 @@
                                                           ask.askType.name() == 'ETC' ? '기타' : '기타'} ]|" id="type"></td>
     <!--            <td th:text="${ask.createdAt}"></td>-->
                 <td th:text="${#temporals.format(ask.createdAt, 'yyyy/MM/dd HH:mm')}"></td>
-                <td><button id="askDetail" th:onclick="|location.href = '@{/ask/askDetail.do(id=${ask.id})}'|" style="font-size: small">답변하기</button></td>
+<!--                <td><button id="askDetail" th:onclick="|location.href = '@{/ask/askDetail.do(id=${ask.id})}'|" style="font-size: small">답변하기</button></td>-->
+
+                <!-- 답변 버튼은 ask.answered가 false일 때만 표시 -->
+                <td>
+                    <button th:if="${!ask.answered}" id="askDetail" th:onclick="|location.href = '@{/ask/askDetail.do(id=${ask.id})}'|" style="font-size: small">답변하기</button>
+                </td>
+
             </tr>
             </tbody>
         </table>

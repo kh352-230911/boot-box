@@ -26,4 +26,6 @@ public class AskInfoDto {
     private AskType askType;
 
     private LocalDateTime createdAt;
+
+    private boolean answered = false; // 문의 답변 여부
 }

@@ -1,6 +1,8 @@
 package com.sh.app.ask.service;
 
+import com.sh.app.answer.repository.AnswerRepository;
 import com.sh.app.ask.dto.AskDetailDto;
+import com.sh.app.ask.dto.AskInfoDto;
 import com.sh.app.ask.dto.CreateAskDto;
 import com.sh.app.ask.entity.Ask;
 import com.sh.app.ask.repository.AskRepository;
@@ -10,7 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -20,10 +24,27 @@ public class AskService {
     private AskRepository askRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private AnswerRepository answerRepository;
 
-    public List<Ask> findAll() {
+    public List<AskInfoDto> findAll() {
+        List<Ask> asks = askRepository.findAll();
+        List<AskInfoDto> askInfoDtos = asks.stream()
+                        .map(ask -> convertToAskInfoDto(ask))
+                                .collect(Collectors.toList());
         System.out.println("문의조회 service");
-        return askRepository.findAll();
+        return askInfoDtos;
+    }
+
+    private AskInfoDto convertToAskInfoDto(Ask ask) {
+        AskInfoDto askInfoDto = modelMapper.map(ask, AskInfoDto.class);
+        boolean hasAnswer = checkAnswerExists(ask.getId());
+        askInfoDto.setAnswered(hasAnswer);
+        return askInfoDto;
+    }
+
+    private boolean checkAnswerExists(Long id) {
+        return answerRepository.existsByAskId(id);
     }
 
     public AskDetailDto findById(Long id) {
