@@ -29,16 +29,21 @@ public class Schedule {
     @JoinColumn(name = "theater_id")
     @BatchSize(size = 50)
     private Theater theater;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) //0219 eager에서 수정
+
+    @ManyToOne(fetch = FetchType.LAZY) //0219 eager에서 수정
     @JoinColumn(name = "movie_id")
     @BatchSize(size = 50)
     private Movie movie;
+
     @Column(nullable = false)
     private LocalDate schDate;
     @Column(nullable = false)
     private LocalDateTime time;
 
+    @Enumerated(EnumType.STRING) // Enum 타입 매핑
     private Approve approve;
+
+
 //    @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY)
 //    @Builder.Default
 //    private Set<Reservation> reservations = new HashSet<>();
