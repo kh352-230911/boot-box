@@ -34,6 +34,7 @@ import com.sh.app.reservation.repository.ReservationRepository;
 import com.sh.app.review.dto.ReviewDetailDto;
 import com.sh.app.review.entity.Review;
 import com.sh.app.review.repository.ReviewRepository;
+import com.sh.app.schedule.dto.ScheduleListDto;
 import com.sh.app.schedule.entity.Schedule;
 import com.sh.app.schedule.repository.ScheduleRepository;
 import com.sh.app.util.GenreNormalization;
@@ -1339,6 +1340,18 @@ public class MovieService {
 
     public List<Movie> getMoviesByGenre(Long genreId) {
         return movieRepository.findMoviesByGenreId(genreId);
+    }
+
+    public List<FindOtherMovieDto> findOtherMovie(Long cinemaId) {
+        // 영화 레포지토리를 사용하여 해당 영화관에서 상영 중인 영화를 제외한 다른 영화를 가져옵니다.
+        System.out.println("findOtherMovie -service !");
+        return movieRepository.findOtherMovie(cinemaId)
+                .stream().map((movie) -> entityToDtos(movie))
+                .collect(Collectors.toList());
+    }
+
+    private FindOtherMovieDto entityToDtos(Movie movie) {
+        return modelMapper.map(movie, FindOtherMovieDto.class);
     }
 }
 
