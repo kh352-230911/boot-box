@@ -25,6 +25,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,6 +127,17 @@ public class AdminController {
             log.debug("scheduleDto = {}", scheduleListDto);
         }
 
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/createSchedule")
+    public ResponseEntity<?> createSchedule(
+            @RequestParam(value = "sch_theaterId") Long sch_theaterId,
+            @RequestParam(value = "sch_movieId") Long sch_movieId,
+            @RequestParam(value = "sch_date") LocalDate sch_date,
+            @RequestParam(value = "sch_startTime") String sch_startTime
+    ) {
+        scheduleService.createSchedule(sch_theaterId, sch_movieId, sch_date, sch_startTime);
         return ResponseEntity.ok().build();
     }
 

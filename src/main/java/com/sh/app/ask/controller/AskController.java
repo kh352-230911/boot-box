@@ -1,9 +1,11 @@
 package com.sh.app.ask.controller;
 
+import com.sh.app.answer.dto.AnswerCreateDto;
 import com.sh.app.answer.dto.AnswerDetailDto;
 import com.sh.app.answer.entity.Answer;
 import com.sh.app.answer.service.AnswerService;
 import com.sh.app.ask.dto.AskDetailDto;
+import com.sh.app.ask.dto.AskInfoDto;
 import com.sh.app.ask.dto.CreateAskDto;
 import com.sh.app.ask.entity.Ask;
 import com.sh.app.ask.service.AskService;
@@ -34,10 +36,10 @@ public class AskController {
 
     @GetMapping("/askList.do")
     public void ask(Model model) {
-        List<Ask> asks = askService.findAll();
-        log.debug("asks = {}", asks);
-        model.addAttribute("asks", asks);
-        System.out.println("문의조회 controller" + asks);
+        List<AskInfoDto> askInfoDtos = askService.findAll();
+        log.debug("asks = {}", askInfoDtos);
+        model.addAttribute("asks", askInfoDtos);
+        System.out.println("문의조회 controller" + askInfoDtos);
     }
 
     @GetMapping("createAsk.do")
@@ -73,11 +75,19 @@ public class AskController {
     }
 
     @PostMapping("/createAnswer.do")
-    public String createAnswer(@RequestParam Long id, @RequestParam String answerContent) {
-        Answer answer = new Answer();
-        answer.setAskId(id); // 문의 ID 설정
-        answer.setContent(answerContent);
-        return "redirect:/ask/askDetail.do?id=" + id;
+    public String createAnswer(@Valid AnswerCreateDto answerCreateDto,
+                               BindingResult bindingResult,
+                               RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            throw new RuntimeException(bindingResult.getAllErrors().get(0).getDefaultMessage());
+        }
+        log.debug("answerCreateDto = {}", answerCreateDto);
+
+        answerService.createAnswer(answerCreateDto);
+
+        redirectAttributes.addFlashAttribute("msg", "답변을 등록을 완료했습니다.");
+
+        return "redirect:/ask/askList.do";
     }
 
     @PostMapping("/createAsk.do")
@@ -95,4 +105,8 @@ public class AskController {
         redirectAttributes.addFlashAttribute("msg", "😊문의사항을 성공적으로 보냈습니다. 신속한 답변드리겠습니다.^^");
         return "redirect:/ask/createAsk.do";
     }
+
+
+
+
 }
