@@ -4,9 +4,14 @@ import com.sh.app.admin.entity.Admin;
 import com.sh.app.admin.service.AdminService;
 import com.sh.app.ask.entity.Ask;
 import com.sh.app.ask.service.AskService;
+import com.sh.app.auth.vo.MemberDetails;
+import com.sh.app.cinema.dto.CinemaDto;
 import com.sh.app.cinema.service.CinemaService;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
+import com.sh.app.movie.dto.FindOtherMovieDto;
+import com.sh.app.movie.dto.MovieListDto;
+import com.sh.app.movie.service.MovieService;
 import com.sh.app.schedule.dto.ScheduleDto;
 import com.sh.app.schedule.dto.ScheduleListDto;
 import com.sh.app.schedule.service.ScheduleService;
@@ -15,6 +20,7 @@ import com.sh.app.theater.service.TheaterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,6 +49,8 @@ public class AdminController {
     private AdminService adminService;
     @Autowired
     private ScheduleService scheduleService;
+    @Autowired
+    private MovieService movieService;
 
     @GetMapping("/memberList.do")
     public void memberList(Model model) {
@@ -95,6 +103,19 @@ public class AdminController {
         // 현재 관리지점 확인
 //        log.debug("region = {}", region);
         List<TheaterDto> theaterDtos = theaterService.findAllTheatersWithCinemaId(cinemaId);
+
+        CinemaDto cinemaDto = cinemaService.getCinemaDetails(cinemaId);
+//        List<MovieListDto> currentMovies = movieService.getCurrentMovies(); // 현재 상영 중인 영화 목록 가져오기
+        List<MovieListDto> currentMovies = cinemaService.getMoviesByCinemaId(cinemaId); // 현재 상영 중인 영화 목록 가져오기
+        log.debug("id = {}", cinemaId);
+        model.addAttribute("cinema", cinemaDto);
+        model.addAttribute("currentMovies", currentMovies); // 모델에 추가
+        log.debug("cinemaDto = {}", cinemaDto);
+        log.debug("currentMovies = {}", currentMovies);
+
+
+
+
         model.addAttribute("theaters", theaterDtos);
     }
 
@@ -139,6 +160,18 @@ public class AdminController {
         scheduleService.createSchedule(sch_theaterId, sch_movieId, sch_date, sch_startTime);
         return ResponseEntity.ok().build();
     }
+
+
+    //현재 지점에서 상영중으로 내걸은 영화를 제외한 나머지 영화를 조회하는 메서드
+    @GetMapping("/findOtherMovie")
+    public ResponseEntity<?> findOtherMovie(@RequestParam(value = "cinemaId") Long cinemaId) {
+        System.out.println("findOtherMovie - controller !cinemaId : "+cinemaId);
+        List<FindOtherMovieDto> findOtherMovieDtos = movieService.findOtherMovie(cinemaId);
+        log.debug("findOtherMovieDtos = {}", findOtherMovieDtos);
+        return ResponseEntity.ok().build();
+    }
+
+
 
 }
 
