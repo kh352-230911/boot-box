@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>승인 관리</title>
+</head>
+<style layout:fragment="style">
+    table
+    {
+        margin: auto;
+        font-size: 1.3rem;
+    }
+    th
+    {
+        width: 250px;
+    }
+    td
+    {
+        text-align: center;
+        vertical-align : middle;
+        padding-top: 8px;
+    }
+    b
+    {
+        font-size: xx-large;
+        color: khaki;
+    }
+    thead >tr>th{
+        background-color: #232323;
+        border-top: 2px solid #ff003b;
+        border-bottom: 2px solid #ff003b;
+        text-align: center;
+    }
+    .wrap-container {
+        height: auto;
+        min-height: 100%;
+        padding-bottom: 60px;
+    }
+    .home-container {
+        min-height: 600px;
+    }
+    /*footer {*/
+    /*    height: 60px;*/
+    /*    position: relative;*/
+    /*    transform: translateY(0%);*/
+    /*}*/
+    footer {
+        height: 60px;
+        /*position: relative;*/
+        transform: translateY(0%);
+        /* 페이지의 아래쪽에 고정 */
+        width: 99%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+</style>
+
+<div layout:fragment="content">
+    <div class="home-container">
+        <table id="memberList" style="margin-top: 30px">
+            <thead>
+            <tr>
+                <th>극장</th>
+                <th>상영관</th>
+                <th>영화</th>
+                <th>스케쥴</th>
+                <th>승인 여부</th>
+            </tr>
+            </thead>
+            <tbody>
+<!--            <tr th:each="admin, status : ${adminList}" th:if="${admin.cinemaManagementDto} != null">-->
+<!--                <td th:text="${admin.id}"></td>-->
+<!--                <td th:text="${admin.username}"></td>-->
+<!--                <td th:text="${admin.cinemaManagementDto.region_cinema}"></td>-->
+<!--                <td th:text="${admin.cinemaManagementDto.address}"></td>-->
+<!--            </tr>-->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script layout:fragment="script"></script>
+</html>

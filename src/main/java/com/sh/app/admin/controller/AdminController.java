@@ -1,12 +1,16 @@
 package com.sh.app.admin.controller;
 
+import com.sh.app.admin.dto.AdminListDto;
 import com.sh.app.admin.entity.Admin;
 import com.sh.app.admin.service.AdminService;
 import com.sh.app.ask.entity.Ask;
 import com.sh.app.ask.service.AskService;
+import com.sh.app.cinema.dto.CinemaManagementDto;
+import com.sh.app.cinema.entity.Cinema;
 import com.sh.app.cinema.service.CinemaService;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
+import com.sh.app.schedule.dto.ScheduleApprovalListDto;
 import com.sh.app.schedule.dto.ScheduleDto;
 import com.sh.app.schedule.dto.ScheduleListDto;
 import com.sh.app.schedule.service.ScheduleService;
@@ -122,6 +126,19 @@ public class AdminController {
         }
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/adminManagement.do")
+    public void adminManagement(Model model) {
+        List<AdminListDto> adminListDtos = adminService.findAllWithCinema();
+
+//        log.debug("adminListDtos = {}", adminListDtos);
+
+        model.addAttribute("adminList", adminListDtos);
+    }
+
+    @GetMapping("/approvalManagement.do")
+    public void approvalManagement() {
     }
 }
 

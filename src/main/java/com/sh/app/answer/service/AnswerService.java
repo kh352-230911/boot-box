@@ -6,6 +6,7 @@ import com.sh.app.answer.entity.Answer;
 import com.sh.app.answer.repository.AnswerRepository;
 import com.sh.app.ask.dto.AskDetailDto;
 import com.sh.app.ask.entity.Ask;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @Service
 @Transactional
+@Slf4j
 public class AnswerService {
 
     @Autowired
@@ -30,9 +32,10 @@ public class AnswerService {
     }
 
     public AnswerDetailDto findById(Long askId) {
-        return answerRepository.findById(askId)
-                .map((answer) -> convertToAnswer(answer))
-                .orElseThrow();
+        Answer answer = answerRepository.findByAskId(askId).orElseThrow();
+        log.debug("answer/service = {}", answer);
+        AnswerDetailDto answerDetailDto = convertToAnswer(answer);
+        return answerDetailDto;
     }
 
     private AnswerDetailDto convertToAnswer(Answer answer) {

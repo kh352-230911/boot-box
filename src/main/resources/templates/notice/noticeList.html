@@ -13,7 +13,7 @@
 
 
 
-    <div class="flex items-center justify-start">
+<!--    <div  class="flex items-center justify-start">-->
 <!--        <div class="home-container">-->
 
 <!--        </div>-->
@@ -30,6 +30,7 @@
                 </div>
             </div>
         <!-- table박스 -->
+    <div class="flex justify-center">
         <div class="container flex justify-center mt-10">
 
             <th:block sec:authorize="hasAuthority('ROLE_USER') or isAnonymous()">
@@ -82,15 +83,16 @@
                 </tbody>
             </table>
         </div>
+    </div>
     <!-- 관리자, 매니저만 사용가능 -->
     <th:block sec:authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_ADMIN')">
-        <div>
+        <div class="">
             <input type="button" value="공지사항추가" id="createNotice"
                    th:onclick="|location.href = '@{/notice/createNotice.do}';|" />
         </div>
     </th:block>
 <!--    </div>-->
-    </div>
+<!--    </div>-->
 </div>
 
 

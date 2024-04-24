@@ -1,5 +1,7 @@
 package com.sh.app.cinema.service;
 
+import com.sh.app.admin.dto.AdminListDto;
+import com.sh.app.cinema.dto.CinemaManagementDto;
 import com.sh.app.cinema.entity.Cinema;
 import com.sh.app.cinema.repository.CinemaRepository;
 import com.sh.app.cinema.dto.CinemaDto;
@@ -7,6 +9,7 @@ import com.sh.app.memberLikeCinema.d.MemberLikeCinemaDto;
 import com.sh.app.memberLikeCinema.entity.MemberLikeCinema;
 import com.sh.app.movie.dto.MovieListDto;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +24,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@Slf4j
 public class CinemaService {
 
     @Autowired
@@ -84,4 +88,5 @@ public class CinemaService {
                 .map(movie -> modelMapper.map(movie, MovieListDto.class))
                 .collect(Collectors.toList());
     }
+
 }

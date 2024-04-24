@@ -24,14 +24,14 @@ section#content {
 /*    min-height: 100%;*/
 /*    padding-bottom: 60px;*/
 /*}*/
-.home-container {
-    min-height: 600px;
-    margin: 0 50px 0 0;
-}
+/*.home-container {*/
+/*    min-height: 600px;*/
+/*    margin: 0 50px 0 0;*/
+/*}*/
 footer {
     background-color: #212121;
     background-clip: content-box;
-    position: relative;
+    /*position: relative;*/
     height: 113px;
     bottom: 0; /* 바디 하단에 배치 */
     width: 100%; /* 너비를 바디와 일치시킴 */
@@ -49,10 +49,10 @@ footer {
     /*transform: translate(-12%, -127%);*/
 }
 .container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    /*position: absolute;*/
+    /*top: 50%;*/
+    /*left: 50%;*/
+    /*transform: translate(-50%, -50%);*/
 }
 .notice-List
 {
