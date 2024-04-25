@@ -1,0 +1,44 @@
+table {
+    margin: auto;
+    font-size: 1.3rem;
+}
+th {
+    width: 250px;
+}
+td {
+    text-align: center;
+    vertical-align : middle;
+    padding-top: 8px;
+}
+b {
+    font-size: xx-large;
+    color: khaki;
+}
+thead >tr>th{
+    background-color: #232323;
+    border-top: 2px solid #ff003b;
+    border-bottom: 2px solid #ff003b;
+    text-align: center;
+}
+.wrap-container {
+    height: auto;
+    min-height: 100%;
+    padding-bottom: 60px;
+}
+.home-container {
+    min-height: 600px;
+}
+footer {
+    height: 60px;
+    /*position: relative;*/
+    transform: translateY(0%);
+    /* 페이지의 아래쪽에 고정 */
+    width: 99%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.approval {
+    cursor: pointer;
+}

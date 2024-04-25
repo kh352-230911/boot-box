@@ -14,5 +14,6 @@ import java.util.Set;
 @Builder
 public class TheaterInfoDto {
     private String name;
+
     private CinemaInfoDto cinema;
 }

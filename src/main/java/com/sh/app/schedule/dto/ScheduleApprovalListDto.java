@@ -1,5 +1,6 @@
 package com.sh.app.schedule.dto;
 
+import com.sh.app.common.Approve;
 import com.sh.app.movie.dto.MovieInfoDto;
 import com.sh.app.movie.dto.MovieListDto;
 import com.sh.app.theater.dto.TheaterInfoDto;
@@ -26,4 +27,6 @@ public class ScheduleApprovalListDto {
     private LocalDate schDate;
 
     private LocalDateTime time;
+
+    private Approve approve;
 }

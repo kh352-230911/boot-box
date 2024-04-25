@@ -151,7 +151,22 @@ public class AdminController {
     }
 
     @GetMapping("/approvalManagement.do")
-    public void approvalManagement() {
+    public void approvalManagement(Model model) {
+        List<ScheduleApprovalListDto> scheduleApprovalListDtos = scheduleService.findAllScheduleApprovals();
+
+        log.debug("scheduleApprovalListDtos = {}", scheduleApprovalListDtos);
+
+        model.addAttribute("scheduleList", scheduleApprovalListDtos);
+    }
+
+    @PostMapping("/scheduleApprove")
+    public ResponseEntity<?> scheduleApprove(@RequestParam(value = "scheduleId") Long id,
+                                             @RequestParam(value = "approve") boolean approve) {
+        log.debug("scheduleId = {}", id);
+        log.debug("approve = {}", approve);
+        scheduleService.approveSchedule(id, approve);
+
+        return ResponseEntity.ok().build();
     }
 }
 

@@ -2,15 +2,15 @@ package com.sh.app.schedule.service;
 
 
 
+import com.sh.app.cinema.dto.CinemaInfoDto;
 import com.sh.app.common.Approve;
+import com.sh.app.movie.dto.MovieInfoDto;
 import com.sh.app.movie.entity.Movie;
-import com.sh.app.schedule.dto.CreateScheduleDto;
-import com.sh.app.schedule.dto.IScheduleInfoDto;
-import com.sh.app.schedule.dto.ScheduleDto;
-import com.sh.app.schedule.dto.ScheduleListDto;
+import com.sh.app.schedule.dto.*;
 import com.sh.app.schedule.entity.Schedule;
 import com.sh.app.schedule.repository.ScheduleRepository;
 import com.sh.app.theater.dto.TheaterDto;
+import com.sh.app.theater.dto.TheaterInfoDto;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -214,6 +214,42 @@ public class ScheduleService {
 
         scheduleRepository.save(schedule);
 
+    }
+
+    public List<ScheduleApprovalListDto> findAllScheduleApprovals() {
+        // 데이터베이스에서 모든 스케줄 데이터를 조회
+        List<Schedule> schedules = scheduleRepository.findAll();
+
+        // 조회된 스케줄 데이터를 ScheduleApprovalListDto로 변환
+        return schedules.stream().map(schedule -> {
+            return ScheduleApprovalListDto.builder()
+                    .id(schedule.getId())
+                    .theaterInfoDto(TheaterInfoDto.builder()
+                            .name(schedule.getTheater().getName())
+                            .cinema(CinemaInfoDto.builder()
+                                    .name(schedule.getTheater().getCinema().getRegion_cinema())
+                                    .address(schedule.getTheater().getCinema().getAddress())
+                                    .build())
+                            .build())
+                    .movieInfoDto(MovieInfoDto.builder()
+                            .id(schedule.getMovie().getId())
+                            .title(schedule.getMovie().getTitle())
+                            .posterUrl(schedule.getMovie().getPosterUrl())
+                            .runtime(schedule.getMovie().getRuntime())
+                            .build())
+                    .schDate(schedule.getSchDate())
+                    .time(schedule.getTime())
+                    .approve(schedule.getApprove())
+                    .build();
+        }).collect(Collectors.toList());
+    }
+
+    public void approveSchedule(Long id, boolean approve) {
+        Schedule schedule = scheduleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Schedule not found!"));
+        Approve status = approve ? Approve.Y : Approve.N;
+        schedule.setApprove(status);
+        scheduleRepository.save(schedule);
     }
 
 //    public List<Map<String, Object>> organizeSchedules(List<IScheduleInfoDto> scheduleDetails) {
