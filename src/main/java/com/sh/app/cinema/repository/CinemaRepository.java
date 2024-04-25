@@ -1,5 +1,6 @@
 package com.sh.app.cinema.repository;
 
+import com.sh.app.cinema.dto.CinemaManagementDto;
 import com.sh.app.cinema.entity.Cinema;
 import com.sh.app.movie.dto.MovieListDto;
 import com.sh.app.movie.entity.Movie;

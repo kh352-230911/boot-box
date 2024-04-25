@@ -1,9 +1,16 @@
 package com.sh.app.admin.controller;
 
+import com.sh.app.admin.dto.AdminListDto;
 import com.sh.app.admin.entity.Admin;
 import com.sh.app.admin.service.AdminService;
 import com.sh.app.ask.entity.Ask;
 import com.sh.app.ask.service.AskService;
+import com.sh.app.cinema.dto.CinemaManagementDto;
+import com.sh.app.cinema.entity.Cinema;
+import com.sh.app.cinema.service.CinemaService;
+import com.sh.app.member.entity.Member;
+import com.sh.app.member.service.MemberService;
+import com.sh.app.schedule.dto.ScheduleApprovalListDto;
 import com.sh.app.auth.vo.MemberDetails;
 import com.sh.app.cinema.dto.CinemaDto;
 import com.sh.app.cinema.service.CinemaService;
@@ -150,9 +157,6 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
 
-
-
-
     @PostMapping("/createSchedule")
     public ResponseEntity<?> createSchedule(
             @RequestParam(value = "sch_theaterId") Long sch_theaterId,
@@ -172,6 +176,34 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/adminManagement.do")
+    public void adminManagement(Model model) {
+        List<AdminListDto> adminListDtos = adminService.findAllWithCinema();
+
+//        log.debug("adminListDtos = {}", adminListDtos);
+
+        model.addAttribute("adminList", adminListDtos);
+    }
+
+    @GetMapping("/approvalManagement.do")
+    public void approvalManagement(Model model) {
+        List<ScheduleApprovalListDto> scheduleApprovalListDtos = scheduleService.findAllScheduleApprovals();
+
+        log.debug("scheduleApprovalListDtos = {}", scheduleApprovalListDtos);
+
+        model.addAttribute("scheduleList", scheduleApprovalListDtos);
+    }
+
+    @PostMapping("/scheduleApprove")
+    public ResponseEntity<?> scheduleApprove(@RequestParam(value = "scheduleId") Long id,
+                                             @RequestParam(value = "approve") boolean approve) {
+        log.debug("scheduleId = {}", id);
+        log.debug("approve = {}", approve);
+        scheduleService.approveSchedule(id, approve);
+
+        return ResponseEntity.ok().build();
+    }
+
 
     //현재 지점에서 상영중으로 내걸은 영화를 제외한 나머지 영화를 조회하는 메서드
     @GetMapping("/findOtherMovie")
@@ -181,8 +213,6 @@ public class AdminController {
         log.debug("findOtherMovieDtos = {}", findOtherMovieDtos.size());
         return ResponseEntity.ok(findOtherMovieDtos);
     }
-
-
 
 }
 

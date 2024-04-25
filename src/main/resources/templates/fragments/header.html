@@ -107,8 +107,8 @@
                                         <a th:href="@{/notice/noticeList.do}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">고객센터</a>
                                     </li>
                                     </th:block>
-                                    <!-- 관리자, 매니저만 사용가능 -->
-                                    <th:block sec:authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_ADMIN')">
+                                    <!-- 매니저만 사용가능 -->
+                                    <th:block sec:authorize="hasAnyAuthority('ROLE_MANAGER')">
                                         <li>
                                             <a th:href="@{/admin/memberList.do(id=${#authentication.name})}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">회원목록</a>
                                         </li>
@@ -126,6 +126,18 @@
                                         </li>
                                         <li>
                                             <a th:href="@{/admin/adminRegion.do(name=${#authentication.name})}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">지점관리</a>
+                                        </li>
+                                    </th:block>
+                                    <!-- 관리자만 사용가능 -->
+                                    <th:block sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+                                        <li>
+                                            <a th:href="@{/admin/memberList.do(id=${#authentication.name})}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">회원목록</a>
+                                        </li>
+                                        <li>
+                                            <a th:href="@{/admin/approvalManagement.do}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">승인관리</a>
+                                        </li>
+                                        <li>
+                                            <a th:href="@{/admin/adminManagement.do}" class="block text-xl font-semibold px-4 py-2 text-white md:hover:text-red-600 dark:hover:bg-gray-600 dark:hover:text-white">지점관리</a>
                                         </li>
                                     </th:block>
 <!--                                    </th:block>-->

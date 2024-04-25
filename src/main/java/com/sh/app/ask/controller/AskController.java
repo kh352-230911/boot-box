@@ -67,7 +67,7 @@ public class AskController {
         } else {
             model.addAttribute("showAnswer", answerDetailDto.getContent());
             model.addAttribute("answerForm", false);
-                    System.out.println("뭘가져왓나???????? = " + answerDetailDto.getContent());
+            System.out.println("뭘가져왓나???????? = " + answerDetailDto.getContent());
         }
         model.addAttribute("ask", askDetailDto);
         log.debug("ask = {}", askDetailDto);

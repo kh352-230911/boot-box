@@ -1,8 +1,7 @@
 package com.sh.app.cinema.dto;
 
 import com.sh.app.location.entity.Location;
-import com.sh.app.memberLikeCinema.d.MemberLikeCinemaDto;
-import com.sh.app.memberLikeCinema.entity.MemberLikeCinema;
+import com.sh.app.memberLikeCinema.dto.MemberLikeCinemaDto;
 import com.sh.app.theater.entity.Theater;
 import lombok.Data;
 

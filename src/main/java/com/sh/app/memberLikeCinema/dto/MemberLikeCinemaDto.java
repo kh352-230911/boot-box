@@ -1,4 +1,4 @@
-package com.sh.app.memberLikeCinema.d;
+package com.sh.app.memberLikeCinema.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
