@@ -1,5 +1,6 @@
 package com.sh.app.cinema.entity;
 
+import com.sh.app.admin.entity.Admin;
 import com.sh.app.location.entity.Location;
 import com.sh.app.memberLikeCinema.entity.MemberLikeCinema;
 import com.sh.app.movie.entity.Movie;
@@ -75,4 +76,8 @@ public class Cinema implements Comparable<Cinema>{
     public int compareTo(Cinema other) {
         return (int)(this.id - other.id);
     }
+
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "admin_id", referencedColumnName = "id")
+//    private Admin admin;
 }

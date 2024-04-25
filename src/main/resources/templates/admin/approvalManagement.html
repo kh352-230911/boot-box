@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        layout:decorate="~{layout/default}">
+<head>
+    <title>승인 관리</title>
+    <link rel="stylesheet" th:href="@{/css/admin/approvalManagement.css}" />
+</head>
+<style layout:fragment="style"></style>
+
+<div layout:fragment="content">
+    <div class="home-container">
+        <table id="memberList" style="margin-top: 30px">
+            <thead>
+                <tr>
+                    <th>극장</th>
+                    <th>상영관</th>
+                    <th>영화</th>
+                    <th>스케쥴</th>
+                    <th>승인 여부</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="schedule, status : ${scheduleList}" th:if="${schedule.approve} != null">
+                    <th:block th:each="theater, theaterStatus : ${schedule.theaterInfoDto}">
+                        <td th:text="${theater.cinema.name}"></td>
+                        <td th:text="${theater.name}"></td>
+                    </th:block>
+                    <th:block th:each="movie, movieStatus : ${schedule.movieInfoDto}">
+                        <td th:text="${movie.title}"></td>
+                    </th:block>
+                    <td th:text="|${#temporals.format(schedule.time, 'yyyy-MM-dd HH:mm')}|"></td>
+                    <td class="approval" th:text="${schedule.approve}" th:data-schedule-id="${schedule.id}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script layout:fragment="script" th:src="@{/js/admin/adminManagement.js}"></script>
+</html>

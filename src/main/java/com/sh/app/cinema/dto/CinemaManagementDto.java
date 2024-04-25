@@ -1,21 +1,19 @@
 package com.sh.app.cinema.dto;
 
-import com.sh.app.location.dto.LocationInfoDto;
+import com.sh.app.admin.dto.AdminListDto;
+import com.sh.app.admin.entity.Admin;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.ArrayList;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CinemaInfoDto {
-    private String name;
-
+public class CinemaManagementDto {
+    private String region_cinema;
     private String address;
-
-    private LocationInfoDto location;
 }
