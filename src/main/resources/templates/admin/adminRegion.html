@@ -94,15 +94,25 @@
                 </div>
                 <label for="sch_theaterId"style="font-size: 14px;">추가 하실 상영 영화를 선택 해주세요.</label>
                 <!--                <input type="text" id="sch_theaterId" placeholder="상영관ID ex)20102" required>-->
-                <select id="movieId" required>
+                <select id="addMovieId" required>
                     <option value="">영화 선택</option>
-                    <option th:each="theater : ${theaters}" th:value="${theater.id}" th:text="${'상영관 ID : ' + theater.id} + ' / ' + ${'상영관 이름 : ' + theater.name}"></option>
+<!--                    <option th:each="theater : ${theaters}" th:value="${theater.id}" th:text="${'상영관 ID : ' + theater.id} + ' / ' + ${'상영관 이름 : ' + theater.name}"></option>-->
                 </select>
-
+                <div class="div-showPoster">
+                    <div class="poster-wrapper">
+                        <img id="posterImage" class="poster-image" src="" alt="Movie Poster">
+                    </div>
+                    <div class="info-wrapper">
+                        <span id="movieId"></span>
+                        <br>
+                        <span id="movieTitle"></span>
+                    </div>
+                </div>
                 <div style="text-align: center;">
-
-                    <button type="button" id="addMovie">영화 추가 하기</button>
-                    <button type="button" class="back">취소</button>
+                    <button type="button" id="addMovie"
+                            th:data-cinemaId="${cinemaId}"
+                            onclick="addNewMovie(this.getAttribute('data-cinemaId'))">영화 추가 하기</button>
+                    <button type="button" class="addMovieBack">취소</button>
                 </div>
             </div>
         </div>

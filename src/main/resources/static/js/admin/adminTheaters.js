@@ -96,6 +96,12 @@ $(".back").click(function (){
     $(".createModal").css("display", "none");
     $(".deleteModal").css("display", "none");
     $(".createScheduleModal").css("display", "none");
+    //$(".addTheaterMovieModal").css("display", "none");
+});
+
+$(".addMovieBack").click(function()
+{
+    document.getElementById("addMovieId").selectedIndex = 0;
     $(".addTheaterMovieModal").css("display", "none");
 });
 
@@ -160,16 +166,127 @@ function addTheaterMovie(cinemaId) {
 
     $.ajax({
         url:"findOtherMovie",
+        type: 'GET',
         data:{
             cinemaId
         },
-        success(){
-            alert("영화 목록을 불러왔습니다.");
+        success: function(movies) { // 성공적으로 요청을 받았을 때의 콜백 함수
+            console.log('Received data:', movies);
+
+            let selectBox = document.getElementById("addMovieId");
+            movies.forEach(function(movie) {
+                var option = document.createElement("option");
+                option.value = movie.id; // 옵션의 값으로 영화 id 설정
+                option.text = movie.title; // 옵션의 텍스트로 영화 제목 설정
+
+                option.dataset.posterUrl = movie.posterUrl; // 옵션의 데이터로 포스터 URL 추가
+                option.dataset.title = movie.title; // 옵션의 데이터로 포스터 URL 추가
+                option.dataset.id = movie.id; // 옵션의 데이터로 포스터 URL 추가
+                option.dataset.filmRatings = movie.filmRatings;
+                option.dataset.releaseDate = movie.releaseDate;
+                option.dataset.runtime = movie.runtime;
+
+
+                selectBox.appendChild(option); // selectbox에 옵션 추가
+            });
+
+
         },
-        error() {
-            alert("영화목록을 불러오는데 실패했습니다.");
+        error: function(xhr, status, error) { // 요청이 실패했을 때의 콜백 함수
+            console.error('Error:', error);
+
         }
     });
+
+}
+document.getElementById("addMovieId").addEventListener("change", function() {
+    showPoster(); // 옵션 선택 시 포스터 표시 함수 호출
+});
+function showPoster() {
+    var selectBox = document.getElementById("addMovieId");
+    var selectedOption = selectBox.options[selectBox.selectedIndex];
+    var posterUrl = selectedOption.dataset.posterUrl; // 수정된 부분: dataset.postUrl을 가져옴
+    var title = selectedOption.dataset.title;
+    var id = selectedOption.dataset.id;
+    var runtime = selectedOption.dataset.runtime;
+    var releaseDate = selectedOption.dataset.releaseDate;
+    var filmRatings = selectedOption.dataset.filmRatings;
+
+    var divShowPoster = document.querySelector(".div-showPoster");
+    //divShowPoster.innerHTML = ""; // 기존 내용 지우기
+
+    let posterImage = document.querySelector("#posterImage");
+    let movieTitle = document.querySelector("#movieTitle");
+    let movieId = document.querySelector("#movieId");
+
+    console.log("movieTitle",movieTitle);
+    console.log("movieId",movieId);
+    console.log("posterUrl:",posterUrl);
+    if (posterUrl == null) {
+        // posterUrl이 null일 때 기본 이미지 출력
+        var img = document.createElement("img");
+        img.loading = "lazy";
+        posterImage.loading="lazy";
+        // img.className = "movie-list-item-img";
+        posterImage.src = "https://t4.ftcdn.net/jpg/03/08/67/51/360_F_308675145_Ye70fJFVPntNVnmxjtVgMy5P8MDEmusB.jpg";
+        img.src = "https://t4.ftcdn.net/jpg/03/08/67/51/360_F_308675145_Ye70fJFVPntNVnmxjtVgMy5P8MDEmusB.jpg";
+        //divShowPoster.appendChild(img);
+    } else if (posterUrl.startsWith('http://file.koreafilm.or.kr')) {
+        // posterUrl이 'http://file.koreafilm.or.kr'로 시작할 때 해당 URL로 이미지 출력
+        var img = document.createElement("img");
+        img.loading = "lazy";
+        posterImage.loading="lazy";
+        // img.className = "movie-list-item-img";
+        posterImage.src=posterUrl;
+        img.src = posterUrl;
+        img.alt = selectedOption.text;
+        //divShowPoster.appendChild(img);
+    } else {
+        // 그 외의 경우에는 TMDB의 URL을 사용하여 이미지 출력
+        var img = document.createElement("img");
+        img.loading = "lazy";
+        posterImage.loading="lazy";
+        // img.className = "movie-list-item-img";
+        posterImage.src="https://image.tmdb.org/t/p/w200"+posterUrl;
+        img.src = "https://image.tmdb.org/t/p/w200" + posterUrl;
+        img.alt = selectedOption.text;
+        //divShowPoster.appendChild(img);
+    }
+    movieId.textContent="영화 ID: "+id;
+    //textContent는 html인식못해서 <br>사용x
+    //innerHTML은 가능, 하지만 xss에 취약하므로 간단한 정보만 출력
+    movieTitle.innerHTML = "영화명: " + title + "<br>" + "관람등급: " + filmRatings + "<br>" + "상영시간: " + runtime +"분"+ "<br>" + "개봉일: " + releaseDate;
+}
+
+
+//본인 지점에 상영 영화 추가하기 버튼
+function addNewMovie(cinemaId) {
+    //selectbox에서 현재 영화 id를 제대로 갖고왔나 확인하기.
+    var selectBox = document.getElementById("addMovieId");
+    var selectedOption = selectBox.options[selectBox.selectedIndex];
+    var movieId = selectedOption.dataset.id;
+    console.log("시네마아이디:", cinemaId);
+    //selectbox를 선택안하고 영화선택인 상태로 둘 경우 값이 undefined이다. 이 경우를 제외하고 작업을 실행해야한다.
+    if (movieId != undefined) {
+        $.ajax({
+            url: "addNewMovie",
+            method: "POST",
+            headers: {
+                [csrfHeaderName]: csrfToken
+            },
+            data: {
+                cinemaId, movieId
+            },
+            success() {
+                alert("상영 영화 추가가 완료되었습니다.");
+                location.href = redirectUrl;
+            },
+            error() {
+                alert("상영 영화 추가에 실패했습니다.");
+            }
+        });
+
+    }
 
 }
 

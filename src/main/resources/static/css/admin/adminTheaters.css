@@ -303,3 +303,35 @@ option {
 .selectBox .select:focus + .icoArrow img {
     transform: rotate(180deg);
 }
+
+/*==========상영영화추가 모달 ==================*/
+.div-showPoster {
+    display: flex;
+    align-items: center;
+    height:400px;
+    background-color: transparent;
+}
+
+.poster-wrapper {
+    flex: 0 0 auto; /* 왼쪽 컨테이너 크기 고정 */
+    margin-left: 20px;
+    margin-right: 20px; /* 포스터 이미지와 정보 사이 간격 조절 */
+    background-color: transparent;
+}
+
+.poster-image {
+    max-width: 200px; /* 포스터 이미지 최대 너비 지정 */
+    height: auto; /* 이미지 비율 유지 */
+    background-color: transparent;
+}
+
+.info-wrapper {
+    flex: 1; /* 오른쪽 컨테이너가 남은 공간을 모두 차지하도록 함 */
+    margin-right: 20px;
+    background-color: transparent;
+}
+
+.info-wrapper p {
+    margin: 0; /* 문단의 기본 마진 제거 */
+    background-color: transparent;
+}

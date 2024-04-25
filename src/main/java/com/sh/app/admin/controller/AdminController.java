@@ -12,6 +12,7 @@ import com.sh.app.member.service.MemberService;
 import com.sh.app.movie.dto.FindOtherMovieDto;
 import com.sh.app.movie.dto.MovieListDto;
 import com.sh.app.movie.service.MovieService;
+import com.sh.app.movieList.service.MovieListService;
 import com.sh.app.schedule.dto.ScheduleDto;
 import com.sh.app.schedule.dto.ScheduleListDto;
 import com.sh.app.schedule.service.ScheduleService;
@@ -51,6 +52,8 @@ public class AdminController {
     private ScheduleService scheduleService;
     @Autowired
     private MovieService movieService;
+    @Autowired
+    private MovieListService movieListService;
 
     @GetMapping("/memberList.do")
     public void memberList(Model model) {
@@ -161,14 +164,22 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/addNewMovie")
+    public ResponseEntity<?> addNewMovie(
+            @RequestParam(value = "cinemaId") Long cinemaId,
+            @RequestParam(value = "movieId") Long movieId) {
+        movieListService.addNewMovie(cinemaId, movieId);
+        return ResponseEntity.ok().build();
+    }
+
 
     //현재 지점에서 상영중으로 내걸은 영화를 제외한 나머지 영화를 조회하는 메서드
     @GetMapping("/findOtherMovie")
     public ResponseEntity<?> findOtherMovie(@RequestParam(value = "cinemaId") Long cinemaId) {
         System.out.println("findOtherMovie - controller !cinemaId : "+cinemaId);
         List<FindOtherMovieDto> findOtherMovieDtos = movieService.findOtherMovie(cinemaId);
-        log.debug("findOtherMovieDtos = {}", findOtherMovieDtos);
-        return ResponseEntity.ok().build();
+        log.debug("findOtherMovieDtos = {}", findOtherMovieDtos.size());
+        return ResponseEntity.ok(findOtherMovieDtos);
     }
 
 
