@@ -1,5 +1,6 @@
 package com.sh.app.movie.repository;
 
+import com.sh.app.movie.dto.FindOtherMovieDto;
 import com.sh.app.movie.entity.Movie;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -97,4 +98,7 @@ FETCH FIRST 13 ROWS ONLY""", nativeQuery = true)
     List<Movie> findMoviesByGenreId(@Param("genreId") Long genreId);
 
 
+    //0424 전체 영화중 특정지점에 상영중인 영화만빼고 모두 찾는 쿼리
+    @Query(value = "SELECT id, title, poster_url FROM movie WHERE id NOT IN (SELECT movie_id FROM movie_list WHERE cinema_id = :cinemaId)", nativeQuery = true)
+    List<Movie> findOtherMovie(Long cinemaId);
 }
