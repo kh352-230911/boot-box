@@ -78,13 +78,22 @@ $(".theaters").click(function () {
     });
 });
 
-//0424 상영 영화 추가
-
-//0424 상영 영화 삭제
-function deleteMovie(movieId) {
-    alert('선택한 영화의 ID는 ' + movieId + '입니다.');
+/*
+* 0425 상영 영화 삭제하기.
+*
+* 삭제하기 전에 해당 지점에 해당영화로 삭제 시점으로부터 미래의 스케쥴이 있는지 확인함.
+* 과거 스케쥴은 상관x
+* 만약 미래 상영 스케쥴이 1건이라도 존재한다면 삭제하지 않고 알려준다.
+*
+*
+* */
+function deleteMovie(movieId,cinemaId) {
+    alert('삭제용/현재 지점('+cinemaId+')에서 선택한 영화의 ID는 ' + movieId + '입니다.');
 }
-
+// 해당 영화화 지점에 해당하는 일정 조회
+function searchMovieSchedule(movieId,cinemaId) {
+    alert('조회용/현재 지점('+cinemaId+')에서 선택한 영화의 ID는 ' + movieId + '입니다.');
+}
 
 
 //0423 상영스케쥴 추가
@@ -262,6 +271,7 @@ function showPoster() {
 //본인 지점에 상영 영화 추가하기 버튼
 function addNewMovie(cinemaId) {
     //selectbox에서 현재 영화 id를 제대로 갖고왔나 확인하기.
+    const redirectUrl = $("#adminRegionUrl").attr("href");
     var selectBox = document.getElementById("addMovieId");
     var selectedOption = selectBox.options[selectBox.selectedIndex];
     var movieId = selectedOption.dataset.id;
@@ -285,9 +295,7 @@ function addNewMovie(cinemaId) {
                 alert("상영 영화 추가에 실패했습니다.");
             }
         });
-
     }
-
 }
 
 

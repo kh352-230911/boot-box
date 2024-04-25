@@ -79,14 +79,15 @@
             <th:block th:if="${#lists.size(currentMovies) > 0}">
                 <div th:text="'현재 상영 가능 영화 갯수는 '+${#lists.size(currentMovies)} +'개 입니다.'"></div>
             </th:block>
-        </div>
-        <div id="movieCrud-wrap">
-            <div>
-                <button type="button" id="addTheaterMovie"
-                        th:data-cinemaId="${cinema.id}"
-                        onclick="addTheaterMovie(this.getAttribute('data-cinemaId'))">상영 영화 추가</button>
+            <div id="movieCrud-wrap">
+                <div>
+                    <button type="button" id="addTheaterMovie"
+                            th:data-cinemaId="${cinema.id}"
+                            onclick="addTheaterMovie(this.getAttribute('data-cinemaId'))">상영 영화 추가</button>
+                </div>
             </div>
         </div>
+
         <div class="addTheaterMovieModal">
             <div class="modal-content" style="text-align: left;">
                 <div style="text-align: center;">
@@ -141,9 +142,18 @@
                                 <td th:text="${movie.title}"></td>
                                 <td>
                                     <button
-                                            id="deleteMovie"
+                                            id="searchMovieSchedule"
+                                            th:data-cinemaId="${cinemaId}"
                                             th:data-movieId="${movie.id}"
-                                            onclick="deleteMovie(this.getAttribute('data-movieId'))">삭제</button>
+                                            onclick="searchMovieSchedule(this.getAttribute('data-movieId'),this.getAttribute('data-cinemaId'))">상영일정조회</button>
+                                </td>
+
+                                <td>
+                                    <button
+                                            id="deleteMovie"
+                                            th:data-cinemaId="${cinemaId}"
+                                            th:data-movieId="${movie.id}"
+                                            onclick="deleteMovie(this.getAttribute('data-movieId'),this.getAttribute('data-cinemaId'))">삭제</button>
                                 </td>
                             </tr>
                             </tbody>

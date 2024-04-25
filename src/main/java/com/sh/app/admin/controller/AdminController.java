@@ -113,9 +113,7 @@ public class AdminController {
         // 현재 관리지점 확인
 //        log.debug("region = {}", region);
         List<TheaterDto> theaterDtos = theaterService.findAllTheatersWithCinemaId(cinemaId);
-
         CinemaDto cinemaDto = cinemaService.getCinemaDetails(cinemaId);
-//        List<MovieListDto> currentMovies = movieService.getCurrentMovies(); // 현재 상영 중인 영화 목록 가져오기
         List<MovieListDto> currentMovies = cinemaService.getMoviesByCinemaId(cinemaId); // 현재 상영 중인 영화 목록 가져오기
         log.debug("id = {}", cinemaId);
         model.addAttribute("cinema", cinemaDto);
@@ -128,6 +126,7 @@ public class AdminController {
 
         model.addAttribute("theaters", theaterDtos);
     }
+
 
     @PostMapping("/createTheater")
     public ResponseEntity<?> createTheater(
@@ -153,7 +152,6 @@ public class AdminController {
         for (ScheduleListDto scheduleListDto : scheduleListDtos) {
             log.debug("scheduleDto = {}", scheduleListDto);
         }
-
         return ResponseEntity.ok().build();
     }
 

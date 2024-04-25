@@ -86,12 +86,21 @@
 }
 #deleteMovie
 {
+    margin-left: 10px;
     background-color: #ff003b;
     border-radius: 5px;
     width: 100px;
     height: 50px;
 }
 
+#searchMovieSchedule
+{
+    margin-left: 10px;
+    background-color: #35aadc;
+    border-radius: 5px;
+    width: 100px;
+    height: 50px;
+}
 /*=================================*/
 #movieCrud-wrap {
     width: 100%;
