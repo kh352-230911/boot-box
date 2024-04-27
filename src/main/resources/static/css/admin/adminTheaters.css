@@ -75,14 +75,28 @@
     flex-wrap: wrap;
     font-size: 12px;
 }
-#movies-wrap img
-{
-    width:50%
-}
 /*상영영화 정보 보여주는 테이블 관련 css*/
 .moviesTable tr
 {
     border: 1px solid #ff003b;
+}
+.moviesTable .td-moviePoster img
+{
+    display: block; /* 이미지를 블록 요소로 설정하여 가로 중앙 정렬을 위해 */
+    margin: 0 auto; /* 가로 방향으로 가운데 정렬 */
+}
+#movies-wrap img
+{
+    width:50%
+}
+.moviesTable .td-searchMovieSchedule, .td-deleteMovie
+{
+    width: 100px;
+}
+.moviesTable .td-movieTitle
+{
+    width:250px;
+
 }
 #deleteMovie
 {

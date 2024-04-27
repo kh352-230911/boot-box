@@ -10,6 +10,7 @@ import com.sh.app.cinema.entity.Cinema;
 import com.sh.app.cinema.service.CinemaService;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
+import com.sh.app.movieList.dto.ShowMovieListDto;
 import com.sh.app.schedule.dto.ScheduleApprovalListDto;
 import com.sh.app.auth.vo.MemberDetails;
 import com.sh.app.cinema.dto.CinemaDto;
@@ -22,6 +23,7 @@ import com.sh.app.movie.service.MovieService;
 import com.sh.app.movieList.service.MovieListService;
 import com.sh.app.schedule.dto.ScheduleDto;
 import com.sh.app.schedule.dto.ScheduleListDto;
+import com.sh.app.schedule.dto.SearchMovieScheduleDto;
 import com.sh.app.schedule.service.ScheduleService;
 import com.sh.app.theater.dto.TheaterDto;
 import com.sh.app.theater.service.TheaterService;
@@ -110,16 +112,19 @@ public class AdminController {
         String region = cinemaService.findRegion(cinemaId);
         model.addAttribute("cinemaId", cinemaId);
         model.addAttribute("region", region);
-        // 현재 관리지점 확인
-//        log.debug("region = {}", region);
         List<TheaterDto> theaterDtos = theaterService.findAllTheatersWithCinemaId(cinemaId);
         CinemaDto cinemaDto = cinemaService.getCinemaDetails(cinemaId);
-        List<MovieListDto> currentMovies = cinemaService.getMoviesByCinemaId(cinemaId); // 현재 상영 중인 영화 목록 가져오기
-        log.debug("id = {}", cinemaId);
         model.addAttribute("cinema", cinemaDto);
-        model.addAttribute("currentMovies", currentMovies); // 모델에 추가
         log.debug("cinemaDto = {}", cinemaDto);
-        log.debug("currentMovies = {}", currentMovies);
+
+
+        List<ShowMovieListDto> showMovieList = movieListService.showMovieListDtos(cinemaId);
+        log.debug("showMovieListDtos = {}", showMovieList);
+        model.addAttribute("showMovieList", showMovieList);
+        // 현재 상영 중인 영화 목록 가져오기
+        List<MovieListDto> currentMovies = cinemaService.getMoviesByCinemaId(cinemaId);
+        model.addAttribute("currentMovies", currentMovies); // 0426 기존 currentMovie객체에서 다른 객체로 수정.
+        //log.debug("currentMovies = {}", currentMovies);
 
 
 
@@ -212,5 +217,22 @@ public class AdminController {
         return ResponseEntity.ok(findOtherMovieDtos);
     }
 
+
+    //현재 지점에서 상영중인 영화 목록에서 "상영 일정 조회" 버튼을 누르면 해당 지점+영화로 일정을 검색한다.
+    @GetMapping("/searchMovieSchedule")
+    public ResponseEntity<?> searchMovieSchedule(@RequestParam(value = "cinemaId") Long cinemaId,
+                                                  @RequestParam(value = "movieId") Long movieId) {
+        System.out.println("searchMovieSchedule - controller 해당 지점 영화로 스케쥴 조회하기");
+        List<SearchMovieScheduleDto> searchMovieScheduleDtos = scheduleService.searchMovieSchedule(cinemaId,movieId);
+        log.debug("SearchMovieScheduleDto = {}", searchMovieScheduleDtos);
+        return ResponseEntity.ok(searchMovieScheduleDtos);
+    }
+
+    //내 지점에서 상영 영화 삭제하기.
+    @PostMapping("/deleteMovieMyCinema")
+    public ResponseEntity<?> deleteMovieMyCinema(@RequestParam(value = "id") Long id) {
+        movieListService.deleteMovieMyCinema(id);
+        return ResponseEntity.ok().build();
+    }
 }
 

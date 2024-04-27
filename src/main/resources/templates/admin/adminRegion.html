@@ -122,38 +122,41 @@
 
 <!-- 아래부터 해당 지점에서 상영되는 영화를 출력하는 코드 -->
         <div id="movies-wrap">
-            <th:block th:if="${not #lists.isEmpty(currentMovies)}">
+            <th:block th:if="${not #lists.isEmpty(showMovieList)}">
                 <div class="movie-list-wrapper">
                     <div class="movie-list">
                         <table class="moviesTable">
                             <tbody>
-                            <tr th:each="movie, iterStat : ${currentMovies}">
-                                <td>
-                                    <th:block th:if="${movie.posterUrl == null}">
+                            <tr th:each="movie  : ${showMovieList}">
+                                <td class="td-moviePoster">
+                                    <th:block th:if="${movie.moviePosterUrl == null}">
                                         <img loading="lazy" class="movie-list-item-img" src="https://t4.ftcdn.net/jpg/03/08/67/51/360_F_308675145_Ye70fJFVPntNVnmxjtVgMy5P8MDEmusB.jpg">
                                     </th:block>
-                                    <th:block th:if="|${movie.posterUrl != null and #strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
-                                        <img loading="lazy" class="movie-list-item-img" th:src="${movie.posterUrl}" th:alt="${movie.title}">
+                                    <th:block th:if="|${movie.moviePosterUrl != null and #strings.startsWith(movie.moviePosterUrl, 'http://file.koreafilm.or.kr')}|">
+                                        <img loading="lazy" class="movie-list-item-img" th:src="${movie.moviePosterUrl}" th:alt="${movie.movieTitle}">
                                     </th:block>
-                                    <th:block th:if="|${movie.posterUrl != null and !#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
-                                        <img loading="lazy" class="movie-list-item-img" th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" th:alt="${movie.title}">
+                                    <th:block th:if="|${movie.moviePosterUrl != null and !#strings.startsWith(movie.moviePosterUrl, 'http://file.koreafilm.or.kr')}|">
+                                        <img loading="lazy" class="movie-list-item-img" th:src="|https://image.tmdb.org/t/p/w200${movie.moviePosterUrl}|" th:alt="${movie.movieTitle}">
                                     </th:block>
                                 </td>
-                                <td th:text="${movie.title}"></td>
-                                <td>
+                                <td class="td-movieTitle" th:text="${movie.movieTitle}"></td>
+                                <td class="td-movieID" th:text="${movie.movieId}"></td>
+                                <td class="td-searchMovieSchedule">
                                     <button
                                             id="searchMovieSchedule"
-                                            th:data-cinemaId="${cinemaId}"
-                                            th:data-movieId="${movie.id}"
-                                            onclick="searchMovieSchedule(this.getAttribute('data-movieId'),this.getAttribute('data-cinemaId'))">상영일정조회</button>
+                                            th:data-id="${movie.id}"
+                                            th:data-cinemaId="${movie.cinemaId}"
+                                            th:data-movieId="${movie.movieId}"
+                                            onclick="searchMovieSchedule(this.getAttribute('data-id'),this.getAttribute('data-cinemaId'),this.getAttribute('data-movieId'))">상영일정조회</button>
                                 </td>
 
-                                <td>
+                                <td class="td-deleteMovie">
                                     <button
                                             id="deleteMovie"
+                                            th:data-id="${movie.id}"
                                             th:data-cinemaId="${cinemaId}"
-                                            th:data-movieId="${movie.id}"
-                                            onclick="deleteMovie(this.getAttribute('data-movieId'),this.getAttribute('data-cinemaId'))">삭제</button>
+                                            th:data-movieId="${movie.movieId}"
+                                            onclick="deleteMovie(this.getAttribute('data-id'),this.getAttribute('data-cinemaId'),this.getAttribute('data-movieId'))">삭제</button>
                                 </td>
                             </tr>
                             </tbody>

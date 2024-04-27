@@ -78,11 +78,12 @@ public class CinemaController {
         log.debug("cinemaDto = {}", cinemaDto);
         log.debug("currentMovies = {}", currentMovies);
 
-        boolean userLikedCinema = cinemaDto.getMemberLikeCinemas().stream()
-                .anyMatch(like -> like.getMemberId().equals(memberDetails.getMember().getId()));
+        if(memberDetails!=null) {
+            boolean userLikedCinema = cinemaDto.getMemberLikeCinemas().stream()
+                    .anyMatch(like -> like.getMemberId().equals(memberDetails.getMember().getId()));
 
-        model.addAttribute("userLikedCinema", userLikedCinema);
-
+            model.addAttribute("userLikedCinema", userLikedCinema);
+        }
         return "cinema/cinemaDetail";
     }
 

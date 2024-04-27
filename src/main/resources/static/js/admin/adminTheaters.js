@@ -87,13 +87,83 @@ $(".theaters").click(function () {
 *
 *
 * */
-function deleteMovie(movieId,cinemaId) {
-    alert('삭제용/현재 지점('+cinemaId+')에서 선택한 영화의 ID는 ' + movieId + '입니다.');
+function deleteMovie(id,cinemaId,movieId) {
+    console.log(id,cinemaId,movieId);
+    // alert('삭제용/현재 지점('+cinemaId+')에서 선택한 영화의 ID는 ' + movieId + '입니다.');
+    $.ajax({
+        url: "searchMovieSchedule",
+        method: "GET",
+        data: {
+            cinemaId, movieId
+        },
+        success: function(data) {
+            console.log(data);
+            if(data.length==0)
+            {
+                let yes = confirm('해당 영화를 지점 상영 목록에서 삭제 하시겠습니까?');
+                if(yes)
+                {
+                    console.log("예 누름");
+                    //삭제 쿼리 진행
+                    deleteMovieMyCinema(id,cinemaId,movieId);
+                }
+                else
+                {
+                    console.log("아니오 누름");
+                }
+            }
+            else
+            {
+                alert("영화 아이디 : "+movieId+"는 금일 이후 스케쥴이 존재합니다. 삭제하실 수 없습니다.");
+            }
+        },
+        error() {
+            alert("[삭제용]해당 영화 상영스케쥴 조회에 실패하였습니다.");
+        }
+    });
+}
+function deleteMovieMyCinema(id,cinemaId,movieId)
+{
+    const redirectUrl = $("#adminRegionUrl").attr("href");
+    $.ajax({
+        url:"deleteMovieMyCinema",
+        method:"POST",
+        headers:{
+            [csrfHeaderName] : csrfToken
+        },
+        data:{
+            id
+        },
+        success(){
+            alert("지점 상영 영화 삭제가 완료되었습니다.");
+            location.href = redirectUrl;
+        },
+        error() {
+            alert("지점 상영 영화 삭제에 실패했습니다.");
+        }
+    });
 }
 // 해당 영화화 지점에 해당하는 일정 조회
-function searchMovieSchedule(movieId,cinemaId) {
-    alert('조회용/현재 지점('+cinemaId+')에서 선택한 영화의 ID는 ' + movieId + '입니다.');
+function searchMovieSchedule(id,cinemaId,movieId) {
+    console.log(id,cinemaId,movieId);
+    //alert('조회용/현재 지점('+cinemaId+')에서 선택한 영화의 ID는 ' + movieId + '입니다.');
+    $.ajax({
+        url: "searchMovieSchedule",
+        method: "GET",
+        data: {
+            cinemaId, movieId
+        },
+        success: function(data) {
+            alert("해당 영화 상영스케쥴 조회가 완료되었습니다.");
+            console.log(data);
+            //location.href = redirectUrl;
+        },
+        error() {
+            alert("[조회용]해당 영화 상영스케쥴 조회에 실패하였습니다.");
+        }
+    });
 }
+
 
 
 //0423 상영스케쥴 추가
@@ -112,6 +182,7 @@ $(".addMovieBack").click(function()
 {
     document.getElementById("addMovieId").selectedIndex = 0;
     $(".addTheaterMovieModal").css("display", "none");
+    selectInit();
 });
 
 $("#sch_insert").click(function () {
@@ -169,10 +240,12 @@ $("#sch_startTime").timepicker({
 //==========아래부턴 해당 지점 상영 영화 관련 코드======================
 //0424 상영 영화 추가할 때 팝업되는 모달  - 그리고 현 지점에서 상영중인 영화를 제외한 전체 영화를 db에서 조회한다..
 
-function addTheaterMovie(cinemaId) {
-    //alert('현재 지점의 넘버는 ' + cinemaId + '입니다.');
+function addTheaterMovie(cinemaId)
+{
+    let selectBox = document.getElementById("addMovieId");
+    let posterImage = document.querySelector("#posterImage");
+    posterImage.src = "https://t4.ftcdn.net/jpg/03/08/67/51/360_F_308675145_Ye70fJFVPntNVnmxjtVgMy5P8MDEmusB.jpg";
     $(".addTheaterMovieModal").css("display","block");
-
     $.ajax({
         url:"findOtherMovie",
         type: 'GET',
@@ -182,7 +255,7 @@ function addTheaterMovie(cinemaId) {
         success: function(movies) { // 성공적으로 요청을 받았을 때의 콜백 함수
             console.log('Received data:', movies);
 
-            let selectBox = document.getElementById("addMovieId");
+
             movies.forEach(function(movie) {
                 var option = document.createElement("option");
                 option.value = movie.id; // 옵션의 값으로 영화 id 설정
@@ -208,6 +281,20 @@ function addTheaterMovie(cinemaId) {
     });
 
 }
+
+//상영 영화 추가 초기화, 취소로 닫을 때 초기화.
+function selectInit()
+{
+
+    let posterImage = document.querySelector("#posterImage");
+    let movieTitle = document.querySelector("#movieTitle");
+    let movieId = document.querySelector("#movieId");
+
+    posterImage.innerHTML = ""; // 포스터 이미지 초기화
+    posterImage.src="";
+    movieTitle.innerHTML = ""; // 영화 제목 등 정보 초기화
+    movieId.innerHTML = ""; // 영화 ID 초기화
+}
 document.getElementById("addMovieId").addEventListener("change", function() {
     showPoster(); // 옵션 선택 시 포스터 표시 함수 호출
 });
@@ -222,7 +309,7 @@ function showPoster() {
     var filmRatings = selectedOption.dataset.filmRatings;
 
     var divShowPoster = document.querySelector(".div-showPoster");
-    //divShowPoster.innerHTML = ""; // 기존 내용 지우기
+    // divShowPoster.innerHTML = ""; // 기존 내용 지우기
 
     let posterImage = document.querySelector("#posterImage");
     let movieTitle = document.querySelector("#movieTitle");

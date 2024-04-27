@@ -13,10 +13,7 @@ import java.time.LocalDate;
 @Builder
 public class MovieInfoDto {
     private Long id;
-
     private String title;
-
     private String posterUrl;
-
     private Integer runtime;
 }

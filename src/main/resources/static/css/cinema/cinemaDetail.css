@@ -153,6 +153,11 @@
 }
 .movie-list-container {
     padding: 0 20px;
+
+}
+.movie-list-container p{
+    padding-left:10px;
+    font-size: 30px;
 }
 .movie-list {
     display: flex;
@@ -350,16 +355,16 @@ footer.active {
 }
 
 .time-slot:hover {
-    background-color: #ff3939; /* 호버 상태의 배경색 */
+    background-color: darkred; /* 호버 상태의 배경색 */
     color: #fff; /* 호버 상태의 텍스트 색상 */
 }
 
-.time-slot:hover .booking-text {
-    display: inline; /* 호버 상태에서만 예매하기 텍스트 표시 */
-}
-.time-slot:hover .seats-available {
-    display: none;
-}
+/*.time-slot:hover .booking-text {*/
+/*    display: inline; !* 호버 상태에서만 예매하기 텍스트 표시 *!*/
+/*}*/
+/*.time-slot:hover .seats-available {*/
+/*    display: none;*/
+/*}*/
 
 .booking-text {
     display: none; /* 기본 상태에서는 예매하기 텍스트 숨김 */

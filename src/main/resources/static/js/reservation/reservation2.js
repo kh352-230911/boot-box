@@ -41,17 +41,113 @@ const now = new Date();
 console.log("현재 날짜와 시간",now);
 let abledNextButton = false;
 let selectedSheduleId;
+let movieIdCookie;
 window.onload = function()
 {
-    var movieIdCookie = getCookie('movieIdCookie');
-    console.log("쿠키에 저장된 무비 아이디는?:",movieIdCookie);
+    movieIdCookie = getCookie('movieIdCookie');
+
+    var theaterToReservationCookie = getCookie('theaterToReservationCookie');
+    console.log("쿠키에 저장된 theaterToReservationCookie아이디는?:", theaterToReservationCookie);
     //테이블에 출력한 후 , 쿠키를 삭제한다.
     if (movieIdCookie) {
         // 해당 영화 아이디를 가진 행에 CSS를 직접 적용하여 하이라이트 표시
         $(".select-movieData[data-movieData-id='" + movieIdCookie + "']").css('background', 'linear-gradient(to right, dimgray, dimgray)');
+        //deleteCookie('movieIdCookie');
+        //해당 영화 아이디로 ajax를 통해 포스터와 타이틀을 갖고온다.
+        console.log("쿠키에 저장된 무비 아이디는?:",movieIdCookie);
+        loadMovieInfoByCookie(movieIdCookie);
     }
-    deleteCookie('movieIdCookie');
-    addPlaceholderTextToTable();
+
+    if(theaterToReservationCookie) {
+        //극장에서 바로 넘어온 경우
+        var theaterToReservationCookie = getCookie('theaterToReservationCookie');
+        console.log("쿠키에 저장된 theaterToReservationCookie아이디는?:", theaterToReservationCookie);
+        loadScheduleInfoByCookie(theaterToReservationCookie);
+    }
+    //addPlaceholderTextToTable();
+}
+
+//쿠키로 영화리스트에서 예매를 누른 후 ->하단에 영화 포스터와 타이틀 출력.
+function loadMovieInfoByCookie(movieIdCookie)
+{
+    console.log("조회할 영화 아이디 :",movieIdCookie);
+    $.ajax({
+        url: `loadMovieInfoByCookie`,
+        type: 'get',
+        data:{
+            movieIdCookie //영화 id
+        },
+        success(data){
+            console.log("가져온 data:",data);
+            let [{ title, posterUrl }] = data;
+            console.log("title:", title);
+            console.log("posterUrl:", posterUrl);
+            showPoster(posterUrl,title);
+            movieId = movieIdCookie;
+            loadMovieSch(movieId,cinemaId,dateId);
+        },
+        error(request) {
+            console.log('~~~~Error response status~~~~:', request.status);
+            if(request.status==500)
+            {
+                alert(`500 / 에러로 인해 메인페이지로 이동합니다. 이용에 불편을 끼쳐드려 죄송합니다.`)
+                window.location.href = `${contextPath}bootbox/`; // 리다이렉트할 URL을 지정합니다.
+            }
+            else if(request.status==401) //인증 관련 에러 잠시 주석처리..
+            {
+                alert(`예매는 로그인 후 이용하실 수 있습니다.`)
+                window.location.href = `${contextPath}`+request.responseText; // 리다이렉트할 URL을 지정합니다.
+            }
+            else if(request.status==404)
+            {
+                alert(`404 / 에러로 인해 메인페이지로 이동합니다. 이용에 불편을 끼쳐드려 죄송합니다.`)
+            }
+
+        },
+
+    });
+}
+
+//0428 쿠키로 상영 스케쥴을 갖고오는 경우
+function loadScheduleInfoByCookie(schId)
+{
+    console.log("조회할 스케쥴 아이디 :",schId);
+    $.ajax({
+        url: `loadScheduleInfoByCookie`,
+        type: 'get',
+        data:{
+            schId //스케쥴 id
+        },
+        success(data){
+            console.log("극장->예매 다이렉트 가져온 data:",data);
+            let [{ id,name,title, posterUrl,regionCinema,runtime,schDate }] = data;
+            showPoster(posterUrl,title); //포스터와 타이틀을 보여주고
+            cinemaDiv.innerText = regionCinema;
+            dateDiv.innerText = schDate;
+            theaterDiv.innerText = name;
+            selectedSheduleId = id; //상영스케쥴아이디 덮어씌우기[동일]
+            goToSelectSeat(id);
+        },
+        error(request) {
+            console.log('~~~~Error response status~~~~:', request.status);
+            if(request.status==500)
+            {
+                alert(`500 / 에러로 인해 메인페이지로 이동합니다. 이용에 불편을 끼쳐드려 죄송합니다.`)
+                window.location.href = `${contextPath}bootbox/`; // 리다이렉트할 URL을 지정합니다.
+            }
+            else if(request.status==401) //인증 관련 에러 잠시 주석처리..
+            {
+                alert(`예매는 로그인 후 이용하실 수 있습니다.`)
+                window.location.href = `${contextPath}`+request.responseText; // 리다이렉트할 URL을 지정합니다.
+            }
+            else if(request.status==404)
+            {
+                alert(`404 / 에러로 인해 메인페이지로 이동합니다. 이용에 불편을 끼쳐드려 죄송합니다.`)
+            }
+
+        },
+
+    });
 }
 function addPlaceholderTextToTable() {
     var placeholderText = "영화, 지점, 시간을 선택해주세요";
@@ -109,7 +205,10 @@ $(document).ready(function()
     //select-movie에서 select-movieData 수정해봄.0327
     $(".select-movieData").click(function()
     {
-        console.log("영화 선택");
+        console.log("영화 선택^^");
+        $(".select-movieData").css('background-color', ''); //초기화
+        //만약 쿠키로 넘겨받은 영화가 아닌 다른 영화를 선택할 경우, 쿠키 행의 bg를 초기화한다.
+        $(".select-movieData[data-movieData-id='" + movieIdCookie + "']").css('background', '');
         $(this).css('background-color', 'dimgray');
         $(".select-movieData").not(this).css('background-color', '');
         //선택한 영화의 고유 id (pk)값 가져오기.
@@ -122,14 +221,16 @@ $(document).ready(function()
     });
 });
 
-
-
-
+window.addEventListener("beforeunload", function(event) {
+    // 페이지를 떠날 때 실행할 작업을 여기에 작성
+    deleteCookie('movieIdCookie');
+    deleteCookie('theaterToReservationCookie');
+});
 
 //리스트에서 선택한 영화 포스터를 보여주는 함수
 function showPoster(posterUrl,movieTitle) {
-    console.log("출력할 포스터:"+posterUrl);
-    console.log("출력할 영화명:"+movieTitle);
+    console.log("showPoster 출력할 포스터:"+posterUrl);
+    console.log("showPoster 출력할 영화명:"+movieTitle);
     // 외부의 <div> 요소를 찾습니다.
     const posterContainer = document.querySelector(".seat-container1");//getElementById("posterContainer");
 
@@ -217,7 +318,6 @@ $(document).ready(function(){
 
         $(this).css('background-color', 'dimgray');
         $(".select_date").not(this).css('background-color', '');
-
         dateDiv.innerText = $(this).text();
 
         // 선택된 버튼의 ID(영화관 ID) 출력
@@ -236,6 +336,7 @@ $(document).ready(function(){
 //매개변수를 영화,상영관(지점),날짜로 받아서 처리.
 function loadMovieSch(movieId,cinemaId,dateId)
 {
+    console.log("loadMovieSch : ",movieId,cinemaId,dateId);
     $.ajax({
         url: `${contextPath}reservation/findSchedules`,
         type: 'get',
@@ -254,7 +355,7 @@ function loadMovieSch(movieId,cinemaId,dateId)
         // error: 서버에서 반환된 오류 메시지입니다.
         error(request, status, error) {
             //console.error('~~~~Ajax request failed~~~~:', error);
-            console.log('~~~~Error response responseText~~~~:', request.responseText);
+            //console.log('~~~~Error response responseText~~~~:', request.responseText);
             console.log('~~~~Error response status~~~~:', request.status);
             if(request.status==500)
             {
@@ -500,16 +601,9 @@ document.querySelector(".select-seats-prev-button").addEventListener('click',fun
 
 
 
-
-
-//0421 영화, 지점, 날짜 , 최종엔 상영일정까지 눌러야 다음버튼을 활성화.
-document.querySelector(".select-seats-next-button").addEventListener('click',function ()
+function goToSelectSeat(selectedSheduleId)
 {
-    console.log("...다음 버튼 클릭...");
-    //0421 기존위치
-    // currentPage++;
-    // updateButtonVisibility();
-
+    console.log("=====goToSelectSeat=====");
     //비동기 test
     $.ajax({
         url: `${contextPath}reservation/detailSchedule`,
@@ -541,7 +635,7 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
             {
                 //주석처리
                 alert(`예매는 로그인 후 이용하실 수 있습니다.`)
-                 window.location.href = `${contextPath}`+request.responseText; // 리다이렉트할 URL을 지정합니다.
+                window.location.href = `${contextPath}`+request.responseText; // 리다이렉트할 URL을 지정합니다.
             }
             else if(request.status==400)//잘못된 클라이언트 요청
             {
@@ -551,6 +645,14 @@ document.querySelector(".select-seats-next-button").addEventListener('click',fun
 
         }
     });
+}
+
+//0421 영화, 지점, 날짜 , 최종엔 상영일정까지 눌러야 다음버튼을 활성화.
+document.querySelector(".select-seats-next-button").addEventListener('click',function ()
+{
+    console.log("...다음 버튼 클릭...");
+    goToSelectSeat(selectedSheduleId);
+
 });
 
 //0219 다음 버튼 외에 영화,극장,시간 버튼 눌렀을 때에도 비동기로 쿼리를 전송하는 작업을 실행해야함..ㅎ..=>상영스케줄을 알기 위해서..
