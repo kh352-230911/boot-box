@@ -45,7 +45,6 @@ let movieIdCookie;
 window.onload = function()
 {
     movieIdCookie = getCookie('movieIdCookie');
-
     var theaterToReservationCookie = getCookie('theaterToReservationCookie');
     console.log("쿠키에 저장된 theaterToReservationCookie아이디는?:", theaterToReservationCookie);
     //테이블에 출력한 후 , 쿠키를 삭제한다.
@@ -976,7 +975,9 @@ function requestPay(id,name,phone)
         return;
     console.log("pass check_before_requestPay");
     let pay_uid = new Date().getTime().toString();
-    let boxId = "box"+new Date().getTime().toString().substring(8);
+    //0428 box+5자리번호 ->box+0428+5자리번호
+    //let boxId = "box"+new Date().getTime().toString().substring(8);
+    let boxId = "box"+today()+new Date().getTime().toString().substring(8);
 
     IMP.request_pay({
         pg: "html5_inicis", // PG사코드 - 고정값
@@ -995,7 +996,7 @@ function requestPay(id,name,phone)
             console.log("Payment ID : " + res.imp_uid);
             console.log("Order ID : " + res.merchant_uid);
             console.log("Payment Amount : " + res.paid_amount);
-            let boxId = "box"+new Date().getTime().toString().substring(8);
+            // let boxId = "box"+new Date().getTime().toString().substring(8);
             let orderId = "order"+new Date().getTime().toString();
             console.log("생성된 box id:",boxId);
 
@@ -1122,5 +1123,19 @@ function dtoTest()
                 console.error("에러가 발생했습니다.:", status+"/"+error);
             }
         });
+}
 
+function today()
+{
+    var today = new Date();
+// 월(Month)과 일(Day)을 가져오기
+    var month = today.getMonth() + 1; // getMonth() 0부터 시작,1 더하기
+    var day = today.getDate();
+// 월과 일을 두 자리 숫자로 표시하도록 설정
+    month = month < 10 ? '0' + month : month; // 월이 한 자리 수일 경우 앞에 0을 붙입니다.
+    day = day < 10 ? '0' + day : day; // 일이 한 자리 수일 경우 앞에 0을 붙입니다.
+// 오늘의 날짜를 표시
+    var todayDate = month + day; // 월과 일을 합쳐서 오늘의 날짜를 나타냅니다.
+    console.log("오늘날짜",todayDate); // 콘솔에 오늘의 날짜 출력
+    return todayDate;
 }
