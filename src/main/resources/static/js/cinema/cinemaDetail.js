@@ -310,7 +310,7 @@ function renderSchedule(scheduleData) {
 
     // 현재 시간을 구하기.
     const now = new Date();
-
+    console.log("scheduleData:",scheduleData);
     scheduleData.forEach(movie => {
         const movieElement = $('<div>').addClass('schedule-container');
 
@@ -369,11 +369,28 @@ function renderSchedule(scheduleData) {
 
 
                 // 시간 슬롯 클릭시 예약 페이지로 이동
-                const timeSlot = $('<a>').addClass('time-slot').attr('href', time.bookingUrl)
+                const timeSlot = $('<a>').addClass('time-slot')
+                                    .attr('href', time.bookingUrl)
                                     .append($('<span>').text(startTimeText), seatsAvailable, bookingText);
-                if (timeDifference <= 10 && timeDifference >= 0) {
+
+                if (timeDifference <= 10 && timeDifference >= 0)
+                {
                     timeSlot.click(function(e) {
                         e.preventDefault(); // 마감된 시간은 슬롯 클릭 방지하여 예약 페이지 이동 불가
+                    });
+                }
+                //0426
+                else
+                {
+                    timeSlot.click(function(e) {
+                        const urlParams = new URLSearchParams(time.bookingUrl);
+                        // schId 매개변수 추출
+                        const schId = urlParams.get('schId');
+                        console.log('schId:', schId);
+                        console.log("내가 클릭한 영화 정보:",movieTitle);
+                        document.cookie = 'theaterToReservationCookie'+ '=' + schId + '; path=/';
+                        alert("예매클릭!");
+                        //goToSelectSeat();
                     });
                 }
                 timeSlots.append(timeSlot);

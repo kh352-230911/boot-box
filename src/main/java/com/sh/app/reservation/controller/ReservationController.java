@@ -7,6 +7,7 @@ import com.google.gson.JsonParser;
 import com.sh.app.auth.vo.MemberDetails;
 import com.sh.app.location.dto.LocationDto;
 import com.sh.app.location.service.LocationService;
+import com.sh.app.movie.dto.MovieInfoDto;
 import com.sh.app.movie.dto.MovieShortDto;
 import com.sh.app.movie.service.MovieService;
 import com.sh.app.pay.dto.OrderPayDto;
@@ -19,7 +20,9 @@ import com.sh.app.reservation.service.ReservationService;
 import com.sh.app.reservationSeat.dto.ReservationSeatDto;
 import com.sh.app.reservationSeat.dto.ReservationSeatDto2;
 import com.sh.app.schedule.dto.IScheduleInfoDto;
+import com.sh.app.schedule.dto.ScheduleCookieDto;
 import com.sh.app.schedule.dto.ScheduleDto;
+import com.sh.app.schedule.dto.SearchMovieScheduleDto;
 import com.sh.app.schedule.service.ScheduleService;
 import com.sh.app.seat.entity.SeatDto;
 import com.sh.app.seat.service.SeatService;
@@ -600,6 +603,33 @@ public class ReservationController {
 
         return code;
 
+    }
+
+
+    //0427 cookie로 넘겨받은 영화의 id로 (직접클릭x) movie에서 title,posterUrl만 갖고오기
+    @GetMapping("/loadMovieInfoByCookie")
+    public ResponseEntity<?> loadMovieInfoByCookie(@RequestParam(value = "movieIdCookie") Long movieId)
+    {
+        System.out.println("=================loadMovieInfoByCookie====================");
+        System.out.println("찾을 movieId:"+movieId);
+        List<MovieInfoDto> movieInfoDtos = movieService.loadMovieInfoByCookie(movieId);
+        log.debug("movieInfoDtos = {}", movieInfoDtos);
+        return ResponseEntity.ok(movieInfoDtos);
+    }
+
+    /*  0427
+        cookie로 넘겨받은 스케쥴 id로 (직접클릭x) sch에서 title,posterUrl만 갖고오기
+        필요한 것 :  영화 타이틀,포스터 url,sch 정보 모두, 특히 theater_id로 극장,몇관인지 찾기
+     */
+
+    @GetMapping("/loadScheduleInfoByCookie")
+    public ResponseEntity<?> loadScheduleInfoByCookie(@RequestParam(value = "schId") Long schId)
+    {
+        System.out.println("=================loadScheduleInfoByCookie====================");
+        System.out.println("찾을 schId:"+schId);
+        List<ScheduleCookieDto> scheduleCookieDtos = scheduleService.loadMovieInfoByCookie(schId);
+        log.debug("scheduleCookieDtos = {}", scheduleCookieDtos);
+        return ResponseEntity.ok(scheduleCookieDtos);
     }
 
 

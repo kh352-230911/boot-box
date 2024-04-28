@@ -1353,5 +1353,15 @@ public class MovieService {
     private FindOtherMovieDto entityToDtos(Movie movie) {
         return modelMapper.map(movie, FindOtherMovieDto.class);
     }
+
+    public List<MovieInfoDto> loadMovieInfoByCookie(Long movieId)
+    {
+        return movieRepository.findById(movieId)
+                .stream().map((movie) -> entityToDtoMovieInfoDto(movie))
+                .collect(Collectors.toList());
+    }
+    private MovieInfoDto entityToDtoMovieInfoDto(Movie movie) {
+        return modelMapper.map(movie, MovieInfoDto.class);
+    }
 }
 

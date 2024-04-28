@@ -42,6 +42,11 @@ $(document).ready(function() {
                 ratingClass = 'grade bg-gradient-to-r bg-purple-100 text-purple-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-purple-400 border border-purple-400';
                 ratingText = '15';
                 break;
+                //관람등급에 고등학생가 라는 것도 있는데, 서치해보니 15세와 동일하다고 하네요.
+            case '고등학생가':
+                ratingClass = 'grade bg-gradient-to-r bg-purple-100 text-purple-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-purple-400 border border-purple-400';
+                ratingText = '15';
+                break;
             case '18세관람가(청소년관람불가)':
                 ratingClass = 'grade bg-gradient-to-r bg-red-100 text-red-800 text-l font-bold me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400';
                 ratingText = '18+';
