@@ -79,14 +79,15 @@
             <th:block th:if="${#lists.size(currentMovies) > 0}">
                 <div th:text="'현재 상영 가능 영화 갯수는 '+${#lists.size(currentMovies)} +'개 입니다.'"></div>
             </th:block>
-        </div>
-        <div id="movieCrud-wrap">
-            <div>
-                <button type="button" id="addTheaterMovie"
-                        th:data-cinemaId="${cinema.id}"
-                        onclick="addTheaterMovie(this.getAttribute('data-cinemaId'))">상영 영화 추가</button>
+            <div id="movieCrud-wrap">
+                <div>
+                    <button type="button" id="addTheaterMovie"
+                            th:data-cinemaId="${cinema.id}"
+                            onclick="addTheaterMovie(this.getAttribute('data-cinemaId'))">상영 영화 추가</button>
+                </div>
             </div>
         </div>
+
         <div class="addTheaterMovieModal">
             <div class="modal-content" style="text-align: left;">
                 <div style="text-align: center;">
@@ -94,15 +95,25 @@
                 </div>
                 <label for="sch_theaterId"style="font-size: 14px;">추가 하실 상영 영화를 선택 해주세요.</label>
                 <!--                <input type="text" id="sch_theaterId" placeholder="상영관ID ex)20102" required>-->
-                <select id="movieId" required>
+                <select id="addMovieId" required>
                     <option value="">영화 선택</option>
-                    <option th:each="theater : ${theaters}" th:value="${theater.id}" th:text="${'상영관 ID : ' + theater.id} + ' / ' + ${'상영관 이름 : ' + theater.name}"></option>
+<!--                    <option th:each="theater : ${theaters}" th:value="${theater.id}" th:text="${'상영관 ID : ' + theater.id} + ' / ' + ${'상영관 이름 : ' + theater.name}"></option>-->
                 </select>
-
+                <div class="div-showPoster">
+                    <div class="poster-wrapper">
+                        <img id="posterImage" class="poster-image" src="" alt="Movie Poster">
+                    </div>
+                    <div class="info-wrapper">
+                        <span id="movieId"></span>
+                        <br>
+                        <span id="movieTitle"></span>
+                    </div>
+                </div>
                 <div style="text-align: center;">
-
-                    <button type="button" id="addMovie">영화 추가 하기</button>
-                    <button type="button" class="back">취소</button>
+                    <button type="button" id="addMovie"
+                            th:data-cinemaId="${cinemaId}"
+                            onclick="addNewMovie(this.getAttribute('data-cinemaId'))">영화 추가 하기</button>
+                    <button type="button" class="addMovieBack">취소</button>
                 </div>
             </div>
         </div>
@@ -111,29 +122,41 @@
 
 <!-- 아래부터 해당 지점에서 상영되는 영화를 출력하는 코드 -->
         <div id="movies-wrap">
-            <th:block th:if="${not #lists.isEmpty(currentMovies)}">
+            <th:block th:if="${not #lists.isEmpty(showMovieList)}">
                 <div class="movie-list-wrapper">
                     <div class="movie-list">
                         <table class="moviesTable">
                             <tbody>
-                            <tr th:each="movie, iterStat : ${currentMovies}">
-                                <td>
-                                    <th:block th:if="${movie.posterUrl == null}">
+                            <tr th:each="movie  : ${showMovieList}">
+                                <td class="td-moviePoster">
+                                    <th:block th:if="${movie.moviePosterUrl == null}">
                                         <img loading="lazy" class="movie-list-item-img" src="https://t4.ftcdn.net/jpg/03/08/67/51/360_F_308675145_Ye70fJFVPntNVnmxjtVgMy5P8MDEmusB.jpg">
                                     </th:block>
-                                    <th:block th:if="|${movie.posterUrl != null and #strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
-                                        <img loading="lazy" class="movie-list-item-img" th:src="${movie.posterUrl}" th:alt="${movie.title}">
+                                    <th:block th:if="|${movie.moviePosterUrl != null and #strings.startsWith(movie.moviePosterUrl, 'http://file.koreafilm.or.kr')}|">
+                                        <img loading="lazy" class="movie-list-item-img" th:src="${movie.moviePosterUrl}" th:alt="${movie.movieTitle}">
                                     </th:block>
-                                    <th:block th:if="|${movie.posterUrl != null and !#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
-                                        <img loading="lazy" class="movie-list-item-img" th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" th:alt="${movie.title}">
+                                    <th:block th:if="|${movie.moviePosterUrl != null and !#strings.startsWith(movie.moviePosterUrl, 'http://file.koreafilm.or.kr')}|">
+                                        <img loading="lazy" class="movie-list-item-img" th:src="|https://image.tmdb.org/t/p/w200${movie.moviePosterUrl}|" th:alt="${movie.movieTitle}">
                                     </th:block>
                                 </td>
-                                <td th:text="${movie.title}"></td>
-                                <td>
+                                <td class="td-movieTitle" th:text="${movie.movieTitle}"></td>
+                                <td class="td-movieID" th:text="${movie.movieId}"></td>
+                                <td class="td-searchMovieSchedule">
+                                    <button
+                                            id="searchMovieSchedule"
+                                            th:data-id="${movie.id}"
+                                            th:data-cinemaId="${movie.cinemaId}"
+                                            th:data-movieId="${movie.movieId}"
+                                            onclick="searchMovieSchedule(this.getAttribute('data-id'),this.getAttribute('data-cinemaId'),this.getAttribute('data-movieId'))">상영일정조회</button>
+                                </td>
+
+                                <td class="td-deleteMovie">
                                     <button
                                             id="deleteMovie"
-                                            th:data-movieId="${movie.id}"
-                                            onclick="deleteMovie(this.getAttribute('data-movieId'))">삭제</button>
+                                            th:data-id="${movie.id}"
+                                            th:data-cinemaId="${cinemaId}"
+                                            th:data-movieId="${movie.movieId}"
+                                            onclick="deleteMovie(this.getAttribute('data-id'),this.getAttribute('data-cinemaId'),this.getAttribute('data-movieId'))">삭제</button>
                                 </td>
                             </tr>
                             </tbody>

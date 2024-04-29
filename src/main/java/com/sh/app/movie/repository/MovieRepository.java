@@ -99,6 +99,7 @@ FETCH FIRST 13 ROWS ONLY""", nativeQuery = true)
 
 
     //0424 전체 영화중 특정지점에 상영중인 영화만빼고 모두 찾는 쿼리
-    @Query(value = "SELECT id, title, poster_url FROM movie WHERE id NOT IN (SELECT movie_id FROM movie_list WHERE cinema_id = :cinemaId)", nativeQuery = true)
+    //@Query(value = "SELECT id FROM movie WHERE id NOT IN (SELECT movie_id FROM movie_list WHERE cinema_id = :cinemaId)", nativeQuery = true)
+    @Query("SELECT m FROM Movie m WHERE m.id NOT IN (SELECT ml.movie.id FROM MovieList ml WHERE ml.cinema.id = :cinemaId)")
     List<Movie> findOtherMovie(Long cinemaId);
 }

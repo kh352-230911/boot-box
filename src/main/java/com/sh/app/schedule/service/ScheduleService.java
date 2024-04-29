@@ -4,6 +4,7 @@ package com.sh.app.schedule.service;
 
 import com.sh.app.cinema.dto.CinemaInfoDto;
 import com.sh.app.common.Approve;
+import com.sh.app.movie.dto.FindOtherMovieDto;
 import com.sh.app.movie.dto.MovieInfoDto;
 import com.sh.app.movie.entity.Movie;
 import com.sh.app.schedule.dto.*;
@@ -257,6 +258,49 @@ public class ScheduleService {
             log.error("Error approving schedule: {}", e.getMessage());
             return false;
         }
+    }
+
+    public List<SearchMovieScheduleDto> searchMovieSchedule(Long cinemaId,Long movieId){
+    // 현재 시네마 아이디, 영화 아이디를 사용해 해당 지점에서만 상영되는 해당 영화의 스케쥴만 가져온다.
+        System.out.println("searchMovieSchedule - service !");
+        return scheduleRepository.searchMovieSchedule(cinemaId,movieId)
+                .stream().map((schedule) -> entityToDtos(schedule))
+                .collect(Collectors.toList());
+    }
+
+    private SearchMovieScheduleDto entityToDtos(Schedule schedule) {
+        return modelMapper.map(schedule, SearchMovieScheduleDto.class);
+    }
+
+
+
+//    public List<ScheduleCookieDto> loadMovieInfoByCookie(Long schId) {
+//        return scheduleRepository.loadMovieInfoByCookie(schId)
+//                .stream().map((schedule) -> entityToCookieDto(schedule))
+//                .collect(Collectors.toList());
+//    }
+//    private ScheduleCookieDto entityToCookieDto(Schedule schedule) {
+//        return modelMapper.map(schedule, ScheduleCookieDto.class);
+//    }
+
+
+
+    public List<ScheduleCookieDto> loadMovieInfoByCookie(Long schId) {
+        List<Object[]> results = scheduleRepository.loadMovieInfoByCookie(schId);
+        return results.stream().map(this::objectArrayToCookieDto).collect(Collectors.toList());
+    }
+
+    //s.id, t.name, c.region_cinema, m.title,m.posterUrl, m.runtime,s.schDate
+    private ScheduleCookieDto objectArrayToCookieDto(Object[] result) {
+        ScheduleCookieDto dto = new ScheduleCookieDto();
+        dto.setId((Long) result[0]);
+        dto.setName((String) result[1]);
+        dto.setRegionCinema((String) result[2]);
+        dto.setTitle((String) result[3]);
+        dto.setPosterUrl((String) result[4]);
+        dto.setRuntime((Integer)result[5]);
+        dto.setSchDate((LocalDate) result[6]);
+        return dto;
     }
 
 //    public List<Map<String, Object>> organizeSchedules(List<IScheduleInfoDto> scheduleDetails) {

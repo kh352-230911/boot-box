@@ -20,6 +20,7 @@ public class BootboxApplication {
 
         SpringApplication.run(BootboxApplication.class, args);
         System.out.println("========start!========");
+
     }
 
     /**
