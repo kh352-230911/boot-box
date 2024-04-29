@@ -244,12 +244,19 @@ public class ScheduleService {
         }).collect(Collectors.toList());
     }
 
-    public void approveSchedule(Long id, boolean approve) {
-        Schedule schedule = scheduleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Schedule not found!"));
-        Approve status = approve ? Approve.Y : Approve.N;
-        schedule.setApprove(status);
-        scheduleRepository.save(schedule);
+    public boolean approveSchedule(Long id, boolean approve) {
+        try {
+            Schedule schedule = scheduleRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Schedule not found!"));
+            Approve status = approve ? Approve.Y : Approve.N;
+            schedule.setApprove(status);
+            scheduleRepository.save(schedule);
+            return true; // 성공적으로 승인 상태가 변경되었을 때 true 반환
+        } catch (Exception e) {
+            // 예외 발생시, 로그를 남기고 false 반환
+            log.error("Error approving schedule: {}", e.getMessage());
+            return false;
+        }
     }
 
 //    public List<Map<String, Object>> organizeSchedules(List<IScheduleInfoDto> scheduleDetails) {
