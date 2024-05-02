@@ -259,26 +259,77 @@ function showPoster(posterUrl,movieTitle) {
 $(document).ready(function(){
     $(".select_location").click(function()
     {
-        //수정한 거
         console.log("지역선택");
-
-        $(this).css('background', 'linear-gradient(to right, red, red)');
+        $(this).css('background-color', 'dimgray');
         // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
         $(".select_location").not(this).css('background', '');
-        console.log("지역선택2");
-        var localName = $(this).text();
-        console.log("선택된 지역:", localName);
-
-        // 선택된 버튼의 ID(영화관 ID) 출력
-        var localId = $(this).data("local-id");
+        var localId = $(this).data("location-id");
         console.log("선택된 지역 ID:", localId);
+
+        //지역id로 해당되는 지점들 찾기
+        $.ajax({
+            url: `findCinema`,
+            type: 'get',
+            data:{
+                localId //지역 id
+            },
+            success(data){
+                console.log("지역으로 찾은 지점:",data);
+                //초기화
+                $('.cinema-area2 tbody').empty();
+                for (var i = 0; i < data.length; i++)
+                {
+                    var cinema = data[i];
+                    var cinemaId = cinema.id;
+                    var regionCinema = cinema.regionCinema;
+
+                    // 버튼을 생성하여 테이블에 추가합니다.
+                    var button = $('<button>', {
+                        type: 'button',
+                        class: 'select_location2',
+                        text: regionCinema,
+                        style: 'font-size: 0.9em;',
+                        'data-cinema-id': cinemaId
+                    });
+                    var td = $('<td>').append(button);
+                    var tr = $('<tr>').append(td);
+                    $('.cinema-area2 tbody').append(tr);
+                }
+            },
+            error(request) {
+                console.log('~~~~Error response status~~~~:', request.status);
+            },
+
+        });
+
     });
 });
-
-
-
 //지점 선택시
 var cinemaId;
+$(document).on('click', '.select_location2', function() {
+    cinemaId = $(this).data('cinema-id');
+    // 클릭된 버튼의 cinemaId를 사용하여 필요한 동작을 수행합니다.
+    console.log("선택된 영화관 ID:", cinemaId);
+
+
+    $(this).css('background-color', 'dimgray');
+    $(".select_location2").not(this).css('background-color', '');
+    //수정한 거
+    // $(this).css('background', 'linear-gradient(to right, grey, grey)');
+    // // 다른 버튼의 배경색을 원래대로 되돌리기 위해 모든 버튼에 대해 반복
+    // $(".select_location2").not(this).css('background', '');
+    console.log("지점선택2");
+    var cinemaName = $(this).text();
+    console.log("선택된 영화관:", cinemaName);
+
+    cinemaDiv.innerText = cinemaName;
+
+
+    // 선택된 버튼의 ID(영화관 ID) 출력
+    cinemaId = $(this).data("cinema-id");
+    console.log("선택된 영화관 ID:", cinemaId);
+    loadMovieSch(movieId,cinemaId,dateId);
+});
 $(document).ready(function(){
     $(".select_location2").click(function()
     {
@@ -398,7 +449,6 @@ function makeNewSchedule(able,organizedSchedules)
     const [{ totalDuration, schedules, title }] = organizedSchedules;
     console.log("총 상영 시간:", totalDuration);
     console.log("제목:", title);
-
     const tbody = document.getElementById('tbody_schedule');
     tbody.innerHTML = ''; // tbody 내용을 비움
 
@@ -413,6 +463,22 @@ function makeNewSchedule(able,organizedSchedules)
     //추가할  요소가 위치할 기준이 될 인덱스를 지정하며 지정된 인덱스 바로 앞에 추가된다. 생략하거나 -1을 지정한 경우에는 섹션내 끝에 추가한다.
     schedules.forEach(({ times, theater }) => {
         times.forEach(({ schId, time, seatsAvailable }) => {
+            //time에 totalDuration계산하여 endTime을 출력한다.
+            var startTimeString = time;
+            // 시작 시간을 시간과 분으로 분리
+            var timeComponents = startTimeString.split(':');
+            var startHour = parseInt(timeComponents[0], 10);
+            var startMinute = parseInt(timeComponents[1], 10);
+
+            // 시작 시간에 총 상영 시간을 더함
+            var endTime = new Date();
+            endTime.setHours(startHour);
+            endTime.setMinutes(startMinute + parseInt(totalDuration,10));
+
+            // 영화가 끝나는 시간을 출력
+            console.log('영화가 끝나는 시간:', endTime.getHours() + ':' + ('0' + endTime.getMinutes()).slice(-2));
+
+
             const row = tbody.insertRow();
             //const schIdCell = row.insertCell();
             const theaterCell = row.insertCell();
@@ -422,10 +488,14 @@ function makeNewSchedule(able,organizedSchedules)
             // schIdCell.textContent = schId;
             theaterCell.innerHTML = '<div class="icon-box"><i class="fas fa-film"></i>' + theater + '</div>';
             theaterCell.style.color = 'black';
-            timeCell.textContent = time + `~       `;
+            theaterCell.style.fontSize = '10px'; // 폰트 크기 변경
+            timeCell.innerHTML = '<div>' + time +'~'+ endTime.getHours() + ':' + ('0' + endTime.getMinutes()).slice(-2)+'</div>';
+            timeCell.style.fontSize='16px';
+            //timeCell.textContent = time + `~       `;
             // seatsAvailableCell에 새로운 div를 추가하여 내용을 배치
-            seatsAvailableCell.textContent = '               ' + seatsAvailable + '/60석';
-
+            seatsAvailableCell.innerHTML = ''+seatsAvailable + '/60석';
+            seatsAvailableCell.style.fontSize = '12px'; // 폰트 크기 변경
+            seatsAvailableCell.style.color='darkgreen';
 
             // 행에 클릭 이벤트 리스너 추가
             row.addEventListener('click', () => {
@@ -437,7 +507,7 @@ function makeNewSchedule(able,organizedSchedules)
                 selectedRow = row;
                 selectedRow.style.backgroundColor = 'dimgray';
                 selectedRow.style.width='300px';
-                selectedRow.style.height='52px';
+                selectedRow.style.height='50px';//클릭시 행의 높이
                 selectedRow.style.display = "block"; // 또는 inline-block 등을 사용할 수 있습니다.
                 // 클릭된 행에 대한 동작을 여기에 추가
                 console.log('클릭된 행:',schId, time, theater, seatsAvailable);
@@ -1139,3 +1209,4 @@ function today()
     console.log("오늘날짜",todayDate); // 콘솔에 오늘의 날짜 출력
     return todayDate;
 }
+

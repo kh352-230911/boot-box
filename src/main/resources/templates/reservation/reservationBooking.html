@@ -71,8 +71,24 @@
             </tr>
             </tbody>
         </table>
-
+    <!-- 0429 지역/지점 테이블 두개로 나누어서 리뉴얼.   -->
         <table class="cinema-area">
+            <thead>
+            <tr>
+                <th>지역</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="location, status : ${dataMap.locations}">
+                <td>
+                <button type="button" class="select_location" th:text="${location.location_name}" style="font-size: 0.9em;"
+                        th:attr="data-location-id=${location.id}"></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class="cinema-area2">
             <thead>
             <tr>
                 <th>지점</th>
@@ -80,17 +96,17 @@
             </thead>
             <tbody>
             <tr th:each="location, status : ${dataMap.locations}">
-                <td th:text="${location.location_name}"></td>
+<!--                <td th:text="${location.location_name}"></td>-->
                 <td class="select-cinemaData">
                     <div class="cinema-list">
-                        <ul>
-                            <hr class="cinemaLine" th:if="${status.index != 0}" style="height: 1px;">
-                            <li th:each="cinema : ${location.cinemas}">
+<!--                        <ul>-->
+<!--                            <hr class="cinemaLine" th:if="${status.index != 0}" style="height: 1px;">-->
+<!--                            <li th:each="cinema : ${location.cinemas}">-->
 
-                                <button type="button" class="select_location2" th:text="${cinema.region_cinema}" style="font-size: 0.9em;"
-                                        th:attr="data-cinema-id=${cinema.id}"></button>
-                            </li>
-                        </ul>
+<!--                                <button type="button" class="select_location2" th:text="${cinema.region_cinema}" style="font-size: 0.9em;"-->
+<!--                                        th:attr="data-cinema-id=${cinema.id}"></button>-->
+<!--                            </li>-->
+<!--                        </ul>-->
                     </div>
                 </td>
             </tr>

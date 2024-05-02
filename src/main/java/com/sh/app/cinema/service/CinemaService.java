@@ -1,5 +1,6 @@
 package com.sh.app.cinema.service;
 
+import com.sh.app.cinema.dto.FindCinemaDto;
 import com.sh.app.cinema.entity.Cinema;
 import com.sh.app.cinema.repository.CinemaRepository;
 import com.sh.app.cinema.dto.CinemaDto;
@@ -87,4 +88,14 @@ public class CinemaService {
                 .collect(Collectors.toList());
     }
 
+    //0501
+    public List<FindCinemaDto> findCinemas(Long localId)
+    {
+        return cinemaRepository.findCinema(localId)
+                .stream().map((cinema) -> entityToMyMovieDto(cinema))
+                .collect(Collectors.toList());
+    }
+    private FindCinemaDto entityToMyMovieDto(Cinema cinema) {
+        return modelMapper.map(cinema, FindCinemaDto.class);
+    }
 }

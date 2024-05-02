@@ -389,7 +389,7 @@ function renderSchedule(scheduleData) {
                         console.log('schId:', schId);
                         console.log("내가 클릭한 영화 정보:",movieTitle);
                         document.cookie = 'theaterToReservationCookie'+ '=' + schId + '; path=/';
-                        alert("예매클릭!");
+                        //alert("예매클릭!");
                         //goToSelectSeat();
                     });
                 }
