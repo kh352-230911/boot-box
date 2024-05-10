@@ -8,6 +8,7 @@ import com.sh.app.ask.service.AskService;
 import com.sh.app.cinema.dto.CinemaManagementDto;
 import com.sh.app.cinema.entity.Cinema;
 import com.sh.app.cinema.service.CinemaService;
+import com.sh.app.common.Approve;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
 import com.sh.app.movie.dto.MyCinemaMovieDto;
@@ -30,6 +31,7 @@ import com.sh.app.theater.dto.TheaterDto;
 import com.sh.app.theater.service.TheaterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -41,6 +43,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -201,9 +204,17 @@ public class AdminController {
                                              @RequestParam(value = "approve") boolean approve) {
         log.debug("scheduleId = {}", id);
         log.debug("approve = {}", approve);
-        scheduleService.approveSchedule(id, approve);
+        boolean isApproved = scheduleService.approveSchedule(id, approve);
 
-        return ResponseEntity.ok().build();
+        if (isApproved) {
+            // 승인 성공
+            return ResponseEntity.ok(Collections.singletonMap("approved", Approve.Y));
+        } else {
+            // 승인 실패
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.singletonMap("error", "Could not approve schedule."));
+        }
+
     }
 
 
