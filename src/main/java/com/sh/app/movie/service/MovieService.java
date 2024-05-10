@@ -1363,5 +1363,17 @@ public class MovieService {
     private MovieInfoDto entityToDtoMovieInfoDto(Movie movie) {
         return modelMapper.map(movie, MovieInfoDto.class);
     }
+
+    public List<MyCinemaMovieDto> MyCinemaMovieDto(Long cinemaId)
+    {
+
+        System.out.println("MyCinemaMovieDto -service !");
+        return movieRepository.findMyCinemaMovie(cinemaId)
+                .stream().map((movie) -> entityToMyMovieDto(movie))
+                .collect(Collectors.toList());
+    }
+    private MyCinemaMovieDto entityToMyMovieDto(Movie movie) {
+        return modelMapper.map(movie, MyCinemaMovieDto.class);
+    }
 }
 

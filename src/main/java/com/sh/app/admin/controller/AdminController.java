@@ -10,6 +10,7 @@ import com.sh.app.cinema.entity.Cinema;
 import com.sh.app.cinema.service.CinemaService;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.service.MemberService;
+import com.sh.app.movie.dto.MyCinemaMovieDto;
 import com.sh.app.movieList.dto.ShowMovieListDto;
 import com.sh.app.schedule.dto.ScheduleApprovalListDto;
 import com.sh.app.auth.vo.MemberDetails;
@@ -121,16 +122,14 @@ public class AdminController {
         List<ShowMovieListDto> showMovieList = movieListService.showMovieListDtos(cinemaId);
         log.debug("showMovieListDtos = {}", showMovieList);
         model.addAttribute("showMovieList", showMovieList);
+
         // 현재 상영 중인 영화 목록 가져오기
         List<MovieListDto> currentMovies = cinemaService.getMoviesByCinemaId(cinemaId);
         model.addAttribute("currentMovies", currentMovies); // 0426 기존 currentMovie객체에서 다른 객체로 수정.
         //log.debug("currentMovies = {}", currentMovies);
-
-
-
-
         model.addAttribute("theaters", theaterDtos);
     }
+
 
 
     @PostMapping("/createTheater")
@@ -233,6 +232,15 @@ public class AdminController {
     public ResponseEntity<?> deleteMovieMyCinema(@RequestParam(value = "id") Long id) {
         movieListService.deleteMovieMyCinema(id);
         return ResponseEntity.ok().build();
+    }
+
+    //현재 지점(내 지점)에서 상영하는 영화 조회
+    //현재 지점에서 상영중으로 내걸은 영화를 제외한 나머지 영화를 조회하는 메서드
+    @GetMapping("/findMyCinemaMovie")
+    public ResponseEntity<?> findMyCinemaMovie(@RequestParam(value = "cinemaId") Long cinemaId) {
+        System.out.println("findMyCinemaMovie - controller !cinemaId : "+cinemaId);
+        List<MovieListDto> currentMovies = cinemaService.getMoviesByCinemaId(cinemaId);
+        return ResponseEntity.ok(currentMovies);
     }
 }
 

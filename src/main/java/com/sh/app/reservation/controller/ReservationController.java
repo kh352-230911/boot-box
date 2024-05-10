@@ -3,8 +3,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.sh.app.auth.vo.MemberDetails;
+import com.sh.app.cinema.dto.FindCinemaDto;
+import com.sh.app.cinema.service.CinemaService;
 import com.sh.app.location.dto.LocationDto;
 import com.sh.app.location.service.LocationService;
 import com.sh.app.movie.dto.MovieInfoDto;
@@ -21,8 +22,6 @@ import com.sh.app.reservationSeat.dto.ReservationSeatDto;
 import com.sh.app.reservationSeat.dto.ReservationSeatDto2;
 import com.sh.app.schedule.dto.IScheduleInfoDto;
 import com.sh.app.schedule.dto.ScheduleCookieDto;
-import com.sh.app.schedule.dto.ScheduleDto;
-import com.sh.app.schedule.dto.SearchMovieScheduleDto;
 import com.sh.app.schedule.service.ScheduleService;
 import com.sh.app.seat.entity.SeatDto;
 import com.sh.app.seat.service.SeatService;
@@ -49,10 +48,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.URL;
-import java.text.ParseException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.*;
@@ -88,6 +85,9 @@ public class ReservationController {
 
     @Autowired
     LocationService locationService;
+
+    @Autowired
+    CinemaService cinemaService;
 
     @Autowired
     ScheduleService scheduleService;
@@ -630,6 +630,17 @@ public class ReservationController {
         List<ScheduleCookieDto> scheduleCookieDtos = scheduleService.loadMovieInfoByCookie(schId);
         log.debug("scheduleCookieDtos = {}", scheduleCookieDtos);
         return ResponseEntity.ok(scheduleCookieDtos);
+    }
+
+    //0501 지역으로 지점(시네마)찾기
+    @GetMapping("/findCinema")
+    public ResponseEntity<?> findCinema(@RequestParam(value = "localId") Long localId)
+    {
+        System.out.println("=================findCinema====================");
+        System.out.println("찾을 cinemaId:"+localId);
+        List<FindCinemaDto> findCinemas = cinemaService.findCinemas(localId);
+        log.debug("findCinemas = {}", findCinemas);
+        return ResponseEntity.ok(findCinemas);
     }
 
 
