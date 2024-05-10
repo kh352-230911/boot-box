@@ -110,28 +110,6 @@ https://img.shields.io/badge/<텍스트>-<배경색>?logo=<로고>&logoColor=<�
 ![Discord](https://img.shields.io/badge/discord-5865F2?style=flat&logo=discord&logoColor=white)
 
 240226 v1.0.0
+240510 -
 
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-        }
-        h1 {
-            color: darkred;
-        }
-        h3 {
-            color: gray;
-        }
-        p {
-            color: green;
-        }
-        hr {
-            color: brown;
-        }
-    </style>
-</head>
-<body>
 
