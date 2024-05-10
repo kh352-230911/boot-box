@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 public interface CinemaRepository extends JpaRepository<Cinema, Long>{
@@ -23,4 +24,7 @@ public interface CinemaRepository extends JpaRepository<Cinema, Long>{
 
     @Query("SELECT c.movies FROM Cinema c WHERE c.id = :id")
     List<Movie> findMoviesByCinemaId(Long id);
+
+    @Query("SELECT c FROM Cinema c WHERE c.location.id= :localId")
+    List<Cinema> findCinema(Long localId);
 }

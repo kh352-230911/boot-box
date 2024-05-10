@@ -102,4 +102,9 @@ FETCH FIRST 13 ROWS ONLY""", nativeQuery = true)
     //@Query(value = "SELECT id FROM movie WHERE id NOT IN (SELECT movie_id FROM movie_list WHERE cinema_id = :cinemaId)", nativeQuery = true)
     @Query("SELECT m FROM Movie m WHERE m.id NOT IN (SELECT ml.movie.id FROM MovieList ml WHERE ml.cinema.id = :cinemaId)")
     List<Movie> findOtherMovie(Long cinemaId);
+
+
+    //0501 내 지점에서 상영되는 영화만 찾기
+    @Query("SELECT ml.movie.id FROM MovieList ml WHERE ml.cinema.id = :cinemaId")
+    List<Movie> findMyCinemaMovie(Long cinemaId);
 }

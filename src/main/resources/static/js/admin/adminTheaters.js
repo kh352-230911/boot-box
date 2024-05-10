@@ -166,10 +166,6 @@ function searchMovieSchedule(id,cinemaId,movieId) {
 
 
 
-//0423 상영스케쥴 추가
-$("#createScheule").click(function () {
-    $(".createScheduleModal").css("display","block");
-});
 
 $(".back").click(function (){
     $(".createModal").css("display", "none");
@@ -385,5 +381,39 @@ function addNewMovie(cinemaId) {
     }
 }
 
+//0423 상영스케쥴 추가 버튼을 눌렀을 때 모달을띄워주는 함수
+//본인 지점에 상영일정 신청 시 , 상영영화목록은 실시간으로 반영되어야 해서 ajax 사용
+function createScheule(cinemaId) {
+    //selectbox에서 현재 영화 id를 제대로 갖고왔나 확인하기.
 
+    console.log("상영 일정 신청하기 click ,지점 : ", cinemaId);
+    $(".createScheduleModal").css("display","block");
+
+    let selectMovieBox = document.getElementById("sch_movieId");
+    $.ajax({
+        url: "findMyCinemaMovie",
+        method: "GET",
+        data: {
+            cinemaId
+        },
+        success: function(movies) {
+            console.log(movies);
+
+            movies.forEach(function(movie) {
+                var option = document.createElement("option");
+                option.value = movie.id; // 옵션의 값으로 영화 id 설정
+                option.text = movie.title; // 옵션의 텍스트로 영화 제목 설정
+                option.dataset.title = movie.title;
+                option.dataset.id = movie.id;
+                selectMovieBox.appendChild(option); // selectbox에 옵션 추가
+            });
+        },
+        error() {
+            alert("[신청용]지점 영화 조회에 실패하였습니다.");
+        }
+    });
+}
+// $("#createScheule").click(function () {
+//     $(".createScheduleModal").css("display","block");
+// });
 

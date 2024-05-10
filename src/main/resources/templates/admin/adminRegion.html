@@ -184,7 +184,9 @@
 
         <div id="scheduleCrud-wrap">
             <div>
-                <button type="button" id="createScheule">상영 일정 신청</button>
+                <button type="button" id="createScheule"
+                        th:data-cinemaId="${cinemaId}"
+                        onclick="createScheule(this.getAttribute('data-cinemaId'))">상영 일정 신청</button>
             </div>
         </div>
         <div class="createScheduleModal">
@@ -199,8 +201,11 @@
                     <option th:each="theater : ${theaters}" th:value="${theater.id}" th:text="${'상영관 ID : ' + theater.id} + ' / ' + ${'상영관 이름 : ' + theater.name}"></option>
                 </select>
                 <label for="sch_movieId"style="font-size: 14px;">영화 ID</label>
-                <input type="text" id="sch_movieId" placeholder="영화 id ex)792307" required autocomplete="off">
-
+<!--                <input type="text" id="sch_movieId" placeholder="영화 id ex)792307" required autocomplete="off">-->
+                <select id="sch_movieId" required>
+                    <option value="">영화 선택</option>
+<!--                    <option th:each="theater : ${theaters}" th:value="${theater.id}" th:text="${'상영관 ID : ' + theater.id} + ' / ' + ${'상영관 이름 : ' + theater.name}"></option>-->
+                </select>
                 <label for="sch_date"style="font-size: 14px;">상영 날짜</label>
                 <input type="text" id="sch_date" placeholder="상영날짜 ex)2024-04-23" required autocomplete="off">
 
