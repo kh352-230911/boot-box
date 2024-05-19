@@ -59,12 +59,10 @@ public class MemberLikeGenreController {
                     .build();
             log.debug("responseDto = {}", responseDto);
 
-
             return ResponseEntity.ok(responseDto);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
 }
 
