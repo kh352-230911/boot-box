@@ -141,8 +141,6 @@ function checkAuthentication() {
     const memberId = memberIdElement ? memberIdElement.getAttribute('data-member-id') : undefined;
 
     if (!memberId) {
-        alert('먼저 로그인을 해주세요.');
-        window.location.href = `${contextPath}login`;
         return false;
     }
     return true;
@@ -292,7 +290,9 @@ $(document).ready(function() {
     $('#movies').css('flex-wrap', 'nowrap');
     $('#recommendedBtn').click(function() {
         if (!checkAuthentication()) {
-            return; // 사용자가 로그인하지 않았으면 여기서 중단
+            alert('먼저 로그인을 해주세요.');
+            location.href = `${contextPath}auth/login.do`;
+            // return; // 사용자가 로그인하지 않았으면 여기서 중단
         }
         fetchGenerLikeData(); // 사용자가 로그인했다면 선호장르 데이터를 가져옴
     });
