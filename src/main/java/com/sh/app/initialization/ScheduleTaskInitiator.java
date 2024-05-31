@@ -5,28 +5,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ScheduleTaskInitiator implements ApplicationListener<ApplicationReadyEvent> {
+public class ScheduleTaskInitiator {
 
     @Autowired
     private MovieService movieService;
 
-    @Autowired
-    private TaskScheduler taskScheduler;
-
-    @Override
-    public void onApplicationEvent(ApplicationReadyEvent event) {
-        taskScheduler.schedule(this::scheduledTask, new CronTrigger("0 0 3 * * *"));
-        taskScheduler.schedule(this::calculateReviewRatings, new CronTrigger("0 0 2 * * *"));
-    }
-
+    @Scheduled(cron = "0 0 3 * * *")
     public void scheduledTask() {
         movieService.scheduledCallApi();
     }
 
+    @Scheduled(cron = "0 0 2 * * *")
     public void calculateReviewRatings() {
         movieService.updateMovieRatings();
     }
