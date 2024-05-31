@@ -160,7 +160,7 @@ function updateUIWithGenerLikeData(data) {
                             <span style="color: white;">"${data.memberLikeGenre.genreName}" </span>
                             <span style="color: grey;">입니다.</span>
                             <br><span style="color: white; margin-left: 230px;"> 장르에 맞는 추천영화 입니다.</span>`;
-    document.getElementById('genreMessage').innerHTML = message; // 변경된 부분
+    document.getElementById('genreMessage').innerHTML = message; // 생성된 메시지를 'genreMessage' div에 추가
 
     let moviesHtml = '<div style="display:flex;">'; // 영화 목록을 표시할 컨테이너
     data.movies.forEach(movie => {

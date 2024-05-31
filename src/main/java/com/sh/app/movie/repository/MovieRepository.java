@@ -67,19 +67,19 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 //                    average_score asc""", nativeQuery = true)
 //    List<Movie> findByTitleContaining(String search);
 @Query(value = """
-SELECT 
-    m.*
-FROM 
-    movie m
-WHERE ABS(m.vote_average - (SELECT AVG(m2.vote_average)
-                            FROM movie m2
-                            WHERE m2.title LIKE %:title%)) <= 1
-ORDER BY CASE WHEN m.title LIKE %:title% THEN 0 ELSE 1 END ASC, -- 'title'를 포함하는 영화 우선
-         ABS(m.vote_average - (SELECT AVG(m3.vote_average) 
-                               FROM movie m3 
-                               WHERE m3.title LIKE %:title%)) ASC, -- 'title' 평점과 가까운 순
-         m.vote_average DESC -- 동일 평점 내에서는 높은 평점 우선
-FETCH FIRST 13 ROWS ONLY""", nativeQuery = true)
+        SELECT 
+            m.*
+        FROM 
+            movie m
+        WHERE ABS(m.vote_average - (SELECT AVG(m2.vote_average)
+                                    FROM movie m2
+                                    WHERE m2.title LIKE %:title%)) <= 1
+        ORDER BY CASE WHEN m.title LIKE %:title% THEN 0 ELSE 1 END ASC, -- 'title'를 포함하는 영화 우선
+                 ABS(m.vote_average - (SELECT AVG(m3.vote_average) 
+                                       FROM movie m3 
+                                       WHERE m3.title LIKE %:title%)) ASC, -- 'title' 평점과 가까운 순
+                 m.vote_average DESC -- 동일 평점 내에서는 높은 평점 우선
+        FETCH FIRST 13 ROWS ONLY""", nativeQuery = true)
     List<Movie> findByTitleContaining(String title);
 
     @Query("SELECT m FROM Movie m where m.releaseDate > :today ORDER BY CASE WHEN m.rank IS NULL THEN 1 ELSE 0 END, m.rank ASC, m.releaseDate DESC, m.id ASC")
