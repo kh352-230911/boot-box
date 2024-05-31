@@ -1,15 +1,9 @@
 package com.sh.app.genre.entity;
 
+import com.sh.app.memberLikeGenre.entity.MemberLikeGenre;
 import jakarta.persistence.*;
 import lombok.*;
-import com.sh.app.movie.entity.Movie;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(exclude = "memberLikeGenres")
 public class Genre {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_genre_id_generator")
@@ -28,7 +23,11 @@ public class Genre {
             allocationSize = 1
     )
     private Long id;
-    @Column(nullable = false)
-    private String genreList;
 
+    private Long genreId;
+
+    private String genreName;
+
+    @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<MemberLikeGenre> memberLikeGenres;
 }

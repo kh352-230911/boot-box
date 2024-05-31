@@ -1,13 +1,19 @@
 package com.sh.app.reservation.controller;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.sh.app.auth.vo.MemberDetails;
+import com.sh.app.cinema.dto.FindCinemaDto;
+import com.sh.app.cinema.service.CinemaService;
 import com.sh.app.location.dto.LocationDto;
 import com.sh.app.location.service.LocationService;
-import com.sh.app.member.entity.Member;
-import com.sh.app.movie.dto.MovieListDto;
+import com.sh.app.movie.dto.MovieInfoDto;
 import com.sh.app.movie.dto.MovieShortDto;
-import com.sh.app.movie.entity.Movie;
 import com.sh.app.movie.service.MovieService;
 import com.sh.app.pay.dto.OrderPayDto;
+import com.sh.app.pay.entity.OrderPay;
+import com.sh.app.pay.service.OrderPayService;
 import com.sh.app.reservation.dto.CombinedDataDto;
 import com.sh.app.reservation.dto.ReservationDto;
 import com.sh.app.reservation.entity.Reservation;
@@ -15,8 +21,7 @@ import com.sh.app.reservation.service.ReservationService;
 import com.sh.app.reservationSeat.dto.ReservationSeatDto;
 import com.sh.app.reservationSeat.dto.ReservationSeatDto2;
 import com.sh.app.schedule.dto.IScheduleInfoDto;
-import com.sh.app.schedule.dto.ScheduleDto;
-import com.sh.app.schedule.entity.Schedule;
+import com.sh.app.schedule.dto.ScheduleCookieDto;
 import com.sh.app.schedule.service.ScheduleService;
 import com.sh.app.seat.entity.SeatDto;
 import com.sh.app.seat.service.SeatService;
@@ -24,34 +29,31 @@ import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.siot.IamportRestClient.IamportClient;
 import jakarta.annotation.PostConstruct;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.security.Principal;
+import javax.net.ssl.HttpsURLConnection;
+import java.io.*;
+import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 0206
@@ -73,6 +75,9 @@ public class ReservationController {
 
     // 의존 주입 영역
     @Autowired
+    private OrderPayService orderPayService;
+
+    @Autowired
     private MovieService movieService;
 
     @Autowired
@@ -80,6 +85,9 @@ public class ReservationController {
 
     @Autowired
     LocationService locationService;
+
+    @Autowired
+    CinemaService cinemaService;
 
     @Autowired
     ScheduleService scheduleService;
@@ -186,9 +194,7 @@ public class ReservationController {
 
         // 로직을 추가하여 scheduleDetails에서 필요한 JSON 구조로 변환
         List<Map<String, Object>> organizedSchedules = organizeSchedules(scheduleDetails);
-        log.debug("organizedSchedules = {}", organizedSchedules);
-
-
+        log.debug("r.c : organizedSchedules = {}", organizedSchedules);
         // JSON 구조로 클라이언트에 반환
         //0221 해당하는 스케쥴이 없는 경우 까지 고려.
         if(organizedSchedules.isEmpty()) {
@@ -197,14 +203,12 @@ public class ReservationController {
         }
         else {
             return ResponseEntity.ok(organizedSchedules);
-
         }
-
     }
 
     private List<Map<String, Object>> organizeSchedules(List<IScheduleInfoDto> scheduleDetails) {
         // 영화별, 상영관별, 스케줄별 그룹화하기위한 맵
-        Map<String, Map<String, List<Map<String, Object>>>> organized = new HashMap<>();
+        Map<String, Map<String, List<Map<String, Object>>>> organized = new LinkedHashMap<>();
         // 각 영화별 상영 시간을 저장하기 위한 맵
         Map<String, String> movieDurations = new HashMap<>();
 
@@ -230,7 +234,7 @@ public class ReservationController {
             timeMap.put("bookingUrl", bookingUrl); // 예약 페이지로 이동할 URL 추가
 
             // 영화 제목별, 상영관별, 스케줄별에 따라 그룹화
-            organized.computeIfAbsent(title, k -> new HashMap<>())
+            organized.computeIfAbsent(title, k -> new LinkedHashMap<>())
                     .computeIfAbsent(theater, k -> new ArrayList<>())
                     .add(timeMap);
         }
@@ -258,7 +262,6 @@ public class ReservationController {
 
         return finalStructure;
     }
-
 
     @GetMapping("/detailSchedule")
     public ResponseEntity<?> findSchedule(@RequestParam("scheduleId") Long scheduleId,Model model
@@ -396,7 +399,8 @@ public class ReservationController {
 //    }
 
 
-    //2개이상의 dto에 할당해줘야 하는 test..
+    //2개이상의 dto에 할당해줘야 하는 test.
+    //총 3개의 dto를 작업해야 하므로 CombineDataDto 1개를 만들어 그 안에 3개의 dto를 필드값처럼 처리했다.
     @PostMapping("/reservationStart")
     public ResponseEntity<?> reservationStart(@AuthenticationPrincipal MemberDetails memberDetails,
                                               @RequestBody CombinedDataDto combinedDataDto ) throws IOException {
@@ -411,6 +415,7 @@ public class ReservationController {
             System.out.println("memberId: " + reservationDto.getMemberId()); //회원아이디
             System.out.println("scheduleId: " + reservationDto.getScheduleId());//상영아이디
             System.out.println("status: " + reservationDto.getStatus());//스테이트[상태값]
+            System.out.println("LocalDateTime: " + reservationDto.getReservationTime());//예약날짜시간
 
             //예약건 추가하러가기
             Reservation reservation = reservationService.insertReservation(reservationDto);
@@ -431,7 +436,6 @@ public class ReservationController {
                 reservationSeatDto2.setSeatId(reservationSeatDto.getSeatId().get(i));
                 //값을 넘겨받은 dto2를 확인한다. ->정상적으로 n개 생성 확인완료
                 System.out.println("dto2정보:"+reservationSeatDto2);
-
                 reservationSeatDto2 =  reservationService.insertReservationSeat(reservationSeatDto2);
 
             }
@@ -443,10 +447,6 @@ public class ReservationController {
             orderPayDto.setPhone(memberDetails.getMember().getMemberPhone());
             //정보 세팅 후 db저장하하기
             orderPayDto = reservationService.insertOrderPay(orderPayDto);
-
-
-
-
 
 
             // 모든 저장이 성공한 경우 성공 응답을 보냄
@@ -461,6 +461,187 @@ public class ReservationController {
         //return ResponseEntity.ok().body(reservation);
 
     }
+
+
+    //jin - 예매 취소 작업 아임포트 환불 연동 전 예매취소 예 선택 시 db삭제 작업이 되나 체크.
+//    @PostMapping("/cancelReservation")
+//    public ResponseEntity<String> cancelReservation(@RequestParam("reservationId") String reservationId) {
+//        // 예매 취소 작업을 수행합니다.
 //
+//        System.out.println("~~~~~예매취소하기 위해 테이블 삭제 작업하는 메소드~~~~~~");
+//        boolean result = reservationService.cancelReservation(reservationId);
+//        if (result) {
+//            return ResponseEntity.ok("예매가 성공적으로 취소되었습니다.");
+//        } else {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("예매 취소에 실패했습니다.");
+//        }
+//    }
+
+    @PostMapping("/cancelReservation")
+    public ResponseEntity<?> cancelReservation(@RequestParam(value = "reservationId") String reservationId) throws IOException {
+        System.out.println("jin/예매취소하는 메소드,취소하고자 하는 예매 reservationId:"+reservationId);
+        getToken(); //액세스 토큰을 발급받는 메소드
+        System.out.println("발급받은 토큰값:"+getToken()); //발급받은 토큰값을 확인하는 sout
+        //이 토큰과 내가 선택한 reservationId로 조회한 imp_를 찾아서 아임포트에 취소요청을 해야한다.
+        //reservationId로 imp조회하기
+        OrderPay orderPay = orderPayService.findByReservationId(reservationId);
+        if (orderPay != null)
+        {
+            System.out.println("orderPay 조회 결과:"+orderPay);
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("예매 취소에 실패했습니다.존재하지 않는 예매내역 입니다.");
+        }
+        //응답값이 0이면 즉,정상적으로 환불이 되었다면..db 삭제도 진행한다.
+        int returnCode = payMentCancle(getToken(),orderPay.getImp());
+        if(returnCode==0)
+        {
+            boolean result = reservationService.cancelReservation(reservationId);
+            if (result) {
+                return ResponseEntity.ok("예매가 성공적으로 취소되었습니다.");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("예매 취소에 실패했습니다.");
+            }
+        }
+        //0이 아닐 경우..
+        else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("예매 취소에 실패했습니다. 환불 code:"+returnCode);
+        }
+
+    }
+
+    public String getToken() throws IOException {
+
+        HttpsURLConnection conn = null;
+
+        URL url = new URL("https://api.iamport.kr/users/getToken");
+        conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-type", "application/json");
+        conn.setRequestProperty("Accept", "application/json");
+        conn.setDoOutput(true);
+        JSONObject json = new JSONObject();
+
+        json.put("imp_key", apiKey);
+        json.put("imp_secret", secretKey);
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+        bw.write(json.toString());
+        bw.flush();
+        bw.close();
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+        Gson gson = new Gson();
+        String response = gson.fromJson(br.readLine(), Map.class).get("response").toString();
+        System.out.println(response);
+        String token = gson.fromJson(response, Map.class).get("access_token").toString();
+        br.close();
+        conn.disconnect();
+
+        return token;
+    }
+
+    ////
+    public int payMentCancle(String access_token, String imp_uid) throws IOException{
+        System.out.println("imp_uid = " + imp_uid);
+        HttpsURLConnection conn = null;
+        URL url = new URL("https://api.iamport.kr/payments/cancel");
+
+        conn = (HttpsURLConnection) url.openConnection();
+
+        conn.setRequestMethod("POST");
+
+        conn.setRequestProperty("Content-type", "application/json");
+        conn.setRequestProperty("Accept", "application/json");
+        conn.setRequestProperty("Authorization", access_token);
+
+        conn.setDoOutput(true);
+
+        JsonObject json = new JsonObject();
+
+//        json.addProperty("reason", reason);
+        json.addProperty("imp_uid", imp_uid);
+//        json.addProperty("amount", amount);
+//        json.addProperty("checksum", amount);
+
+        // 출력 스트림으로 해당 conn에 요청
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+        bw.write(json.toString());
+        //System.out.println("환불sout:"+json.toString());
+        bw.flush();
+        bw.close();
+
+        String responseJson = new BufferedReader(new InputStreamReader(conn.getInputStream()))
+                .lines()
+                .collect(Collectors.joining("\n"));
+
+        System.out.println("응답 본문: " + responseJson);
+
+        int code=0;
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(responseJson);
+
+            code = jsonNode.get("code").asInt();
+            System.out.println("응답 중 Code 추출: " + code);
+            //응답값이 0이면 정상 / 0 외 , 혹은 1이면 비정상 (확인 결과 1은 이미 취소된 건을 의미하는것 같음)
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+//        JsonObject jsonResponse = JsonParser.parseString(responseJson).getAsJsonObject();
+//        String resultCode = jsonResponse.get("code").getAsString();
+//        String resultMessage = jsonResponse.get("message").getAsString();
+//        System.out.println("결과 코드 = " + resultCode);
+//        System.out.println("결과 메시지 = " + resultMessage);
+
+        // 입력 스트림으로 conn 요청에 대한 응답 반환
+        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+        System.out.println("환불sout:"+br.toString());
+        br.close();
+        conn.disconnect();
+
+        return code;
+
+    }
+
+
+    //0427 cookie로 넘겨받은 영화의 id로 (직접클릭x) movie에서 title,posterUrl만 갖고오기
+    @GetMapping("/loadMovieInfoByCookie")
+    public ResponseEntity<?> loadMovieInfoByCookie(@RequestParam(value = "movieIdCookie") Long movieId)
+    {
+        System.out.println("=================loadMovieInfoByCookie====================");
+        System.out.println("찾을 movieId:"+movieId);
+        List<MovieInfoDto> movieInfoDtos = movieService.loadMovieInfoByCookie(movieId);
+        log.debug("movieInfoDtos = {}", movieInfoDtos);
+        return ResponseEntity.ok(movieInfoDtos);
+    }
+
+    /*  0427
+        cookie로 넘겨받은 스케쥴 id로 (직접클릭x) sch에서 title,posterUrl만 갖고오기
+        필요한 것 :  영화 타이틀,포스터 url,sch 정보 모두, 특히 theater_id로 극장,몇관인지 찾기
+     */
+
+    @GetMapping("/loadScheduleInfoByCookie")
+    public ResponseEntity<?> loadScheduleInfoByCookie(@RequestParam(value = "schId") Long schId)
+    {
+        System.out.println("=================loadScheduleInfoByCookie====================");
+        System.out.println("찾을 schId:"+schId);
+        List<ScheduleCookieDto> scheduleCookieDtos = scheduleService.loadMovieInfoByCookie(schId);
+        log.debug("scheduleCookieDtos = {}", scheduleCookieDtos);
+        return ResponseEntity.ok(scheduleCookieDtos);
+    }
+
+    //0501 지역으로 지점(시네마)찾기
+    @GetMapping("/findCinema")
+    public ResponseEntity<?> findCinema(@RequestParam(value = "localId") Long localId)
+    {
+        System.out.println("=================findCinema====================");
+        System.out.println("찾을 cinemaId:"+localId);
+        List<FindCinemaDto> findCinemas = cinemaService.findCinemas(localId);
+        log.debug("findCinemas = {}", findCinemas);
+        return ResponseEntity.ok(findCinemas);
+    }
+
 
 }

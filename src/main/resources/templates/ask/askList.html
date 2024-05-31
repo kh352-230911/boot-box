@@ -15,36 +15,44 @@
              문의사항
          </span>
     </div>
-    <table id="ask">
-        <thead>
-        <tr>
-            <th id="askNumber">번호</th>
-            <!--            <th id="memberId">회원아이디</th>-->
-            <th id="askTitle">제목</th>
-            <!--            <th id="askDetail">내용</th>-->
-            <th id="askType">문의 유형</th>
-            <th id="askDate">문의 등록 날짜</th>
-            <th style="width: 130px;"><!-- 답변버튼 --></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="ask : ${asks}" th:data-ask-id="${ask.id}"
-            th:onclick="|location.href = '@{/ask/askDetail.do(id=${ask.id})}'|">
+    <div class="content-box">
+        <table id="ask">
+            <thead>
+            <tr>
+                <th id="askNumber">번호</th>
+                <!--            <th id="memberId">회원아이디</th>-->
+                <th id="askTitle">제목</th>
+                <!--            <th id="askDetail">내용</th>-->
+                <th id="askType">문의 유형</th>
+                <th id="askDate">문의 등록 날짜</th>
+                <th style="width: 130px;"><!-- 답변버튼 --></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="ask : ${asks}" th:data-ask-id="${ask.id}"
+                th:onclick="|location.href = '@{/ask/askDetail.do(id=${ask.id})}'|">
 
-            <td th:text="${ask.id}" style="padding-left: 40px"></td>
-<!--            <td id="memberId" th:text="${ask.memberId}"></td>-->
-            <td th:text="${ask.askTitle}"></td>
-<!--            <td th:text="${ask.askDetail}"></td>-->
-            <td th:text="|[ ${ask.askType.name() == 'RESERVATION' ? '예매' :
-                                                      ask.askType.name() == 'CINEMA' ? '상영관' :
-                                                      ask.askType.name() == 'MOVIE' ? '영화' :
-                                                      ask.askType.name() == 'ETC' ? '기타' : '기타'} ]|" id="type"></td>
-<!--            <td th:text="${ask.createdAt}"></td>-->
-            <td th:text="${#temporals.format(ask.createdAt, 'yyyy/MM/dd HH:mm')}"></td>
-            <td><button id="askDetail" th:onclick="|location.href = '@{/ask/askDetail.do(id=${ask.id})}'|" style="font-size: small">답변하기</button></td>
-        </tr>
-        </tbody>
-    </table>
+                <td th:text="${ask.id}" style="padding-left: 40px"></td>
+    <!--            <td id="memberId" th:text="${ask.memberId}"></td>-->
+                <td th:text="${ask.askTitle}"></td>
+    <!--            <td th:text="${ask.askDetail}"></td>-->
+                <td th:text="|[ ${ask.askType.name() == 'RESERVATION' ? '예매' :
+                                                          ask.askType.name() == 'CINEMA' ? '상영관' :
+                                                          ask.askType.name() == 'MOVIE' ? '영화' :
+                                                          ask.askType.name() == 'ETC' ? '기타' : '기타'} ]|" id="type"></td>
+    <!--            <td th:text="${ask.createdAt}"></td>-->
+                <td th:text="${#temporals.format(ask.createdAt, 'yyyy/MM/dd HH:mm')}"></td>
+<!--                <td><button id="askDetail" th:onclick="|location.href = '@{/ask/askDetail.do(id=${ask.id})}'|" style="font-size: small">답변하기</button></td>-->
+
+                <!-- 답변 버튼은 ask.answered가 false일 때만 표시 -->
+                <td>
+                    <button th:if="${!ask.answered}" id="askDetail" th:onclick="|location.href = '@{/ask/askDetail.do(id=${ask.id})}'|" style="font-size: small">답변하기</button>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script layout:fragment="script" th:src="@{/js/answer/createAnswer.js}"></script>

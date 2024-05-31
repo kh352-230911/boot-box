@@ -1,15 +1,16 @@
 package com.sh.app.reservation.entity;
 import com.sh.app.common.Status;
-import com.sh.app.genre.entity.Genre;
 import com.sh.app.member.entity.Member;
-import com.sh.app.pay.entity.OrderPay;
+import com.sh.app.movie.entity.Movie;
+import com.sh.app.review.entity.Review;
 import com.sh.app.schedule.entity.Schedule;
 import com.sh.app.seat.entity.Seat;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 
 import java.util.Set;
 
@@ -43,6 +44,8 @@ public class Reservation {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status; //상태값, enum class
+    //0416 dateTime추가
+    private LocalDateTime reservationTime;
 
     //예약 내역 - 결제 내역 1:1 oneTo one
     //한개의 예약내역엔 한개의 결제내역이 존재함
@@ -55,15 +58,20 @@ public class Reservation {
     @JoinTable(name = "reservation_seat", //브릿지 테이블 이름
             joinColumns = @JoinColumn(name = "res_id"),//조인할 fk중 현재 entity의 pk - 외래키
             inverseJoinColumns = @JoinColumn(name = "seat_id"))//상대 entity의 pk - 상대 외래키
+    @BatchSize(size = 50)
     private Set<Seat> seats = new HashSet<>();//브릿지를 통해 연결할 상대entity
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @Column(name = "member_id")
+    private Long memberId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_id")
+    @BatchSize(size = 50)
     private Schedule schedule;
+
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "review_id")
+//    private Review review;
 
     // 브릿지 테이블 : reservation_seat
 //    @ManyToMany

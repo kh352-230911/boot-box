@@ -37,6 +37,7 @@ public class OAuth2UserUtils {
                 .memberPwd("1234")
                 .memberName(name)
                 .memberEmail(email)
+                .birthyear("정보 없음")
                 .build();
     }
 

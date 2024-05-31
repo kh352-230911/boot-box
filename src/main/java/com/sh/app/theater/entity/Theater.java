@@ -1,10 +1,10 @@
 package com.sh.app.theater.entity;
 
 import com.sh.app.cinema.entity.Cinema;
-import com.sh.app.movie.entity.Movie;
 import com.sh.app.schedule.entity.Schedule;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +21,7 @@ public class Theater {
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cinema_id")
+    @BatchSize(size = 50)
     private Cinema cinema;
     @Column(nullable = false)
     private String name;

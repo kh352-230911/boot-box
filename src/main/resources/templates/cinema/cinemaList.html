@@ -10,28 +10,35 @@
 <style layout:fragment="style"></style>
 
 <div layout:fragment="content" class="px-10">
-    <span class="border-b-2 border-red-600 font-semibold pb-1">전체극장</span>
+    <!--    <span class="border-b-2 border-red-600 font-semibold pb-1">전체극장</span>-->
+    <span>전체극장</span>
     <br>
+    <hr style="height: 1px">
+<!--    <span class="border-b-2 border-red-600 font-semi-bold pb-1">전체극장</span>-->
+<!--    <br>-->
     <div class = "theater-box" >
-        <div class="favorite-area">
-            <div class="favorite-title">
+        <div class="favorite-area" style=" background-color:transparent;">
+            <div class="favorite-title " style="display: flex; background-color: transparent; align-items: center; margin-left: 10px;">
+                <i class="bookmark fa-regular fa-bookmark" style="color: #FFD43B; " ></i>
                 <h1>나의 BootBox</h1>
             </div>
-            <div class="favorite-list">
+            <div class="favorite-list" style="display: flex; background-color: transparent;  margin-left: 10px; align-items: center;">
                 <ul>
                     <li th:each="memberLikeCinema, status : ${memberLikeCinemas}">
                         <a th:href="@{'/cinema/cinemaDetail.do'(id=${memberLikeCinema.cinema.id})}" th:text="${memberLikeCinema.cinema.region_cinema}">강남점</a>
                     </li>
-                    <li class="like">
-                        <p class="like-1">자주가는 영화관</p>
-                    </li>
+<!--                    <li class="like">-->
+<!--                        <p class="like-1">자주가는 영화관</p>-->
+<!--                    </li>-->
                 </ul>
-                <div class="mini flex justify-center">
-                    <p class="text-xs mt-5 w-200">자주가는 극장은 북마크로 체크해주세요.</p>
-                </div>
+            </div>
+            <div class="mini flex justify-center">
+                <p class="text-xs mt-5 w-200">자주가는 극장은 북마크로 체크해주세요.</p>
             </div>
 
         </div>
+
+
         <div class = "location-area">
             <ul>
                 <li th:each="location : ${locations}">

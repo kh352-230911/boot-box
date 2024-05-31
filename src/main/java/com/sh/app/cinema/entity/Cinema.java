@@ -1,12 +1,13 @@
 package com.sh.app.cinema.entity;
 
-import com.sh.app.genre.entity.Genre;
+import com.sh.app.admin.entity.Admin;
 import com.sh.app.location.entity.Location;
 import com.sh.app.memberLikeCinema.entity.MemberLikeCinema;
 import com.sh.app.movie.entity.Movie;
 import com.sh.app.theater.entity.Theater;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -20,7 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-//@ToString(exclude = {"theaters", "movies", "memberLikeCinemas"})
+@ToString(exclude = "memberLikeCinemas")
 public class Cinema implements Comparable<Cinema>{
 
     @Id
@@ -40,15 +41,16 @@ public class Cinema implements Comparable<Cinema>{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
+    @BatchSize(size = 50)
     private Location location;
 
 //    @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY)
 //    @Builder.Default
 //    private List<Theater> theaters = new ArrayList<>();
 //
-//    @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY)
-//    private List<MemberLikeCinema> memberLikeCinemas = new ArrayList<>();
-
+    @OneToMany(mappedBy = "cinema", fetch = FetchType.LAZY)
+    @BatchSize(size = 50)
+    private List<MemberLikeCinema> memberLikeCinemas = new ArrayList<>();
 
     public void setLocation(Location location) {
         this.location = location;
@@ -61,16 +63,21 @@ public class Cinema implements Comparable<Cinema>{
     }
 
     // 극장 브릿지 테이블
-//    @ManyToMany
-//    @JoinTable(
-//            name = "movie_list",
-//            joinColumns = @JoinColumn(name = "cinema_id"),
-//            inverseJoinColumns = @JoinColumn(name = "movie_id"))
-//    @Builder.Default
-//    private Set<Movie> movies = new LinkedHashSet<>();
+    @ManyToMany
+    @JoinTable(
+            name = "movie_list",
+            joinColumns = @JoinColumn(name = "cinema_id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_id"))
+    @Builder.Default
+    @BatchSize(size = 50)
+    private Set<Movie> movies = new LinkedHashSet<>();
 
     @Override
     public int compareTo(Cinema other) {
         return (int)(this.id - other.id);
     }
+
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "admin_id", referencedColumnName = "id")
+//    private Admin admin;
 }

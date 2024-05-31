@@ -19,10 +19,10 @@
 
     <div id="ReservationAll" class="grid grid-cols-4 ml-30">  <!-- 전체 정보 -->
 
-        <div id="movie">
-            <div class="section-movie"><h2>영화</h2></div>
-            <div id="movie1">
-                <div id="movie2" class="ml-10 mt-2">
+        <div id="movieData">
+            <div class="section-movieData"><h2>영화</h2></div>
+            <div id="movieData1">
+                <div id="movieData2" class="ml-10 mt-2">
                     <button th:onclick="movieByRating()" >예매율순 </button>
                     <button th:onclick="movieByAlphabetically()" class="ml-3">가나다순</button>
                     <ul id="movieList" class="mt-2">
@@ -167,7 +167,7 @@
             <div id="time1">
 <!--                <div id="timeList" class="ml-3 mt-2" >-->
                 <div id="timeList" class="ml-3 mt-2">
-<!--                    <th:block th:if="${movie != null and cinema != null and date != null}">-->
+<!--                    <th:block th:if="${movieData != null and cinema != null and date != null}">-->
                     <ul style="margin-left: 10px">
                         <li style="width: 200px;">
                             <div  style="font-weight: bold; color: darkgreen">3관 1층</div>

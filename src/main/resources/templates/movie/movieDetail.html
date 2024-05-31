@@ -14,160 +14,114 @@
         <div class="content">
             <!-- Home -->
             <main class="movie_home">
+                <div class="line"></div>
                 <!-- Movie information -->
                 <div class="movie_info">
 
                     <div class="movie_info-left">
                         <h1 class="movie_title" th:text="${movie.title}">윙카</h1>
-                        <div class="movie_rate">
-                            <th:block th:if="${movie.avgReviewScore} == 5.0">
-                                <ul class="movie_stars">
-                                    <li class="movie_star rated">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star rated">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star rated">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star rated">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star rated">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                </ul>
-                            </th:block>
-                            <th:block th:if="${movie.avgReviewScore} >= 4.0 and ${movie.avgReviewScore} < 5.0">
-                                <ul class="movie_stars">
-                                    <li class="movie_star rated">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star rated">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star rated">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star rated">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                </ul>
-                            </th:block>
-                            <th:block th:if="${movie.avgReviewScore} >= 3.0 and ${movie.avgReviewScore} < 4.0">
-                                <ul class="movie_stars">
-                                    <li class="movie_star rated">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star rated">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star rated">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                </ul>
-                            </th:block>
-                            <th:block th:if="${movie.avgReviewScore} >= 2.0 and ${movie.avgReviewScore} < 3.0">
-                                <ul class="movie_stars">
-                                    <li class="movie_star rated">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star rated">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                </ul>
-                            </th:block>
-                            <th:block th:if="${movie.avgReviewScore} >= 1.0 and ${movie.avgReviewScore} < 2.0">
-                                <ul class="movie_stars">
-                                    <li class="movie_star rated">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                </ul>
-                            </th:block>
-                            <th:block th:if="${movie.avgReviewScore} >= 0.0 and ${movie.avgReviewScore} < 1.0">
-                                <ul class="movie_stars">
-                                    <li class="movie_star">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                    <li class="movie_star">
-                                        <i class="fa-solid fa-star"></i>
-                                    </li>
-                                </ul>
-                            </th:block>
-                            <div class="movie_comment" th:text="|예매율 ${movie.advanceReservation}%|"></div>
+                        <div class="p-0 mt-4 ml-1">
+                            <em class="text-2xl text-red-500" th:if="|${movie.dDay != ''}|" th:text="${movie.dDay}"></em>
                         </div>
-                        <div class="movie_infos" th:text="|개봉 : ${movie.releaseDate}|"></div>
+                        <div class="movie_rate">
+
+                            <div class="star flex items-center justify-center">
+                                <th:block th:each="star : ${#numbers.sequence(1, 5)}">
+                                    <th:block th:if="${movie.voteAverage / 2.0 >= star}">
+                                        <!-- 채워진 별 표시 -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="movie_star rated w-4 h-4 ms-1 text-yellow-500" aria-hidden="true" fill="currentColor" viewBox="0 0 16 16">
+                                            <!-- SVG path for full star here -->
+                                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                        </svg>
+                                    </th:block>
+                                    <th:block th:if="${movie.voteAverage / 2.0 >= star - 0.5 and movie.voteAverage / 2.0 < star}">
+                                        <!-- 반 별 표시 -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="movie_star rated w-4 h-4 ms-1 text-yellow-500" aria-hidden="true" fill="currentColor" viewBox="0 0 16 16">
+                                            <!-- SVG path for half star here -->
+                                            <path d="M5.354 5.119 7.538.792A.516.516 0 0 1 8 .5c.183 0 .366.097.465.292l2.184 4.327 4.898.696A.537.537 0 0 1 16 6.32a.548.548 0 0 1-.17.445l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256a.52.52 0 0 1-.146.05c-.342.06-.668-.254-.6-.642l.83-4.73L.173 6.765a.55.55 0 0 1-.172-.403.58.58 0 0 1 .085-.302.513.513 0 0 1 .37-.245l4.898-.696zM8 12.027a.5.5 0 0 1 .232.056l3.686 1.894-.694-3.957a.565.565 0 0 1 .162-.505l2.907-2.77-4.052-.576a.525.525 0 0 1-.393-.288L8.001 2.223 8 2.226v9.8z" />
+                                        </svg>
+                                    </th:block>
+                                    <th:block th:if="${movie.voteAverage / 2.0 < star - 0.5}">
+                                        <!-- 빈 별 표시 -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="movie_star w-4 h-4 ms-1 text-yellow-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 16 16">
+                                            <!-- SVG path for empty star here -->
+                                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
+                                        </svg>
+                                    </th:block>
+                                </th:block>
+                            </div>
+
+                            <div class="movie_comment" th:text="|평점 ${movie.voteAverage}|"></div>
+                        </div>
+                        <div class="movie_infos">
+                            개봉<span style="display:inline-block; width:5px;"></span>:<span style="display:inline-block; width:5px;"></span>
+                            <span th:text="|${#temporals.format(movie.releaseDate, 'yyyy.MM.dd')}|"></span>
+                        </div>
                         <div class="flex">
-                            장르 :&nbsp;
-                            <span th:each="movieGenre, status : ${movie.genres}">
-                                <p th:text="|${movieGenre.genreList}${!status.last ? ', ' : ''}|"></p>
+                            장르 : <span style="margin-left:10px;"></span>
+                            <span th:each="genreDetail, iterStat : ${movie.genreDetailDtos}">
+                                <span th:text="${genreDetail.genreName}"></span>
+                                <span th:if="${not iterStat.last}" style="margin-left:5px;margin-right:5px;">, </span>
                             </span>
                         </div>
-                        <div th:text="|러닝타임 : ${movie.runningTime} 분|"></div>
-                        <div th:text="|감독 : ${movie.director}|"></div>
-                        <div th:text="|배우 : ${movie.actor}|"></div>
-                        <!-- name() 메소드는 열거형 상수의 이름을 문자열로 반환 -->
-                        <div th:text="|등급 : ${movie.filmRatings.name() == 'ALL' ? '전체관람가' :
-                                               movie.filmRatings.name() == 'EIGHTEEN' ? '18세이상관람가' :
-                                               movie.filmRatings.name() == 'FIFTEEN' ? '15세이상관람가' :
-                                               movie.filmRatings.name() == 'TWELVE' ? '12세이상관람가' :
-                                               movie.filmRatings.name() == 'NONE' ? '등급 없음' : '등급 없음'}|"></div>
-                        <div class="movie_des" th:text="${movie.summary}">
+
+                        <div class="movie_infos">
+                            러닝타임<span style="display:inline-block; width:5px;"></span>:<span style="display:inline-block; width:5px;"></span>
+                            <span th:text="|${movie.runtime} 분|"></span>
+                        </div>
+                        <div class="flex">
+                            감독 : <span style="margin-left:10px;"></span>
+                            <th:block th:each="directorDetail, iterStat : ${movie.directorDetailDtos}">
+                                <span th:text="${directorDetail.directorName}"></span>
+                            </th:block>
+                        </div>
+                        <div class="flex">
+                            배우 : <span style="margin-left:10px;"></span>
+                            <span  th:each="actorDetail, iterStat : ${movie.actorDetailDtos}">
+                                <span th:utext="${actorDetail.actorName} + '&nbsp;'"></span>
+                                <span th:if="${not iterStat.last}">, </span>
+                            </span>
+                        </div>
+
+                        <div class="movie_infos">
+                            등급<span style="display:inline-block; width:5px;"></span>:<span style="display:inline-block; width:5px;"></span>
+                            <span th:text="${movie.filmRatings}"></span>
+                        </div>
+
+                        <div class="movie_des" th:text="${movie.overview}">
                             줄거리
                         </div>
                         <div class="movie_action">
                             <!--  임시 예매 페이지 이동 바로 좌석선택으로 넘어감   -->
-                            <button class="movie_button" th:onclick="|location.href = '@{/reservation/reservationBooking.do}'|">예매하기</button>
+                            <!--  0428 영화 상세 페이지 - 예매하기 누르면 해당 영화 id를 가지고 예매 페이지로 이동하게끔 수정
+                            http://localhost:8080/bootbox/reservation/reservationBooking.do-->
+                            <button
+                                    class="movie_button"
+                                    th:onclick="|setMovieCookieAndRedirect_detail('movieIdCookie', ${movie.id})|">예매하기</button>
                         </div>
                     </div>
 
-
                     <div class="movie_info-right">
                         <div class="movie_img">
-                            <img
-                                    th:src= "${movie.poster}" alt="movie_image"
-                                    class="movie_img-item movie_img-first"
-                            />
+
+<!--                            <th:block th:if="${#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">-->
+<!--                                <img class="movie_img-item movie_img-first" th:src="${movie.posterUrl}">-->
+<!--                            </th:block>-->
+<!--                            <th:block th:if="${!#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">-->
+<!--                                <img class="movie_img-item movie_img-first" th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" >-->
+<!--                            </th:block>-->
+                            <th:block th:if="${movie.posterUrl == null}">
+<!--                                <img class="movie_img-item movie_img-first" src="https://t4.ftcdn.net/jpg/00/65/54/59/360_F_65545917_Dp8T5PUlRV4UvsOHQIGUeQpfXg5nZFyc.jpg">-->
+<!--                                <img class="movie_img-item movie_img-first" src="https://t4.ftcdn.net/jpg/05/81/84/71/360_F_581847176_eF540XqFGHDdGPZxyh5NtWHNzgs0XFk6.jpg">-->
+                                <img class="movie_img-item movie_img-first" src="https://t4.ftcdn.net/jpg/03/08/67/51/360_F_308675145_Ye70fJFVPntNVnmxjtVgMy5P8MDEmusB.jpg">
+                            </th:block>
+                            <th:block th:if="|${movie.posterUrl != null and #strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
+                                <img class="movie_img-item movie_img-first" th:src="${movie.posterUrl}" th:alt="${movie.title}">
+                            </th:block>
+                            <th:block th:if="|${movie.posterUrl != null and !#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
+                                <img class="movie_img-item movie_img-first" th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" th:alt="${movie.title}">
+                            </th:block>
+
                         </div>
                     </div>
                 </div>
@@ -175,143 +129,62 @@
                 <div class="line"></div>
                 <!-- trailer -->
                 <div class="text-2xl">Trailer</div>
-                <div class="trailer-container">
-                    <video autoplay muted controls loop>
-                        <source th:src= "${movie.trailer}" type="video/mp4">
-                    </video>
-                </div>
-                <div class="line"></div>
 
+                <div class="line2"></div>
+
+                <div class="trailer-container flex justify-center" style="overflow: hidden;">
+                    <th:block th:if="${#strings.startsWith(movie.vodDetailDtos[0].vodUrl, 'https://www.kmdb.or.kr')}">
+                        <video autoplay muted controls loop width="1300" height="450" style="margin-top: 20px;">
+                            <source th:src="${movie.vodDetailDtos[0].vodUrl}" type="video/mp4">
+                        </video>
+                    </th:block>
+                    <th:block th:if="${!#strings.startsWith(movie.vodDetailDtos[0].vodUrl, 'https://www.kmdb.or.kr')}">
+                        <iframe th:src="|https://www.youtube.com/embed/${movie.vodDetailDtos[0].vodUrl}?autoplay=1&mute=1&controls=0&loop=1&playlist=${movie.vodDetailDtos[0].vodUrl}|" width="1300" height="450" title="YouTube video player" type="video/mp4" style="margin-top: 20px;">
+                        </iframe>
+                        </th:block>
+                    </div>
+                <div class="line2"></div>
+
+
+                <div class="line"></div>
                 <!-- review -->
                 <div class="text-2xl">Review</div>
+
+                <div class="line2"></div>
+
                 <br>
-                <div th:each="review, status : ${movie.reviews}">
+                <div class="flex justify-start" th:each="reviewDetail, status : ${movie.reviewDetailDtos}">
                     <figure class="">
-                        <th:block th:if="${review.reviewScore} == 5.0">
-                            <ul class="movie_stars">
-                                <li class="movie_star rated">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star rated">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star rated">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star rated">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star rated">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                            </ul>
-                        </th:block>
-                        <th:block th:if="${review.reviewScore} >= 4.0 and ${review.reviewScore} < 5.0">
-                            <ul class="movie_stars">
-                                <li class="movie_star rated">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star rated">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star rated">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star rated">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                            </ul>
-                        </th:block>
-                        <th:block th:if="${review.reviewScore} >= 3.0 and ${review.reviewScore} < 4.0">
-                            <ul class="movie_stars">
-                                <li class="movie_star rated">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star rated">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star rated">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                            </ul>
-                        </th:block>
-                        <th:block th:if="${review.reviewScore} >= 2.0 and ${review.reviewScore} < 3.0">
-                            <ul class="movie_stars">
-                                <li class="movie_star rated">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star rated">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                            </ul>
-                        </th:block>
-                        <th:block th:if="${review.reviewScore} >= 1.0 and ${review.reviewScore} < 2.0">
-                            <ul class="movie_stars">
-                                <li class="movie_star rated">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                            </ul>
-                        </th:block>
-                        <th:block th:if="${review.reviewScore} >= 0.0 and ${review.reviewScore} < 1.0">
-                            <ul class="movie_stars">
-                                <li class="movie_star">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                                <li class="movie_star">
-                                    <i class="fa-solid fa-star"></i>
-                                </li>
-                            </ul>
-                        </th:block>
                         <blockquote class="shadow-2xl shadow-red-100/50">
-                                <p class="m-2 text-xl font-semibold text-white dark:text-white" th:text="${review.reviewDetail}">"Flowbite is just awesome. It contains tons of predesigned components and pages starting from login screen to complex dashboard. Perfect choice for your next SaaS application."</p>
-                                <figcaption class="mx-2 flex items-center mt-6 space-x-3 rtl:space-x-reverse">
-                                    <img class="w-6 h-6 rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSokjeTAtRKHg0qff0jJb9jRcB9_MGXYOrulw&usqp=CAU" alt="profile picture">
-                                    <div class="flex items-center divide-x-2 rtl:divide-x-reverse divide-gray-300 dark:divide-gray-700">
-                                        <cite class="pe-3 font-medium text-white" th:text="${review.member.memberName}">UserName</cite>
-                                        <cite class="ps-3 text-sm text-gray-500 dark:text-gray-400" th:text="${review.member.memberLoginId}">ID</cite>
-                                    </div>
-                                </figcaption>
+                            <div class="flex items-center">
+                                <p class="mr-12 text-xl font-semibold text-white dark:text-white" th:text="${reviewDetail.reviewDetail}">"Flowbite is just awesome. It contains tons of predesigned components and pages starting from login screen to complex dashboard. Perfect choice for your next SaaS application."</p>
+
+                                <p class="mr-2" th:text="${#numbers.formatDecimal(reviewDetail.reviewScore, 1, 1)}"></p>
+                                <th:block th:each="star : ${#numbers.sequence(1, 5)}">
+                                    <th:block th:if="${reviewDetail.reviewScore >= star}">
+                                        <!-- 채워진 별 표시 -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="movie_star rated w-4 h-4 ms-1 text-yellow-500" aria-hidden="true" fill="currentColor" viewBox="0 0 16 16">
+                                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                        </svg>
+                                    </th:block>
+                                    <th:block th:if="${reviewDetail.reviewScore < star}">
+                                        <!-- 빈 별 표시 -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="movie_star rated w-4 h-4 ms-1 text-yellow-500" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 16 16">
+                                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
+                                        </svg>
+                                    </th:block>
+                                </th:block>
+                            </div>
+                            <figcaption class="mx-2 flex items-center mt-2 space-x-3 rtl:space-x-reverse">
+                                <img class="rounded-full" width="30px" alt="avatar" th:src="|https://api.dicebear.com/8.x/fun-emoji/svg?seed=${reviewDetail.member.memberLoginId}|" >
+                                <div class="flex items-center divide-x-2 rtl:divide-x-reverse divide-gray-300 dark:divide-gray-700">
+                                    <cite class="pe-3 font-medium text-white" th:text="${reviewDetail.member.memberName}">UserName</cite>
+                                    <cite class="ps-3 text-sm text-gray-500 dark:text-gray-400" th:text="${reviewDetail.member.memberLoginId}">ID</cite>
+                                </div>
+                            </figcaption>
+
                             <div class="createAt">
-                                <cite class="ps-3 text-sm text-gray-500 dark:text-gray-400 " th:text="|${#temporals.format(review.reviewCreatedAt, 'yyyy/MM/dd HH:mm')}|">date</cite>
+                                <cite class="ps-3 text-sm text-gray-500 dark:text-gray-400 " th:text="|${#temporals.format(reviewDetail.reviewCreatedAt, 'yyyy/MM/dd HH:mm')}|">date</cite>
                             </div>
                         </blockquote>
                     </figure>
@@ -320,5 +193,5 @@
         </div>
     </div>
 </div>
-<script layout:fragment="script"></script>
+<script layout:fragment="script" th:src="@{/js/movie/movieDetail.js}"></script>
 </html>

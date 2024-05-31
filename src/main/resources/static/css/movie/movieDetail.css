@@ -84,7 +84,9 @@ button {
 
 .movie_info {
     display: flex;
+    justify-content: center;
     margin-top: 70px;
+    margin-bottom: 35px;
     align-items: center;
     flex-direction: row-reverse;
 }
@@ -99,7 +101,7 @@ div {
     position: relative;
     text-transform: uppercase;
     font-weight: 400;
-    font-size: 24px;
+    font-size: 23px;
     display: inline-flex;
 }
 .movie_title::after {
@@ -116,19 +118,30 @@ div {
     margin-top: 30px;
     font-size: 10px;
 }
-.movie_stars {
-    display: flex;
-}
+/*.movie_stars {*/
+/*    display: flex;*/
+/*}*/
+/*.movie_star {*/
+/*    margin-right: 10px;*/
+/*    margin-bottom: 0px;*/
+/*}*/
+/*.movie_star i {*/
+/*    color: var(--color-gray-1);*/
+/*}*/
+/*.movie_star.rated i {*/
+/*    color: yellow;*/
+/*}*/
 .movie_star {
     margin-right: 10px;
     margin-bottom: 0px;
 }
-.movie_star i {
-    color: var(--color-gray-1);
-}
-.movie_star.rated i {
+.movie_star > path{
     color: yellow;
 }
+.movie_star.rated > path{
+    color: yellow;
+}
+
 .movie_comment {
     font-size: 14px;
     color: var(--color-gray-1);
@@ -153,19 +166,39 @@ div {
 }
 
 .movie_info-right {
-    margin-left: 30px;
-    width: 400px;
+    margin-left: 10px;
+    width: 530px;
 }
 .movie_infos{
     margin-top: -0.5rem;
 }
 .movie_img {
     position: relative;
-    height: 650px;
+    height: 533px;
 }
+
 .movie_img-item {
+    position: relative;
+    height: 370px;
+    width: 314px;
+    border-radius: 15px;
+    box-shadow: 10px 10px 20px rgba(147, 124, 124, 0.2);
+    overflow: hidden;
+}
+
+.movie_img-item:after {
+    content: "";
     position: absolute;
-    height: 350px;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(203, 9, 9, 0.5), transparent);
+    transform: scaleY(-1); /* Y축을 따라 반전 */
+}
+
+.movie_img-item:hover {
+    filter: sepia(60%);
 }
 .movie_img-item.movie_img-first {
     top: 0px;
@@ -174,7 +207,9 @@ div {
 }
 .line{
     border-top: #ff3939 1px solid;
-    margin: 0px;
+}
+.line2{
+    border-bottom: #ff3939 1px solid;
 }
 figure {
     width: 100%; /* 전체 너비를 사용하도록 설정 */
@@ -189,4 +224,11 @@ figure {
     max-width: 100%;
     display: block;
     margin: 0 auto;
+}
+.text-2xl{
+    margin: -9px;
+}
+
+.star {
+    margin: -13px;
 }

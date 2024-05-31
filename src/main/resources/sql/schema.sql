@@ -5,6 +5,16 @@ drop table member_like_genre;
 drop sequence seq_member_like_genre_id;
 drop table genre;
 drop sequence seq_genre_id;
+drop table vod;
+drop sequence seq_vod_id;
+drop table movie_actor;
+drop sequence seq_movie_actor_id;
+drop table actor;
+drop sequence seq_actor_id;
+drop table movie_director;
+drop sequence seq_movie_director_id;
+drop table director;
+drop sequence seq_director_id;
 drop table reservation_seat;
 drop sequence seq_reservation_seat_id;
 drop table seat;
@@ -38,6 +48,16 @@ drop table cinema;
 drop table location;
 drop table movie;
 
+--0.스케쥴로 특정시간에 db insert test(향후 api 및 예매율 등 처리 위해..)
+CREATE TABLE TEST_SCH(
+                         id number NOT NULL,
+                         createdAt date NOT NULL DEFAULT current_date,
+                         msg varchar2(200) NOT NULL,
+                         CONSTRAINT pk_test_sch_id PRIMARY KEY(id) --pk
+);
+
+create sequence seq_test_sch_id; --지점 시퀀스
+
 
 --17.지역
 CREATE TABLE LOCATION(
@@ -67,7 +87,7 @@ CREATE TABLE MEMBER(
     member_pwd	varchar2(100) NOT NULL, --비밀번호
     member_email varchar2(100) NOT NULL,	--이메일(uq)
     member_name varchar2(50) NOT NULL, --이름
-    member_phone varchar2(100) NOT NULL, --핸드폰번호
+    member_phone varchar2(100) NULL, --핸드폰번호
     birthyear varchar2(50) NOT NULL, -- 출생년도
     constraints pk_member_id primary key(id),
     constraints uq_member_member_login_id unique(member_login_id),
@@ -122,41 +142,94 @@ CREATE TABLE THEATER (
 );
 --
 --15.장르
-CREATE TABLE GENRE(
-    id	number NOT NULL, --pk
-    genre_list varchar2(200) NOT NULL,
-    constraints pk_genre_id primary key(id) --pk
+create table genre(
+  id number not null, -- pk 시퀀스 id
+  genre_id number null, -- 장르 식별 id
+  genre_name varchar2(255) NOT NULL, -- 장르명
+  constraints pk_genre_id primary key(id)
 );
 create sequence seq_genre_id;
 --
--- 1.예매 가능한 영화
-CREATE TABLE MOVIE(
-    id number NOT NULL , --영화 id (api로 받아올 때 - 고유값이라 겹치지 않음)
-    title varchar2(500) NOT NULL, --영화 제목
-    film_ratings varchar2(20) default 'NONE' NOT NULL, -- 관람등급
-    release_date varchar2(20) NOT NULL, -- 개봉일(상영가능한 날짜의 첫 날)
-    running_time number NOT NULL, --상영시간
-    trailer	varchar2(500) NULL, --예고편
-    poster varchar2(500) NULL, --포스터
-    director varchar2(100) NULL, --감독
-    actor	varchar2(500) NULL, --배우
-    summary varchar2(4000) NULL, --줄거리(5000자 length에러 나서 4000으로 수정)
-    advance_reservation number(4,1) NOT NULL, -- 예매율
-    constraints pk_movie_id primary key(id), -- pk
-    constraints ck_movie_film_ratings check(film_ratings in('ALL', 'TWELVE', 'FIFTEEN', 'EIGHTEEN', 'NONE')) -- ck
+-- 배우
+create table actor (
+    id number not null, -- pk 시퀀스 id
+    actor_id number null, -- 배우 식별 id
+    actor_name varchar2(255) not null, -- 배우명
+    constraints pk_actor_id primary key(id)
+);
+create sequence seq_actor_id;
+--
+-- 감독
+create table director (
+    id number not null, -- pk 시퀀스 id
+    director_id number null, -- 감독 식별 id
+    director_name varchar2(255) not null, -- 감독명
+    constraints pk_director_id primary key(id)
+);
+create sequence seq_director_id;
+--
+-- 영화(박스오피스 + 현재 상영작)
+create table movie(
+    id number not null, -- 영화 id (api로 받아올 때 - 고유값이라 겹치지 않음)
+    rank number null, -- 박스오피스 식별 랭킹
+    status varchar2(20) default 'current_movie' not null,
+    title varchar2(500) not null, -- 영화 제목
+    normalized_title varchar2(500) not null, -- 정규화된 영화 제목(tmdb/kmdb 영화 제목 식별용 정규화 제목)
+    release_date date not null, -- 개봉일(상영가능한 날짜의 첫 날)
+    film_ratings varchar2(255) default '정보 없음' not null, -- 관람등급
+    runtime number default 0 not null, -- 상영시간
+    overview varchar2(2000) null, -- 줄거리
+    vote_average number(2, 1) default 0 not null, -- 평점
+    poster_url varchar2(500), -- 포스터
+    constraints pk_movie_id primary key(id),
+    constraints ck_movie_status check(status in('box_office', 'current_movie'))
 );
 -- 시퀀스 사용x
 --
+-- 예고편
+create table vod (
+    id number not null, -- pk 시퀀스 id
+    movie_id number not null, -- fk 영화 고유 id
+    vod_name varchar2(500) not null, -- 비디오 제목
+    vod_url varchar2(255) not null, -- url
+    type varchar2(255) not null, -- vod 타입
+    constraints pk_vod_id primary key(id),
+    constraints fk_vod_movie_id foreign key(movie_id) references movie(id) on delete cascade
+);
+create sequence seq_vod_id;
+--
 --19.영화 장르
-CREATE TABLE MOVIE_GENRE(
-    id	number NOT NULL,
-    genre_id number NOT NULL,
-    movie_id number NOT NULL,
+create table movie_genre(
+    id	number not null, -- pk 시퀀스 id
+    movie_id number not null, -- fk 영화 고유 id
+    genre_id number not null, -- fk 장르 시퀀스 id
     constraint pk_movie_genre_id primary key(id),
-    constraint fk_movie_genre_genre_id foreign key(genre_id) references genre(id) on delete set null,
-    constraint fk_movie_genre_movie_id foreign key(movie_id) references movie(id) on delete set null
+    constraint fk_movie_genre_movie_id foreign key(movie_id) references movie(id) on delete cascade,
+    constraint fk_movie_genre_genre_id foreign key(genre_id) references genre(id) on delete cascade
 );
 create sequence seq_movie_genre_id;
+--
+-- 영화 배우
+create table movie_actor (
+    id number not null, -- pk 시퀀스 id
+    movie_id number not null, -- fk 영화 고유 id
+    actor_id number not null, -- fk 배우 시퀀스 id
+    constraints pk_movie_actor_id primary key(id),
+    constraints fk_movie_actor_movie_id foreign key(movie_id) references movie(id) on delete cascade,
+    constraints fk_movie_actor_actor_id foreign key(actor_id) references actor(id) on delete cascade
+);
+create sequence seq_movie_actor_id;
+--
+-- 영화 감독
+create table movie_director (
+    id number not null, -- pk 시퀀스 id
+    movie_id number not null, -- fk 영화 고유 id
+    director_id number not null, -- fk 감독 시퀀스 id
+    constraints pk_movie_director_id primary key(id),
+    constraints fk_movie_director_movie_id foreign key(movie_id) references movie(id) on delete cascade,
+    constraints fk_movie_director_director_id foreign key(director_id) references director(id) on delete cascade
+);
+create sequence seq_movie_director_id;
 --
 --20.회원이 선호하는 장르
 CREATE TABLE MEMBER_LIKE_GENRE(
@@ -312,3 +385,42 @@ CREATE TABLE REVIEW(
     constraints fk_review_movie_id foreign key(movie_id) references movie(id) on delete set null
 );
 create sequence seq_review_id;
+--
+-- 스토어
+create table store (
+    id number not null, -- pk
+    type varchar2(100) not null, -- 상품 카테고리
+    image_url varchar2(2000) not null, -- 상품 이미지
+    name varchar2(500) not null, -- 상품명
+    price number not null, -- 상품 가격
+    description varchar2(4000) not null, -- 상품 설명
+    expiration_period number not null, -- 유효기간
+    constraints pk_store_id primary key(id)
+);
+create sequence seq_store_id;
+--
+-- 상품 주문결제
+create table product_order_pay (
+    id varchar2(100) not null, -- pk 문자 + 시간 조합
+    member_id number not null, -- 회원 아이디(pk)
+    amount varchar2(100) not null, -- 결제방식
+    price number not null, -- 총 금액
+    count number not null, -- 총 수량
+    pay_time date default sysdate not null, -- 결제 시간
+    cancel_pay_time date null, -- 결제 취소 시간
+    pay_status varchar2(50) not null, -- 구매 완료/취소 상태
+    constraints pk_product_order_pay_id primary key(id),
+    constraints fk_product_order_pay_member_id foreign key(member_id) references member(id) on delete set null,
+    constraints ck_product_order_pay_pay_status check(pay_status in ('confirm', 'cancel'))
+);
+--
+-- 구매 상품 (브릿지)
+create table product_buy (
+    id number not null, -- pk
+    product_order_id varchar2(100) not null, -- fk
+    store_id number not null, -- fk
+    constraints pk_product_buy primary key(id),
+    constraints fk_product_buy_product_order_id foreign key(product_order_id) references product_order_pay(id) on delete set null,
+    constraints fk_product_buy_store_id foreign key(store_id) references store(id) on delete set null
+);
+create sequence seq_product_buy_id;

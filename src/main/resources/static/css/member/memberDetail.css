@@ -38,7 +38,7 @@ body:before {
     padding-bottom: 60px;
 }
 .home-container {
-    min-height: 600px;
+    /*min-height: 600px;*/
 }
 /*footer {*/
 /*    height: 60px;*/
@@ -59,9 +59,11 @@ body:before {
 /*    margin: 0px;*/
 /*}*/
 .line2 {
-    transform: translateY(-5px);
+    /*transform: translateY(-5px);*/
+    transform: translateY(15px);
     border-color: rgb(185 28 28);
-    width: 750px;
+    /*width: 750px;*/
+    width: 600px;
 }
 .profile-card {
     background: rgb(185 28 28);
@@ -472,8 +474,10 @@ body:before {
         border-radius: 4px;
     }
     100% {
-        width: 1100px;
-        height: 600px;
+        /*width: 1100px;*/
+        /*height: 600px;*/
+        width: 950px;
+        height: 470px;
         background: linear-gradient(179deg, #b4b4b4, #1E1E22);
         border-radius: 50px;
     }
@@ -495,7 +499,7 @@ body:before {
     }
     100% {
         opacity: 1;
-        margin-top: -20px;
+        margin-top: 50px;
     }
 }
 @-webkit-keyframes scaleIn {
@@ -575,6 +579,7 @@ body:before {
 .profile-options p {
     margin: 0;
     font-size: 0.8em;
+    letter-spacing: -1px; /* 원하는 만큼 조절 */
 }
 .profile-options a {
     display: block;
@@ -704,7 +709,8 @@ body:before {
     width: 200px;
 }
 .menu-box {
-    height: 360px;
+    /*height: 360px;*/
+    height: 290px;
 }
 .menu-box .titular {
     background: #ff6363;
@@ -759,5 +765,6 @@ body:before {
     border: 1px solid #1f253d;
 }
 .home {
-    transform: translate(-55px,-260px);
+    /*transform: translate(-55px,-260px);*/
+    transform: translate(-35px,-210px);
 }

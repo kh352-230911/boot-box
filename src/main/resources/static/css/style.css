@@ -8,6 +8,10 @@ body {
     font-family: "Agency FB";
     font-weight: 500;
     font-size: 1.2em;
+    position: relative; /* 바디를 상대 위치로 설정하여 헤더, 섹션, 푸터의 위치를 조정 */
+    /*padding-top: 100px; !* 헤더 높이만큼 바디 상단에 여백 추가 *!*/
+    /*padding-bottom: 95px; !* 푸터 높이만큼 바디 하단에 여백 추가 *!*/
+    min-height: 100vh; /* 최소 높이를 화면 전체 높이로 설정 */
 }
 
 hr {
@@ -19,9 +23,9 @@ section, header, aside, footer {
     /*padding: 10px;*/
     color: white;
 }
-.header-container{
-    z-index: 100;
-}
+/*.header-container{*/
+/*    z-index: 100;*/
+/*}*/
 
 #white-color1 {
     margin: 0px;
@@ -38,12 +42,15 @@ body#container {
     background-color: #232323;
 }
 
-/********** header **********/
+/*!********** header **********!*/
 #header-container {
     background-color: #212121;
 }
 header div#header-container {
-    height: 100px;
+    height: 100px; /* 헤더 높이 설정 */
+    position: absolute; /* 헤더를 절대 위치로 설정 */
+    top: 0; /* 바디 상단에 배치 */
+    width: 100%; /* 너비를 바디와 일치시킴 */
 }
 header div#dropdownNavbar{
     background-color: #212121;
@@ -55,18 +62,66 @@ nav {
     background-color: #212121;
 }
 
+/********** header **********/
+/*#header-container {*/
+/*    background-color: #212121;*/
+/*    height: 100px; !* 헤더 높이 설정 *!*/
+/*    position: fixed; !* 헤더를 고정 위치로 설정 *!*/
+/*    top: 0; !* 상단에 고정 *!*/
+/*    left: 0; !* 왼쪽 끝에 고정 *!*/
+/*    right: 0; !* 오른쪽 끝에 고정 *!*/
+/*    z-index: 1000; !* 다른 요소들 위에 오도록 z-index 설정 *!*/
+/*    display: flex; !* Flexbox 레이아웃 적용 *!*/
+/*    justify-content: space-between; !* 양쪽 끝에 내용을 붙임 *!*/
+/*    align-items: center; !* 세로축 중앙 정렬 *!*/
+/*    padding: 0 20px; !* 좌우 패딩 설정 *!*/
+/*}*/
+
+/*!* 헤더 내부 브랜드 로고 및 내비게이션 메뉴 스타일링 *!*/
+/*.brand-logo {*/
+/*    !* 로고 스타일링 필요시 추가 *!*/
+/*}*/
+
+/*.navigation {*/
+/*    !* 내비게이션 메뉴 스타일링 필요시 추가 *!*/
+/*}*/
+
+/*!* 반응형 디자인을 위한 미디어 쿼리 *!*/
+/*@media (max-width: 768px) {*/
+/*    #header-container {*/
+/*        padding: 0 10px; !* 모바일 화면에서 좌우 패딩 줄임 *!*/
+/*    }*/
+/*}*/
+
+/*nav {*/
+/*    background-color: #212121;*/
+/*    display: flex; !* Flexbox 레이아웃 사용 *!*/
+/*    justify-content: space-between; !* 내용을 양쪽 끝에 정렬 *!*/
+/*    align-items: center; !* 세로축 중앙 정렬 *!*/
+/*    padding: 0 10px; !* 좌우 패딩 추가 *!*/
+/*    height: 100%; !* 헤더 높이와 같게 설정 *!*/
+/*}*/
+
 /********** content **********/
 section#content {
+    min-height: calc(100vh - 195px); /* 섹션의 최소 높이를 화면 높이에서 헤더와 푸터의 높이를 뺀 값으로 설정 */
+    position: relative; /* 섹션을 상대 위치로 설정 */
 }
 
 /********** footer **********/
 footer {
-    background-color: #212121;
+    /*background-color: #212121;*/
     /*background-clip: content-box;*/
     /*height: 10vh;*/
-    height: 60px;
-    position: relative;
-    transform: translateY(0%);
+    /*height: 60px;*/
+    /*position: relative;*/
+    /*transform: translateY(0%);*/
+    background-color: #212121;
+    background-clip: content-box;
+    height: 95px;
+    /*position: absolute; !* 푸터를 절대 위치로 설정 *!*/
+    bottom: 0; /* 바디 하단에 배치 */
+    width: 100%; /* 너비를 바디와 일치시킴 */
 }
 
 /* section-1-1 */
@@ -128,18 +183,38 @@ footer {
     margin-right:0;
 }
 /* 영화이미지 위 호버버튼  */
+.movie-container:hover .section-1-2-btn,
+.movie-container:hover .section-1-2-btn-bg {
+    opacity: 1; /* 호버 상태에서 보이도록 */
+}
+
+.movie-container:hover .movie-poster img {
+    opacity: 0.3; /* 호버 시 이미지 투명도 변경 */
+}
 .section-1-2-btn {
-    position:absolute;
-    top:0;
-    left:0;
-    display:none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0); /* 처음 상태는 투명 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0; /* 처음 상태에서는 보이지 않음 */
+    transition: opacity 0.3s;
+    cursor: pointer;
+    border-radius: 10px;
+    z-index: 5; /* 숫자 뒤에 위치 */
 }
 .section-1-2-btn-bg {
-    width: 210px;
-    height: 301px;
-    background-color:black;
-    opacity:60%;
-    border-radius:10px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    transition: opacity 0.3s;
+    z-index: -1; /* 버튼 배경을 뒤로 보내기 */
 }
 .section-1-2-btn-de {
     position:absolute;
@@ -176,20 +251,20 @@ footer {
 
 .movie-title {
     display:flex;
-    justify-content:center;
-    font-size: 80%;
-    font-weight:bold;
-    margin-top: 10px;
+    font-size: large;
+    /*margin: 5px;*/
+    width: 100%; /* 부모 요소의 전체 너비를 사용하도록 설정 */
 }
 
 .movie-content {
     display:flex;
     justify-content:center;
+    width: 100%;
 }
 .movie-content > img {
-    width:10%;
-    height: 20%;
-    margin-top:8px;
+    width: 14%;
+    height: 60%;
+    margin-top: 8px;
 }
 .movie-content > span {
     padding:7px;
@@ -197,6 +272,14 @@ footer {
     font-weight:bold;
     color: #c7c7c7;
 }
+.movie-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
 /* 전체보기 버튼 스타일 */
 .full-view a {
     border: 1px solid white; /* 흰색 테두리 추가 */
@@ -209,21 +292,7 @@ footer {
 .a-1 {
     background-color: #232323;
 }
-.rank {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 150px;
-    padding: 10px 0 0 15px;
-    line-height: 1.1;
-    font-size: 3em;
-    font-style: italic;
-    font-family: 'Roboto';
-    font-weight: 300;
-    color: #fff;
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, .8);
-}
+
 /* 동영상 배너 */
 .video-banner {
     border-top: #ff3939 1px solid;
@@ -242,39 +311,117 @@ footer {
     height: 498px;
 }
 
-/* slider 영역 */
+ /*수정 전 slider 영역 */
+/*.small {*/
+/*    overflow: hidden;*/
+/*    position: relative;*/
+/*}*/
+/*.small-ul {*/
+/*    list-style: none;*/
+/*    padding: 0;*/
+/*    margin: 0;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    transition: transform 0.5s ease;*/
+/*}*/
+/*.small-ul li {*/
+/*    margin-right: 30px;*/
+/*    margin-top: 50px;*/
+/*}*/
+/*.small-span {*/
+/*    position: absolute;*/
+/*    top: 50%;*/
+/*    transform: translateY(-50%);*/
+/*    cursor: pointer;*/
+/*    color: #070707;*/
+/*    background-color: rgba(255, 255, 255, 0.5);*/
+/*    padding: 5px;*/
+/*    border-radius: 50%;*/
+/*}*/
+/*.small-span:hover {*/
+/*    background-color: rgba(255, 255, 255, 0.7);*/
+/*}*/
+/*i.arrow {*/
+/*    position: absolute;*/
+/*    top: 45%;*/
+/*    cursor: pointer;*/
+/*    padding: 5px;*/
+/*    border-radius: 50%;*/
+/*    color: lightgray;*/
+/*    font-size: 100px;*/
+/*    transition: 0.5s all ease;*/
+/*}*/
+/*i.arrow:hover {*/
+/*    transform: scale(1.2);*/
+/*}*/
+/*.right {*/
+/*    right: 0;*/
+/*}*/
+/*.left{*/
+/*    left: 0;*/
+/*}*/
+
+/* 수정 후 slider 영역 */
 .small {
-    overflow: hidden;
-    position: relative;
+    overflow: hidden; /* 슬라이더 넘어가는 부분 숨김 */
+    position: relative; /* 상대적 위치 설정 */
+    width: 100%; /* 슬라이더의 너비를 부모 요소에 맞춤 */
 }
+
+/* 스타일을 기본 크기에 맞추고 */
 .small-ul {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
-    justify-content: center;
     transition: transform 0.5s ease;
+    justify-content: space-around; /* 아이템들 사이에 공간을 균등하게 분배 */
+    /*flex-wrap: nowrap;*/
+    align-items: stretch;
 }
+
 .small-ul li {
-    margin-right: 30px;
-    margin-top: 50px;
+    margin-right: 30px; /* 아이템 사이 간격 */
+    flex: 0 0 auto; /* flex-basis를 auto로 설정하여 아이템의 원래 크기를 기준으로 함 */
 }
+
+/* 화면 크기에 따라 스타일을 조정 */
+@media (max-width: 768px) {
+    .small-ul li {
+        margin-right: 15px; /* 아이템 사이 간격 줄임 */
+        /* 필요하다면 아이템의 크기도 조절할 수 있습니다. 예: */
+        width: calc(50% - 15px); /* 각 아이템의 너비를 반응형으로 조정 */
+    }
+}
+
+@media (max-width: 480px) {
+    .small-ul li {
+        margin-right: 10px; /* 아이템 사이 간격 더 줄임 */
+        /* 아이템의 크기를 더 줄이거나 다른 방식으로 배치할 수 있습니다. */
+        width: calc(100% - 20px); /* 전체 너비의 아이템 */
+    }
+}
+
 .small-span {
+    /* 상태 인디케이터 스타일 */
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 45%;
+    /*transform: translateY(-50%);*/
     cursor: pointer;
     color: #070707;
     background-color: rgba(255, 255, 255, 0.5);
     padding: 5px;
     border-radius: 50%;
 }
+
 .small-span:hover {
     background-color: rgba(255, 255, 255, 0.7);
 }
+
 i.arrow {
+    /* 화살표 버튼 스타일 */
     position: absolute;
-    top: 45%;
+    top: 35%;
     cursor: pointer;
     padding: 5px;
     border-radius: 50%;
@@ -282,12 +429,133 @@ i.arrow {
     font-size: 100px;
     transition: 0.5s all ease;
 }
+
 i.arrow:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
 }
+
 .right {
     right: 0;
 }
-.left{
+
+.left {
     left: 0;
+}
+
+
+
+.movie-container {
+    position: relative;
+    width: 210px;
+    margin: 20px;
+    margin-right: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.movie-box {
+    position: relative;
+    width: 200px;
+    height: 300px;
+    border-radius: 10px;
+}
+
+.movie-box img{
+    position: relative;
+    width: 200px;
+    height: 300px;
+    border-radius: 10px;
+}
+
+.movie-rank {
+    font-style: italic;
+    position: absolute;
+    bottom: 203px;
+    left: -52px;
+    z-index: 10;
+    font-size: 5em;
+    color: white;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    border-radius: 5px;
+    padding: 0 10px;
+}
+.movie-poster img {
+    width: 100%;
+    height: auto;
+    transition: opacity 0.3s;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.movie-poster {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* z-index를 1로 설정하여 기본값보다 높지만 숫자보다는 낮게 설정 */
+}
+
+.movie_star {
+    margin-right: 5px;
+    margin-bottom: 0px;
+}
+.movie_star > path{
+    color: yellow;
+}
+.movie_star.rated > path{
+    color: yellow;
+}
+
+
+
+.tab-content {
+    display: none;
+}
+
+/* 활성 탭의 컨텐츠를 보여줌 */
+.tab-content.active {
+    display: block;
+}
+
+/* 탭 기본 스타일 */
+.tab {
+    cursor: pointer;
+    padding: 10px 20px;
+    margin-right: -1px;
+    border-bottom: 3px solid transparent;
+    background-color: #232323;
+    color: white;
+    text-align: center;
+}
+
+/* 활성 탭 스타일 */
+.tab.active {
+    border-bottom: 3px solid #ff0000;
+    font-weight: bold;
+    color: #fff;
+}
+
+.section-1-1 {
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.recommended-wrapper {
+    margin-right: auto;
+}
+
+.divider {
+    height: 28px;
+    width: 3px;
+    background-color: #716a6a;
+    margin: 0px;
+}
+
+#genreMessage {
+    margin: 20px;
 }

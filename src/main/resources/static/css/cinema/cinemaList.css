@@ -19,27 +19,39 @@
 }
 
 .theater-box .favorite-area .favorite-title {
-    position: absolute;
+    /*position: absolute;*/
     top: 0;
     left: 48px;
-    width: 260px;
-    height: 49px;
+    width: auto;
+    height: 100%;
     line-height: 49px;
     font-size: 24px;
     font-weight: bold;
     text-shadow: 2px 2px #727171;
+    float: left;
 }
 .mini{
     width: 230px;
 }
 
 .theater-box .favorite-area .favorite-list {
-    position: absolute;
+    /*position: absolute;*/
     top: 0;
-    left: 220px;
-    width: 800px;
+    /*left: 220px;*/
+    width: auto;
+    height: 100%;
+    float: left;
 }
 
+/*.theater-box .favorite-area .favorite-text*/
+/*{*/
+/*    float : left;*/
+/*}*/
+
+/*.theater-box .favorite-area .favorite-loginbtn*/
+/*{*/
+/*    float : left;*/
+/*}*/
 .favorite-list>ul>li:first-child {
     margin-left: 0;
 }
@@ -50,6 +62,7 @@
     padding: 2px;
     border: 2px solid #6e6c6d;
     text-align: center;
+
 }
 .favorite-list>ul p {
     float: left;
@@ -61,17 +74,19 @@
 
 .favorite-list>ul>li>a{
     display: block;
-    width: 100px;
+    width: auto;
     height: 39px;
     line-height: 39px;
     border: 1px solid #6e6c6d;
+    padding: 0 10px; /* 텍스트와 박스 사이의 간격을 10px로 조정 */
 }
 .favorite-list>ul>li>p{
     display: block;
-    width: 190px;
+    width: auto;
     height: 39px;
     line-height: 36px;
     border: 1px solid #6e6c6d;
+    padding: 0 10px;
 }
 
 
@@ -99,7 +114,8 @@
 }
 
 .location-area>ul>li.on {
-    outline: 3px solid #bb0808;
+    /*outline: 3px solid #bb0808;*/
+    background-color: #bb0808;
 }
 
 .theater-box .location-area>ul>li>button {
@@ -122,6 +138,7 @@
     min-height: 85px;
     font-size: 15px;
     color: #b9b9b9;
+
 }
 
 .theater-box .theater-list ul {

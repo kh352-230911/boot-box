@@ -2,7 +2,6 @@ package com.sh.app.config;
 
 import com.sh.app.auth.handler.CustomFailureHandler;
 import com.sh.app.auth.handler.CustomSuccessHandler;
-import com.sh.app.oauth.service.OAuth2UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -22,7 +20,7 @@ public class WebSecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/favicon.ico","/css/**", "/images/**", "/js/**");
+        return (web) -> web.ignoring().requestMatchers("/favicon.ico","/css/**", "/images/**", "/js/**","/error");
     }
 
     @Bean
@@ -40,6 +38,7 @@ public class WebSecurityConfig {
                     .requestMatchers("/notice/**").permitAll()
                     .requestMatchers("/ask/**").authenticated() // 인증된 사용자만 접근가능
                     .requestMatchers("/member/**").permitAll()
+                    .requestMatchers("/store/**").permitAll()
                     .requestMatchers("/member/createMember.do", "/member/checkIdDuplicate.do").anonymous()
 //                    .requestMatchers("/board/**").authenticated()
 //                    .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -54,10 +53,9 @@ public class WebSecurityConfig {
         http.formLogin((formLoginConfigurer -> {
             formLoginConfigurer
                     .loginPage("/auth/login.do") // 로그인 폼페이지(GET) (작업필요)
-//                    .loginPage("/auth/adminLogin.do")
                     .loginProcessingUrl("/auth/login.do") // 로그인 처리 (POST)
-//                    .loginProcessingUrl("/auth/adminLogin.do")
                     .successHandler(new CustomSuccessHandler()) //성공시 수행할 핸들러
+                    .failureHandler(new CustomFailureHandler()) //실패시 수행할 핸들러 0420
                     .permitAll();
         }));
         http.logout(logoutConfigurer -> {

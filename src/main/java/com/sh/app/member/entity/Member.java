@@ -2,10 +2,13 @@ package com.sh.app.member.entity;
 
 import com.sh.app.ask.entity.Ask;
 import com.sh.app.authority.entity.Authority;
+import com.sh.app.genre.entity.Genre;
 import com.sh.app.memberLikeCinema.entity.MemberLikeCinema;
+import com.sh.app.memberLikeGenre.entity.MemberLikeGenre;
 import com.sh.app.reservation.entity.Reservation;
 import com.sh.app.review.entity.Review;
 import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.*;
@@ -28,10 +31,10 @@ import java.util.Set;
 @Builder
 @DynamicInsert //null이 아닌 필드값만 insert한다.
 @DynamicUpdate //영속성 컨텍스트의 엔티티와 달라진 필드만 update한다.
-//@ToString(exclude = "reviews")
-@ToString(exclude = "memberLikeCinemas")
+//@ToString(exclude = {"reviews", "memberLikeCinemas", "memberLikeGenres", "authorities", "asks", "reservations"})
+@ToString(exclude = {"memberLikeCinemas", "memberLikeGenres",
+        "reviews", "asks", "reservations"})
 public class Member implements Serializable{
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_member_id_generator")
     @SequenceGenerator(
@@ -59,22 +62,25 @@ public class Member implements Serializable{
 
     private String birthyear; //null ok
 
-    @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(mappedBy = "member")
-    @Builder.Default
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
     private List<Review> reviews = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id") // authority.member_id 컬럼 작성
     private List<Authority> authorities;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Ask> asks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "member_id")
+    @BatchSize(size = 50)
     private List<Reservation> reservations = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<MemberLikeCinema> memberLikeCinemas = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<MemberLikeGenre> memberLikeGenres;
 }

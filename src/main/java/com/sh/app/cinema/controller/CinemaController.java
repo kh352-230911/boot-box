@@ -21,7 +21,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,6 +57,7 @@ public class CinemaController {
         // 사용자가 로그인한 경우
         if (memberDetails != null) {
             memberLikeCinemaListDtos = memberLikeCinemaService.findByMemberId(memberDetails.getMember().getId());
+            System.out.println("내가찜한 선호극장:"+memberLikeCinemaListDtos);
         }
 
         model.addAttribute("locations", locationsWithCinemas);
@@ -67,13 +67,23 @@ public class CinemaController {
     }
 
     @GetMapping("/cinemaDetail.do")
-    public String cinemaDetail(@RequestParam("id") Long id, Model model) {
+    public String cinemaDetail(@RequestParam("id") Long id, Model model,
+                               @AuthenticationPrincipal MemberDetails memberDetails) {
         CinemaDto cinemaDto = cinemaService.getCinemaDetails(id);
-        List<MovieListDto> currentMovies = movieService.getCurrentMovies(); // 현재 상영 중인 영화 목록 가져오기
+//        List<MovieListDto> currentMovies = movieService.getCurrentMovies(); // 현재 상영 중인 영화 목록 가져오기
+        List<MovieListDto> currentMovies = cinemaService.getMoviesByCinemaId(id); // 현재 상영 중인 영화 목록 가져오기
+        log.debug("id = {}", id);
         model.addAttribute("cinema", cinemaDto);
         model.addAttribute("currentMovies", currentMovies); // 모델에 추가
         log.debug("cinemaDto = {}", cinemaDto);
         log.debug("currentMovies = {}", currentMovies);
+
+        if(memberDetails!=null) {
+            boolean userLikedCinema = cinemaDto.getMemberLikeCinemas().stream()
+                    .anyMatch(like -> like.getMemberId().equals(memberDetails.getMember().getId()));
+
+            model.addAttribute("userLikedCinema", userLikedCinema);
+        }
         return "cinema/cinemaDetail";
     }
 
@@ -85,11 +95,22 @@ public class CinemaController {
         log.debug("id = {}", id); // 극장 ID
         log.debug("selectedDate = {}", selectedDate); // 선택된날짜
         List<IScheduleInfoDto> scheduleDetails = scheduleService.findScheduleDetailsByDateAndCinemaId(id, selectedDate);
-        log.debug("scheduleDetails = {}", scheduleDetails);
+        log.debug("c. c : scheduleDetails = {}", scheduleDetails);
+//        for (IScheduleInfoDto scheduleDetail : scheduleDetails) {
+//            log.debug("Schedule Detail:");
+//            log.debug("Schedule TheaterName: {}", scheduleDetail.getTheaterName());
+//            log.debug("Movie Id: {}", scheduleDetail.getMovieId());
+//            log.debug("Cinema Id: {}", scheduleDetail.getCinemaId());
+//            log.debug("Schedule Id: {}", scheduleDetail.getSchId());
+//            log.debug("Schedule Date: {}", scheduleDetail.getSchDate());
+//            log.debug("=============================================");
+//            // 다른 필드들도 필요에 따라 출력할 수 있습니다.
+//        }
+
 
         // 로직을 추가하여 scheduleDetails에서 필요한 JSON 구조로 변환
         List<Map<String, Object>> organizedSchedules = scheduleService.organizeSchedules(scheduleDetails);
-        log.debug("organizedSchedules = {}", organizedSchedules);
+        log.debug("c.c : organizedSchedules = {}", organizedSchedules);
 
         // JSON 구조로 클라이언트에 반환
         return ResponseEntity.ok(organizedSchedules);

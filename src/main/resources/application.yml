@@ -16,7 +16,7 @@ spring:
     url: ${PROD_DB_URL}
     username: ${PROD_DB_USERNAME}
     password: ${PROD_DB_PASSWORD}
-  #    driver-class-name: oracle.jdbc.driver.OracleDriver
+#      driver-class-name: oracle.jdbc.driver.OracleDriver
   #    url: jdbc:oracle:thin:@localhost:1521:xe
   #    username: bootbox
   #    password: bootbox
@@ -72,4 +72,14 @@ logging:
 #      default: test
       active: prod
 
+# 영화 api (kobis, kmdb, tmdb, youtube)
+api:
+  kobis:
+    key: ${api_kobis_key}
+  kmdb:
+    key: ${api_kmdb_key}
+  youtube:
+    key: ${api_youtube_key}
+  tmdb:
+    key: ${api_tmdb_key}
 

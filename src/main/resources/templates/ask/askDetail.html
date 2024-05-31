@@ -8,9 +8,9 @@
     <link rel="stylesheet" th:href="@{/css/ask/askDetail.css}" />
 </head>
 <style layout:fragment="style"></style>
-<div layout:fragment="content" >
-    <div class="container flex justify-center mt-4">
-        <table class="mt-30">
+<div layout:fragment="content" class="flex justify-center">
+    <div class="container">
+        <table>
             <thead>
             <tr>
                 <th th:text="${ask.id}">번호</th>
@@ -35,30 +35,31 @@
               th:action="@{/ask/createAnswer.do}"
               method="post"
               enctype="application/x-www-form-urlencoded">
-        <table>
-            <thead>
-                <tr>
-                    <th>답변</th>
-                </tr>
-            </thead>
-                <tbody>
+            <table>
+                <thead>
                     <tr>
-                        <th:block th:if="${showAnswer == null}">
-                            <td>
-                                <textarea id="answerContent" name="answerContent"></textarea>
-                            </td>
-                        </th:block>
-                        <th:block th:unless="${showAnswer == null}">
-                            <td th:text="${showAnswer}"></td>
-                        </th:block>
+                        <th>답변</th>
                     </tr>
-                </tbody>
-        </table>
-            <input type="hidden" name="id" th:value="${ask.id}" />
-            <th:block th:if="${showAnswer == null}">
-                <span><input type="submit" value="답변저장" id="save"></span>
-            </th:block>
+                </thead>
+                    <tbody>
+                        <tr>
+                            <th:block th:if="${showAnswer == null}">
+                                <td>
+                                    <textarea id="answerContent" name="content"></textarea>
+                                </td>
+                            </th:block>
+                            <th:block th:unless="${showAnswer == null}">
+                                <td th:text="${showAnswer}"></td>
+                            </th:block>
+                        </tr>
+                    </tbody>
+              </table>
             <div class="button-container">
+                <input type="hidden" name="askId" th:value="${ask.id}" />
+                <input type="hidden" name="adminId" th:value="${#authentication.principal.admin.id}" />
+                <th:block th:if="${showAnswer == null}">
+                    <span id="answer-margin"><input type="submit" value="답변저장" id="save"></span>
+                </th:block>
                 <a th:onclick="|location.href = '@{/ask/askList.do}';|" class="back-to-list-btn">목록으로</a>
             </div>
         </form>

@@ -12,7 +12,7 @@
 <style layout:fragment="style"></style>
 
 <div layout:fragment="content">
-    <div class="container mx-auto p-2">
+    <div class="container mx-auto p-2 mb-12">
         <nav class="navbar">
             <div class="navbar-container">
                 <div class="menu-container">
@@ -31,9 +31,9 @@
             </div>
         </nav>
 
-<!--  비회원일때  -->
+        <!--  비회원일때  -->
         <th:block sec:authorize="isAnonymous() or hasAnyAuthority('ROLE_MANAGER', 'ROLE_ADMIN')">
-    <!-- sidebar -->
+            <!-- sidebar -->
             <div class="sidebar">
                 <i class="fas fa-home"></i>
                 <i class="fas fa-search" ></i>
@@ -41,19 +41,25 @@
             </div>
         </th:block>
 
-<!-- 회원일때 -->
+        <!-- 회원일때 -->
         <th:block sec:authorize="isAuthenticated() and (not hasAnyAuthority('ROLE_MANAGER', 'ROLE_ADMIN'))">
-<!-- sidebar -->
+            <!-- sidebar -->
             <div class="sidebar">
                 <i class="fas fa-home"></i>
                 <i class="fas fa-search" ></i>
-            <!-- 비어있지 않으면  -->
-                <th:block th:if="${not #lists.isEmpty(cinema.memberLikeCinemas)}">
+                <!-- 비어있지 않으면서 로그인 한 회원이 즐겨찾기 한 극장인 경우 -->
+                <th:block th:if="${not #lists.isEmpty(cinema.memberLikeCinemas)} and ${userLikedCinema}">
                     <i class="bookmark fa-solid fa-bookmark" style="color: #FFD43B;" th:data-cinema-id="${cinema.id}">
                         <input class="memberId" type="hidden" th:data-member-id="${#authentication.principal.member.id}">
                     </i>
                 </th:block>
-            <!-- 비어있으면  -->
+                <!-- 비어있지 않으면서 로그인 한 회원이 즐겨찾기 하지 않은 극장인 경우 -->
+                <th:block th:if="${not #lists.isEmpty(cinema.memberLikeCinemas)} and ${!userLikedCinema}">
+                    <i class="bookmark fa-regular fa-bookmark fa-beat-fade" style="color: #FFD43B;" th:data-cinema-id="${cinema.id}">
+                        <input class="memberId" type="hidden" th:data-member-id="${#authentication.principal.member.id}">
+                    </i>
+                </th:block>
+                <!-- 비어있으면  -->
                 <th:block th:if="${#lists.isEmpty(cinema.memberLikeCinemas)}">
                     <i class="bookmark fa-regular fa-bookmark fa-beat-fade" style="color: #FFD43B;" th:data-cinema-id="${cinema.id}">
                         <input class="memberId" type="hidden" th:data-member-id="${#authentication.principal.member.id}">
@@ -84,17 +90,42 @@
                     </a>
                 </div>
                     <div class="movie-list-container">
-                        <h2>현재 상영작</h2>
-                        <div class="movie-list-wrapper">
-                            <div class="movie-list">
-                                <div th:each="movie : ${currentMovies}" class="movie-list-item">
-                                    <img th:src="${movie.poster}" class="movie-list-item-img" alt="" th:alt="${movie.title}">
-<!--                                    <span class="movie-list-item-title" th:text="${movie.title}"></span>-->
-<!--                                    <button class="movie-list-item-button">상세보기</button>-->
+                        <p>현재 상영작</p>
+                        <th:block th:if="${not #lists.isEmpty(currentMovies)}">
+                            <div class="movie-list-wrapper">
+                                <div class="movie-list">
+                                    <div th:each="movie : ${currentMovies}" class="movie-list-item">
+<!--                                        <th:block th:if="${#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">-->
+<!--                                            <img class="movie-list-item-img" th:src="${movie.posterUrl}" th:alt="${movie.title}">-->
+<!--                                        </th:block>-->
+<!--                                        <th:block th:if="${!#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}">-->
+<!--                                            <img class="movie-list-item-img" th:src="|https://image.tmdb.org/t/p/original${movie.posterUrl}|" th:alt="${movie.title}">-->
+<!--                                        </th:block>-->
+                                        <th:block th:if="${movie.posterUrl == null}">
+                                            <img loading="lazy" class="movie-list-item-img" src="https://t4.ftcdn.net/jpg/03/08/67/51/360_F_308675145_Ye70fJFVPntNVnmxjtVgMy5P8MDEmusB.jpg">
+                                        </th:block>
+                                        <th:block th:if="|${movie.posterUrl != null and #strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
+                                            <img loading="lazy" class="movie-list-item-img" th:src="${movie.posterUrl}" th:alt="${movie.title}">
+                                        </th:block>
+                                        <th:block th:if="|${movie.posterUrl != null and !#strings.startsWith(movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
+                                            <img loading="lazy" class="movie-list-item-img" th:src="|https://image.tmdb.org/t/p/w200${movie.posterUrl}|" th:alt="${movie.title}">
+                                        </th:block>
+    <!--                                    <img th:src="|https://image.tmdb.org/t/p/original${movie.posterUrl}|" class="movie-list-item-img" alt="" th:alt="${movie.title}">-->
+    <!--                                    <span class="movie-list-item-title" th:text="${movie.title}"></span>-->
+    <!--                                    <button class="movie-list-item-button">상세보기</button>-->
+                                    </div>
                                 </div>
-                            <i class="fas fa-chevron-right arrow"></i>
+                                <i class="left fas fa-chevron-left arrow"></i>
+                                <i class="right fas fa-chevron-right arrow"></i>
                             </div>
-                        </div>
+                        </th:block>
+                        <th:block th:if="${#lists.isEmpty(currentMovies)}">
+                            <div class="movie-list-wrapper flex justify-center">
+                                <div class="movie-list">
+                                    <p>현재 상영하는 영화가 없습니다.</p>
+                                </div>
+                            </div>
+                        </th:block>
                     </div>
                     <!-- 한 줄 달력 일정 추가 -->
                     <div class="month-and-selection">
