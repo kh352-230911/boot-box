@@ -49,12 +49,12 @@ window.onload = function()
     console.log("쿠키에 저장된 theaterToReservationCookie아이디는?:", theaterToReservationCookie);
     //테이블에 출력한 후 , 쿠키를 삭제한다.
     if (movieIdCookie) {
-        // 해당 영화 아이디를 가진 행에 CSS를 직접 적용하여 하이라이트 표시
+        // 해당 영화 아이디를 가진 행에 CSS를 직접 적용하여 하이라이트 표시 및 즉시 스크롤 처리(auto,center)
+        var selectedMovieElement = $(".select-movieData[data-movieData-id='" + movieIdCookie + "']");
         $(".select-movieData[data-movieData-id='" + movieIdCookie + "']").css('background', 'linear-gradient(to right, dimgray, dimgray)');
-        //deleteCookie('movieIdCookie');
-        //해당 영화 아이디로 ajax를 통해 포스터와 타이틀을 갖고온다.
+        selectedMovieElement[0].scrollIntoView({ behavior: 'auto', block: 'center' });
         console.log("쿠키에 저장된 무비 아이디는?:",movieIdCookie);
-        loadMovieInfoByCookie(movieIdCookie);
+        loadMovieInfoByCookie(movieIdCookie);//해당 영화 아이디로 ajax를 통해 포스터와 타이틀을 갖고온다.
     }
 
     if(theaterToReservationCookie) {
@@ -228,21 +228,12 @@ window.addEventListener("beforeunload", function(event) {
 
 //리스트에서 선택한 영화 포스터를 보여주는 함수
 function showPoster(posterUrl,movieTitle) {
-    console.log("showPoster 출력할 포스터:"+posterUrl);
-    console.log("showPoster 출력할 영화명:"+movieTitle);
-    // 외부의 <div> 요소를 찾습니다.
     const posterContainer = document.querySelector(".seat-container1");//getElementById("posterContainer");
-
-    // 해당 포스터 이미지를 표시하는 <img> 요소를 생성합니다.
     let imgElement = document.querySelector(".seat-container1-img");
-
     let textElement = document.querySelector(".seat-container1-title");
-    // 이전에 표시된 이미지가 있다면 제거합니다.
+    // 이전에 표시된 이미지가 있다면 제거
     posterContainer.innerHTML = "";
     imgElement.src = 'https://image.tmdb.org/t/p/w200'+posterUrl;
-    console.log("출력할 포스터 test ^^:"+posterUrl);
-    
-    //movieTitle을 전체 출력하되, 제목이 길면 자른다.
     if(movieTitle.length>=10)
     {
         textElement.innerHTML = addLineBreaks(movieTitle,10);
@@ -434,21 +425,13 @@ function loadMovieSch(movieId,cinemaId,dateId)
 function makeNewSchedule(able,organizedSchedules)
 {
     const scheduleTable = document.getElementById('scheduleTable');
-    const initialTableHeight = scheduleTable.offsetHeight; // 테이블의 초기 높이 저장
-
     //다른 테이블들 높이도 체크..
     const cinemaTable = document.querySelector('.cinema-area');
-    const initialTableHeight2 = cinemaTable.offsetHeight; // 테이블의 초기 높이 저장
-    console.log("테이블 초기 높이:",initialTableHeight);
-    console.log("테이블 초기 높이2:",initialTableHeight2);
-// 기존의 행 삭제
+    // 기존의 행 삭제
     while (scheduleTable.rows.length > 1) {
-        scheduleTable.deleteRow(1); // 헤더를 제외한 행을 삭제합니다.
+        scheduleTable.deleteRow(1);
     }
-// 새로운 데이터 추가
     const [{ totalDuration, schedules, title }] = organizedSchedules;
-    console.log("총 상영 시간:", totalDuration);
-    console.log("제목:", title);
     const tbody = document.getElementById('tbody_schedule');
     tbody.innerHTML = ''; // tbody 내용을 비움
 
@@ -735,11 +718,6 @@ function  checkButtonAllSelect()
 function makeSeat(response)
 {
     console.log("ajax에서 함수 불러오기.");
-    ////[SeatDto(id=23, name=C03), SeatDto(id=30, name=C10)]
-    // const [SeatDto] = response;
-    // console.log("testttttttttttttttttttttttttt", SeatDto);
-
-
     //이미 예약된 자리 배열
     const disabledSeat = [];
     response.forEach((SeatDto)=>
@@ -784,10 +762,8 @@ function createSeats(rows, cols,disabledSeat) {
 
     var seatNumber = 1; // 좌석 번호 초기값
 
-
     for (var i = 0; i < rows; i++) {
         var row = document.createElement('tr');
-
         // 알파벳 표시하는 첫 번째 셀 생성
         var col = document.createElement('td');
         var label = document.createElement('label');
@@ -812,8 +788,6 @@ function createSeats(rows, cols,disabledSeat) {
             checkbox.id = 's' + seatId;
             checkbox.name = 'tickets';
             checkbox.className = 'custom-checkbox'; // 사용자 정의 체크박스 클래스 추가
-
-
 
             checkbox.setAttribute('data-seat-id', seatId); // 좌석 아이디를 데이터 속성으로 추가
             checkbox.setAttribute('data-seat-number', seatNumber);
@@ -880,6 +854,7 @@ function createSeats(rows, cols,disabledSeat) {
             label.textContent = j; // 열 번호 추가
 
             disabledSeat.forEach(function(seat) {
+                console.log(seat);
                 if(seat===seatId)
                     checkbox.disabled = true;
             });
@@ -889,7 +864,6 @@ function createSeats(rows, cols,disabledSeat) {
             col.appendChild(checkbox);
             col.appendChild(label);
             row.appendChild(col);
-
 
             seatNumber++;
         }
@@ -1209,4 +1183,5 @@ function today()
     console.log("오늘날짜",todayDate); // 콘솔에 오늘의 날짜 출력
     return todayDate;
 }
+
 
