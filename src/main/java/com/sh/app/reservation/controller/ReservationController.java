@@ -7,8 +7,10 @@ import com.sh.app.auth.vo.MemberDetails;
 import com.sh.app.cinema.dto.FindCinemaDto;
 import com.sh.app.cinema.service.CinemaService;
 import com.sh.app.location.dto.LocationDto;
+import com.sh.app.location.dto.LocationResDto;
 import com.sh.app.location.service.LocationService;
 import com.sh.app.memberLikeCinema.dto.MemberLikeCinemaListDto;
+import com.sh.app.memberLikeCinema.dto.MemberLikeCinemaListDto2;
 import com.sh.app.memberLikeCinema.serviece.MemberLikeCinemaService;
 import com.sh.app.movie.dto.MovieInfoDto;
 import com.sh.app.movie.dto.MovieShortDto;
@@ -32,6 +34,7 @@ import com.siot.IamportRestClient.response.Payment;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONObject;
+import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.siot.IamportRestClient.IamportClient;
@@ -156,28 +159,33 @@ public class ReservationController {
         System.out.println("지역정보 및 지점 가져오기 start====================================================================================");
         //0214 db 조회하여 지역정보 가져오기
         List<LocationDto> locationsWithCinemas = locationService.findAllLocationsWithCinemas();
-        System.out.println(locationsWithCinemas);
+        //0604 위의코드 대체
+        List<LocationResDto> locations = locationService.findAllLocations();
+        System.out.println("가져온 지역 정보 및 지점 정보 출력 : \n"+locations);
+
         // 사용자가 로그인한 경우
-//        if (memberDetails != null) {
-//            memberLikeCinemaListDtos = memberLikeCinemaService.findByMemberId(memberDetails.getMember().getId());
-//            System.out.println("예매 메인 - 내가찜한 선호극장:"+memberLikeCinemaListDtos);
-//            //0602 test
-//            LocationDto firstLocation = locationsWithCinemas.get(0);
-//            LocationDto duplicatedLocation = new LocationDto();
-//            duplicatedLocation.setId(firstLocation.getId());
-//            duplicatedLocation.setLocation_name("0번째");
-//            locationsWithCinemas.add(0,duplicatedLocation);
-//        }
+        if (memberDetails != null) {
+            memberLikeCinemaListDtos = memberLikeCinemaService.findByMemberId(memberDetails.getMember().getId());
+            System.out.println("예매 메인 - 내가찜한 선호극장:"+memberLikeCinemaListDtos);
+            //0602 test
+            LocationResDto firstLocation = locations.get(0);
+            LocationResDto duplicatedLocation = new LocationResDto();
+            duplicatedLocation.setId(9999L);
+            duplicatedLocation.setLocation_name("선호극장");
+            locations.add(0,duplicatedLocation);
+        }
 //
 //        model.addAttribute("memberLikeCinemas", memberLikeCinemaListDtos);
 
         System.out.println("지역정보 및 지점 가져오기 end======================================================================================");
+
         //0214 db조회 영화 결과값+ 날짜값 + 지역 결과값 묶어서 model값을 보내주고싶을때 map을 이용해서 여러개를 전달 할 수 있다.
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("movies", movieList); //영화정보
         dataMap.put("dateList", dateList); // 날짜 [로컬에서 계산함]
         dataMap.put("dayOfWeekList", dayOfWeekList); //요일 [로컬에서 계산함]
-        dataMap.put("locations",locationsWithCinemas); //지역정보
+
+        dataMap.put("locations",locations); //지역정보
 
         // Model에 데이터 저장
         model.addAttribute("dataMap", dataMap);
@@ -629,16 +637,70 @@ public class ReservationController {
         return ResponseEntity.ok(scheduleCookieDtos);
     }
 
-    //0501 지역으로 지점(시네마)찾기
+    //0501 지역으로 지점(시네마)찾기!
+    //0604 선호극장 추가
     @GetMapping("/findCinema")
-    public ResponseEntity<?> findCinema(@RequestParam(value = "localId") Long localId)
-    {
+    @JsonIgnore
+    public ResponseEntity<?> findCinema(@RequestParam(value = "localId") Long localId) {
         System.out.println("=================findCinema====================");
-        System.out.println("찾을 cinemaId:"+localId);
-        List<FindCinemaDto> findCinemas = cinemaService.findCinemas(localId);
-        log.debug("findCinemas = {}", findCinemas);
-        return ResponseEntity.ok(findCinemas);
+        System.out.println("찾을 cinemaId:" + localId);
+
+        try {
+            if (localId == 9999) {
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                if (authentication != null && authentication.getPrincipal() instanceof MemberDetails) {
+                    MemberDetails memberDetails = (MemberDetails) authentication.getPrincipal();
+                    System.out.println("현재 회원의 핸드폰번호:" + memberDetails.getMember().getMemberPhone());
+                    System.out.println("현재 회원의 아이디(숫자):" + memberDetails.getMember().getId());
+
+                    List<MemberLikeCinemaListDto2> memberLikeCinemaListDtos2 = memberLikeCinemaService.findByMemberId2(memberDetails.getMember().getId());
+                    System.out.println("예매 메인 - 내가찜한 선호극장222222222222222:" + memberLikeCinemaListDtos2);
+                    return ResponseEntity.ok(memberLikeCinemaListDtos2);
+                } else {
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+                }
+            } else {
+                List<FindCinemaDto> findCinemas = cinemaService.findCinemas(localId);
+                return ResponseEntity.ok(findCinemas);
+            }
+        } catch (Exception e) {
+            System.err.println("Error occurred while finding cinema: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류가 발생했습니다.");
+        }
     }
+
+
+
+
+
+
+//    public ResponseEntity<?> findCinema(@RequestParam(value = "localId") Long localId)
+//    {
+//        System.out.println("=================findCinema====================");
+//        System.out.println("찾을 cinemaId:"+localId);
+//        //선호극장은 id 9999,이때 로그인한 회원의 정보를 가지고 선호극장을 조회해본다.
+//        if(localId==9999)
+//        {
+//            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//            if (authentication != null && authentication.getPrincipal() instanceof MemberDetails)
+//            {
+//                MemberDetails memberDetails = (MemberDetails) authentication.getPrincipal();
+//                // 여기에서 memberDetails를 사용하여 사용자의 모든 정보에 접근할 수 있습니다.
+//                System.out.println("현재 회원의 핸드폰번호:"+memberDetails.getMember().getMemberPhone());
+//                System.out.println("현재 회원의 아이디(숫자):"+memberDetails.getMember().getId());
+//            //findCinemas = memberLikeCinemaService.findByMemberId(memberDetails.getMember().getId());
+//
+//                List<MemberLikeCinemaListDto> memberLikeCinemaListDtos = memberLikeCinemaService.findByMemberId(memberDetails.getMember().getId());
+//                System.out.println("예매 메인 - 내가찜한 선호극장222222222222222:"+memberLikeCinemaListDtos);
+//                return ResponseEntity.ok(memberLikeCinemaListDtos);
+//            }
+//        }//if
+//        else {
+//            List<FindCinemaDto> findCinemas= cinemaService.findCinemas(localId);
+//            //log.debug("findCinemas = {}", findCinemas);
+//            return ResponseEntity.ok(findCinemas);
+//        }
+//    }
 
 
 }

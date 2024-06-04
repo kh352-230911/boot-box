@@ -272,6 +272,8 @@ $(document).ready(function(){
                 {
                     var cinema = data[i];
                     var cinemaId = cinema.id;
+                    if(cinemaId==null)
+                        cinemaId = cinema.cinemaId;
                     var regionCinema = cinema.regionCinema;
 
                     // 버튼을 생성하여 테이블에 추가합니다.

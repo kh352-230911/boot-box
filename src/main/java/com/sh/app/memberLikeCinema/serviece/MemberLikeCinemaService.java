@@ -1,9 +1,11 @@
 package com.sh.app.memberLikeCinema.serviece;
 
+import com.sh.app.location.dto.LocationResDto;
 import com.sh.app.member.entity.Member;
 import com.sh.app.member.repository.MemberRepository;
 import com.sh.app.memberLikeCinema.dto.CreateMemberLikeCinemaDto;
 import com.sh.app.memberLikeCinema.dto.MemberLikeCinemaListDto;
+import com.sh.app.memberLikeCinema.dto.MemberLikeCinemaListDto2;
 import com.sh.app.memberLikeCinema.entity.MemberLikeCinema;
 import com.sh.app.memberLikeCinema.repository.MemberLikeCinemaRepository;
 import org.modelmapper.ModelMapper;
@@ -56,6 +58,33 @@ public class MemberLikeCinemaService {
         MemberLikeCinemaListDto memberLIkeCinemaListDto = modelMapper.map(memberLikeCinema, MemberLikeCinemaListDto.class);
         return memberLIkeCinemaListDto;
     }
+
+    ////
+    public List<MemberLikeCinemaListDto2> findByMemberId2(Long memberId) {
+        return memberLikeCinemaRepository.findByMemberIdWithCinema2(memberId)
+                .stream()
+                .map(this::convertToMemberLikeCinemaDto2)
+                .collect(Collectors.toList());
+    }
+
+    private MemberLikeCinemaListDto2 convertToMemberLikeCinemaDto2(MemberLikeCinema memberLikeCinema) {
+        MemberLikeCinemaListDto2 memberLIkeCinemaListDto2 = modelMapper.map(memberLikeCinema, MemberLikeCinemaListDto2.class);
+        return memberLIkeCinemaListDto2;
+    }
+
+//    public List<LocationResDto> findLikeCinema(Long memberId)
+//    {
+//        return memberLikeCinemaRepository.findByMemberIdWithCinema(memberId)
+//                .stream()
+//                .map(this::convertToMemberLikeCinemaDto2)
+//                .collect(Collectors.toList());
+//    }
+//    private LocationResDto convertToMemberLikeCinemaDto2(LocationResDto locationResDto) {
+//        LocationResDto locationResDto1 = modelMapper.map(memberLikeCinema, MemberLikeCinemaListDto.class);
+//        return locationResDto1;
+//    }
+
+
 
 
 }
