@@ -31,5 +31,4 @@ public class MemberLikeCinema {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cinema_id") // cinema.cinema_id 컬럼지정
     private Cinema cinema;
-
 }

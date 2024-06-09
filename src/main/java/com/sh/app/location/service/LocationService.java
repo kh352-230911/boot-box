@@ -1,9 +1,9 @@
 package com.sh.app.location.service;
 
 import com.sh.app.cinema.dto.CinemaDto;
-import com.sh.app.cinema.dto.CinemaTitleDto;
 import com.sh.app.cinema.entity.Cinema;
 import com.sh.app.location.dto.LocationDto;
+import com.sh.app.location.dto.LocationResDto;
 import com.sh.app.location.entity.Location;
 import com.sh.app.location.repository.LocationRepository;
 import org.modelmapper.ModelMapper;
@@ -103,5 +103,28 @@ public class LocationService {
         cinemaDto.setLocation_la(cinema.getLocation_la());
         cinemaDto.setTheater_number(cinema.getTheater_number());
         return cinemaDto;
+    }
+
+    public List<LocationResDto> findAllLocations()
+    {
+        //지역만 갖고온다.
+        List<Location> locations = locationRepository.findAll();
+        // Location 엔터디를 LocationDto로 변환합니다.
+        return locations.stream()
+                .map(this::convertToLocationDto2)
+                .collect(Collectors.toList());
+    }
+
+
+
+    private LocationResDto convertToLocationDto2(Location location) {
+        LocationResDto locationResDto = new LocationResDto();
+        locationResDto.setId(location.getId());
+        locationResDto.setLocation_name(location.getLocation_name());
+
+//        List<CinemaDto> cinemaDtos = location.getCinemas().stream()
+//                .map(cinema -> convertToCinemaDto(cinema)) // ModelMapper를 이용하거나, 적절한 변환 로직 적용
+//                .collect(Collectors.toList());
+        return locationResDto;
     }
 }
