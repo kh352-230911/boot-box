@@ -37,6 +37,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.awt.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -206,11 +209,15 @@ public class MemberController {
         return "redirect:/";
     }
 
+    //0610 서울기준으로 현재시간 체크해야함 jin 수정
     @GetMapping("/memberReservation.do")
     public void memberReservation(Long id, Model model) {
         MemberReservationDto member = memberService.findByReservation(id);
-//        log.debug("member = {}", member);
+        ZonedDateTime nowInSeoulZoned = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+        LocalDateTime nowInSeoul = nowInSeoulZoned.toLocalDateTime();
+        System.out.println("nowInSeoul 확인 :"+nowInSeoul);
         System.out.println("예약 내역 확인 member:"+member);
+        model.addAttribute("nowInSeoul", nowInSeoul);
         model.addAttribute("member", member);
     }
 
