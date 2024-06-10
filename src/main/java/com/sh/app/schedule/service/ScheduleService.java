@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -61,7 +62,9 @@ public class ScheduleService {
 
     //0218 - 특정 영화, 극장 지점 ,시간 조건에 맞는 스케쥴들 출력[test]
     public List<IScheduleInfoDto> findScheduleDetailsByDateAndCinemaId_2(Long movieId, Long cinemaId, LocalDate schDate) {
-        return scheduleRepository.findScheduleDetailsByDateAndCinemaId_2(movieId, cinemaId,schDate);
+        ZoneId zoneId = ZoneId.of("Asia/Seoul");
+        LocalDateTime localDateTime = LocalDateTime.now(zoneId);
+        return scheduleRepository.findScheduleDetailsByDateAndCinemaId_2(movieId, cinemaId,schDate,localDateTime);
     }
 
     private ScheduleDto convertToDto(Schedule schedule) {
@@ -106,7 +109,9 @@ public class ScheduleService {
 
     //origin
     public List<IScheduleInfoDto> findScheduleDetailsByDateAndCinemaId(Long id, LocalDate schDate) {
-        return scheduleRepository.findScheduleDetailsByDateAndCinemaId(id, schDate);
+        ZoneId zoneId = ZoneId.of("Asia/Seoul");
+        LocalDateTime localDateTime = LocalDateTime.now(zoneId);
+        return scheduleRepository.findScheduleDetailsByDateAndCinemaId(id, schDate,localDateTime);
     }
 
     public List<ScheduleListDto> findScheduleWithTheaterId(Long theaterId) {
@@ -263,7 +268,9 @@ public class ScheduleService {
     public List<SearchMovieScheduleDto> searchMovieSchedule(Long cinemaId,Long movieId){
     // 현재 시네마 아이디, 영화 아이디를 사용해 해당 지점에서만 상영되는 해당 영화의 스케쥴만 가져온다.
         System.out.println("searchMovieSchedule - service !");
-        return scheduleRepository.searchMovieSchedule(cinemaId,movieId)
+        ZoneId zoneId = ZoneId.of("Asia/Seoul");
+        LocalDateTime localDateTime = LocalDateTime.now(zoneId);
+        return scheduleRepository.searchMovieSchedule(cinemaId,movieId,localDateTime)
                 .stream().map((schedule) -> entityToDtos(schedule))
                 .collect(Collectors.toList());
     }
