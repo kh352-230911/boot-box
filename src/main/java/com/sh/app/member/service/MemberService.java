@@ -47,6 +47,8 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -212,10 +214,13 @@ public class MemberService {
     }
 
     public MemberReservationDto findPastReservationsById(Long id) {
+        System.out.println("내가 본 영화를 조회하는 구간입니다....");
+        ZoneId zoneId = ZoneId.of("Asia/Seoul");
+        LocalDateTime localDateTime = LocalDateTime.now(zoneId);
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Member not found with id: " + id));
 
-        List<Reservation> pastReservations = reservationRepository.findPastReservationsById(id);
+        List<Reservation> pastReservations = reservationRepository.findPastReservationsById(id,localDateTime);
         
         Set<ReservationInfoDto> reservationInfoDtos = pastReservations.stream()
                 .map(this::convertToReservationInfoDto)

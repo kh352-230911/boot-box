@@ -281,7 +281,6 @@ function addTheaterMovie(cinemaId)
 //상영 영화 추가 초기화, 취소로 닫을 때 초기화.
 function selectInit()
 {
-
     let posterImage = document.querySelector("#posterImage");
     let movieTitle = document.querySelector("#movieTitle");
     let movieId = document.querySelector("#movieId");
