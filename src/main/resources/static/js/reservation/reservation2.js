@@ -42,6 +42,14 @@ console.log("현재 날짜와 시간",now);
 let abledNextButton = false;
 let selectedSheduleId;
 let movieIdCookie;
+
+//
+const now1 = new Date();
+// 'Asia/Seoul' 시간대로 변환
+const seoulTimeString = now1.toLocaleString('en-US', { timeZone: 'Asia/Seoul' });
+// 변환된 시간을 다시 Date 객체로 변환
+const seoulTime = new Date(seoulTimeString);
+console.log("seoulTimeseoulTimeseoulTimeseoulTimeseoulTime",seoulTime);
 window.onload = function()
 {
     movieIdCookie = getCookie('movieIdCookie');
@@ -1050,14 +1058,19 @@ function requestPay(id,name,phone)
             if (res.success) //실제로 결제가 성공되면 이 구간으로 넘어오게 된다.
             {
                 console.log("결제가 성공적으로 요청되었습니다!",res.success);
-                const now = new Date();
-                console.log("결제 완료 날짜 시간 :) ",now);
+
+                // 'Asia/Seoul' 시간대로 변환
+                const seoulTimeString = new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' });
+                // 변환된 시간을 다시 Date 객체로 변환
+                const seoulTime = new Date(seoulTimeString);
+                console.log("결제가 성공적seoulTime ",seoulTime);
+
                 let sendData01 = {
                     id: boxId,//예매id (랜덤조합)
                     memberId: id,//회원 아이디 long
                     scheduleId: selectedSheduleId, //상영스케쥴 번호
                     status : Status.CONFIRM, //enum 화
-                    reservationTime : now
+                    reservationTime : seoulTime
                 };
                 //0224 seat_id는 A01 이 아니라 1 이런식으로 넘겨줘야함! checkedNumbers는 내가 선택 좌석의 순수 숫자값을 저장한 배열이다.
                 let sendData02 = {
