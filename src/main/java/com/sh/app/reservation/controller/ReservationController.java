@@ -7,7 +7,11 @@ import com.sh.app.auth.vo.MemberDetails;
 import com.sh.app.cinema.dto.FindCinemaDto;
 import com.sh.app.cinema.service.CinemaService;
 import com.sh.app.location.dto.LocationDto;
+import com.sh.app.location.dto.LocationResDto;
 import com.sh.app.location.service.LocationService;
+import com.sh.app.memberLikeCinema.dto.MemberLikeCinemaListDto;
+import com.sh.app.memberLikeCinema.dto.MemberLikeCinemaListDto2;
+import com.sh.app.memberLikeCinema.serviece.MemberLikeCinemaService;
 import com.sh.app.movie.dto.MovieInfoDto;
 import com.sh.app.movie.dto.MovieShortDto;
 import com.sh.app.movie.service.MovieService;
@@ -30,6 +34,7 @@ import com.siot.IamportRestClient.response.Payment;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONObject;
+import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.siot.IamportRestClient.IamportClient;
@@ -94,6 +99,10 @@ public class ReservationController {
 
     @Autowired
     SeatService seatService;
+
+    @Autowired
+    private MemberLikeCinemaService memberLikeCinemaService;
+
     private IamportClient iamportClient;
 
     @Value("${imp.api.key}")
@@ -110,29 +119,29 @@ public class ReservationController {
 
     //첫 예매 페이지 진입 시 날짜(로컬)
     @GetMapping("/reservationBooking.do")
-    public void reservationMain(Model model)
+    public void reservationMain(Model model,@AuthenticationPrincipal MemberDetails memberDetails)
     {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof MemberDetails) {
-            MemberDetails memberDetails = (MemberDetails) authentication.getPrincipal();
-            // 여기에서 memberDetails를 사용하여 사용자의 모든 정보에 접근할 수 있습니다.
-            System.out.println("현재 회원의 핸드폰번호:"+memberDetails.getMember().getMemberPhone());
-            System.out.println("현재 회원의 아이디(숫자):"+memberDetails.getMember().getId());
-        }
-        else {
-            System.out.println("로그인한 상태가 아닙니다......");
-        }
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if (authentication != null && authentication.getPrincipal() instanceof MemberDetails) {
+//            MemberDetails memberDetails = (MemberDetails) authentication.getPrincipal();
+//            // 여기에서 memberDetails를 사용하여 사용자의 모든 정보에 접근할 수 있습니다.
+//            System.out.println("현재 회원의 핸드폰번호:"+memberDetails.getMember().getMemberPhone());
+//            System.out.println("현재 회원의 아이디(숫자):"+memberDetails.getMember().getId());
+//        }
+//        else {
+//            System.out.println("로그인한 상태가 아닙니다......");
+//        }
 
-
+        // 사용자가 로그인하지 않은 경우에도 locationsWithCinemas 정보는 페이지에 전달,
+        // memberLikeCinemaListDtos는 비어 있는 리스트로 전달
+        List<MemberLikeCinemaListDto> memberLikeCinemaListDtos = new ArrayList<>();
 
 
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-
         List<String> dateList = new ArrayList<>();
         List<String> dayOfWeekList = new ArrayList<>();
-
         //2주[14일]
         for (int i = 0; i < 15; i++) {
             LocalDate date = currentDate.plusDays(i);
@@ -150,14 +159,33 @@ public class ReservationController {
         System.out.println("지역정보 및 지점 가져오기 start====================================================================================");
         //0214 db 조회하여 지역정보 가져오기
         List<LocationDto> locationsWithCinemas = locationService.findAllLocationsWithCinemas();
+        //0604 위의코드 대체
+        List<LocationResDto> locations = locationService.findAllLocations();
+        System.out.println("가져온 지역 정보 및 지점 정보 출력 : \n"+locations);
+
+        // 사용자가 로그인한 경우
+        if (memberDetails != null) {
+            memberLikeCinemaListDtos = memberLikeCinemaService.findByMemberId(memberDetails.getMember().getId());
+            System.out.println("예매 메인 - 내가찜한 선호극장:"+memberLikeCinemaListDtos);
+            //0602 test
+            LocationResDto firstLocation = locations.get(0);
+            LocationResDto duplicatedLocation = new LocationResDto();
+            duplicatedLocation.setId(9999L);
+            duplicatedLocation.setLocation_name("선호극장");
+            locations.add(0,duplicatedLocation);
+        }
+//
+//        model.addAttribute("memberLikeCinemas", memberLikeCinemaListDtos);
 
         System.out.println("지역정보 및 지점 가져오기 end======================================================================================");
+
         //0214 db조회 영화 결과값+ 날짜값 + 지역 결과값 묶어서 model값을 보내주고싶을때 map을 이용해서 여러개를 전달 할 수 있다.
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("movies", movieList); //영화정보
         dataMap.put("dateList", dateList); // 날짜 [로컬에서 계산함]
         dataMap.put("dayOfWeekList", dayOfWeekList); //요일 [로컬에서 계산함]
-        dataMap.put("locations",locationsWithCinemas); //지역정보
+
+        dataMap.put("locations",locations); //지역정보
 
         // Model에 데이터 저장
         model.addAttribute("dataMap", dataMap);
@@ -268,14 +296,6 @@ public class ReservationController {
                                            //  ,@AuthenticationPrincipal MemberDetails memberDetails
     )
     {
-
-//        List<SeatDto> seatDtos;
-//        seatDtos = seatService.findSeatsByScheduleId(scheduleId);
-//        System.out.println("===해당 스케쥴에 예약된 좌석===");
-//        System.out.println(seatDtos);
-//        return ResponseEntity.ok(seatDtos);
-
-
         //임시주석한 풀 코드
         if (isAuthenticated()) {
             getUserInfo();
@@ -407,9 +427,6 @@ public class ReservationController {
 
         //3번 저장 후 return
         try {
-            System.out.println("결제return 정보로 테이블에 isnert하는 작업...22222");
-            System.out.println(combinedDataDto);
-
             ReservationDto reservationDto = combinedDataDto.getReservationDto();
             System.out.println("id: " + memberDetails.getMember().getId()); //reservationDto.getId()<- x
             System.out.println("memberId: " + reservationDto.getMemberId()); //회원아이디
@@ -479,11 +496,7 @@ public class ReservationController {
 
     @PostMapping("/cancelReservation")
     public ResponseEntity<?> cancelReservation(@RequestParam(value = "reservationId") String reservationId) throws IOException {
-        System.out.println("jin/예매취소하는 메소드,취소하고자 하는 예매 reservationId:"+reservationId);
         getToken(); //액세스 토큰을 발급받는 메소드
-        System.out.println("발급받은 토큰값:"+getToken()); //발급받은 토큰값을 확인하는 sout
-        //이 토큰과 내가 선택한 reservationId로 조회한 imp_를 찾아서 아임포트에 취소요청을 해야한다.
-        //reservationId로 imp조회하기
         OrderPay orderPay = orderPayService.findByReservationId(reservationId);
         if (orderPay != null)
         {
@@ -492,8 +505,7 @@ public class ReservationController {
         else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("예매 취소에 실패했습니다.존재하지 않는 예매내역 입니다.");
         }
-        //응답값이 0이면 즉,정상적으로 환불이 되었다면..db 삭제도 진행한다.
-        int returnCode = payMentCancle(getToken(),orderPay.getImp());
+        int returnCode = payMentCancel(getToken(),orderPay.getImp());
         if(returnCode==0)
         {
             boolean result = reservationService.cancelReservation(reservationId);
@@ -511,9 +523,7 @@ public class ReservationController {
     }
 
     public String getToken() throws IOException {
-
         HttpsURLConnection conn = null;
-
         URL url = new URL("https://api.iamport.kr/users/getToken");
         conn = (HttpsURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
@@ -541,21 +551,16 @@ public class ReservationController {
     }
 
     ////
-    public int payMentCancle(String access_token, String imp_uid) throws IOException{
+    public int payMentCancel(String access_token, String imp_uid) throws IOException{
         System.out.println("imp_uid = " + imp_uid);
         HttpsURLConnection conn = null;
         URL url = new URL("https://api.iamport.kr/payments/cancel");
-
         conn = (HttpsURLConnection) url.openConnection();
-
         conn.setRequestMethod("POST");
-
         conn.setRequestProperty("Content-type", "application/json");
         conn.setRequestProperty("Accept", "application/json");
         conn.setRequestProperty("Authorization", access_token);
-
         conn.setDoOutput(true);
-
         JsonObject json = new JsonObject();
 
 //        json.addProperty("reason", reason);
@@ -632,16 +637,70 @@ public class ReservationController {
         return ResponseEntity.ok(scheduleCookieDtos);
     }
 
-    //0501 지역으로 지점(시네마)찾기
+    //0501 지역으로 지점(시네마)찾기!
+    //0604 선호극장 추가
     @GetMapping("/findCinema")
-    public ResponseEntity<?> findCinema(@RequestParam(value = "localId") Long localId)
-    {
+    @JsonIgnore
+    public ResponseEntity<?> findCinema(@RequestParam(value = "localId") Long localId) {
         System.out.println("=================findCinema====================");
-        System.out.println("찾을 cinemaId:"+localId);
-        List<FindCinemaDto> findCinemas = cinemaService.findCinemas(localId);
-        log.debug("findCinemas = {}", findCinemas);
-        return ResponseEntity.ok(findCinemas);
+        System.out.println("찾을 cinemaId:" + localId);
+
+        try {
+            if (localId == 9999) {
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                if (authentication != null && authentication.getPrincipal() instanceof MemberDetails) {
+                    MemberDetails memberDetails = (MemberDetails) authentication.getPrincipal();
+                    System.out.println("현재 회원의 핸드폰번호:" + memberDetails.getMember().getMemberPhone());
+                    System.out.println("현재 회원의 아이디(숫자):" + memberDetails.getMember().getId());
+
+                    List<MemberLikeCinemaListDto2> memberLikeCinemaListDtos2 = memberLikeCinemaService.findByMemberId2(memberDetails.getMember().getId());
+                    System.out.println("예매 메인 - 내가찜한 선호극장222222222222222:" + memberLikeCinemaListDtos2);
+                    return ResponseEntity.ok(memberLikeCinemaListDtos2);
+                } else {
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+                }
+            } else {
+                List<FindCinemaDto> findCinemas = cinemaService.findCinemas(localId);
+                return ResponseEntity.ok(findCinemas);
+            }
+        } catch (Exception e) {
+            System.err.println("Error occurred while finding cinema: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류가 발생했습니다.");
+        }
     }
+
+
+
+
+
+
+//    public ResponseEntity<?> findCinema(@RequestParam(value = "localId") Long localId)
+//    {
+//        System.out.println("=================findCinema====================");
+//        System.out.println("찾을 cinemaId:"+localId);
+//        //선호극장은 id 9999,이때 로그인한 회원의 정보를 가지고 선호극장을 조회해본다.
+//        if(localId==9999)
+//        {
+//            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//            if (authentication != null && authentication.getPrincipal() instanceof MemberDetails)
+//            {
+//                MemberDetails memberDetails = (MemberDetails) authentication.getPrincipal();
+//                // 여기에서 memberDetails를 사용하여 사용자의 모든 정보에 접근할 수 있습니다.
+//                System.out.println("현재 회원의 핸드폰번호:"+memberDetails.getMember().getMemberPhone());
+//                System.out.println("현재 회원의 아이디(숫자):"+memberDetails.getMember().getId());
+//            //findCinemas = memberLikeCinemaService.findByMemberId(memberDetails.getMember().getId());
+//
+//                List<MemberLikeCinemaListDto> memberLikeCinemaListDtos = memberLikeCinemaService.findByMemberId(memberDetails.getMember().getId());
+//                System.out.println("예매 메인 - 내가찜한 선호극장222222222222222:"+memberLikeCinemaListDtos);
+//                return ResponseEntity.ok(memberLikeCinemaListDtos);
+//            }
+//        }//if
+//        else {
+//            List<FindCinemaDto> findCinemas= cinemaService.findCinemas(localId);
+//            //log.debug("findCinemas = {}", findCinemas);
+//            return ResponseEntity.ok(findCinemas);
+//        }
+//    }
 
 
 }

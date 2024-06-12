@@ -88,8 +88,8 @@
                             <div style="display: inline-block;">
                                 <p class="text-gray-300" style="display: inline;">예매번호</p>
                                 <span class="movie_title mt-4" th:text="${reservation.id}" style="display: inline; font-weight: bold;">box~</span>
-
-                                <th:block th:if="${#temporals.createNow().isBefore(schedule.startTime)}">
+                                <!-- 0610 여기서도 createNow()로 현재 시간을 갖고오는데, 서버로 넘기면 시간차 이슈 발생해서 타임존 설정해야함. -->
+                                <th:block th:if="${nowInSeoul.isBefore(schedule.startTime)}">
                                     <button
                                             id="reservationCancelButton"
                                             th:data-reservationId="${reservation.id}"

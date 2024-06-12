@@ -14,6 +14,9 @@ public interface MemberLikeCinemaRepository extends JpaRepository<MemberLikeCine
     @Query("SELECT mlc FROM MemberLikeCinema mlc JOIN FETCH mlc.cinema WHERE mlc.member.id = :memberId")
     List<MemberLikeCinema> findByMemberIdWithCinema(@Param("memberId") Long memberId);
 
+    @Query("SELECT mlc, c.region_cinema FROM MemberLikeCinema mlc JOIN FETCH mlc.cinema c WHERE mlc.member.id = :memberId order by c.region_cinema")
+    List<MemberLikeCinema> findByMemberIdWithCinema2(@Param("memberId") Long memberId);
+
     int countByMemberId(Long memberId);
 
 }

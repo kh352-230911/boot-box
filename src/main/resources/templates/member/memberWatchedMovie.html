@@ -63,6 +63,7 @@
                                     <img loading="lazy" class="w-40 h-60 movie_img-item movie_img-first" src="https://t4.ftcdn.net/jpg/03/08/67/51/360_F_308675145_Ye70fJFVPntNVnmxjtVgMy5P8MDEmusB.jpg">
                                 </th:block>
                                 <th:block th:if="|${schedule.movie.posterUrl != null and #strings.startsWith(schedule.movie.posterUrl, 'http://file.koreafilm.or.kr')}|">
+                                    <a th:href="@{/movie/movieDetail.do(id=${schedule.movie.id})}">
                                     <img loading="lazy" class="w-40 h-60 movie_img-item movie_img-first" th:src="${schedule.movie.posterUrl}" th:alt="${movie.title}">
                                 </th:block>
                                 <th:block th:if="|${schedule.movie.posterUrl != null and !#strings.startsWith(schedule.movie.posterUrl, 'http://file.koreafilm.or.kr')}|">

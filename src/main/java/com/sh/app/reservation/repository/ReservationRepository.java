@@ -4,6 +4,7 @@ import com.sh.app.reservation.entity.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -17,9 +18,10 @@ public interface ReservationRepository extends JpaRepository<Reservation, String
 //    @Query("select r from Reservation r join fetch r.schedule s where r.memberId = :id and s.time < current_timestamp")
 // @Query("SELECT r FROM Reservation r JOIN FETCH r.schedule s JOIN FETCH s.movie JOIN FETCH r.seats JOIN FETCH s.theater t JOIN FETCH
 // t.cinema JOIN FETCH r.review WHERE r.memberId = :id AND s.time < CURRENT_TIMESTAMP")  // schema 에서 reservation 테이블에 review_id 컬럼 추가한 후 사용
+    //0610 시간대를 위한 localDateTime 매개변수 추가
     @Query("select r from Reservation r join fetch r.schedule s join fetch s.movie join fetch r.seats join fetch s.theater t join fetch " +
-            "t.cinema where r.memberId = :id and s.time < current_timestamp")
-    List<Reservation> findPastReservationsById(Long id);
+            "t.cinema where r.memberId = :id and s.time < :localDateTime")
+    List<Reservation> findPastReservationsById(Long id, LocalDateTime localDateTime);
 
     @Query("SELECT COUNT(r) FROM Reservation r WHERE r.schedule.movie.id = :id")
     long countByMovieId(Long id);

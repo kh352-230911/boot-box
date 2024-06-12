@@ -9,6 +9,10 @@ imp.code: ${IMP_CODE}
 imp.api.key: ${IMP_API_KEY}
 imp.api.secretkey: ${IMP_API_SECRETKEY}
 
+
+
+
+
 # database
 spring:
   datasource:
@@ -25,6 +29,8 @@ spring:
     show-sql: true #만들어진 쿼리를 보여줄것인가? true or false
     properties:
       hibernate:
+        jdbc:
+          time_zone: Asia/Seoul
         format_sql: true #false일시 한 줄로 나옴
         hbm2ddl:
           #create:entity로 등록한 모든 테이블을 생성하기때문에 member table만 작업하는것따윈없다..
@@ -36,6 +42,11 @@ spring:
       schema-locations: classpath:/sql/schema.sql
       data-locations: classpath:/sql/data.sql
       mode: never
+  #0611 ajax사용시 server에서도 -9시간으로 처리됨. 여기서도 timezone을 asia-seoul 적용한다..
+  jackson:
+    time-zone: Asia/Seoul
+    deserialization:
+      adjust-dates-to-context-time-zone: 'false'
   security:
     oauth2:
       client:
@@ -82,4 +93,5 @@ api:
     key: ${api_youtube_key}
   tmdb:
     key: ${api_tmdb_key}
+
 

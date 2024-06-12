@@ -47,6 +47,8 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -134,57 +136,126 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
-    public MemberReservationDto findByReservation(Long id) {
-        return memberRepository.findByReservation(id).map(member -> {
-            Set<ReservationInfoDto> reservationInfoDtos = member.getReservations()
-                    .stream().map(reservation -> {
-                        // 예약 정보에서 SeatInfoDto로 변환
-                        Set<SeatInfoDto> seatInfoDtos = reservation.getSeats()
-                                .stream().map(seat -> modelMapper.map(seat, SeatInfoDto.class))
-                                .collect(Collectors.toSet());
+//    public MemberReservationDto findByReservation(Long id) {
+//        return memberRepository.findByReservation(id).map(member -> {
+//            Set<ReservationInfoDto> reservationInfoDtos = member.getReservations()
+//                    .stream().map(reservation -> {
+//                        // 예약 정보에서 SeatInfoDto로 변환
+//                        Set<SeatInfoDto> seatInfoDtos = reservation.getSeats()
+//                                .stream().map(seat -> modelMapper.map(seat, SeatInfoDto.class))
+//                                .collect(Collectors.toSet());
+//
+//                        // 예약 정보에서 ScheduleInfomDto로 변환
+//                        ScheduleInfomDto scheduleInfomDto = modelMapper.map(reservation.getSchedule(), ScheduleInfomDto.class);
+//                        scheduleInfomDto.setStartTime(reservation.getSchedule().getTime());
+//
+//                        // 예약 정보의 스케쥴의 상영관과 영화를 각각 dto로 변환
+//                        TheaterInfoDto theaterInfoDto = modelMapper.map(reservation.getSchedule().getTheater(), TheaterInfoDto.class);
+//                        MovieInfoDto movieInfoDto = modelMapper.map(reservation.getSchedule().getMovie(), MovieInfoDto.class);
+//
+//                        scheduleInfomDto.calculateEndTime();
+//
+//                        // 예약 정보의 스케쥴의 상영관의 극장을 CinemaInfoDto 변환
+//                        CinemaInfoDto cinemaInfoDto = modelMapper.map(reservation.getSchedule().getTheater().getCinema(), CinemaInfoDto.class);
+//
+//                        // 예약 정보의 스케쥴의 상영관의 극장의 지점을 LocationInfoDto 변환
+//                        LocationInfoDto locationInfoDto = modelMapper.map(reservation.getSchedule().getTheater().getCinema().getLocation(), LocationInfoDto.class);
+//
+//                        cinemaInfoDto.setName(reservation.getSchedule().getTheater().getCinema().getRegion_cinema());
+//                        cinemaInfoDto.setLocation(locationInfoDto);
+//
+//                        locationInfoDto.setName(reservation.getSchedule().getTheater().getCinema().getLocation().getLocation_name());
+//
+//                        theaterInfoDto.setCinema(cinemaInfoDto);
+//
+//                        scheduleInfomDto.setTheaters(theaterInfoDto);
+//                        scheduleInfomDto.setMovie(movieInfoDto);
+//
+//                        ReservationInfoDto reservationInfoDto = modelMapper.map(reservation, ReservationInfoDto.class);
+//                        reservationInfoDto.setReservationTime(reservation.getReservationTime());
+//                        reservationInfoDto.setSeats(seatInfoDtos);
+//                        reservationInfoDto.setSchedule(scheduleInfomDto);
+//
+//                        return reservationInfoDto;
+//                    }).collect(Collectors.toSet());
+//
+//            return MemberReservationDto.builder()
+//                    .id(member.getId())
+//                    .name(member.getMemberName())
+//                    .reservations(reservationInfoDtos)
+//                    .build();
+//        }).orElse(null);
+//    }
+public MemberReservationDto findByReservation(Long id) {
+    return memberRepository.findByReservation(id).map(member -> {
+        // Stream을 사용하여 ReservationInfoDto로 변환
+        List<ReservationInfoDto> reservationInfoDtoList = member.getReservations()
+                .stream()
+                .map(reservation -> {
+                    // 예약 정보에서 SeatInfoDto로 변환
+                    Set<SeatInfoDto> seatInfoDtos = reservation.getSeats()
+                            .stream().map(seat -> modelMapper.map(seat, SeatInfoDto.class))
+                            .collect(Collectors.toSet());
 
-                        // 예약 정보에서 ScheduleInfomDto로 변환
-                        ScheduleInfomDto scheduleInfomDto = modelMapper.map(reservation.getSchedule(), ScheduleInfomDto.class);
-                        scheduleInfomDto.setStartTime(reservation.getSchedule().getTime());
+                    // 예약 정보에서 ScheduleInfomDto로 변환
+                    ScheduleInfomDto scheduleInfomDto = modelMapper.map(reservation.getSchedule(), ScheduleInfomDto.class);
+                    scheduleInfomDto.setStartTime(reservation.getSchedule().getTime());
 
-                        // 예약 정보의 스케쥴의 상영관과 영화를 각각 dto로 변환
-                        TheaterInfoDto theaterInfoDto = modelMapper.map(reservation.getSchedule().getTheater(), TheaterInfoDto.class);
-                        MovieInfoDto movieInfoDto = modelMapper.map(reservation.getSchedule().getMovie(), MovieInfoDto.class);
+                    // 예약 정보의 스케쥴의 상영관과 영화를 각각 dto로 변환
+                    TheaterInfoDto theaterInfoDto = modelMapper.map(reservation.getSchedule().getTheater(), TheaterInfoDto.class);
+                    MovieInfoDto movieInfoDto = modelMapper.map(reservation.getSchedule().getMovie(), MovieInfoDto.class);
 
-                        scheduleInfomDto.calculateEndTime();
+                    scheduleInfomDto.calculateEndTime();
 
-                        // 예약 정보의 스케쥴의 상영관의 극장을 CinemaInfoDto 변환
-                        CinemaInfoDto cinemaInfoDto = modelMapper.map(reservation.getSchedule().getTheater().getCinema(), CinemaInfoDto.class);
+                    // 예약 정보의 스케쥴의 상영관의 극장을 CinemaInfoDto 변환
+                    CinemaInfoDto cinemaInfoDto = modelMapper.map(reservation.getSchedule().getTheater().getCinema(), CinemaInfoDto.class);
 
-                        // 예약 정보의 스케쥴의 상영관의 극장의 지점을 LocationInfoDto 변환
-                        LocationInfoDto locationInfoDto = modelMapper.map(reservation.getSchedule().getTheater().getCinema().getLocation(), LocationInfoDto.class);
+                    // 예약 정보의 스케쥴의 상영관의 극장의 지점을 LocationInfoDto 변환
+                    LocationInfoDto locationInfoDto = modelMapper.map(reservation.getSchedule().getTheater().getCinema().getLocation(), LocationInfoDto.class);
 
-                        cinemaInfoDto.setName(reservation.getSchedule().getTheater().getCinema().getRegion_cinema());
-                        cinemaInfoDto.setLocation(locationInfoDto);
+                    cinemaInfoDto.setName(reservation.getSchedule().getTheater().getCinema().getRegion_cinema());
+                    cinemaInfoDto.setLocation(locationInfoDto);
 
-                        locationInfoDto.setName(reservation.getSchedule().getTheater().getCinema().getLocation().getLocation_name());
+                    locationInfoDto.setName(reservation.getSchedule().getTheater().getCinema().getLocation().getLocation_name());
 
-                        theaterInfoDto.setCinema(cinemaInfoDto);
+                    theaterInfoDto.setCinema(cinemaInfoDto);
 
-                        scheduleInfomDto.setTheaters(theaterInfoDto);
-                        scheduleInfomDto.setMovie(movieInfoDto);
+                    scheduleInfomDto.setTheaters(theaterInfoDto);
+                    scheduleInfomDto.setMovie(movieInfoDto);
 
-                        ReservationInfoDto reservationInfoDto = modelMapper.map(reservation, ReservationInfoDto.class);
-                        reservationInfoDto.setReservationTime(reservation.getReservationTime());
-                        reservationInfoDto.setSeats(seatInfoDtos);
-                        reservationInfoDto.setSchedule(scheduleInfomDto);
+                    ReservationInfoDto reservationInfoDto = modelMapper.map(reservation, ReservationInfoDto.class);
+                    reservationInfoDto.setReservationTime(reservation.getReservationTime());
+                    reservationInfoDto.setSeats(seatInfoDtos);
+                    reservationInfoDto.setSchedule(scheduleInfomDto);
 
-                        return reservationInfoDto;
-                    }).collect(Collectors.toSet());
+                    return reservationInfoDto;
+                })
+                //ReservationTime을 서로 비교하여 정렬함.(내림차순, 즉 최신순-오래된순으로 정렬함)
+                //null인 경우엔 맨 뒤로 보낸다.(유효한 시간 값이 있을때 우선순위)
+                .sorted((r1, r2) -> {
+                    if (r1.getReservationTime() == null && r2.getReservationTime() == null) {
+                        return 0;
+                    } else if (r1.getReservationTime() == null) {
+                        return 1;
+                    } else if (r2.getReservationTime() == null) {
+                        return -1;
+                    } else {
+                        //둘다 값이 있는 경우 r2,r1의 시간을 비교한다. r2가 r1보다 크면 음수반환=>r2가 앞으로 옴.
+                        return r2.getReservationTime().compareTo(r1.getReservationTime());
+                    }
+                })
+                .collect(Collectors.toList());//정렬된 stream을 list로 변환.
 
-            return MemberReservationDto.builder()
-                    .id(member.getId())
-                    .name(member.getMemberName())
-                    .reservations(reservationInfoDtos)
-                    .build();
-        }).orElse(null);
-    }
+        // 정렬된 List를 Set으로 변환
+        Set<ReservationInfoDto> reservationInfoDtos = new LinkedHashSet<>(reservationInfoDtoList);
 
+        return MemberReservationDto.builder()
+                .id(member.getId())
+                .name(member.getMemberName())
+                .reservations(reservationInfoDtos)
+                .build();
+    }).orElse(null);
+}
 
     public MemberAskDto findById(Long id) {
         Member member = memberRepository.findById(id)
@@ -212,10 +283,13 @@ public class MemberService {
     }
 
     public MemberReservationDto findPastReservationsById(Long id) {
+        System.out.println("내가 본 영화를 조회하는 구간입니다....");
+        ZoneId zoneId = ZoneId.of("Asia/Seoul");
+        LocalDateTime localDateTime = LocalDateTime.now(zoneId);
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Member not found with id: " + id));
 
-        List<Reservation> pastReservations = reservationRepository.findPastReservationsById(id);
+        List<Reservation> pastReservations = reservationRepository.findPastReservationsById(id,localDateTime);
         
         Set<ReservationInfoDto> reservationInfoDtos = pastReservations.stream()
                 .map(this::convertToReservationInfoDto)
