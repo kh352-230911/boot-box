@@ -213,6 +213,8 @@ public class MemberController {
     @GetMapping("/memberReservation.do")
     public void memberReservation(Long id, Model model) {
         MemberReservationDto member = memberService.findByReservation(id);
+        //여기서 reservationTime대로 다시 정렬함.
+
         ZonedDateTime nowInSeoulZoned = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
         LocalDateTime nowInSeoul = nowInSeoulZoned.toLocalDateTime();
         System.out.println("nowInSeoul 확인 :"+nowInSeoul);
